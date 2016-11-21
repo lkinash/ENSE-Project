@@ -19,6 +19,13 @@ import com.google.appengine.archetypes.forms.CancelAppointmentForm;
  * @author Lindsey
  */
 
+@Api(
+	    name = "appointment",
+	    version = "v1",
+	    scopes = {Constants.EMAIL_SCOPE},
+	    clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID, Constants.IOS_CLIENT_ID},
+	    audiences = {Constants.ANDROID_AUDIENCE}
+	)
 public class AppointmentAPI {
 
 	// Start of user code (user defined attributes for AppointmentAPI)
@@ -28,6 +35,7 @@ public class AppointmentAPI {
 	/**
 	 * The constructor.
 	 */
+	/*
 	public AppointmentAPI() {
 		// Start of user code constructor for AppointmentAPI)
 		super();
@@ -37,6 +45,7 @@ public class AppointmentAPI {
 	/**
 	 * Description of the method createAppointment.
 	 */
+	/*
 	public void createAppointment() {
 		// Start of user code for method createAppointment
 		// End of user code
@@ -45,6 +54,7 @@ public class AppointmentAPI {
 	/**
 	 * Description of the method modifyAppointment.
 	 */
+	/*
 	public void modifyAppointment() {
 		// Start of user code for method modifyAppointment
 		// End of user code
@@ -56,6 +66,7 @@ public class AppointmentAPI {
 	 * @param appointmentId 
 	 * @param removeAppointmentForm 
 	 */
+	/*
 	public void cancelAppointment(Client client, Long appointmentId, CancelAppointmentForm removeAppointmentForm) {
 		// Start of user code for method cancelAppointment
 		// End of user code
@@ -66,6 +77,7 @@ public class AppointmentAPI {
 	 * @param admin 
 	 * @param appointmentId 
 	 */
+	/*
 	public void updateAppointmentStatus(Admin admin, Long appointmentId) {
 		// Start of user code for method updateAppointmentStatus
 		// End of user code
@@ -74,6 +86,7 @@ public class AppointmentAPI {
 	/**
 	 * Description of the method queryAppointments.
 	 */
+	/*
 	public void queryAppointments() {
 		// Start of user code for method queryAppointments
 		// End of user code
@@ -82,6 +95,7 @@ public class AppointmentAPI {
 	/**
 	 * Description of the method filterAppointments.
 	 */
+	/*
 	public void filterAppointments() {
 		// Start of user code for method filterAppointments
 		// End of user code
@@ -91,11 +105,12 @@ public class AppointmentAPI {
 	 * Description of the method findAvailableAppointmentTimes.
 	 * @param appointmentForm 
 	 */
+	/*
 	public void findAvailableAppointmentTimes(AppointmentForm appointmentForm) {
 		// Start of user code for method findAvailableAppointmentTimes
 		// End of user code
 	}
 
-
+*/
 
 }

@@ -3,6 +3,9 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.entities;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 // Start of user code (user defined imports)
 
 // End of user code
@@ -12,6 +15,7 @@ package com.google.appengine.archetypes.entities;
  * 
  * @author Lindsey
  */
+@Entity
 public class SaleItem {
 	/**
 	 * Description of the property name.

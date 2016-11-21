@@ -9,7 +9,13 @@ import com.google.appengine.archetypes.entities.User;
 
 import java.util.Date;
 import java.util.List;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 // End of user code
 
@@ -18,6 +24,7 @@ import java.util.List;
  * 
  * @author Lindsey
  */
+@Entity
 public class Client extends User {
 	/**
 	 * Description of the property firstName.

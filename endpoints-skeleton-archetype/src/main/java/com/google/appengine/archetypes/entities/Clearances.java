@@ -5,6 +5,9 @@ package com.google.appengine.archetypes.entities;
 
 import java.util.Date;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 import com.google.appengine.archetypes.entities.Service;
 // Start of user code (user defined imports)
 
@@ -15,6 +18,7 @@ import com.google.appengine.archetypes.entities.Service;
  * 
  * @author Lindsey
  */
+@Entity
 public class Clearances {
 	/**
 	 * Description of the property service.

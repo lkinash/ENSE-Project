@@ -9,6 +9,9 @@ import com.google.appengine.archetypes.entities.AdminClearances;
 import com.google.appengine.archetypes.entities.User;
 // Start of user code (user defined imports)
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 // End of user code
 
 /**
@@ -16,6 +19,7 @@ import com.google.appengine.archetypes.entities.User;
  * 
  * @author Lindsey
  */
+@Entity
 public class Admin extends User {
 	/**
 	 * Description of the property adminClearance.

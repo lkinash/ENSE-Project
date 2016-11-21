@@ -23,5 +23,14 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/Lindsey/.m2/repository/com/googlecode/objectify/objectify/5.1.13/objectify-5.1.13.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="com.googlecode.objectify"/>
+			<attribute name="maven.artifactId" value="objectify"/>
+			<attribute name="maven.version" value="5.1.13"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/endpoints-skeleton-archetype-1.0-SNAPSHOT/WEB-INF/classes"/>
 </classpath>

@@ -18,7 +18,13 @@ import com.google.appengine.archetypes.forms.ClientForm;
  * 
  * @author Lindsey
  */
-
+@Api(
+	    name = "client",
+	    version = "v1",
+	    scopes = {Constants.EMAIL_SCOPE},
+	    clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID, Constants.IOS_CLIENT_ID},
+	    audiences = {Constants.ANDROID_AUDIENCE}
+	)
 public class ClientAPI {
 	// Start of user code (user defined attributes for ClientAPI)
 
@@ -27,6 +33,7 @@ public class ClientAPI {
 	/**
 	 * The constructor.
 	 */
+	/*
 	public ClientAPI() {
 		// Start of user code constructor for ClientAPI)
 		super();
@@ -37,6 +44,7 @@ public class ClientAPI {
 	 * Description of the method createClient.
 	 * @param clientForm 
 	 */
+	/*
 	public void createClient(ClientForm clientForm) {
 		// Start of user code for method createClient
 		// End of user code
@@ -46,6 +54,7 @@ public class ClientAPI {
 	 * Description of the method modifyClient.
 	 * @param clientForm 
 	 */
+	/*
 	public void modifyClient(ClientForm clientForm) {
 		// Start of user code for method modifyClient
 		// End of user code
@@ -57,6 +66,7 @@ public class ClientAPI {
 	 * @param clearance 
 	 * @param date 
 	 */
+	/*
 	public void addClientClearances(Long clientId, Clearances clearance, Date date) {
 		// Start of user code for method addClientClearances
 		// End of user code
@@ -68,6 +78,7 @@ public class ClientAPI {
 	 * @param clearance 
 	 * @param date 
 	 */
+	 /*
 	public void setClientClearances(Long clientId, Clearances clearance, Date date) {
 		// Start of user code for method addClientClearances
 		// End of user code
@@ -76,5 +87,5 @@ public class ClientAPI {
 	// Start of user code (user defined methods for ClientAPI)
 
 	// End of user code
-
+*/
 }

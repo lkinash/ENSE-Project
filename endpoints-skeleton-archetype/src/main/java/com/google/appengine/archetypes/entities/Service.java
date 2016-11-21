@@ -4,6 +4,9 @@
 package com.google.appengine.archetypes.entities;
 
 import com.google.appengine.archetypes.entities.SaleItem;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
 
 // End of user code
@@ -13,6 +16,7 @@ import com.google.appengine.archetypes.entities.SaleItem;
  * 
  * @author Lindsey
  */
+@Entity
 public class Service extends SaleItem {
 	/**
 	 * Description of the property requiresClearance.

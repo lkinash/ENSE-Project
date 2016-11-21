@@ -4,6 +4,10 @@
 package com.google.appengine.archetypes.entities;
 
 import com.google.appengine.archetypes.entities.Service;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 import java.util.List;
 // Start of user code (user defined imports)
 
@@ -14,6 +18,7 @@ import java.util.List;
  * 
  * @author Lindsey
  */
+@Entity
 public class Room {
 	/**
 	 * Description of the property number.

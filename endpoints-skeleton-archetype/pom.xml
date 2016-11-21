@@ -9,7 +9,7 @@
     <artifactId>endpoints-skeleton-archetype</artifactId>
 
     <properties>
-        <app.id>your-app-id</app.id>
+        <app.id>ense-project</app.id>
         <app.version>1</app.version>
         <appengine.target.version>1.9.21</appengine.target.version>
         <gcloud.plugin.version>3.8.0</gcloud.plugin.version>
