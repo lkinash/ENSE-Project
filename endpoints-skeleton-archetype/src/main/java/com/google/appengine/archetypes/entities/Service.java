@@ -4,7 +4,6 @@
 package com.google.appengine.archetypes.entities;
 
 import com.google.appengine.archetypes.entities.SaleItem;
-
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
@@ -21,7 +20,7 @@ public class Service extends SaleItem {
 	/**
 	 * Description of the property requiresClearance.
 	 */
-	private boolean requiresClearance = Boolean.FALSE;
+	private boolean requiresClearance;
 
 	// Start of user code (user defined attributes for Service)
 
@@ -31,9 +30,9 @@ public class Service extends SaleItem {
 		
 	}
 	
-	public Service(boolean newRequiresClearance){
+	public Service(boolean newRequiresClearance, Long newProductId, String newName, String newType, double newPrice){
 	
-		super();
+		super(newProductId, newName, newType, newPrice);
 		
 		this.requiresClearance = newRequiresClearance;
 	}

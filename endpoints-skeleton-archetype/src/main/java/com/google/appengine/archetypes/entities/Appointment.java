@@ -3,7 +3,7 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.entities;
 
-import com.google.appengine.archetypes.entities.Status;
+import com.google.appengine.archetypes.list.Status;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -22,12 +22,13 @@ public class Appointment{
 	/**
 	 * Description of the property status.
 	 */
-	private Status status = null;
+	private Status status;
 
 	/**
 	 * Description of the property eventId.
 	 */
-	private Long eventId = null;
+	@Id 
+	private Long eventId;
 
 	// Start of user code (user defined methods for Appointment)
 

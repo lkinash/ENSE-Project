@@ -20,17 +20,18 @@ public class User {
 	/**
 	 * Description of the property email.
 	 */
-	private String email = "";
+	private String email;
 
 	/**
 	 * Description of the property password.
 	 */
-	private String password = "";
+	private String password;
 
 	/**
 	 * Description of the property userId.
 	 */
-	private Long userId = null;
+	@Id
+	private String userId;
 
 
 	// Start of user code (user defined methods for User)
@@ -41,7 +42,7 @@ public class User {
 		
 	}
 	
-	public User(String newEmail, String newPassword, Long newUserId){
+	public User(String newEmail, String newPassword, String newUserId){
 		
 		this.email = newEmail;
 		this.userId = newUserId;
@@ -85,7 +86,7 @@ public class User {
 	 * Returns userId.
 	 * @return userId 
 	 */
-	public Long getUserId() {
+	public String getUserId() {
 		return this.userId;
 	}
 
@@ -93,7 +94,7 @@ public class User {
 	 * Sets a value to attribute userId. 
 	 * @param newUserId 
 	 */
-	public void setUserId(Long newUserId) {
+	public void setUserId(String newUserId) {
 		this.userId = newUserId;
 	}
 

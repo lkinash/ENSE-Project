@@ -20,22 +20,23 @@ public class SaleItem {
 	/**
 	 * Description of the property name.
 	 */
-	private String name = "";
+	private String name;
 
 	/**
 	 * Description of the property price.
 	 */
-	private double price = 0;
+	private double price;
 
 	/**
 	 * Description of the property type.
 	 */
-	private String type = "";
+	private String type;
 
 	/**
 	 * Description of the property productId.
 	 */
-	private Long productId = null;
+	@Id 
+	private long productId;
 
 
 	// Start of user code (user defined methods for SaleItem)
@@ -47,7 +48,7 @@ public class SaleItem {
 	}
 	
 
-	public SaleItem(Long newProductId, String newName, String newType, double newPrice){
+	public SaleItem(long newProductId, String newName, String newType, double newPrice){
 		
 		this.productId = newProductId;
 		this.name = newName;

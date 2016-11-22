@@ -20,20 +20,24 @@ import java.util.List;
  */
 @Entity
 public class Room {
+	
+	@Id 
+	private long roomId;
+	
 	/**
 	 * Description of the property number.
 	 */
-	private int number = 0;
+	private int number;
 
 	/**
 	 * Description of the property service.
 	 */
-	private List<Service> service = null;
+	private List<Service> service;
 
 	/**
 	 * Description of the property calendar.
 	 */
-	private Object calendar = null ;
+	private Object calendar;
 	
 	// Start of user code (user defined attributes for Room)
 	

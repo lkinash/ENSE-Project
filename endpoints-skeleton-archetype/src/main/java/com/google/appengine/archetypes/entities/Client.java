@@ -29,37 +29,37 @@ public class Client extends User {
 	/**
 	 * Description of the property firstName.
 	 */
-	private String firstName = "";
+	private String firstName;
 
 	/**
 	 * Description of the property lastName.
 	 */
-	private String lastName = "";
+	private String lastName;
 
 	/**
 	 * Description of the property phoneNumber.
 	 */
-	private int phoneNumber = 0;
+	private int phoneNumber;
 
 	/**
 	 * Description of the property calendar.
 	 */
-	private Appointment calendar = null;
+	private Appointment calendar;
 
 	/**
 	 * Description of the property clearances.
 	 */
-	private List<Clearances> clearances = null;
+	private List<Clearances> clearances;
 
 	/**
 	 * Description of the property appointments.
 	 */
-	private List<Appointment> appointments = null;
+	private List<Appointment> appointments;
 
 	/**
 	 * Description of the property birthday.
 	 */
-	private Date birthday = null;
+	private Date birthday;
 
 	// Start of user code (user defined attributes for Client)
 
@@ -69,9 +69,9 @@ public class Client extends User {
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Appointment> newAppointments, List<Clearances> newClearances, Appointment newCalendar  ){
+	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Appointment> newAppointments, List<Clearances> newClearances, Appointment newCalendar, String newEmail, String newPassword, String newUserId  ){
 		
-		super();
+		super(newEmail, newPassword, newUserId);
 		
 		this.birthday = newBirthday;
 		this.appointments = newAppointments;
@@ -86,9 +86,9 @@ public class Client extends User {
 	 * Description of the method getUserId.
 	 * @return 
 	 */
-	public Long getUserId() {
+	public String getUserId() {
 		// Start of user code for method getUserId
-		Long getUserId = null;
+		String getUserId = null;
 		return getUserId;
 		// End of user code
 	}

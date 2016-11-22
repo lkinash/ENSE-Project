@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2016, All rights reserved.
  *******************************************************************************/
-package com.google.appengine.archetypes.entities;
+package com.google.appengine.archetypes.list;
 
 
 import com.googlecode.objectify.annotation.Entity;

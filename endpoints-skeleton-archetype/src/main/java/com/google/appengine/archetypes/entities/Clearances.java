@@ -20,15 +20,18 @@ import com.google.appengine.archetypes.entities.Service;
  */
 @Entity
 public class Clearances {
+	
+	@Id 
+	private long clearanceId; 
 	/**
 	 * Description of the property service.
 	 */
-	private Service service = null;
+	private Service service;
 
 	/**
 	 * Description of the property renewalDate.
 	 */
-	private Date renewalDate = null;
+	private Date renewalDate ;
 
 	
 	public Clearances(){

@@ -4,7 +4,6 @@
 package com.google.appengine.archetypes.entities;
 
 import com.google.appengine.archetypes.entities.SaleItem;
-
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
@@ -21,14 +20,14 @@ public class Product extends SaleItem {
 	/**
 	 * Description of the property barcodeId.
 	 */
-	private int barcodeId = 0;
+	private int barcodeId;
 
 	public Product(){
 		
 	}
 
-	public Product(int newBarcodeId){
-		super();
+	public Product(int newBarcodeId, Long newProductId, String newName, String newType, double newPrice){
+		super(newProductId, newName, newType, newPrice);
 		this.barcodeId = newBarcodeId;
 	}
 

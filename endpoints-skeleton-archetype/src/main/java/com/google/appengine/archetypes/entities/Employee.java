@@ -20,23 +20,24 @@ public class Employee {
 	/**
 	 * Description of the property calendar.
 	 */
-	private Object calendar = null;
+	private Object calendar;
 
 	/**
 	 * Description of the property firstName.
 	 */
-	private String name = "";
+	private String name;
 
 	/**
 	 * Description of the property employeeId.
 	 */
-	private int employeeId = 0;
+	@Id 
+	private long employeeId;
 	
 	public Employee(){
 		
 	}
 	
-	public Employee(Object calendar, String name, int employeeId){
+	public Employee(Object calendar, String name, long employeeId){
 		this.calendar = calendar;
 		this.name = name;
 		this.employeeId = employeeId;
@@ -79,7 +80,7 @@ public class Employee {
 	 * Returns employeeId.
 	 * @return employeeId 
 	 */
-	public int getEmployeeId() {
+	public long getEmployeeId() {
 		return this.employeeId;
 	}
 
@@ -87,7 +88,7 @@ public class Employee {
 	 * Sets a value to attribute employeeId. 
 	 * @param newEmployeeId 
 	 */
-	public void setEmployeeId(int newEmployeeId) {
+	public void setEmployeeId(long newEmployeeId) {
 		this.employeeId = newEmployeeId;
 	}
 
