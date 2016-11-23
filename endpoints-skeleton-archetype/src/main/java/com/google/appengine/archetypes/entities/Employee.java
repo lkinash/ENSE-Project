@@ -33,14 +33,15 @@ public class Employee {
 	@Id 
 	private long employeeId;
 	
+	
 	public Employee(){
 		
 	}
 	
-	public Employee(Object calendar, String name, long employeeId){
-		this.calendar = calendar;
-		this.name = name;
-		this.employeeId = employeeId;
+	public Employee(Object newCalendar, String newName, long newEmployeeId){
+		this.calendar = newCalendar;
+		this.name = newName;
+		this.employeeId = newEmployeeId;
 	}
 
 	

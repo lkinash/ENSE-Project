@@ -20,18 +20,19 @@ public class AdminForm {
 	/**
 	 * Description of the property password.
 	 */
-	private String password = "";
+	private String password;
 
 	/**
 	 * Description of the property clearance.
 	 */
-	private List<AdminClearances> clearance = null;
+	private List<AdminClearances> clearance;
 
 	/**
 	 * Description of the property email.
 	 */
-	private String email = "";
+	private String email;
 
+	
 	public AdminForm(){
 		
 	}

@@ -38,14 +38,30 @@ public class Clearances {
 		
 	}
 	
-	public Clearances(Service service, Date renewalDate){
+	public Clearances(Service service, Date renewalDate, long newClearanceId){
 		this.service = service;
 		this.renewalDate = renewalDate;
+		this.clearanceId = newClearanceId;
 	}
 	
 	// Start of user code (user defined methods for Clearances)
 
 	// End of user code
+	/**
+	 * Returns service.
+	 * @return service 
+	 */
+	public long getClearanceId() {
+		return this.clearanceId;
+	}
+
+	/**
+	 * Sets a value to attribute service. 
+	 * @param newService 
+	 */
+	public void setClearanceId(long newClearanceId) {
+		this.clearanceId = newClearanceId;
+	}
 	/**
 	 * Returns service.
 	 * @return service 

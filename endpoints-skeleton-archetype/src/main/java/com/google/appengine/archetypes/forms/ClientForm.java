@@ -22,32 +22,32 @@ public class ClientForm {
 	/**
 	 * Description of the property password.
 	 */
-	private String password = "";
+	private String password;
 
 	/**
 	 * Description of the property firstName.
 	 */
-	private String firstName = "";
+	private String firstName;
 
 	/**
 	 * Description of the property email.
 	 */
-	private String email = "";
+	private String email;
 
 	/**
 	 * Description of the property birthday.
 	 */
-	private Date birthday = null;
+	private Date birthday;
 
 	/**
 	 * Description of the property phoneNumber.
 	 */
-	private int phoneNumber = 0;
+	private int phoneNumber;
 
 	/**
 	 * Description of the property lastName.
 	 */
-	private String lastName = "";
+	private String lastName;
 
 	// Start of user code (user defined methods for ClientForm)
 

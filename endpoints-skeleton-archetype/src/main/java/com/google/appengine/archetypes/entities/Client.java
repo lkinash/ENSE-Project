@@ -87,10 +87,11 @@ public class Client extends User {
 	 * @return 
 	 */
 	public String getUserId() {
-		// Start of user code for method getUserId
-		String getUserId = null;
-		return getUserId;
-		// End of user code
+		return super.getUserId();
+	}
+	
+	public void setUserId(String newUserId) {
+		super.setUserId(newUserId);
 	}
 
 	/**
@@ -98,19 +99,15 @@ public class Client extends User {
 	 * @return 
 	 */
 	public String getEmail() {
-		// Start of user code for method getEmail
-		String getEmail = "";
-		return getEmail;
-		// End of user code
+		return super.getEmail();
 	}
 
 	/**
 	 * Description of the method setEmail.
 	 * @param email 
 	 */
-	public void setEmail(String email) {
-		// Start of user code for method setEmail
-		// End of user code
+	public void setEmail(String newEmail) {
+		super.setEmail(newEmail);
 	}
 
 
@@ -119,28 +116,15 @@ public class Client extends User {
 	 * @return 
 	 */
 	public String getPassword() {
-		// Start of user code for method getPassword
-		String getPassword = "";
-		return getPassword;
-		// End of user code
+		return super.getPassword();
 	}
 
 	/**
 	 * Description of the method setPassword.
 	 * @param password 
 	 */
-	public void setPassword(String password) {
-		// Start of user code for method setPassword
-		// End of user code
-	}
-
-	/**
-	 * Description of the method setUserId.
-	 * @param clientId 
-	 */
-	public void setUserId(Long clientId) {
-		// Start of user code for method setUserId
-		// End of user code
+	public void setPassword(String newPassword) {
+		super.setPassword(newPassword);
 	}
 
 	// Start of user code (user defined methods for Client)

@@ -108,7 +108,7 @@ public class SaleItem {
 	 * Returns productId.
 	 * @return productId 
 	 */
-	public Long getProductId() {
+	public long getProductId() {
 		return this.productId;
 	}
 
@@ -116,7 +116,7 @@ public class SaleItem {
 	 * Sets a value to attribute productId. 
 	 * @param newProductId 
 	 */
-	public void setProductId(Long newProductId) {
+	public void setProductId(long newProductId) {
 		this.productId = newProductId;
 	}
 

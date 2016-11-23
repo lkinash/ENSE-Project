@@ -18,22 +18,22 @@ public class AppointmentForm {
 	/**
 	 * Description of the property apointmentType.
 	 */
-	private AppointmentType apointmentType = null;
+	private AppointmentType apointmentType;
 
 	/**
 	 * Description of the property treatment.
 	 */
-	private Object treatment = null;
+	private Object treatment;
 
 	/**
 	 * Description of the property preferedEmployee.
 	 */
-	private Employee preferedEmployee = null;
+	private Employee preferedEmployee;
 
 	/**
 	 * Description of the property clientId.
 	 */
-	private Long clientId = null;
+	private Long clientId;
 
 	// Start of user code (user defined methods for AppointmentForm)
 

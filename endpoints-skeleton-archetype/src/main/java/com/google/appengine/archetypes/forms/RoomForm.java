@@ -19,12 +19,12 @@ public class RoomForm {
 	/**
 	 * Description of the property services.
 	 */
-	private List<Service> services = null;
+	private List<Service> services;
 
 	/**
 	 * Description of the property roomNumber.
 	 */
-	private int roomNumber = 0;
+	private int roomNumber;
 
 
 	// Start of user code (user defined methods for RoomForm)
@@ -46,7 +46,7 @@ public class RoomForm {
 	 * @return services 
 	 */
 	public List<Service> getServices() {
-		return null;
+		return services;
 	}
 
 	/**

@@ -42,35 +42,15 @@ public class Admin extends User {
 	}
 	
 	/**
-	 * Description of the method getPassword.
-	 * @return 
-	 */
-	public String getPassword() {
-		// Start of user code for method getPassword
-		String getPassword = "";
-		return getPassword;
-		// End of user code
-	}
-
-	/**
-	 * Description of the method setPassword.
-	 * @param password 
-	 */
-	public void setPassword(String password) {
-		// Start of user code for method setPassword
-		// End of user code
-	}
-
-
-	/**
 	 * Description of the method getUserId.
 	 * @return 
 	 */
 	public String getUserId() {
-		// Start of user code for method getUserId
-		String getUserId = null;
-		return getUserId;
-		// End of user code
+		return super.getUserId();
+	}
+	
+	public void setUserId(String newUserId) {
+		super.setUserId(newUserId);
 	}
 
 	/**
@@ -78,30 +58,33 @@ public class Admin extends User {
 	 * @return 
 	 */
 	public String getEmail() {
-		// Start of user code for method getEmail
-		String getEmail = "";
-		return getEmail;
-		// End of user code
+		return super.getEmail();
 	}
 
 	/**
 	 * Description of the method setEmail.
 	 * @param email 
 	 */
-	public void setEmail(String email) {
-		// Start of user code for method setEmail
-		// End of user code
+	public void setEmail(String newEmail) {
+		super.setEmail(newEmail);
+	}
+
+
+	/**
+	 * Description of the method getPassword.
+	 * @return 
+	 */
+	public String getPassword() {
+		return super.getPassword();
 	}
 
 	/**
-	 * Description of the method setUserId.
-	 * @param adminId 
+	 * Description of the method setPassword.
+	 * @param password 
 	 */
-	public void setUserId(Long adminId) {
-		// Start of user code for method setUserId
-		// End of user code
+	public void setPassword(String newPassword) {
+		super.setPassword(newPassword);
 	}
-
 	// Start of user code (user defined methods for Admin)
 
 	// End of user code
@@ -109,8 +92,8 @@ public class Admin extends User {
 	 * Returns adminClearance.
 	 * @return adminClearance 
 	 */
-	public AdminClearances getAdminClearance() {
-		return null;
+	public List<AdminClearances> getAdminClearance() {
+		return this.adminClearance;
 	}
 
 	/**

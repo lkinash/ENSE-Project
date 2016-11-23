@@ -18,17 +18,17 @@ public class EmployeeForm {
 	/**
 	 * Description of the property name.
 	 */
-	private String name = "";
+	private String name;
 
 	/**
 	 * Description of the property calendar.
 	 */
-	private Object calendar = null;
+	private Object calendar;
 
 	/**
 	 * Description of the property serivces.
 	 */
-	private List<Service> serivces = null;
+	private List<Service> serivces;
 
 	// Start of user code (user defined methods for EmployeeForm)
 

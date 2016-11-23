@@ -26,7 +26,7 @@ public class Product extends SaleItem {
 		
 	}
 
-	public Product(int newBarcodeId, Long newProductId, String newName, String newType, double newPrice){
+	public Product(int newBarcodeId, long newProductId, String newName, String newType, double newPrice){
 		super(newProductId, newName, newType, newPrice);
 		this.barcodeId = newBarcodeId;
 	}
@@ -48,6 +48,70 @@ public class Product extends SaleItem {
 	 */
 	public void setBarcodeId(int newBarcodeId) {
 		this.barcodeId = newBarcodeId;
+	}
+	
+	/**
+	 * Returns name.
+	 * @return name 
+	 */
+	public String getName() {
+		return super.getName();
+	}
+
+	/**
+	 * Sets a value to attribute name. 
+	 * @param newName 
+	 */
+	public void setName(String newName) {
+		super.setName(newName);
+	}
+
+	/**
+	 * Returns price.
+	 * @return price 
+	 */
+	public double getPrice() {
+		return super.getPrice();
+	}
+
+	/**
+	 * Sets a value to attribute price. 
+	 * @param newPrice 
+	 */
+	public void setPrice(double newPrice) {
+		super.setPrice(newPrice);
+	}
+
+	/**
+	 * Returns type.
+	 * @return type 
+	 */
+	public String getType(){
+		return super.getType();
+	}
+
+	/**
+	 * Sets a value to attribute type. 
+	 * @param newType 
+	 */
+	public void setType(String newType) {
+		super.setType(newType);
+	}
+
+	/**
+	 * Returns productId.
+	 * @return productId 
+	 */
+	public long getProductId(){
+		return super.getProductId();
+	}
+
+	/**
+	 * Sets a value to attribute productId. 
+	 * @param newProductId 
+	 */
+	public void setProductId(long newProductId) {
+		super.setProductId(newProductId);
 	}
 
 }

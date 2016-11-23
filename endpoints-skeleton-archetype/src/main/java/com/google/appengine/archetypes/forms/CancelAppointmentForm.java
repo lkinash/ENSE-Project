@@ -16,12 +16,12 @@ public class CancelAppointmentForm {
 	/**
 	 * Description of the property appointmentId.
 	 */
-	private Long appointmentId = null;
+	private Long appointmentId;
 
 	/**
 	 * Description of the property reasonForCancellation.
 	 */
-	private String reasonForCancellation = "";
+	private String reasonForCancellation;
 
 	// Start of user code (user defined methods for CancelAppointmentForm)
 

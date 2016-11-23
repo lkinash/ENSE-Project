@@ -16,22 +16,22 @@ public class ServiceForm {
 	/**
 	 * Description of the property name.
 	 */
-	private String name = "";
+	private String name;
 
 	/**
 	 * Description of the property clearanceRequired.
 	 */
-	private boolean clearanceRequired = Boolean.FALSE;
+	private boolean clearanceRequired;
 
 	/**
 	 * Description of the property price.
 	 */
-	private double price = 0;
+	private double price;
 
 	/**
 	 * Description of the property type.
 	 */
-	private String type = "";
+	private String type;
 
 	// Start of user code (user defined methods for ServiceForm)
 

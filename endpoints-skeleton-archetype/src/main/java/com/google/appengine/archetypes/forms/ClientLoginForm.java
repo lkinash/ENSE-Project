@@ -17,12 +17,12 @@ public class ClientLoginForm {
 	/**
 	 * Description of the property password.
 	 */
-	private String password = "";
+	private String password;
 
 	/**
 	 * Description of the property email.
 	 */
-	private String email = "";
+	private String email;
 
 
 	// Start of user code (user defined methods for ClientLoginForm)

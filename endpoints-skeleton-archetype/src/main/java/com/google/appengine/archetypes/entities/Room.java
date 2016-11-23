@@ -32,7 +32,7 @@ public class Room {
 	/**
 	 * Description of the property service.
 	 */
-	private List<Service> service;
+	private List<Service> services;
 
 	/**
 	 * Description of the property calendar.
@@ -51,7 +51,7 @@ public class Room {
 		
 		this.number = newNumber;
 		this.calendar = newCalendar;
-		this.service = newService;
+		this.services = newService;
 	}
 	
 
@@ -59,9 +59,8 @@ public class Room {
 	 * Description of the method setServices.
 	 * @param services 
 	 */
-	public void setServices(List<Service> services) {
-		// Start of user code for method setServices
-		// End of user code
+	public void setServices(List<Service> newServices) {
+		this.services = newServices;
 	}
 
 	/**
@@ -69,15 +68,9 @@ public class Room {
 	 * @return 
 	 */
 	public List<Service> getServices() {
-		// Start of user code for method getServices
-		List getServices = null;
-		return getServices;
-		// End of user code
+		return this.services;
 	}
 
-	// Start of user code (user defined methods for Room)
-
-	// End of user code
 	/**
 	 * Returns number.
 	 * @return number 
@@ -95,14 +88,6 @@ public class Room {
 	}
 
 	/**
-	 * Returns service.
-	 * @return service 
-	 */
-	public List<Service> getService() {
-		return this.service;
-	}
-
-	/**
 	 * Returns calendar.
 	 * @return calendar 
 	 */
@@ -117,5 +102,12 @@ public class Room {
 	public void setCalendar(Object newCalendar) {
 		this.calendar = newCalendar;
 	}
+	
+	public long getRoomId(){
+		return this.roomId; 
+	}
 
+	public void setRoomId(long newRoomId){
+		this.roomId = newRoomId;
+	}
 }
