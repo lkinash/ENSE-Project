@@ -5,6 +5,7 @@ package com.google.appengine.archetypes.entities;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 // Start of user code (user defined imports)
 
@@ -20,17 +21,20 @@ public class SaleItem {
 	/**
 	 * Description of the property name.
 	 */
-	private String name;
+	@Index
+    private String name;
 
 	/**
 	 * Description of the property price.
 	 */
-	private double price;
+	@Index
+    private double price;
 
 	/**
 	 * Description of the property type.
 	 */
-	private String type;
+	@Index
+    private String type;
 
 	/**
 	 * Description of the property productId.

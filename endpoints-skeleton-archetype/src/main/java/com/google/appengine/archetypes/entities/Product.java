@@ -3,10 +3,15 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.entities;
 
+import com.google.api.server.spi.config.AnnotationBoolean;
+import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.archetypes.entities.SaleItem;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Parent;
 
 // End of user code
 
@@ -20,8 +25,10 @@ public class Product extends SaleItem {
 	/**
 	 * Description of the property barcodeId.
 	 */
-	private int barcodeId;
-
+	@Index
+    private int barcodeId;
+	
+	
 	public Product(){
 		
 	}

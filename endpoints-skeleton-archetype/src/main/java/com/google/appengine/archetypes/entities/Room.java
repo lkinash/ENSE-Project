@@ -4,9 +4,9 @@
 package com.google.appengine.archetypes.entities;
 
 import com.google.appengine.archetypes.entities.Service;
-
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 import java.util.List;
 // Start of user code (user defined imports)
@@ -32,12 +32,14 @@ public class Room {
 	/**
 	 * Description of the property service.
 	 */
+	@Index
 	private List<Service> services;
 
 	/**
 	 * Description of the property calendar.
 	 */
-	private Object calendar;
+	@Index
+    private Object calendar;
 	
 	// Start of user code (user defined attributes for Room)
 	

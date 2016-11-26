@@ -7,7 +7,7 @@ import java.util.Date;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-
+import com.googlecode.objectify.annotation.Index;
 import com.google.appengine.archetypes.entities.Service;
 // Start of user code (user defined imports)
 
@@ -26,12 +26,14 @@ public class Clearances {
 	/**
 	 * Description of the property service.
 	 */
-	private Service service;
+	@Index
+    private Service service;
 
 	/**
 	 * Description of the property renewalDate.
 	 */
-	private Date renewalDate ;
+	@Index
+    private Date renewalDate ;
 
 	
 	public Clearances(){

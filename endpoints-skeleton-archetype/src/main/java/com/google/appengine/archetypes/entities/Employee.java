@@ -7,6 +7,7 @@ package com.google.appengine.archetypes.entities;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
+import com.googlecode.objectify.annotation.Index;
 
 // End of user code
 
@@ -20,11 +21,13 @@ public class Employee {
 	/**
 	 * Description of the property calendar.
 	 */
+	@Index
 	private Object calendar;
 
 	/**
 	 * Description of the property firstName.
 	 */
+	@Index
 	private String name;
 
 	/**

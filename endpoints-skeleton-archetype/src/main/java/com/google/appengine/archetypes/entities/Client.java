@@ -16,6 +16,7 @@ import com.googlecode.objectify.annotation.Id;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 // End of user code
 
@@ -29,12 +30,14 @@ public class Client extends User {
 	/**
 	 * Description of the property firstName.
 	 */
-	private String firstName;
+	@Index
+    private String firstName;
 
 	/**
 	 * Description of the property lastName.
 	 */
-	private String lastName;
+	@Index
+    private String lastName;
 
 	/**
 	 * Description of the property phoneNumber.
@@ -54,7 +57,8 @@ public class Client extends User {
 	/**
 	 * Description of the property appointments.
 	 */
-	private List<Appointment> appointments;
+	@Index
+    private List<Appointment> appointments;
 
 	/**
 	 * Description of the property birthday.
