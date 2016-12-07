@@ -26,8 +26,8 @@ public class OfyDatabaseService {
 		// End of user code
 	}
 
-	// Start of user code (user defined methods for OfyDatabaseService)
-
-	// End of user code
+    // TODO
+    // Add objectify service functionality based on objectify library
+	// Includes making keys
 
 }

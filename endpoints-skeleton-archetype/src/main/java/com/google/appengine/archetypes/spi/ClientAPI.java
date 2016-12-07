@@ -4,14 +4,16 @@
 package com.google.appengine.archetypes.spi;
 
 import java.util.Date;
+
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.wrappers.*;
-import com.google.appengine.archetypes.entities.User;
+import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.forms.EmployeeForm;
-
 import com.google.api.server.spi.config.Api;
+import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.Named;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Clearances;
 import com.google.appengine.archetypes.forms.ClientForm;
@@ -38,7 +40,7 @@ public class ClientAPI {
 	 * Description of the method createClient.
 	 * @param clientForm 
 	 */
-	/*
+	
 	@ApiMethod(name = "createClient", httpMethod = "post")
   	public WrappedBoolean createClient(ClientForm clientForm) {
 		// Start of user code for method createClient
@@ -51,9 +53,9 @@ public class ClientAPI {
 	 * Description of the method modifyClient.
 	 * @param clientForm 
 	 */
-	/*
+	
 	@ApiMethod(name = "modifyClient", httpMethod = "post")
-  	public WrappedBoolean modifyClient(ClientForm clientForm, User user) {
+  	public WrappedBoolean modifyClient(ClientForm clientForm, final User user) {
 		// Start of user code for method modifyClient
 		// End of user code
 		return null;
@@ -65,9 +67,9 @@ public class ClientAPI {
 	 * @param clearance 
 	 * @param date 
 	 */
-	/*
+	
 	@ApiMethod(name = "addClientClearance", httpMethod = "post")
-  	public WrappedBoolean addClientClearances(User user, long clientId, Clearances clearance, Date date) {
+  	public WrappedBoolean addClientClearances(final User user, @Named("clientdId") final long clientId, Clearances clearance, @Named("date") final Date date) {
 		// Start of user code for method addClientClearances
 		// End of user code
 		return null;
@@ -79,16 +81,13 @@ public class ClientAPI {
 	 * @param clearance 
 	 * @param date 
 	 */
-	 /*
+	 
 	@ApiMethod(name = "createAppointment", httpMethod = "post")
-  	public WrappedBoolean setClientClearances(long clientId, Clearances clearance, Date date, User user) {
+  	public WrappedBoolean setClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) {
 		// Start of user code for method addClientClearances
 		// End of user code
 		return null;
 	}
 
-	// Start of user code (user defined methods for ClientAPI)
 
-	// End of user code
-*/
 }
