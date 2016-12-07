@@ -43,8 +43,10 @@ public class ClientAPI {
 	
 	@ApiMethod(name = "createClient", httpMethod = "post")
   	public WrappedBoolean createClient(ClientForm clientForm) {
-		// Start of user code for method createClient
-		// End of user code
+
+        // TODO 
+        // 
+		
 		return null;
 		 
 	}
@@ -56,8 +58,10 @@ public class ClientAPI {
 	
 	@ApiMethod(name = "modifyClient", httpMethod = "post")
   	public WrappedBoolean modifyClient(ClientForm clientForm, final User user) {
-		// Start of user code for method modifyClient
-		// End of user code
+
+        // TODO 
+        // 
+		
 		return null;
 	}
 
@@ -70,8 +74,10 @@ public class ClientAPI {
 	
 	@ApiMethod(name = "addClientClearance", httpMethod = "post")
   	public WrappedBoolean addClientClearances(final User user, @Named("clientdId") final long clientId, Clearances clearance, @Named("date") final Date date) {
-		// Start of user code for method addClientClearances
-		// End of user code
+
+        // TODO 
+        // 
+		
 		return null;
 	}
 
@@ -84,8 +90,10 @@ public class ClientAPI {
 	 
 	@ApiMethod(name = "createAppointment", httpMethod = "post")
   	public WrappedBoolean setClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) {
-		// Start of user code for method addClientClearances
-		// End of user code
+
+        // TODO 
+        // 
+		
 		return null;
 	}
 

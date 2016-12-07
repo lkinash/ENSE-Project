@@ -10,6 +10,10 @@ import com.google.appengine.archetypes.wrappers.*;
 //import com.google.appengine.archetypes.entities.User;
 import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Employee;
+import com.google.appengine.archetypes.entities.Product;
+import com.google.appengine.archetypes.entities.Room;
+import com.google.appengine.archetypes.entities.SaleItem;
+import com.google.appengine.archetypes.entities.Service;
 import com.google.appengine.archetypes.forms.AdminForm;
 import com.google.appengine.archetypes.forms.EmployeeForm;
 import com.google.appengine.archetypes.forms.ProductForm;
@@ -37,6 +41,9 @@ public class AdminApi {
 	@ApiMethod(name = "addEmployee", path = "addEmployee", httpMethod = "post")
   	public WrappedBoolean addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
   		
+        // TODO 
+        // 
+		
 		return null;
   	}
 
@@ -49,6 +56,9 @@ public class AdminApi {
    	@ApiMethod(name = "updateEmployee", path = "updateEmployee", httpMethod = "post")
     public WrappedBoolean updateEmployee(final User user, EmployeeForm employeeForm) {
 
+        // TODO 
+        // 
+   		
    		return null;
   	}
 
@@ -60,8 +70,10 @@ public class AdminApi {
   	
  	@ApiMethod(name = "removeEmployee", path = "removeEmployee", httpMethod = "post")
     public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId) {
-  		// Start of user code for method removeEmployee
-  		// End of user code
+
+        // TODO 
+        // 
+ 		
 		return null;
   	}
 
@@ -73,8 +85,10 @@ public class AdminApi {
      
    	@ApiMethod(name = "addRoom", path = "addRoom", httpMethod = "post")
   	public WrappedBoolean addRoom(final User user, RoomForm roomForm) {
-  		// Start of user code for method addRoom
-  		// End of user code
+
+        // TODO 
+        // 
+   		
 		return null;
   	}
 
@@ -86,8 +100,10 @@ public class AdminApi {
       
  	@ApiMethod(name = "updateRoom", path = "updateRoom", httpMethod = "post")
  	public WrappedBoolean updateRoom(final User user, RoomForm roomForm) {
-  		// Start of user code for method updateRoom
-  		// End of user code
+
+        // TODO 
+        // 
+ 		
 		return null;
   	}
 
@@ -99,8 +115,10 @@ public class AdminApi {
   	
   	@ApiMethod(name = "removeRoom",  path = "removeRoom", httpMethod = "post")
  	public WrappedBoolean removeRoom(final User user, @Named("roomNumber") final int roomNumber) {
-  		// Start of user code for method removeRoom
-  		// End of user code
+
+        // TODO 
+        // 
+  		
 		return null;
   	}
 
@@ -112,8 +130,10 @@ public class AdminApi {
       
   	@ApiMethod(name = "addService",  path = "addService", httpMethod = "post")
  	public WrappedBoolean addService(final User user, ServiceForm serviceForm) {
-  		// Start of user code for method addService
-  		// End of user code
+
+        // TODO 
+        // 
+  		
 		return null;
   	}
 
@@ -125,8 +145,10 @@ public class AdminApi {
     
   	@ApiMethod(name = "updateService", path = "updateService", httpMethod = "post")
  	public WrappedBoolean updateService(final User user, ServiceForm serviceForm) {
-  		// Start of user code for method updateService
-  		// End of user code
+
+        // TODO 
+        // 
+  		
 		return null;
   	}
 
@@ -138,8 +160,10 @@ public class AdminApi {
   	
   	@ApiMethod(name = "addProduct",  path = "addProduct", httpMethod = "post")
  	public WrappedBoolean addProduct(final User user, ProductForm productForm) {
-  		// Start of user code for method addProduct
-  		// End of user code
+
+        // TODO 
+        // 
+  		
 		return null;
   	}
 
@@ -151,8 +175,10 @@ public class AdminApi {
   	
   	@ApiMethod(name = "removeProductService", path = "removeProductService", httpMethod = "post")
  	public WrappedBoolean removeProductService(final User user, @Named("productId") final long productId) {
-  		// Start of user code for method removeProductService
-  		// End of user code
+
+        // TODO 
+        // 
+  		
 		return null;
   	}
 
@@ -164,8 +190,10 @@ public class AdminApi {
   	
   	@ApiMethod(name = "addAdmin", path = "addAdmin", httpMethod = "post")
  	public WrappedBoolean addAdmin(final User user, AdminForm adminForm) {
-  		// Start of user code for method addAdmin
-  		// End of user code
+
+        // TODO 
+        // 
+  		
 		return null;
   	}
 
@@ -177,8 +205,10 @@ public class AdminApi {
   	
   	@ApiMethod(name = "updateAdmin", path = "updateAdmin", httpMethod = "post")
  	public WrappedBoolean updateAdmin(final User user, AdminForm adminForm) {
-  		// Start of user code for method updateAdmin
-  		// End of user code
+
+        // TODO 
+        // 
+  		
 		return null;
   	}
 
@@ -190,8 +220,10 @@ public class AdminApi {
   	
   	@ApiMethod(name = "removeAdmin",  path = "removeAdmin", httpMethod = "post")
  	public WrappedBoolean removeAdmin(final User user, AdminForm adminForm) {
-  		// Start of user code for method removeAdmin
-  		// End of user code
+
+        // TODO 
+        // 
+  		
 		return null;
   	}
 
@@ -199,9 +231,13 @@ public class AdminApi {
   	 * Returns rooms.
   	 * @return rooms 
   	 */
-  	/*
+  	
   	@ApiMethod(name = "getRooms", httpMethod = "get")
- 	public Room getRooms() {
+ 	public Room getRooms(final User user) {
+  		
+        // TODO 
+        // 
+  		
   		return null;
   	}
 
@@ -209,9 +245,13 @@ public class AdminApi {
   	 * Returns services.
   	 * @return services 
   	 */
-  	/*
+  	
   	@ApiMethod(name = "getServices", httpMethod = "get")
- 	public Service getServices() {
+ 	public Service getServices(final User user) {
+  		
+        // TODO 
+        // 
+  		
   		return null;
   	}
 
@@ -219,9 +259,13 @@ public class AdminApi {
   	 * Returns saleItems.
   	 * @return saleItems 
   	 */
-  	/*
+  	
   	@ApiMethod(name = "getSaleItems", httpMethod = "get")
- 	public SaleItem getSaleItems() {
+ 	public SaleItem getSaleItems(final User user) {
+  		
+        // TODO 
+        // 
+  		
   		return null;
   	}
 
@@ -229,9 +273,13 @@ public class AdminApi {
   	 * Returns products.
   	 * @return products 
   	 */
-  	/*
+  	
   	@ApiMethod(name = "getProducts", httpMethod = "get")
- 	public Product getProducts() {
+ 	public Product getProducts(final User user) {
+  		
+        // TODO 
+        // 
+  		
   		return null;
   	}
 
@@ -239,12 +287,16 @@ public class AdminApi {
   	 * Returns admins.
   	 * @return admins 
   	 */
-  	/*
+  	
   	@ApiMethod(name = "getAdmins", httpMethod = "get")
- 	public Admin getAdmins() {
+ 	public Admin getAdmins(final User user) {
+  		
+        // TODO 
+        // 
+  		
   		return null;
   	}
-  */
+  
   
 
 	

@@ -43,9 +43,11 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "createAppointment", httpMethod = "post")
-  	public WrappedBoolean createAppointment() {
-		// Start of user code for method createAppointment
-		// End of user code
+  	public WrappedBoolean createAppointment(final User user) {
+
+        // TODO 
+        // 
+		
 		return null;
 	}
 
@@ -54,9 +56,11 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "modifyAppointment", httpMethod = "post")
-  	public WrappedBoolean modifyAppointment() {
-		// Start of user code for method modifyAppointment
-		// End of user code
+  	public WrappedBoolean modifyAppointment(final User user) {
+
+        // TODO 
+        // 
+		
 		return null;
 	}
 
@@ -69,8 +73,10 @@ public class AppointmentAPI {
 	
 	@ApiMethod(name = "cancelAppointment", httpMethod = "post")
   	public WrappedBoolean cancelAppointment(final User user,@Named("userAppointmentId") final long userAppointmentId, CancelAppointmentForm removeAppointmentForm) {
-		// Start of user code for method cancelAppointment
-		// End of user code
+
+        // TODO 
+        // 
+		
 		return null;
 	}
 
@@ -82,8 +88,10 @@ public class AppointmentAPI {
 	
 	@ApiMethod(name = "updateAppointmentStatus", httpMethod = "post")
   	public WrappedBoolean updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId) {
-		// Start of user code for method updateAppointmentStatus
-		// End of user code
+
+        // TODO 
+        // 
+		
 		return null;
 	}
 
@@ -93,8 +101,10 @@ public class AppointmentAPI {
 	
 	@ApiMethod(name = "queryAppointments", httpMethod = "post")
   	public Appointment queryAppointments(final User user) {
-		// Start of user code for method queryAppointments
-		// End of user code
+
+        // TODO 
+        // 
+		
 		return null;
 	}
 
@@ -104,8 +114,10 @@ public class AppointmentAPI {
 	
 	@ApiMethod(name = "filterAppointments", httpMethod = "post")
   	public WrappedBoolean filterAppointments(final User user) {
-		// Start of user code for method filterAppointments
-		// End of user code
+
+        // TODO 
+        // 
+		
 		return null;
 	}
 
@@ -113,12 +125,14 @@ public class AppointmentAPI {
 	 * Description of the method findAvailableAppointmentTimes.
 	 * @param appointmentForm 
 	 */
-	/*
+	
 	@ApiMethod(name = "findAvailableAppointmentTimes", httpMethod = "get")
   	public Object findAvailableAppointmentTimes(AppointmentForm appointmentForm, final User user) {
-		// Start of user code for method findAvailableAppointmentTimes
-		// End of user code
+
+        // TODO 
+        // 
+		
 		return null;
-	} */
+	} 
 
 }
