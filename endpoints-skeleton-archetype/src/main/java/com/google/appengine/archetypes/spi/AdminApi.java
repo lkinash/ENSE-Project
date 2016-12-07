@@ -1,5 +1,8 @@
 package com.google.appengine.archetypes.spi;
 
+import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
+import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
@@ -7,7 +10,6 @@ import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.wrappers.*;
-//import com.google.appengine.archetypes.entities.User;
 import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.entities.Product;
@@ -26,8 +28,8 @@ import com.googlecode.objectify.Key;
 	    name = "admin",
 	    version = "v1",
 	    scopes = {Constants.EMAIL_SCOPE},
-	    clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID, Constants.IOS_CLIENT_ID},
-	    audiences = {Constants.ANDROID_AUDIENCE}
+	    clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID, Constants.IOS_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID},
+	    description = "Admin side API."
 	)
 public class AdminApi {
 
@@ -96,10 +98,12 @@ public class AdminApi {
   	 * Description of the method updateRoom.
   	 * @param admin 
   	 * @param roomForm 
+  	 * @throws UnauthorizedException 
   	 */
       
  	@ApiMethod(name = "updateRoom", path = "updateRoom", httpMethod = "post")
- 	public WrappedBoolean updateRoom(final User user, RoomForm roomForm) {
+ 	public WrappedBoolean updateRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
+
 
         // TODO 
         // 
@@ -156,14 +160,23 @@ public class AdminApi {
   	 * Description of the method addProduct.
   	 * @param admin 
   	 * @param productForm 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "addProduct",  path = "addProduct", httpMethod = "post")
- 	public WrappedBoolean addProduct(final User user, ProductForm productForm) {
+ 	public WrappedBoolean addProduct(final User user, ProductForm productForm) throws UnauthorizedException {
 
-        // TODO 
-        // 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+ 		
+        final Key<Product> productKey = factory().allocateId(Product.class);
+        final long productId = productKey.getId();
+        
+  		Product product  = new Product(productForm.getBarcodeNumber() , productId, productForm.getName(), productForm.getType(), productForm.getPrice());
   		
+  	    ofy().save().entities(product).now();
+  			
 		return null;
   	}
 

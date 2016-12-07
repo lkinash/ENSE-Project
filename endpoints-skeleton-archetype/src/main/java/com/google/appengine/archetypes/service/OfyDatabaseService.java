@@ -3,9 +3,10 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.service;
 
-// Start of user code (user defined imports)
-
-// End of user code
+import com.google.appengine.archetypes.entities.*;
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyFactory;
+import com.googlecode.objectify.ObjectifyService;
 
 /**
  * Description of OfyDatabaseService.
@@ -13,21 +14,38 @@ package com.google.appengine.archetypes.service;
  * @author Lindsey
  */
 public class OfyDatabaseService {
-	// Start of user code (user defined attributes for OfyDatabaseService)
 
-	// End of user code
 
-	/**
-	 * The constructor.
-	 */
-	public OfyDatabaseService() {
-		// Start of user code constructor for OfyDatabaseService)
-		super();
-		// End of user code
-	}
+    /**
+     * This static block ensure the entity registration.
+     */
+    static {
+        factory().register(Admin.class);
+        factory().register(Appointment.class);
+        factory().register(Clearances.class);
+        factory().register(Client.class);
+        factory().register(Employee.class);
+        factory().register(Product.class);
+        factory().register(Room.class);
+        factory().register(Service.class);
+        factory().register(SaleItem.class);
+        factory().register(User.class);
+    }
 
-    // TODO
-    // Add objectify service functionality based on objectify library
-	// Includes making keys
+    /**
+     * Use this static method for getting the Objectify service object in order to make sure the
+     * above static block is executed before using Objectify.
+     * @return Objectify service object.
+     */
+    public static Objectify ofy() {
+        return ObjectifyService.ofy();
+    }
 
+    /**
+     * Use this static method for getting the Objectify service factory.
+     * @return ObjectifyFactory.
+     */
+    public static ObjectifyFactory factory() {
+        return ObjectifyService.factory();
+    }
 }

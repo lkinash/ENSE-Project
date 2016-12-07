@@ -32,8 +32,8 @@ import com.google.appengine.archetypes.forms.EmployeeForm;
 	    name = "appointment",
 	    version = "v1",
 	    scopes = {Constants.EMAIL_SCOPE},
-	    clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID, Constants.IOS_CLIENT_ID},
-	    audiences = {Constants.ANDROID_AUDIENCE}
+	    clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID, Constants.IOS_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID},
+	    description = "An API for making appointments."
 	)
 public class AppointmentAPI {
 
@@ -43,7 +43,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "createAppointment", httpMethod = "post")
-  	public WrappedBoolean createAppointment(final User user) {
+  	public WrappedBoolean createAppointment(final User user, AppointmentForm appointmentForm) {
 
         // TODO 
         // 
@@ -56,7 +56,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "modifyAppointment", httpMethod = "post")
-  	public WrappedBoolean modifyAppointment(final User user) {
+  	public WrappedBoolean modifyAppointment(final User user, AppointmentForm appointmentForm) {
 
         // TODO 
         // 
