@@ -13,7 +13,23 @@ package com.google.appengine.archetypes.nuImage;
  * @author Lindsey
  */
 public enum AppointmentType {
-	// Start of user code (user defined enum literals for AppointmentType)
+	/**
+	 * Description of 
+	 */
+	HairRemoval,
 
-	// End of user code
+	/**
+	 * Description of 
+	 */
+	FaceLift,
+
+	/**
+	 * Description of 
+	 */
+	TattooRemoval,
+
+	/**
+	 * Description of 
+	 */
+	SkinResurfacing,
 }

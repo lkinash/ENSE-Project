@@ -42,6 +42,12 @@ public class AdminApi {
 	
 	@ApiMethod(name = "addEmployee", path = "addEmployee", httpMethod = "post")
   	public WrappedBoolean addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
   		
         // TODO 
         // 
@@ -53,11 +59,18 @@ public class AdminApi {
   	 * Description of the method updateEmployee.
   	 * @param admin 
   	 * @param employeeForm 
+  	 * @throws UnauthorizedException 
   	 */
   
    	@ApiMethod(name = "updateEmployee", path = "updateEmployee", httpMethod = "post")
-    public WrappedBoolean updateEmployee(final User user, EmployeeForm employeeForm) {
+    public WrappedBoolean updateEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
         // TODO 
         // 
    		
@@ -68,11 +81,18 @@ public class AdminApi {
   	 * Description of the method removeEmployee.
   	 * @param admin 
   	 * @param employeeId 
+  	 * @throws UnauthorizedException 
   	 */
   	
  	@ApiMethod(name = "removeEmployee", path = "removeEmployee", httpMethod = "post")
-    public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId) {
+    public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
         // TODO 
         // 
  		
@@ -83,11 +103,18 @@ public class AdminApi {
   	 * Description of the method addRoom.
   	 * @param admin 
   	 * @param roomForm 
+  	 * @throws UnauthorizedException 
   	 */
      
    	@ApiMethod(name = "addRoom", path = "addRoom", httpMethod = "post")
-  	public WrappedBoolean addRoom(final User user, RoomForm roomForm) {
+  	public WrappedBoolean addRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
         // TODO 
         // 
    		
@@ -104,6 +131,11 @@ public class AdminApi {
  	@ApiMethod(name = "updateRoom", path = "updateRoom", httpMethod = "post")
  	public WrappedBoolean updateRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
 
         // TODO 
         // 
@@ -115,11 +147,18 @@ public class AdminApi {
   	 * Description of the method removeRoom.
   	 * @param admin 
   	 * @param roomNumber 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "removeRoom",  path = "removeRoom", httpMethod = "post")
- 	public WrappedBoolean removeRoom(final User user, @Named("roomNumber") final int roomNumber) {
+ 	public WrappedBoolean removeRoom(final User user, @Named("roomNumber") final int roomNumber) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
         // TODO 
         // 
   		
@@ -130,13 +169,29 @@ public class AdminApi {
   	 * Description of the method addService.
   	 * @param admin 
   	 * @param serviceForm 
+  	 * @throws UnauthorizedException 
   	 */
       
   	@ApiMethod(name = "addService",  path = "addService", httpMethod = "post")
- 	public WrappedBoolean addService(final User user, ServiceForm serviceForm) {
+ 	public WrappedBoolean addService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
         // TODO 
-        // 
+        // Add clearance check for admin user
+  		
+
+        final Key<Service> serviceKey = factory().allocateId(Service.class);
+        final long serviceId = serviceKey.getId();
+        
+        boolean requiresClearance = true;
+        // TODO 
+        // Link to get this value from a list
+        
+  		Service service  = new Service(requiresClearance , serviceId, serviceForm.getName(), serviceForm.getType(), serviceForm.getPrice());
+  		
+  	    ofy().save().entities(service).now();
   		
 		return null;
   	}
@@ -145,11 +200,18 @@ public class AdminApi {
   	 * Description of the method updateService.
   	 * @param admin 
   	 * @param serviceForm 
+  	 * @throws UnauthorizedException 
   	 */
     
   	@ApiMethod(name = "updateService", path = "updateService", httpMethod = "post")
- 	public WrappedBoolean updateService(final User user, ServiceForm serviceForm) {
+ 	public WrappedBoolean updateService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
         // TODO 
         // 
   		
@@ -169,6 +231,8 @@ public class AdminApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
+        // TODO 
+        // Add clearance check for admin user
  		
         final Key<Product> productKey = factory().allocateId(Product.class);
         final long productId = productKey.getId();
@@ -184,11 +248,18 @@ public class AdminApi {
   	 * Description of the method removeProductService.
   	 * @param admin 
   	 * @param productId 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "removeProductService", path = "removeProductService", httpMethod = "post")
- 	public WrappedBoolean removeProductService(final User user, @Named("productId") final long productId) {
+ 	public WrappedBoolean removeProductService(final User user, @Named("productId") final long productId) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
         // TODO 
         // 
   		
@@ -199,11 +270,19 @@ public class AdminApi {
   	 * Description of the method addAdmin.
   	 * @param admin 
   	 * @param adminForm 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "addAdmin", path = "addAdmin", httpMethod = "post")
- 	public WrappedBoolean addAdmin(final User user, AdminForm adminForm) {
+ 	public WrappedBoolean addAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
   		
@@ -214,11 +293,19 @@ public class AdminApi {
   	 * Description of the method updateAdmin.
   	 * @param admin 
   	 * @param adminForm 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "updateAdmin", path = "updateAdmin", httpMethod = "post")
- 	public WrappedBoolean updateAdmin(final User user, AdminForm adminForm) {
+ 	public WrappedBoolean updateAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
   		
@@ -229,11 +316,19 @@ public class AdminApi {
   	 * Description of the method removeAdmin.
   	 * @param admin 
   	 * @param adminForm 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "removeAdmin",  path = "removeAdmin", httpMethod = "post")
- 	public WrappedBoolean removeAdmin(final User user, AdminForm adminForm) {
+ 	public WrappedBoolean removeAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
   		
@@ -243,11 +338,19 @@ public class AdminApi {
   	/**
   	 * Returns rooms.
   	 * @return rooms 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "getRooms", httpMethod = "get")
- 	public Room getRooms(final User user) {
+ 	public Room getRooms(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
   		
+        
         // TODO 
         // 
   		
@@ -257,11 +360,19 @@ public class AdminApi {
   	/**
   	 * Returns services.
   	 * @return services 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "getServices", httpMethod = "get")
- 	public Service getServices(final User user) {
+ 	public Service getServices(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
   		
+        
         // TODO 
         // 
   		
@@ -271,11 +382,19 @@ public class AdminApi {
   	/**
   	 * Returns saleItems.
   	 * @return saleItems 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "getSaleItems", httpMethod = "get")
- 	public SaleItem getSaleItems(final User user) {
+ 	public SaleItem getSaleItems(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
   		
+        
         // TODO 
         // 
   		
@@ -285,11 +404,19 @@ public class AdminApi {
   	/**
   	 * Returns products.
   	 * @return products 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "getProducts", httpMethod = "get")
- 	public Product getProducts(final User user) {
+ 	public Product getProducts(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
   		
+        
         // TODO 
         // 
   		
@@ -299,11 +426,19 @@ public class AdminApi {
   	/**
   	 * Returns admins.
   	 * @return admins 
+  	 * @throws UnauthorizedException 
   	 */
   	
   	@ApiMethod(name = "getAdmins", httpMethod = "get")
- 	public Admin getAdmins(final User user) {
+ 	public Admin getAdmins(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
   		
+        
         // TODO 
         // 
   		

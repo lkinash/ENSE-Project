@@ -14,6 +14,7 @@ import com.google.appengine.archetypes.forms.EmployeeForm;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Clearances;
 import com.google.appengine.archetypes.forms.ClientForm;
@@ -54,11 +55,19 @@ public class ClientAPI {
 	/**
 	 * Description of the method modifyClient.
 	 * @param clientForm 
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "modifyClient", httpMethod = "post")
-  	public WrappedBoolean modifyClient(ClientForm clientForm, final User user) {
+  	public WrappedBoolean modifyClient(ClientForm clientForm, final User user) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for client user
+  		
+        
         // TODO 
         // 
 		
@@ -70,11 +79,19 @@ public class ClientAPI {
 	 * @param clientId 
 	 * @param clearance 
 	 * @param date 
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "addClientClearance", httpMethod = "post")
-  	public WrappedBoolean addClientClearances(final User user, @Named("clientdId") final long clientId, Clearances clearance, @Named("date") final Date date) {
+  	public WrappedBoolean addClientClearances(final User user, @Named("clientdId") final long clientId, Clearances clearance, @Named("date") final Date date) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for client user
+  		
+       
         // TODO 
         // 
 		
@@ -86,11 +103,20 @@ public class ClientAPI {
 	 * @param clientId 
 	 * @param clearance 
 	 * @param date 
+	 * @throws UnauthorizedException 
 	 */
 	 
 	@ApiMethod(name = "createAppointment", httpMethod = "post")
-  	public WrappedBoolean setClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) {
+  	public WrappedBoolean setClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
 
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+
+		
         // TODO 
         // 
 		

@@ -6,6 +6,7 @@ package com.google.appengine.archetypes.spi;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Appointment;
@@ -40,11 +41,19 @@ public class AppointmentAPI {
 	
 	/**
 	 * Description of the method createAppointment.
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "createAppointment", httpMethod = "post")
-  	public WrappedBoolean createAppointment(final User user, AppointmentForm appointmentForm) {
+  	public WrappedBoolean createAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
 		
@@ -53,11 +62,19 @@ public class AppointmentAPI {
 
 	/**
 	 * Description of the method modifyAppointment.
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "modifyAppointment", httpMethod = "post")
-  	public WrappedBoolean modifyAppointment(final User user, AppointmentForm appointmentForm) {
+  	public WrappedBoolean modifyAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
 		
@@ -69,11 +86,19 @@ public class AppointmentAPI {
 	 * @param client 
 	 * @param appointmentId 
 	 * @param removeAppointmentForm 
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "cancelAppointment", httpMethod = "post")
-  	public WrappedBoolean cancelAppointment(final User user,@Named("userAppointmentId") final long userAppointmentId, CancelAppointmentForm removeAppointmentForm) {
+  	public WrappedBoolean cancelAppointment(final User user,@Named("userAppointmentId") final long userAppointmentId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
 		
@@ -84,11 +109,19 @@ public class AppointmentAPI {
 	 * Description of the method updateAppointmentStatus.
 	 * @param admin 
 	 * @param appointmentId 
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "updateAppointmentStatus", httpMethod = "post")
-  	public WrappedBoolean updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId) {
+  	public WrappedBoolean updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
 		
@@ -97,11 +130,19 @@ public class AppointmentAPI {
 
 	/**
 	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "queryAppointments", httpMethod = "post")
-  	public Appointment queryAppointments(final User user) {
+  	public Appointment queryAppointments(final User user) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
 		
@@ -110,11 +151,19 @@ public class AppointmentAPI {
 
 	/**
 	 * Description of the method filterAppointments.
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "filterAppointments", httpMethod = "post")
-  	public WrappedBoolean filterAppointments(final User user) {
+  	public WrappedBoolean filterAppointments(final User user) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
 		
@@ -124,11 +173,19 @@ public class AppointmentAPI {
 	/**
 	 * Description of the method findAvailableAppointmentTimes.
 	 * @param appointmentForm 
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "findAvailableAppointmentTimes", httpMethod = "get")
-  	public Object findAvailableAppointmentTimes(AppointmentForm appointmentForm, final User user) {
+  	public Object findAvailableAppointmentTimes(AppointmentForm appointmentForm, final User user) throws UnauthorizedException {
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        // TODO 
+        // Add clearance check for admin user
+  		
+        
         // TODO 
         // 
 		

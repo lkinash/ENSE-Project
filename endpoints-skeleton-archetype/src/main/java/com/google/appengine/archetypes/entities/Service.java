@@ -4,9 +4,11 @@
 package com.google.appengine.archetypes.entities;
 
 import com.google.appengine.archetypes.entities.SaleItem;
+import com.google.appengine.archetypes.nuImage.ServiceType;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
+import com.googlecode.objectify.annotation.Index;
 
 // End of user code
 
@@ -22,19 +24,23 @@ public class Service extends SaleItem {
 	 */
 	private boolean requiresClearance;
 
-	// Start of user code (user defined attributes for Service)
+	/**
+	 * Description of the property type.
+	 */
+	@Index
+    private ServiceType type;
 
-	// End of user code
 
 	public Service(){
 		
 	}
 	
-	public Service(boolean newRequiresClearance, long newProductId, String newName, String newType, double newPrice){
+	public Service(boolean newRequiresClearance, long newProductId, String newName, ServiceType newType, double newPrice){
 	
-		super(newProductId, newName, newType, newPrice);
+		super(newProductId, newName, newPrice);
 		
 		this.requiresClearance = newRequiresClearance;
+		this.type = newType;
 	}
 	
 	/**
@@ -89,16 +95,16 @@ public class Service extends SaleItem {
 	 * Returns type.
 	 * @return type 
 	 */
-	public String getType(){
-		return super.getType();
+	public ServiceType getType(){
+		return this.type;
 	}
 
 	/**
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(String newType) {
-		super.setType(newType);
+	public void setType(ServiceType newType) {
+		this.type = newType;
 	}
 
 	/**

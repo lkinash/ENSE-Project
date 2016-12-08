@@ -6,6 +6,7 @@ package com.google.appengine.archetypes.entities;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.archetypes.entities.SaleItem;
+import com.google.appengine.archetypes.nuImage.ProductType;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -28,14 +29,21 @@ public class Product extends SaleItem {
 	@Index
     private int barcodeId;
 	
+	/**
+	 * Description of the property type.
+	 */
+	@Index
+    private ProductType type;
+
 	
 	public Product(){
 		
 	}
 
-	public Product(int newBarcodeId, long newProductId, String newName, String newType, double newPrice){
-		super(newProductId, newName, newType, newPrice);
+	public Product(int newBarcodeId, long newProductId, String newName, ProductType newType, double newPrice){
+		super(newProductId, newName, newPrice);
 		this.barcodeId = newBarcodeId;
+		this.type = newType;
 	}
 
 	// Start of user code (user defined methods for Product)
@@ -56,6 +64,23 @@ public class Product extends SaleItem {
 	public void setBarcodeId(int newBarcodeId) {
 		this.barcodeId = newBarcodeId;
 	}
+	
+	/**
+	 * Returns type.
+	 * @return type 
+	 */
+	public ProductType getType() {
+		return this.type;
+	}
+
+	/**
+	 * Sets a value to attribute type. 
+	 * @param newType 
+	 */
+	public void setType(ProductType newType) {
+		this.type = newType;
+	}
+
 	
 	/**
 	 * Returns name.
@@ -87,22 +112,6 @@ public class Product extends SaleItem {
 	 */
 	public void setPrice(double newPrice) {
 		super.setPrice(newPrice);
-	}
-
-	/**
-	 * Returns type.
-	 * @return type 
-	 */
-	public String getType(){
-		return super.getType();
-	}
-
-	/**
-	 * Sets a value to attribute type. 
-	 * @param newType 
-	 */
-	public void setType(String newType) {
-		super.setType(newType);
 	}
 
 	/**

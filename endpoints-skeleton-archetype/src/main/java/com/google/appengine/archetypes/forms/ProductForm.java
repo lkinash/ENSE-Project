@@ -3,6 +3,8 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.forms;
 
+import com.google.appengine.archetypes.nuImage.ProductType;
+
 // Start of user code (user defined imports)
 
 // End of user code
@@ -16,7 +18,7 @@ public class ProductForm {
 	/**
 	 * Description of the property type.
 	 */
-	private String type;
+	private ProductType type;
 
 	/**
 	 * Description of the property name.
@@ -42,7 +44,7 @@ public class ProductForm {
 		
 	}
 
-	public ProductForm(String newType, String newName, int newBarcodeNumber, double newPrice){
+	public ProductForm(ProductType newType, String newName, int newBarcodeNumber, double newPrice){
 		
 		this.barcodeNumber = newBarcodeNumber;
 		this.name = newName;
@@ -55,7 +57,7 @@ public class ProductForm {
 	 * Returns type.
 	 * @return type 
 	 */
-	public String getType() {
+	public ProductType getType() {
 		return this.type;
 	}
 
@@ -63,7 +65,7 @@ public class ProductForm {
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(String newType) {
+	public void setType(ProductType newType) {
 		this.type = newType;
 	}
 

@@ -29,13 +29,7 @@ public class SaleItem {
 	 */
 	@Index
     private double price;
-
-	/**
-	 * Description of the property type.
-	 */
-	@Index
-    private String type;
-
+	
 	/**
 	 * Description of the property productId.
 	 */
@@ -52,11 +46,10 @@ public class SaleItem {
 	}
 	
 
-	public SaleItem(long newProductId, String newName, String newType, double newPrice){
+	public SaleItem(long newProductId, String newName, double newPrice){
 		
 		this.productId = newProductId;
 		this.name = newName;
-		this.type = newType;
 		this.price = newPrice;
 	}
 	
@@ -90,22 +83,6 @@ public class SaleItem {
 	 */
 	public void setPrice(double newPrice) {
 		this.price = newPrice;
-	}
-
-	/**
-	 * Returns type.
-	 * @return type 
-	 */
-	public String getType() {
-		return this.type;
-	}
-
-	/**
-	 * Sets a value to attribute type. 
-	 * @param newType 
-	 */
-	public void setType(String newType) {
-		this.type = newType;
 	}
 
 	/**

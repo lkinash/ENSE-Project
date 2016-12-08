@@ -3,6 +3,8 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.forms;
 
+import com.google.appengine.archetypes.nuImage.ServiceType;
+
 // Start of user code (user defined imports)
 
 // End of user code
@@ -31,7 +33,7 @@ public class ServiceForm {
 	/**
 	 * Description of the property type.
 	 */
-	private String type;
+	private ServiceType type;
 
 	// Start of user code (user defined methods for ServiceForm)
 
@@ -41,7 +43,7 @@ public class ServiceForm {
 		
 	}
 
-	public ServiceForm(String newName, String newType, double newPrice, boolean newClearanceRequired){
+	public ServiceForm(String newName, ServiceType newType, double newPrice, boolean newClearanceRequired){
 		
 		this.clearanceRequired = newClearanceRequired;
 		this.name = newName;
@@ -102,7 +104,7 @@ public class ServiceForm {
 	 * Returns type.
 	 * @return type 
 	 */
-	public String getType() {
+	public ServiceType getType() {
 		return this.type;
 	}
 
@@ -110,7 +112,7 @@ public class ServiceForm {
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(String newType) {
+	public void setType(ServiceType newType) {
 		this.type = newType;
 	}
 
