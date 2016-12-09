@@ -8,6 +8,7 @@ import com.google.appengine.archetypes.entities.Clearances;
 import com.google.appengine.archetypes.entities.User;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import com.googlecode.objectify.annotation.Entity;
@@ -205,6 +206,33 @@ public class Client extends User {
 	public List<Clearances> getClearances() {
 		return this.clearances;
 	}
+	
+	/**
+	 * Returns clearances.
+	 * @return clearances 
+	 */
+	public void addClearance(Clearances newClearance) {
+		this.clearances.add(newClearance);
+	}
+	
+	/**
+	 * Returns clearances.
+	 * @return clearances 
+	 */
+	public boolean removeClearance(Clearances newClearance) {
+		
+		Iterator<Clearances> temp = clearances.iterator();
+		while (temp.hasNext()) {
+		  	Clearances tempClearance = temp.next();
+		   if(tempClearance.getClearanceId() == newClearance.getClearanceId()){
+			   temp.remove();
+			   return true;
+		   }
+		}
+		return false;
+	}
+	
+	
 
 	/**
 	 * Returns appointments.

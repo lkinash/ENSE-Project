@@ -5,12 +5,15 @@ package com.google.appengine.archetypes.spi;
 
 import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
+
 import java.util.Date;
+import java.util.List;
 
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.wrappers.*;
 import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.entities.Admin;
+import com.google.appengine.archetypes.entities.Appointment;
 import com.google.appengine.archetypes.entities.Client;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.forms.EmployeeForm;
@@ -21,6 +24,7 @@ import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Clearances;
 import com.google.appengine.archetypes.forms.ClientForm;
+import com.google.common.base.Strings;
 import com.googlecode.objectify.Key;
 
 // End of user code
@@ -48,11 +52,33 @@ public class ClientAPI {
 	@ApiMethod(name = "createClient", httpMethod = "post")
   	public WrappedBoolean createClient(ClientForm clientForm) {
 
+        final Key<Client> clientKey = factory().allocateId(Client.class);
+        final long clientId = clientKey.getId();
+       
+        String clientStringId = "";
+        // TODO 
+        // Link client Id to the user profile for logging in.
+        
+        
+        List<Appointment> newAppointments = null;
+        List<Clearances> newClearances = null;
+        Appointment newCalendar = null;
+        // TODO 
+        // Properly declare variables based on google calendar
+		
+        
+		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
+				clientForm.getPhoneNumber(), clientForm.getBirthday(), newAppointments,
+				newClearances, newCalendar, 
+				clientForm.getEmail(), clientForm.getPassword(), clientStringId);
+			
+  		ofy().save().entities(client).now();
+        
+		return null;
+		 
         // TODO 
         // 
 		
-		return null;
-		 
 	}
 
 	/**
@@ -71,35 +97,16 @@ public class ClientAPI {
         // Add clearance check for client user
   		
         
+
         // TODO 
         // 
 		
+        
+        
 		return null;
 	}
 
-	/**
-	 * Description of the method addClientClearances.
-	 * @param clientId 
-	 * @param clearance 
-	 * @param date 
-	 * @throws UnauthorizedException 
-	 */
-	
-	@ApiMethod(name = "addClientClearance", httpMethod = "post")
-  	public WrappedBoolean addClientClearances(final User user, @Named("clientdId") final long clientId, Clearances clearance, @Named("date") final Date date) throws UnauthorizedException {
 
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        // TODO 
-        // Add clearance check for client user
-  		
-       
-        // TODO 
-        // 
-		
-		return null;
-	}
 
 	/**
 	 * Description of the method addClientClearances.
@@ -109,8 +116,8 @@ public class ClientAPI {
 	 * @throws UnauthorizedException 
 	 */
 	 
-	@ApiMethod(name = "createAppointment", httpMethod = "post")
-  	public WrappedBoolean setClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
+	@ApiMethod(name = "addClientClearance", httpMethod = "post")
+  	public WrappedBoolean addClientClearances(@Named("clientId") final String clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
 
 
         if (user == null) {
@@ -119,17 +126,48 @@ public class ClientAPI {
         // TODO 
         // Add clearance check for admin user
 
+		Client client = getClient(user, clientId);
+
+		clearance.setRenewalDate(date);
 		
+		client.addClearance(clearance);
+		
+  		ofy().save().entities(client).now();
+		
+		return null;
+	}
+	
+	/**
+	 * Description of the method addClientClearances.
+	 * @param clientId 
+	 * @param clearance 
+	 * @param date 
+	 * @throws UnauthorizedException 
+	 */
+	 
+	@ApiMethod(name = "removeClientClearance", httpMethod = "post")
+  	public WrappedBoolean removeClientClearances(@Named("clientId") final String clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
+
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
         // TODO 
-        // 
+        // Add clearance check for admin user
+
+		Client client = getClient(user, clientId);
+		
+		client.removeClearance(clearance);
+		
+  		ofy().save().entities(client).now();
 		
 		return null;
 	}
 	
 	
 	@ApiMethod(name = "getClient", httpMethod = "get")
-  	public Client getClient(final User user) throws UnauthorizedException {
-
+  	public Client getClient(final User user,@Named("clientId") final String clientId) throws UnauthorizedException {
+		//pass in a client ID to access a client other than the current user
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -137,10 +175,16 @@ public class ClientAPI {
         // TODO 
         // Add clearance check for admin user
 
-
-        String userId = user.getUserId();
-        Key<Client> key = Key.create(Client.class, userId);
-
+        Key<Client> key = null;
+        
+        if(Strings.isNullOrEmpty(clientId)){
+        	String userId = user.getUserId();
+        	key = Key.create(Client.class, userId);
+        }
+        else{
+        	key = Key.create(Client.class, clientId);
+        }
+        
     	Client client = (Client) ofy().load().key(key).now();
     	return client;
 	}

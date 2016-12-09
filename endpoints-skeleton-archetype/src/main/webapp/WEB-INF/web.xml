@@ -31,6 +31,26 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+    <servlet>
+		<servlet-name>GoogleSendgridJava</servlet-name>
+		<servlet-class>com.google.appengine.archetypes.servlets.GoogleSendgridJavaServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GoogleSendgridJava</servlet-name>
+		<url-pattern>/googlesendgridjava</url-pattern>
+	</servlet-mapping>
+
+ <servlet>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+  <init-param>
+   <param-name>services</param-name>
+   <param-value/>
+  </init-param>
+ </servlet>
+ 
+    
+    
  <security-constraint>
         <web-resource-collection>
             <web-resource-name>all</web-resource-name>
