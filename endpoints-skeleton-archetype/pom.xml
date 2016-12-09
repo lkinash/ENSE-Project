@@ -58,7 +58,12 @@
             <groupId>com.googlecode.objectify</groupId>
             <artifactId>objectify</artifactId>
             <version>5.0</version>
-        </dependency>
+        </dependency>    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-calendar</artifactId>
+      <version>v3-rev225-1.22.0</version>
+    </dependency>
+        
 
         <!-- Test Dependencies -->
         <dependency>

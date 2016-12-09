@@ -11,6 +11,7 @@ import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.wrappers.*;
 import com.google.appengine.archetypes.entities.Admin;
+import com.google.appengine.archetypes.entities.Client;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.entities.Product;
 import com.google.appengine.archetypes.entities.Room;
@@ -48,6 +49,19 @@ public class AdminApi {
         }
         // TODO 
         // Add clearance check for admin user
+  		
+  		
+        final Key<Employee> employeeKey = factory().allocateId(Employee.class);
+        final long employeeId = employeeKey.getId();
+        
+        boolean requiresClearance = true;
+        // TODO 
+        // Link to get this value from a list
+        
+  		Employee employee  = new Employee(employeeForm.getCalendar(), employeeForm.getName(), employeeId);
+
+  		ofy().save().entities(employee).now();
+        
   		
         // TODO 
         // 
@@ -181,7 +195,6 @@ public class AdminApi {
         // TODO 
         // Add clearance check for admin user
   		
-
         final Key<Service> serviceKey = factory().allocateId(Service.class);
         final long serviceId = serviceKey.getId();
         
@@ -342,7 +355,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "getRooms", httpMethod = "get")
- 	public Room getRooms(final User user) throws UnauthorizedException {
+ 	public Room getRooms(final User user, @Named("roomNumber") final int roomNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -350,11 +363,11 @@ public class AdminApi {
         // TODO 
         // Add clearance check for admin user
   		
-        
-        // TODO 
-        // 
+        Key<Room> key = Key.create(Room.class, roomNumber);
+        		
+        Room room = (Room) ofy().load().key(key).now();
   		
-  		return null;
+  		return room;
   	}
 
   	/**
@@ -364,7 +377,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "getServices", httpMethod = "get")
- 	public Service getServices(final User user) throws UnauthorizedException {
+ 	public Service getServices(final User user,  @Named("serviceId") final long serviceId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -373,10 +386,11 @@ public class AdminApi {
         // Add clearance check for admin user
   		
         
-        // TODO 
-        // 
+        Key<Service> key = Key.create(Service.class, serviceId);
+
+    	Service service = (Service) ofy().load().key(key).now();
+    	return service;
   		
-  		return null;
   	}
 
   	/**
@@ -386,7 +400,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "getSaleItems", httpMethod = "get")
- 	public SaleItem getSaleItems(final User user) throws UnauthorizedException {
+ 	public SaleItem getSaleItems(final User user, @Named("productId") final long productId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -394,11 +408,11 @@ public class AdminApi {
         // TODO 
         // Add clearance check for admin user
   		
-        
-        // TODO 
-        // 
+        Key<SaleItem> key = Key.create(SaleItem.class, productId);
+
+    	SaleItem item = (SaleItem) ofy().load().key(key).now();
+    	return item;
   		
-  		return null;
   	}
 
   	/**
@@ -408,7 +422,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "getProducts", httpMethod = "get")
- 	public Product getProducts(final User user) throws UnauthorizedException {
+ 	public Product getProducts(final User user, @Named("productId") final long productId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -416,11 +430,11 @@ public class AdminApi {
         // TODO 
         // Add clearance check for admin user
   		
-        
-        // TODO 
-        // 
+        Key<Product> key = Key.create(Product.class, productId);
+
+    	Product product = (Product) ofy().load().key(key).now();
+    	return product;
   		
-  		return null;
   	}
 
   	/**

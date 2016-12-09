@@ -3,6 +3,9 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.spi;
 
+import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
+import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
