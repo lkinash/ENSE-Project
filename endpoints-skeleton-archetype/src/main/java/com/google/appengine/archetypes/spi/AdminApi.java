@@ -3,11 +3,14 @@ package com.google.appengine.archetypes.spi;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
 
+import java.util.List;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.api.services.calendar.Calendar;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.wrappers.*;
 import com.google.appengine.archetypes.entities.Admin;
@@ -22,6 +25,7 @@ import com.google.appengine.archetypes.forms.EmployeeForm;
 import com.google.appengine.archetypes.forms.ProductForm;
 import com.google.appengine.archetypes.forms.RoomForm;
 import com.google.appengine.archetypes.forms.ServiceForm;
+import com.google.appengine.archetypes.list.AdminClearances;
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
 
@@ -42,75 +46,24 @@ public class AdminApi {
   	 */
 	
 	@ApiMethod(name = "addEmployee", path = "addEmployee", httpMethod = "post")
-  	public WrappedBoolean addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
+  	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
-  		
+        
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
-        
-        boolean requiresClearance = true;
-        // TODO 
-        // Link to get this value from a list
         
   		Employee employee  = new Employee(employeeForm.getCalendar(), employeeForm.getName(), employeeId);
 
   		ofy().save().entities(employee).now();
-        
   		
-        // TODO 
-        // 
-		
-		return null;
-  	}
-
-  	/**
-  	 * Description of the method updateEmployee.
-  	 * @param admin 
-  	 * @param employeeForm 
-  	 * @throws UnauthorizedException 
-  	 */
-  
-   	@ApiMethod(name = "updateEmployee", path = "updateEmployee", httpMethod = "post")
-    public WrappedBoolean updateEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        // TODO 
-        // Add clearance check for admin user
-  		
-        // TODO 
-        // 
-   		
-   		return null;
-  	}
-
-  	/**
-  	 * Description of the method removeEmployee.
-  	 * @param admin 
-  	 * @param employeeId 
-  	 * @throws UnauthorizedException 
-  	 */
-  	
- 	@ApiMethod(name = "removeEmployee", path = "removeEmployee", httpMethod = "post")
-    public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        // TODO 
-        // Add clearance check for admin user
-  		
-        // TODO 
-        // 
- 		
-		return null;
+		return employee;
   	}
 
   	/**
@@ -121,62 +74,30 @@ public class AdminApi {
   	 */
      
    	@ApiMethod(name = "addRoom", path = "addRoom", httpMethod = "post")
-  	public WrappedBoolean addRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
+  	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+        
   		
+        final Key<Room> roomKey = factory().allocateId(Room.class);
+        final long roomId = roomKey.getId();
+        
+        
+        Calendar calendar = null;
         // TODO 
-        // 
+        // Link to get this value as a calendar object
+        
+        
+        Room room = new Room(roomForm.getRoomNumber(), roomForm.getServices(), calendar, roomId);
+    		
+  		ofy().save().entities(room).now(); 
    		
-		return null;
-  	}
-
-  	/**
-  	 * Description of the method updateRoom.
-  	 * @param admin 
-  	 * @param roomForm 
-  	 * @throws UnauthorizedException 
-  	 */
-      
- 	@ApiMethod(name = "updateRoom", path = "updateRoom", httpMethod = "post")
- 	public WrappedBoolean updateRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        // TODO 
-        // Add clearance check for admin user
-
-        // TODO 
-        // 
- 		
-		return null;
-  	}
-
-  	/**
-  	 * Description of the method removeRoom.
-  	 * @param admin 
-  	 * @param roomNumber 
-  	 * @throws UnauthorizedException 
-  	 */
-  	
-  	@ApiMethod(name = "removeRoom",  path = "removeRoom", httpMethod = "post")
- 	public WrappedBoolean removeRoom(final User user, @Named("roomNumber") final int roomNumber) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        // TODO 
-        // Add clearance check for admin user
-  		
-        // TODO 
-        // 
-  		
-		return null;
+		return room;
   	}
 
   	/**
@@ -187,48 +108,29 @@ public class AdminApi {
   	 */
       
   	@ApiMethod(name = "addService",  path = "addService", httpMethod = "post")
- 	public WrappedBoolean addService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
+ 	public Service addService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         final Key<Service> serviceKey = factory().allocateId(Service.class);
         final long serviceId = serviceKey.getId();
+        
         
         boolean requiresClearance = true;
         // TODO 
         // Link to get this value from a list
         
+        
   		Service service  = new Service(requiresClearance , serviceId, serviceForm.getName(), serviceForm.getType(), serviceForm.getPrice());
   		
   	    ofy().save().entities(service).now();
   		
-		return null;
-  	}
-
-  	/**
-  	 * Description of the method updateService.
-  	 * @param admin 
-  	 * @param serviceForm 
-  	 * @throws UnauthorizedException 
-  	 */
-    
-  	@ApiMethod(name = "updateService", path = "updateService", httpMethod = "post")
- 	public WrappedBoolean updateService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        // TODO 
-        // Add clearance check for admin user
-  		
-        // TODO 
-        // 
-  		
-		return null;
+		return service;
   	}
 
   	/**
@@ -239,13 +141,14 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "addProduct",  path = "addProduct", httpMethod = "post")
- 	public WrappedBoolean addProduct(final User user, ProductForm productForm) throws UnauthorizedException {
+ 	public Product addProduct(final User user, ProductForm productForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
  		
         final Key<Product> productKey = factory().allocateId(Product.class);
         final long productId = productKey.getId();
@@ -254,29 +157,7 @@ public class AdminApi {
   		
   	    ofy().save().entities(product).now();
   			
-		return null;
-  	}
-
-  	/**
-  	 * Description of the method removeProductService.
-  	 * @param admin 
-  	 * @param productId 
-  	 * @throws UnauthorizedException 
-  	 */
-  	
-  	@ApiMethod(name = "removeProductService", path = "removeProductService", httpMethod = "post")
- 	public WrappedBoolean removeProductService(final User user, @Named("productId") final long productId) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        // TODO 
-        // Add clearance check for admin user
-  		
-        // TODO 
-        // 
-  		
-		return null;
+		return product;
   	}
 
   	/**
@@ -287,22 +168,133 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "addAdmin", path = "addAdmin", httpMethod = "post")
- 	public WrappedBoolean addAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
+ 	public Admin addAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
+        final Key<Admin> adminKey = factory().allocateId(Admin.class);
+        final long adminId = adminKey.getId();
         
+        
+        String adminStringId = "";
         // TODO 
-        // 
+        // Fix to set to the admin Id
+      
+        
+  		Admin admin  = new Admin(adminForm.getClearance(), adminForm.getEmail(),adminForm.getPassword(), adminStringId);
+  			
+  		ofy().save().entities(admin).now();
   		
-		return null;
+		return admin;
+		
   	}
 
   	/**
+	 * Description of the method updateEmployee.
+	 * @param admin 
+	 * @param employeeForm 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "updateEmployee", path = "updateEmployee", httpMethod = "post")
+	public WrappedBoolean updateEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }
+	    if (!checkAdminAuthorizationForPage(user)) {
+	        throw new UnauthorizedException("Authorization level too low.");
+	    }
+		
+	    
+	    
+	    // TODO 
+	    // 
+		
+		return null;
+	}
+
+	/**
+	 * Description of the method updateRoom.
+	 * @param admin 
+	 * @param roomForm 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "updateRoom", path = "updateRoom", httpMethod = "post")
+	public WrappedBoolean updateRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }
+	    if (!checkAdminAuthorizationForPage(user)) {
+	        throw new UnauthorizedException("Authorization level too low.");
+	    }
+	    
+	
+	    // TODO 
+	    // 
+		
+		return null;
+	}
+
+	/**
+	 * Description of the method updateService.
+	 * @param admin 
+	 * @param serviceForm 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "updateService", path = "updateService", httpMethod = "post")
+	public WrappedBoolean updateService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }
+	    if (!checkAdminAuthorizationForPage(user)) {
+	        throw new UnauthorizedException("Authorization level too low.");
+	    }
+		
+	    
+	    // TODO 
+	    // 
+		
+	    
+		return null;
+	}
+	
+
+	/**
+	 * Description of the method updateService.
+	 * @param admin 
+	 * @param serviceForm 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "updateProduct", path = "updateProduct", httpMethod = "post")
+	public WrappedBoolean updateProduct(final User user, ProductForm productForm) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }
+	    if (!checkAdminAuthorizationForPage(user)) {
+	        throw new UnauthorizedException("Authorization level too low.");
+	    }
+		
+	    
+	    // TODO 
+	    // 
+		
+	    
+		return null;
+	}
+
+	/**
   	 * Description of the method updateAdmin.
   	 * @param admin 
   	 * @param adminForm 
@@ -315,8 +307,9 @@ public class AdminApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         
         // TODO 
@@ -326,6 +319,117 @@ public class AdminApi {
   	}
 
   	/**
+	 * Description of the method removeProductService.
+	 * @param admin 
+	 * @param productId 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "removeService", path = "removeService", httpMethod = "post")
+	public WrappedBoolean removeService(final User user, @Named("serviceId") final long serviceId) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }
+	    if (!checkAdminAuthorizationForPage(user)) {
+	        throw new UnauthorizedException("Authorization level too low.");
+	    }
+		
+	    Key<Employee> key = Key.create(Employee.class, serviceId);
+		
+		ofy().delete().key(key).now();
+	   
+		
+		// TODO 
+	    // Test and Set Return Value
+	    
+		return null;
+	}
+
+  	/**
+	 * Description of the method removeProductService.
+	 * @param admin 
+	 * @param productId 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "removeProduct", path = "removeProduct", httpMethod = "post")
+	public WrappedBoolean removeProduct(final User user, @Named("productId") final long productId) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }
+	    if (!checkAdminAuthorizationForPage(user)) {
+	        throw new UnauthorizedException("Authorization level too low.");
+	    }
+		
+	    Key<Employee> key = Key.create(Employee.class, productId);
+		
+		ofy().delete().key(key).now();
+	   
+		
+		// TODO 
+	    // Test and Set Return Value
+		
+	    
+		return null;
+	}
+
+	/**
+	 * Description of the method removeRoom.
+	 * @param admin 
+	 * @param roomNumber 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "removeRoom",  path = "removeRoom", httpMethod = "post")
+	public WrappedBoolean removeRoom(final User user, @Named("roomNumber") final int roomNumber) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }
+	    if (!checkAdminAuthorizationForPage(user)) {
+	        throw new UnauthorizedException("Authorization level too low.");
+	    }
+		
+	
+	    
+	    // TODO 
+	    // 
+		
+		return null;
+	}
+
+	/**
+	 * Description of the method removeEmployee.
+	 * @param admin 
+	 * @param employeeId 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "removeEmployee", path = "removeEmployee", httpMethod = "post")
+	public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }
+	    if (!checkAdminAuthorizationForPage(user)) {
+	        throw new UnauthorizedException("Authorization level too low.");
+	    }
+		
+	    
+	    Key<Employee> key = Key.create(Employee.class, employeeId);
+	
+		ofy().delete().key(key).now();
+		
+	    
+	    // TODO 
+	    // return value setting
+		
+		return null;
+	}
+
+	/**
   	 * Description of the method removeAdmin.
   	 * @param admin 
   	 * @param adminForm 
@@ -333,17 +437,22 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "removeAdmin",  path = "removeAdmin", httpMethod = "post")
- 	public WrappedBoolean removeAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
+ 	public WrappedBoolean removeAdmin(final User user, @Named("adminId") final String adminId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
-        
-        // TODO 
-        // 
+	    Key<Employee> key = Key.create(Employee.class, adminId);
+		
+		ofy().delete().key(key).now();
+	   
+		
+		// TODO 
+	    // Test and Set Return Value
   		
 		return null;
   	}
@@ -359,9 +468,10 @@ public class AdminApi {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
+        }       
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
         }
-        // TODO 
-        // Add clearance check for admin user
   		
         Key<Room> key = Key.create(Room.class, roomNumber);
         		
@@ -382,10 +492,10 @@ public class AdminApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
-        
         Key<Service> key = Key.create(Service.class, serviceId);
 
     	Service service = (Service) ofy().load().key(key).now();
@@ -405,8 +515,9 @@ public class AdminApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         Key<SaleItem> key = Key.create(SaleItem.class, productId);
 
@@ -427,9 +538,10 @@ public class AdminApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
-  		
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+        
         Key<Product> key = Key.create(Product.class, productId);
 
     	Product product = (Product) ofy().load().key(key).now();
@@ -444,22 +556,31 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "getAdmins", httpMethod = "get")
- 	public Admin getAdmins(final User user) throws UnauthorizedException {
+ 	public Admin getAdmins(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
-  		
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
         
-        // TODO 
-        // 
-  		
-  		return null;
+        Key<Admin> key = Key.create(Admin.class, adminId);
+
+       	Admin admin = (Admin) ofy().load().key(key).now();
+       	return admin;
+        
   	}
   
-  
-
+  	
+  	public boolean checkAdminAuthorizationForPage(final User user){
+  		
+        // TODO 
+        // Add clearance check 
+  		
+  		
+  		return true;
+  	}
+  	
 	
 }

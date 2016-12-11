@@ -3,6 +3,7 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.entities;
 
+import com.google.api.services.calendar.Calendar;
 import com.google.appengine.archetypes.entities.Appointment;
 import com.google.appengine.archetypes.entities.Clearances;
 import com.google.appengine.archetypes.entities.User;
@@ -48,7 +49,7 @@ public class Client extends User {
 	/**
 	 * Description of the property calendar.
 	 */
-	private Appointment calendar;
+	private Calendar calendar;
 
 	/**
 	 * Description of the property clearances.
@@ -74,7 +75,7 @@ public class Client extends User {
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Appointment> newAppointments, List<Clearances> newClearances, Appointment newCalendar, String newEmail, String newPassword, String newUserId  ){
+	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Appointment> newAppointments, List<Clearances> newClearances, Calendar newCalendar, String newEmail, String newPassword, String newUserId  ){
 		
 		super(newEmail, newPassword, newUserId);
 		
@@ -187,7 +188,7 @@ public class Client extends User {
 	 * Returns calendar.
 	 * @return calendar 
 	 */
-	public Appointment getCalendar() {
+	public Calendar getCalendar() {
 		return this.calendar;
 	}
 
@@ -195,7 +196,7 @@ public class Client extends User {
 	 * Sets a value to attribute calendar. 
 	 * @param newCalendar 
 	 */
-	public void setCalendar(Appointment newCalendar) {
+	public void setCalendar(Calendar newCalendar) {
 		this.calendar = newCalendar;
 	}
 

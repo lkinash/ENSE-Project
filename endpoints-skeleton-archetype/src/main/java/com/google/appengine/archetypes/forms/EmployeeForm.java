@@ -5,6 +5,8 @@ package com.google.appengine.archetypes.forms;
 
 import java.util.List;
 
+
+import com.google.api.services.calendar.Calendar;
 // Start of user code (user defined imports)
 import com.google.appengine.archetypes.entities.Service;
 // End of user code
@@ -23,7 +25,7 @@ public class EmployeeForm {
 	/**
 	 * Description of the property calendar.
 	 */
-	private Object calendar;
+	private Calendar calendar;
 
 	/**
 	 * Description of the property serivces.
@@ -38,7 +40,7 @@ public class EmployeeForm {
 		
 	}
 	
-	public EmployeeForm(String newName, Object newCalendar, List<Service> newServices){
+	public EmployeeForm(String newName, Calendar newCalendar, List<Service> newServices){
 		
 		this.calendar = newCalendar;
 		this.name = newName;
@@ -65,7 +67,7 @@ public class EmployeeForm {
 	 * Returns calendar.
 	 * @return calendar 
 	 */
-	public Object getCalendar() {
+	public Calendar getCalendar() {
 		return this.calendar;
 	}
 
@@ -73,7 +75,7 @@ public class EmployeeForm {
 	 * Sets a value to attribute calendar. 
 	 * @param newCalendar 
 	 */
-	public void setCalendar(Object newCalendar) {
+	public void setCalendar(Calendar newCalendar) {
 		this.calendar = newCalendar;
 	}
 

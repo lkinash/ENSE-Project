@@ -3,6 +3,7 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.entities;
 
+import com.google.api.services.calendar.Calendar;
 import com.google.appengine.archetypes.entities.Service;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -39,7 +40,7 @@ public class Room {
 	 * Description of the property calendar.
 	 */
 	@Index
-    private Object calendar;
+    private Calendar calendar;
 	
 	// Start of user code (user defined attributes for Room)
 	
@@ -49,11 +50,12 @@ public class Room {
 		
 	}
 	
-	public Room(int newNumber, List<Service> newService, Object newCalendar){
+	public Room(int newNumber, List<Service> newService, Calendar newCalendar, long newRoomId){
 		
 		this.number = newNumber;
 		this.calendar = newCalendar;
 		this.services = newService;
+		this.roomId = newRoomId;
 	}
 	
 
@@ -93,7 +95,7 @@ public class Room {
 	 * Returns calendar.
 	 * @return calendar 
 	 */
-	public Object getCalendar() {
+	public Calendar getCalendar() {
 		return this.calendar;
 	}
 
@@ -101,7 +103,7 @@ public class Room {
 	 * Sets a value to attribute calendar. 
 	 * @param newCalendar 
 	 */
-	public void setCalendar(Object newCalendar) {
+	public void setCalendar(Calendar newCalendar) {
 		this.calendar = newCalendar;
 	}
 	

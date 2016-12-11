@@ -22,9 +22,7 @@ import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.forms.EmployeeForm;
 
-// Start of user code (user defined imports)
 
-// End of user code
 
 /**
  * Description of AppointmentAPI.
@@ -53,13 +51,15 @@ public class AppointmentAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         
         // TODO 
         // 
 		
+        
 		return null;
 	}
 
@@ -74,13 +74,15 @@ public class AppointmentAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         
         // TODO 
         // 
 		
+        
 		return null;
 	}
 
@@ -98,12 +100,14 @@ public class AppointmentAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         
         // TODO 
         // 
+        
 		
 		return null;
 	}
@@ -121,13 +125,15 @@ public class AppointmentAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         
         // TODO 
         // 
 		
+        
 		return null;
 	}
 
@@ -142,12 +148,14 @@ public class AppointmentAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         
         // TODO 
         // 
+        
 		
 		return null;
 	}
@@ -163,13 +171,15 @@ public class AppointmentAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         
         // TODO 
         // 
 		
+        
 		return null;
 	}
 
@@ -185,14 +195,26 @@ public class AppointmentAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         
         // TODO 
         // 
+        
 		
 		return null;
 	} 
+	
+  	public boolean checkAuthorizationForPage(final User user){
+  		
+  		
+        // TODO 
+        // Add clearance check 
+  		
+  		
+  		return true;
+  	}
 
 }

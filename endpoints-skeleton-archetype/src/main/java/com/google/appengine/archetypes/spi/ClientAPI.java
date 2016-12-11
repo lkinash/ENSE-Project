@@ -21,6 +21,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.api.services.calendar.Calendar;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Clearances;
 import com.google.appengine.archetypes.forms.ClientForm;
@@ -50,7 +51,7 @@ public class ClientAPI {
 	 */
 	
 	@ApiMethod(name = "createClient", httpMethod = "post")
-  	public WrappedBoolean createClient(ClientForm clientForm) {
+  	public Client createClient(ClientForm clientForm) {
 
         final Key<Client> clientKey = factory().allocateId(Client.class);
         final long clientId = clientKey.getId();
@@ -62,7 +63,7 @@ public class ClientAPI {
         
         List<Appointment> newAppointments = null;
         List<Clearances> newClearances = null;
-        Appointment newCalendar = null;
+        Calendar newCalendar = null;
         // TODO 
         // Properly declare variables based on google calendar
 		
@@ -74,10 +75,10 @@ public class ClientAPI {
 			
   		ofy().save().entities(client).now();
         
-		return null;
+		return client;
 		 
         // TODO 
-        // 
+        // Set the return value 
 		
 	}
 
@@ -93,8 +94,9 @@ public class ClientAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for client user
+        if (!checkClientAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
   		
         
 
@@ -123,8 +125,9 @@ public class ClientAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkClientAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
 
 		Client client = getClient(user, clientId);
 
@@ -152,8 +155,9 @@ public class ClientAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkClientAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
 
 		Client client = getClient(user, clientId);
 		
@@ -172,8 +176,9 @@ public class ClientAPI {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        // TODO 
-        // Add clearance check for admin user
+        if (!checkClientAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
 
         Key<Client> key = null;
         
@@ -188,4 +193,13 @@ public class ClientAPI {
     	Client client = (Client) ofy().load().key(key).now();
     	return client;
 	}
+	
+  	public boolean checkClientAuthorizationForPage(final User user){
+  		
+        // TODO 
+        // Add clearance check 
+  		
+  		
+  		return true;
+  	}
 }

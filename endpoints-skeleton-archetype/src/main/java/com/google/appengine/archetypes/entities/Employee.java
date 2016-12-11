@@ -4,6 +4,7 @@
 package com.google.appengine.archetypes.entities;
 
 
+import com.google.api.services.calendar.Calendar;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
@@ -22,7 +23,7 @@ public class Employee {
 	 * Description of the property calendar.
 	 */
 	@Index
-	private Object calendar;
+	private Calendar calendar;
 
 	/**
 	 * Description of the property firstName.
@@ -41,7 +42,7 @@ public class Employee {
 		
 	}
 	
-	public Employee(Object newCalendar, String newName, long newEmployeeId){
+	public Employee(Calendar newCalendar, String newName, long newEmployeeId){
 		this.calendar = newCalendar;
 		this.name = newName;
 		this.employeeId = newEmployeeId;
@@ -52,7 +53,7 @@ public class Employee {
 	 * Returns calendar.
 	 * @return calendar 
 	 */
-	public Object getCalendar() {
+	public Calendar getCalendar() {
 		return this.calendar;
 	}
 
@@ -60,7 +61,7 @@ public class Employee {
 	 * Sets a value to attribute calendar. 
 	 * @param newCalendar 
 	 */
-	public void setCalendar(Object newCalendar) {
+	public void setCalendar(Calendar newCalendar) {
 		this.calendar = newCalendar;
 	}
 
