@@ -194,7 +194,7 @@ public class ClientAPI {
     	return client;
 	}
 	
-  	public boolean checkClientAuthorizationForPage(final User user){
+	private static boolean checkClientAuthorizationForPage(final User user){
   		
         // TODO 
         // Add clearance check 

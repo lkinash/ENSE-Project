@@ -27,7 +27,7 @@ public class Product extends SaleItem {
 	 * Description of the property barcodeId.
 	 */
 	@Index
-    private int barcodeId;
+    private int barcodeNumber;
 	
 	/**
 	 * Description of the property type.
@@ -40,9 +40,9 @@ public class Product extends SaleItem {
 		
 	}
 
-	public Product(int newBarcodeId, long newProductId, String newName, ProductType newType, double newPrice){
+	public Product(int newBarcodeNumber, long newProductId, String newName, ProductType newType, double newPrice){
 		super(newProductId, newName, newPrice);
-		this.barcodeId = newBarcodeId;
+		this.barcodeNumber = newBarcodeNumber;
 		this.type = newType;
 	}
 
@@ -53,16 +53,16 @@ public class Product extends SaleItem {
 	 * Returns barcodeId.
 	 * @return barcodeId 
 	 */
-	public int getBarcodeId() {
-		return this.barcodeId;
+	public int getBarcodeNumber() {
+		return this.barcodeNumber;
 	}
 
 	/**
 	 * Sets a value to attribute barcodeId. 
 	 * @param newBarcodeId 
 	 */
-	public void setBarcodeId(int newBarcodeId) {
-		this.barcodeId = newBarcodeId;
+	public void setBarcodeNumber(int newBarcodeNumber) {
+		this.barcodeNumber = newBarcodeNumber;
 	}
 	
 	/**

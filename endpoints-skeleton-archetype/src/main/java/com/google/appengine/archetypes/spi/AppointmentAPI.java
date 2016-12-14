@@ -207,7 +207,7 @@ public class AppointmentAPI {
 		return null;
 	} 
 	
-  	public boolean checkAuthorizationForPage(final User user){
+	private static boolean checkAuthorizationForPage(final User user){
   		
   		
         // TODO 

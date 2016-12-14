@@ -202,7 +202,7 @@ public class AdminApi {
 	 */
 	
 	@ApiMethod(name = "updateEmployee", path = "updateEmployee", httpMethod = "post")
-	public WrappedBoolean updateEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException {
+	public Employee updateEmployee(final User user, EmployeeForm employeeForm, @Named("employeeId") long employeeId) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
@@ -210,13 +210,22 @@ public class AdminApi {
 	    if (!checkAdminAuthorizationForPage(user)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
-		
+		 
+	    Employee employee = getEmployee(user, employeeId);
 	    
+	    if(!(employeeForm.getCalendar() == null)){
+	    	employee.setCalendar(employeeForm.getCalendar());
+	    }
+	    if(!(employeeForm.getName() == null)){
+	    	employee.setName(employeeForm.getName());
+	    }
+	    
+  		ofy().save().entities(employee).now();
 	    
 	    // TODO 
-	    // 
+	    // Ensure in the form elements that are not set are set to null
 		
-		return null;
+		return employee;
 	}
 
 	/**
@@ -227,7 +236,7 @@ public class AdminApi {
 	 */
 	
 	@ApiMethod(name = "updateRoom", path = "updateRoom", httpMethod = "post")
-	public WrappedBoolean updateRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
+	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
@@ -236,11 +245,23 @@ public class AdminApi {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 	    
-	
+	    Room room = getRoom(user, roomId);
+	    
+	    // TODO
+	    // Check what the default value will be 
+	    if(!(roomForm.getRoomNumber() == -1)){
+	    	room.setNumber(roomForm.getRoomNumber());
+	    }
+	    if(!(roomForm.getServices() == null)){
+	    	room.setServices(roomForm.getServices());
+	    }
+	    
+  		ofy().save().entities(room).now();
+	    
 	    // TODO 
-	    // 
+	    // Ensure in the form elements that are not set are set to null
 		
-		return null;
+		return room;
 	}
 
 	/**
@@ -251,7 +272,7 @@ public class AdminApi {
 	 */
 	
 	@ApiMethod(name = "updateService", path = "updateService", httpMethod = "post")
-	public WrappedBoolean updateService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
+	public Service updateService(final User user, ServiceForm serviceForm, @Named("serviceId") final long serviceId) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
@@ -260,12 +281,30 @@ public class AdminApi {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
+
+	    Service service = getService(user, serviceId);
+	    
+	    if(!(serviceForm.getName() == null)){
+	    	service.setName(serviceForm.getName());
+	    }
+	    if(!(serviceForm.getClearanceRequired() == null)){
+	    	service.setRequiresClearance(serviceForm.getClearanceRequired());
+	    }
+	    if(!(serviceForm.getType() == null)){
+	    	service.setType(serviceForm.getType());
+	    }
+	    // TODO
+	    // Check what our default will be for numbers 
+	    if(!(serviceForm.getPrice() == -1)){
+	    	service.setPrice(serviceForm.getPrice());
+	    }
+	    
+  		ofy().save().entities(service).now();
 	    
 	    // TODO 
-	    // 
+	    // Ensure in the form elements that are not set are set to null
 		
-	    
-		return null;
+		return service;
 	}
 	
 
@@ -277,7 +316,7 @@ public class AdminApi {
 	 */
 	
 	@ApiMethod(name = "updateProduct", path = "updateProduct", httpMethod = "post")
-	public WrappedBoolean updateProduct(final User user, ProductForm productForm) throws UnauthorizedException {
+	public Product updateProduct(final User user, ProductForm productForm, @Named("productId") final long productId) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
@@ -286,12 +325,31 @@ public class AdminApi {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
+  		//new Product(productForm.getBarcodeNumber() , productId, productForm.getName(), productForm.getType(), productForm.getPrice());
+  		
+	    Product product = getProduct(user, productId);
+	    
+	    if(!(productForm.getBarcodeNumber() == -1)){
+	    	product.setBarcodeNumber(productForm.getBarcodeNumber());
+	    }
+	    if(!(productForm.getName() == null)){
+	    	product.setName(productForm.getName());
+	    }
+	    // TODO
+	    // Check the default values for this 
+	    if(!(productForm.getPrice() == -1)){
+	    	product.setPrice(productForm.getPrice());
+	    }
+	    if(!(productForm.getType() == null)){
+	    	product.setType(productForm.getType());
+	    }
+	    
+  		ofy().save().entities(product).now();
 	    
 	    // TODO 
-	    // 
+	    // Ensure in the form elements that are not set are set to null
 		
-	    
-		return null;
+		return product;
 	}
 
 	/**
@@ -302,7 +360,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "updateAdmin", path = "updateAdmin", httpMethod = "post")
- 	public WrappedBoolean updateAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
+ 	public Admin updateAdmin(final User user, AdminForm adminForm, @Named("adminId") final long adminId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -311,11 +369,26 @@ public class AdminApi {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
-        
-        // TODO 
-        // 
-  		
-		return null;
+  		Admin admin = getAdmin(user, adminId);
+  			    
+	    if(!(adminForm.getClearance() == null)){
+	    	admin.setAdminClearance(adminForm.getClearance());
+	    }
+	    if(!(adminForm.getEmail() == null)){
+	    	admin.setEmail(adminForm.getEmail());
+	    }
+	    if(!(adminForm.getPassword() == null)){
+	    	admin.setPassword(adminForm.getPassword());
+	    }
+	    // TODO
+	    // Create a secure password send method
+	    
+  		ofy().save().entities(admin).now();
+	    
+	    // TODO 
+	    // Ensure in the form elements that are not set are set to null
+		
+		return admin;
   	}
 
   	/**
@@ -335,7 +408,7 @@ public class AdminApi {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
-	    Key<Employee> key = Key.create(Employee.class, serviceId);
+	    Key<Service> key = Key.create(Service.class, serviceId);
 		
 		ofy().delete().key(key).now();
 	   
@@ -363,7 +436,7 @@ public class AdminApi {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
-	    Key<Employee> key = Key.create(Employee.class, productId);
+	    Key<Product> key = Key.create(Product.class, productId);
 		
 		ofy().delete().key(key).now();
 	   
@@ -392,10 +465,13 @@ public class AdminApi {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
-	
+	    Key<Room> key = Key.create(Room.class, roomNumber);
+		
+		ofy().delete().key(key).now();
 	    
-	    // TODO 
-	    // 
+		// TODO 
+	    // Test and Set Return Value
+		
 		
 		return null;
 	}
@@ -446,7 +522,7 @@ public class AdminApi {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
-	    Key<Employee> key = Key.create(Employee.class, adminId);
+	    Key<Admin> key = Key.create(Admin.class, adminId);
 		
 		ofy().delete().key(key).now();
 	   
@@ -464,7 +540,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "getRooms", httpMethod = "get")
- 	public Room getRooms(final User user, @Named("roomNumber") final int roomNumber) throws UnauthorizedException {
+ 	public Room getRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -473,7 +549,7 @@ public class AdminApi {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
-        Key<Room> key = Key.create(Room.class, roomNumber);
+        Key<Room> key = Key.create(Room.class, roomId);
         		
         Room room = (Room) ofy().load().key(key).now();
   		
@@ -487,7 +563,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "getServices", httpMethod = "get")
- 	public Service getServices(final User user,  @Named("serviceId") final long serviceId) throws UnauthorizedException {
+ 	public Service getService(final User user,  @Named("serviceId") final long serviceId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -509,8 +585,8 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getSaleItems", httpMethod = "get")
- 	public SaleItem getSaleItems(final User user, @Named("productId") final long productId) throws UnauthorizedException {
+  	@ApiMethod(name = "getEmployee", httpMethod = "get")
+ 	public Employee getEmployee(final User user, @Named("employeeId") final long employeeId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -519,10 +595,10 @@ public class AdminApi {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
-        Key<SaleItem> key = Key.create(SaleItem.class, productId);
+        Key<Employee> key = Key.create(Employee.class, employeeId);
 
-    	SaleItem item = (SaleItem) ofy().load().key(key).now();
-    	return item;
+    	Employee employee = (Employee) ofy().load().key(key).now();
+    	return employee;
   		
   	}
 
@@ -533,7 +609,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "getProducts", httpMethod = "get")
- 	public Product getProducts(final User user, @Named("productId") final long productId) throws UnauthorizedException {
+ 	public Product getProduct(final User user, @Named("productId") final long productId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -555,8 +631,8 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAdmins", httpMethod = "get")
- 	public Admin getAdmins(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
+  	@ApiMethod(name = "getAdmin", httpMethod = "get")
+ 	public Admin getAdmin(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -573,7 +649,8 @@ public class AdminApi {
   	}
   
   	
-  	public boolean checkAdminAuthorizationForPage(final User user){
+  	
+  	private static boolean checkAdminAuthorizationForPage(final User user){
   		
         // TODO 
         // Add clearance check 
