@@ -4,10 +4,8 @@
 package com.google.appengine.archetypes.forms;
 
 import com.google.appengine.archetypes.entities.Employee;
-import com.google.appengine.archetypes.nuImage.AppointmentType;
-// Start of user code (user defined imports)
+import com.google.appengine.archetypes.entities.Type;
 
-// End of user code
 
 /**
  * Description of AppointmentForm.
@@ -16,9 +14,9 @@ import com.google.appengine.archetypes.nuImage.AppointmentType;
  */
 public class AppointmentForm {
 	/**
-	 * Description of the property apointmentType.
+	 * Description of the property appointmentType.
 	 */
-	private AppointmentType apointmentType;
+	private Type appointmentType;
 
 	/**
 	 * Description of the property treatment.
@@ -43,9 +41,9 @@ public class AppointmentForm {
 		
 	}
 	
-	public AppointmentForm(AppointmentType newAppointmentType, Object newTreatment, Employee newPreferedEmployee, Long newClientId){
+	public AppointmentForm(Type newType, Object newTreatment, Employee newPreferedEmployee, Long newClientId){
 		
-		this.apointmentType = newAppointmentType;
+		this.appointmentType = newType;
 		this.clientId = newClientId;
 		this.preferedEmployee = newPreferedEmployee;
 		this.treatment = newTreatment;
@@ -53,19 +51,19 @@ public class AppointmentForm {
 	
 	
 	/**
-	 * Returns apointmentType.
-	 * @return apointmentType 
+	 * Returns appointmentType.
+	 * @return appointmentType 
 	 */
-	public AppointmentType getApointmentType() {
-		return this.apointmentType;
+	public Type getappointmentType() {
+		return this.appointmentType;
 	}
 
 	/**
-	 * Sets a value to attribute apointmentType. 
-	 * @param newApointmentType 
+	 * Sets a value to attribute appointmentType. 
+	 * @param newappointmentType 
 	 */
-	public void setApointmentType(AppointmentType newApointmentType) {
-		this.apointmentType = newApointmentType;
+	public void setappointmentType(Type newappointmentType) {
+		this.appointmentType = newappointmentType;
 	}
 
 	/**

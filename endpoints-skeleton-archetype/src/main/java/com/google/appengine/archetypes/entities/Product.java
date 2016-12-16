@@ -6,7 +6,6 @@ package com.google.appengine.archetypes.entities;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.archetypes.entities.SaleItem;
-import com.google.appengine.archetypes.nuImage.ProductType;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -33,14 +32,14 @@ public class Product extends SaleItem {
 	 * Description of the property type.
 	 */
 	@Index
-    private ProductType type;
+    private Type type;
 
 	
 	public Product(){
 		
 	}
 
-	public Product(int newBarcodeNumber, long newProductId, String newName, ProductType newType, double newPrice){
+	public Product(int newBarcodeNumber, long newProductId, String newName, Type newType, double newPrice){
 		super(newProductId, newName, newPrice);
 		this.barcodeNumber = newBarcodeNumber;
 		this.type = newType;
@@ -69,7 +68,7 @@ public class Product extends SaleItem {
 	 * Returns type.
 	 * @return type 
 	 */
-	public ProductType getType() {
+	public Type getType() {
 		return this.type;
 	}
 
@@ -77,7 +76,7 @@ public class Product extends SaleItem {
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(ProductType newType) {
+	public void setType(Type newType) {
 		this.type = newType;
 	}
 
