@@ -33,15 +33,11 @@ public class Type {
 		
 	}
 	
-	public Type(boolean newIsService, String newType, TypeList list) throws NoSuchFieldException{
+	public Type(boolean newIsService, String newType){
 	
-
 		this.isService = newIsService;
-		
-		if(list.getIsAType(newType))
-			this.type = newType;
-		else
-			throw new NoSuchFieldException();
+		this.type = newType;
+
 	}
 	
 	/**
@@ -56,12 +52,9 @@ public class Type {
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(String newType, TypeList list) throws NoSuchFieldException {
+	public void setType(String newType) {
 		
-		if(list.getIsAType(newType))
-			this.type = newType;
-		else
-			throw new NoSuchFieldException();
+		this.type = newType;
 		
 	}
 	
@@ -69,7 +62,7 @@ public class Type {
 	 * Returns type.
 	 * @return type 
 	 */
-	public Boolean getIsService(){
+	public boolean getIsService(){
 		return this.isService;
 	}
 

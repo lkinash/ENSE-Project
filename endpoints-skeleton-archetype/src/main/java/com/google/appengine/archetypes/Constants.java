@@ -21,4 +21,6 @@ public class Constants {
   
   public static final String SENDGRID_USERNAME = "ENSE-Project";
   public static final String SENDGRID_PASSWORD = "Project-ENSE400";
+  
+  public static final String TYPE_LIST_ID = "01type12list23ID34";
 }

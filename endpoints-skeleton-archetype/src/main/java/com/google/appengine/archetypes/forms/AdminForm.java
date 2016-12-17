@@ -7,9 +7,6 @@ import java.util.List;
 
 import com.google.appengine.archetypes.list.AdminClearances;
 import com.google.appengine.archetypes.entities.Clearances;
-// Start of user code (user defined imports)
-
-// End of user code
 
 /**
  * Description of AdminForm.

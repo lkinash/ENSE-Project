@@ -20,11 +20,14 @@ import com.google.appengine.archetypes.entities.Product;
 import com.google.appengine.archetypes.entities.Room;
 import com.google.appengine.archetypes.entities.SaleItem;
 import com.google.appengine.archetypes.entities.Service;
+import com.google.appengine.archetypes.entities.Type;
+import com.google.appengine.archetypes.entities.TypeList;
 import com.google.appengine.archetypes.forms.AdminForm;
 import com.google.appengine.archetypes.forms.EmployeeForm;
 import com.google.appengine.archetypes.forms.ProductForm;
 import com.google.appengine.archetypes.forms.RoomForm;
 import com.google.appengine.archetypes.forms.ServiceForm;
+import com.google.appengine.archetypes.forms.TypeForm;
 import com.google.appengine.archetypes.list.AdminClearances;
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
@@ -193,6 +196,36 @@ public class AdminApi {
 		return admin;
 		
   	}
+  	
+  	/**
+  	 * Description of the method addAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "addType", path = "addType", httpMethod = "post")
+ 	public Type addType(final User user, TypeForm typeForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+       
+        TypeList list = getTypeList(user);
+
+        Type newType = new Type(typeForm.getIsService(), typeForm.getTypeName());
+        
+        list.addType(newType);
+        
+  		ofy().save().entities(list).now();
+  		
+		return newType;
+		
+  	}
 
   	/**
 	 * Description of the method updateEmployee.
@@ -202,7 +235,7 @@ public class AdminApi {
 	 */
 	
 	@ApiMethod(name = "updateEmployee", path = "updateEmployee", httpMethod = "post")
-	public Employee updateEmployee(final User user, EmployeeForm employeeForm, @Named("employeeId") long employeeId) throws UnauthorizedException {
+	public Employee updateEmployee(final User user, EmployeeForm employeeForm, @Named("employeeId") final long employeeId) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
@@ -532,6 +565,39 @@ public class AdminApi {
   		
 		return null;
   	}
+  	
+  	/**
+  	 * Description of the method addAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "removeType", path = "removeType", httpMethod = "post")
+ 	public WrappedBoolean removeType(final User user, TypeForm typeForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+       
+        TypeList list = getTypeList(user);
+
+        Type newType = new Type(typeForm.getIsService(), typeForm.getTypeName());
+        
+        list.removeType(newType);
+        
+  		ofy().save().entities(list).now();
+  		
+		// TODO 
+	    // Test and Set Return Value
+  		
+		return null;
+		
+  	}
 
   	/**
   	 * Returns rooms.
@@ -647,7 +713,43 @@ public class AdminApi {
        	return admin;
         
   	}
-  
+  	
+  	@ApiMethod(name = "getTypeList", httpMethod = "get")
+ 	public TypeList getTypeList(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+        
+        Key<TypeList> key = Key.create(TypeList.class, Constants.TYPE_LIST_ID);
+
+       	TypeList list = (TypeList) ofy().load().key(key).now();
+       	return list;
+        
+  	}
+  	
+  	@ApiMethod(name = "getIsAType", httpMethod = "get")
+ 	public WrappedBoolean getIsAType(final User user, Type testType) throws UnauthorizedException {
+
+       if (user == null) {
+           throw new UnauthorizedException("Authorization required");
+       }
+       if (!checkAdminAuthorizationForPage(user)) {
+           throw new UnauthorizedException("Authorization level too low.");
+       }
+        
+       TypeList list = getTypeList(user);
+       	 
+       if(list.getIsAType(testType)){
+    	   return new WrappedBoolean(true);
+       }
+       else
+    	   return new WrappedBoolean(false, "Type is not in the Type List.");
+        
+  	}
   	
   	
   	private static boolean checkAdminAuthorizationForPage(final User user){

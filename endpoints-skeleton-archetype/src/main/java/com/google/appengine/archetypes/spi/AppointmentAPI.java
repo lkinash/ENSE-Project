@@ -27,7 +27,6 @@ import com.google.appengine.archetypes.forms.EmployeeForm;
 /**
  * Description of AppointmentAPI.
  * 
- * @author Lindsey
  */
 
 @Api(

@@ -5,6 +5,7 @@ package com.google.appengine.archetypes.entities;
 
 import java.util.List;
 
+import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.SaleItem;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -18,18 +19,33 @@ import com.googlecode.objectify.annotation.Index;
  */
 @Entity
 public class TypeList {
-
+	
+	private static TypeList instance = null;
+	
+	@Index
+	private String typeListID;
+	
 	/**
 	 * Description of the property type.
 	 */
 	@Index
     private List<Type> types;
 	
-	public TypeList(){
+	private TypeList(){
 	
 		types = null;
+		typeListID = Constants.TYPE_LIST_ID;
 	}
 		
+	public static synchronized TypeList getInstance(){
+		
+		if(instance == null){
+			instance = new TypeList();
+		}
+	
+		return instance;
+	}
+	
 	/**
 	 * Returns type.
 	 * @return type 
@@ -68,7 +84,9 @@ public class TypeList {
 	 */
 	public void addType(Type newType) {
 		
-		types.add(newType);		
+		if(!getIsAType(newType)){			//avoid duplicates
+			types.add(newType);		
+		}
 	}
 	
 	public void removeType(Type newType) {

@@ -28,12 +28,11 @@ import com.google.appengine.archetypes.forms.ClientForm;
 import com.google.common.base.Strings;
 import com.googlecode.objectify.Key;
 
-// End of user code
+
 
 /**
  * Description of ClientAPI.
  * 
- * @author Lindsey
  */
 @Api(
 	    name = "client",
@@ -89,7 +88,7 @@ public class ClientAPI {
 	 */
 	
 	@ApiMethod(name = "modifyClient", httpMethod = "post")
-  	public WrappedBoolean modifyClient(ClientForm clientForm, final User user) throws UnauthorizedException {
+  	public Client modifyClient(ClientForm clientForm, final User user, @Named("clientId") final String clientId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -98,14 +97,33 @@ public class ClientAPI {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
+    	//public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Appointment> newAppointments, List<Clearances> newClearances, Calendar newCalendar, String newEmail, String newPassword, String newUserId  ){
+    		
         
-
-        // TODO 
-        // 
+	    Client client = getClient(user, clientId);
+	    
+	    if(!(clientForm.getFirstName() == null)){
+	    	client.setFirstName(clientForm.getFirstName());
+	    }
+	    if(!(clientForm.getLastName() == null)){
+	    	client.setLastName(clientForm.getLastName());
+	    }
+	    if(!(clientForm.getPhoneNumber() == -1)){
+	    	client.setPhoneNumber(clientForm.getPhoneNumber());
+	    }
+	    if(!(clientForm.getBirthday() == null)){
+	    	client.setBirthday(clientForm.getBirthday());
+	    }
+	    if(!(clientForm.getPassword() == null)){
+	    	client.setPassword(clientForm.getPassword());
+	    }
+	    
+  		ofy().save().entities(client).now();
+	    
+	    // TODO 
+	    // Ensure in the form elements that are not set are set to null
 		
-        
-        
-		return null;
+		return client;
 	}
 
 
