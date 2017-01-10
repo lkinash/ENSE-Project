@@ -96,10 +96,7 @@ public class ClientAPI {
         if (!checkClientAuthorizationForPage(user)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
-  		
-    	//public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Appointment> newAppointments, List<Clearances> newClearances, Calendar newCalendar, String newEmail, String newPassword, String newUserId  ){
-    		
-        
+
 	    Client client = getClient(user, clientId);
 	    
 	    if(!(clientForm.getFirstName() == null)){
