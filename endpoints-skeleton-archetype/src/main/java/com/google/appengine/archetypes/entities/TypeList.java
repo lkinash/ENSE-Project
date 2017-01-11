@@ -22,7 +22,7 @@ public class TypeList {
 	
 	private static TypeList instance = null;
 	
-	@Index
+	@Id
 	private String typeListID;
 	
 	/**

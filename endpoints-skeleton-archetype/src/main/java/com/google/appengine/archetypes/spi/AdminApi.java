@@ -62,7 +62,14 @@ public class AdminApi {
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
         
-  		Employee employee  = new Employee(employeeForm.getCalendar(), employeeForm.getName(), employeeId);
+        Calendar calendar;
+        
+        if(employeeForm.getCalendar() != null)
+        	calendar = employeeForm.getCalendar();
+        else 
+        	calendar = new Calendar(null, null, null);
+        
+  		Employee employee  = new Employee(calendar, employeeForm.getName(), employeeId);
 
   		ofy().save().entities(employee).now();
   		
@@ -489,7 +496,7 @@ public class AdminApi {
 	 */
 	
 	@ApiMethod(name = "removeRoom",  path = "removeRoom", httpMethod = "post")
-	public WrappedBoolean removeRoom(final User user, @Named("roomNumber") final int roomNumber) throws UnauthorizedException {
+	public WrappedBoolean removeRoom(final User user, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
@@ -498,7 +505,7 @@ public class AdminApi {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
-	    Key<Room> key = Key.create(Room.class, roomNumber);
+	    Key<Room> key = Key.create(Room.class, roomId);
 		
 		ofy().delete().key(key).now();
 	    

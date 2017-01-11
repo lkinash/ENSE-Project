@@ -4,6 +4,7 @@
 package com.google.appengine.archetypes.entities;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 
@@ -20,6 +21,9 @@ public class Type {
 	 */
 	@Index
     private String type;
+	
+	@Id
+	private String typeId;
 
 	/**
 	 * Description of the property type.
@@ -64,6 +68,25 @@ public class Type {
 	 */
 	public boolean getIsService(){
 		return this.isService;
+	}
+	
+	
+	/**
+	 * Sets a value to attribute type. 
+	 * @param newType 
+	 */
+	public void setTypeId(String newTypeId) {
+		
+		this.typeId = newTypeId;
+		
+	}
+	
+	/**
+	 * Returns type.
+	 * @return type 
+	 */
+	public String getTypeId(){
+		return this.typeId;
 	}
 
 
