@@ -69,8 +69,7 @@ public class ClientAPI {
         
 		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
 				clientForm.getPhoneNumber(), clientForm.getBirthday(), newAppointments,
-				newClearances, newCalendar, 
-				clientForm.getEmail(), clientForm.getPassword(), clientStringId);
+				newClearances, newCalendar, clientForm.getEmail(), clientForm.getPassword(), clientStringId);
 			
   		ofy().save().entities(client).now();
         

@@ -65,9 +65,9 @@ public class AdminApi {
         Calendar calendar;
         
         if(employeeForm.getCalendar() != null)
-        	calendar = employeeForm.getCalendar();
+        	calendar = employeeForm.getCalendar();					//get the calendar 
         else 
-        	calendar = new Calendar(null, null, null);
+        	calendar = new Calendar(null, null, null);				//if the calendar is unset it creates a new one
         
   		Employee employee  = new Employee(calendar, employeeForm.getName(), employeeId);
 
@@ -97,11 +97,16 @@ public class AdminApi {
         final Key<Room> roomKey = factory().allocateId(Room.class);
         final long roomId = roomKey.getId();
         
+        Calendar calendar = new Calendar(null, null, null);			
+        List <Service> service;
         
-        Calendar calendar = null;
-        // TODO 
-        // Link to get this value as a calendar object
+        if(roomForm.getServices() != null)
+        	service = roomForm.getServices();
+        else
+        	service = null;
         
+        //TODO
+        //create a new list of services
         
         Room room = new Room(roomForm.getRoomNumber(), roomForm.getServices(), calendar, roomId);
     		
@@ -163,7 +168,14 @@ public class AdminApi {
         final Key<Product> productKey = factory().allocateId(Product.class);
         final long productId = productKey.getId();
         
-  		Product product  = new Product(productForm.getBarcodeNumber() , productId, productForm.getName(), productForm.getType(), productForm.getPrice());
+        int barcode;
+        
+        if(productForm.getBarcodeNumber() < 1)
+        	barcode = 00000;
+        else 
+        	barcode = productForm.getBarcodeNumber();
+        	
+  		Product product  = new Product(barcode , productId, productForm.getName(), productForm.getType(), productForm.getPrice());
   		
   	    ofy().save().entities(product).now();
   			
