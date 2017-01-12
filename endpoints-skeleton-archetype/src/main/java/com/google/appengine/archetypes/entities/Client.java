@@ -75,7 +75,7 @@ public class Client extends User {
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Appointment> newAppointments, List<Clearances> newClearances, Calendar newCalendar, String newEmail, String newPassword, String newUserId  ){
+	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Appointment> newAppointments, List<Clearances> newClearances, Calendar newCalendar, String newEmail, String newPassword, long newUserId  ){
 		
 		super(newEmail, newPassword, newUserId);
 		
@@ -92,11 +92,11 @@ public class Client extends User {
 	 * Description of the method getUserId.
 	 * @return 
 	 */
-	public String getUserId() {
+	public long getUserId() {
 		return super.getUserId();
 	}
 	
-	public void setUserId(String newUserId) {
+	public void setUserId(long newUserId) {
 		super.setUserId(newUserId);
 	}
 

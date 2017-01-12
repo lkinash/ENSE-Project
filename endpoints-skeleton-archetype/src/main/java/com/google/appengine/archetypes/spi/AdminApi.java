@@ -203,12 +203,7 @@ public class AdminApi {
         final long adminId = adminKey.getId();
         
         
-        String adminStringId = "";
-        // TODO 
-        // Fix to set to the admin Id
-      
-        
-  		Admin admin  = new Admin(adminForm.getClearance(), adminForm.getEmail(),adminForm.getPassword(), adminStringId);
+  		Admin admin  = new Admin(adminForm.getClearance(), adminForm.getEmail(),adminForm.getPassword(), adminId);
   			
   		ofy().save().entities(admin).now();
   		
@@ -442,6 +437,40 @@ public class AdminApi {
 		
 		return admin;
   	}
+  	
+  	/**
+  	 * Description of the method addAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "updateType", path = "updateType", httpMethod = "post")
+ 	public Type updateType(final User user, TypeForm typeForm, @Named("typeId") final String typeId  ) throws UnauthorizedException {
+
+  		if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        
+
+        
+        
+	    // TODO
+	    // get the type and modify it
+	    
+        
+        
+  		
+	    // TODO 
+	    // add back into the list and into the datastore
+	
+		return null;
+		
+  	}
 
   	/**
 	 * Description of the method removeProductService.
@@ -565,7 +594,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "removeAdmin",  path = "removeAdmin", httpMethod = "post")
- 	public WrappedBoolean removeAdmin(final User user, @Named("adminId") final String adminId) throws UnauthorizedException {
+ 	public WrappedBoolean removeAdmin(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -774,7 +803,15 @@ public class AdminApi {
   	private static boolean checkAdminAuthorizationForPage(final User user){
   		
         // TODO 
-        // Add clearance check 
+        // Get the page ID
+  		
+		
+		// TODO 
+        // Get the user clearances
+		
+  		
+		// TODO 
+        // Check the user clearances against the page ID
   		
   		
   		return true;

@@ -47,19 +47,23 @@ public class ClientAPI {
 	/**
 	 * Description of the method createClient.
 	 * @param clientForm 
+	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "createClient", httpMethod = "post")
-  	public Client createClient(ClientForm clientForm) {
+  	public Client createClient(final User user, ClientForm clientForm) throws UnauthorizedException {
 
+  		if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkClientAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+		
         final Key<Client> clientKey = factory().allocateId(Client.class);
         final long clientId = clientKey.getId();
        
-        String clientStringId = "";
-        // TODO 
-        // Link client Id to the user profile for logging in.
-        
-        
         List<Appointment> newAppointments = null;
         List<Clearances> newClearances = null;
         Calendar newCalendar = null;
@@ -69,7 +73,7 @@ public class ClientAPI {
         
 		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
 				clientForm.getPhoneNumber(), clientForm.getBirthday(), newAppointments,
-				newClearances, newCalendar, clientForm.getEmail(), clientForm.getPassword(), clientStringId);
+				newClearances, newCalendar, clientForm.getEmail(), clientForm.getPassword(), clientId);
 			
   		ofy().save().entities(client).now();
         
@@ -87,7 +91,7 @@ public class ClientAPI {
 	 */
 	
 	@ApiMethod(name = "modifyClient", httpMethod = "post")
-  	public Client modifyClient(ClientForm clientForm, final User user, @Named("clientId") final String clientId) throws UnauthorizedException {
+  	public Client modifyClient(ClientForm clientForm, final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -133,7 +137,7 @@ public class ClientAPI {
 	 */
 	 
 	@ApiMethod(name = "addClientClearance", httpMethod = "post")
-  	public WrappedBoolean addClientClearances(@Named("clientId") final String clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
+  	public WrappedBoolean addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
 
 
         if (user == null) {
@@ -163,7 +167,7 @@ public class ClientAPI {
 	 */
 	 
 	@ApiMethod(name = "removeClientClearance", httpMethod = "post")
-  	public WrappedBoolean removeClientClearances(@Named("clientId") final String clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
+  	public WrappedBoolean removeClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
 
 
         if (user == null) {
@@ -184,7 +188,7 @@ public class ClientAPI {
 	
 	
 	@ApiMethod(name = "getClient", httpMethod = "get")
-  	public Client getClient(final User user,@Named("clientId") final String clientId) throws UnauthorizedException {
+  	public Client getClient(final User user,@Named("clientId") final long clientId) throws UnauthorizedException {
 		//pass in a client ID to access a client other than the current user
 
         if (user == null) {
@@ -196,7 +200,7 @@ public class ClientAPI {
 
         Key<Client> key = null;
         
-        if(Strings.isNullOrEmpty(clientId)){
+        if(clientId < 1){
         	String userId = user.getUserId();
         	key = Key.create(Client.class, userId);
         }
@@ -208,11 +212,45 @@ public class ClientAPI {
     	return client;
 	}
 	
+	/**
+  	 * Description of the method removeAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "removeClient",  path = "removeClient", httpMethod = "post")
+ 	public WrappedBoolean removeClient(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkClientAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+	    Key<Client> key = Key.create(Client.class, clientId);
+		
+		ofy().delete().key(key).now();
+	   
+		
+		// TODO 
+	    // Test and Set Return Value
+  		
+		return null;
+  	}
+	
 	private static boolean checkClientAuthorizationForPage(final User user){
   		
         // TODO 
-        // Add clearance check 
+        // Get the page ID
   		
+		
+		// TODO 
+        // Get the user clearances
+		
+		// TODO 
+        // Check the user clearances against the page ID
   		
   		return true;
   	}

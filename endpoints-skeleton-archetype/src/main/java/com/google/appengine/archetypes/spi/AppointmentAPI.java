@@ -208,9 +208,16 @@ public class AppointmentAPI {
 	
 	private static boolean checkAuthorizationForPage(final User user){
   		
-  		
         // TODO 
-        // Add clearance check 
+        // Get the page ID
+  		
+		
+		// TODO 
+        // Get the user clearances
+		
+		
+		// TODO 
+        // Check the user clearances against the page ID
   		
   		
   		return true;
