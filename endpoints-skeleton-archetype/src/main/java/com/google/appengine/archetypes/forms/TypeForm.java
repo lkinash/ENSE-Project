@@ -1,14 +1,15 @@
 package com.google.appengine.archetypes.forms;
 
-import com.google.appengine.archetypes.entities.TypeList;
-import com.googlecode.objectify.annotation.Index;
+
 
 public class TypeForm {
 
-	private String type;
+	private String typeName;
 
     private boolean isService;	
 
+    
+    
 	public TypeForm(){
 		
 	}
@@ -16,7 +17,7 @@ public class TypeForm {
 	public TypeForm(boolean newIsService, String newType){
 	
 		this.isService = newIsService;
-		this.type = newType;
+		this.typeName = newType;
 	}
 	
 	/**
@@ -24,7 +25,7 @@ public class TypeForm {
 	 * @return type 
 	 */
 	public String getTypeName(){
-		return this.type;
+		return this.typeName;
 	}
 
 	/**
@@ -32,7 +33,7 @@ public class TypeForm {
 	 * @param newType 
 	 */
 	public void setType(String newType){
-		this.type = newType;
+		this.typeName = newType;
 	}
 	
 	/**

@@ -232,7 +232,13 @@ public class AdminApi {
        
         TypeList list = getTypeList(user);
 
-        Type newType = new Type(typeForm.getIsService(), typeForm.getTypeName());
+        final Key<Type> typeKey = factory().allocateId(Type.class);
+        final long typeId = typeKey.getId();
+        
+        Type newType = new Type(true, "test", typeId);
+        
+        //Type newType = new Type(typeForm.getIsService(), typeForm.getTypeName());
+        
         
         list.addType(newType);
         
@@ -623,7 +629,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "removeType", path = "removeType", httpMethod = "post")
- 	public WrappedBoolean removeType(final User user, TypeForm typeForm) throws UnauthorizedException {
+ 	public WrappedBoolean removeType(final User user, TypeForm typeForm, @Named("typeId") final long typeId ) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -635,7 +641,7 @@ public class AdminApi {
        
         TypeList list = getTypeList(user);
 
-        Type newType = new Type(typeForm.getIsService(), typeForm.getTypeName());
+        Type newType = new Type(typeForm.getIsService(), typeForm.getTypeName(), typeId);
         
         list.removeType(newType);
         
@@ -774,8 +780,8 @@ public class AdminApi {
         }
         
         Key<TypeList> key = Key.create(TypeList.class, Constants.TYPE_LIST_ID);
-
-       	TypeList list = (TypeList) ofy().load().key(key).now();
+        TypeList list = (TypeList) ofy().load().key(key).now();
+       	
        	return list;
         
   	}

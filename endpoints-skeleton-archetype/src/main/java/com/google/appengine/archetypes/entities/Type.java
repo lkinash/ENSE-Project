@@ -37,10 +37,11 @@ public class Type {
 		
 	}
 	
-	public Type(boolean newIsService, String newType){
+	public Type(boolean newIsService, String newType, long newTypeId){
 	
 		this.isService = newIsService;
 		this.type = newType;
+		this.typeId = newTypeId;
 
 	}
 	
