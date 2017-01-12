@@ -5,8 +5,8 @@ package com.google.appengine.archetypes.forms;
 
 import java.util.List;
 
-
 import com.google.api.services.calendar.Calendar;
+import com.google.appengine.archetypes.entities.Clearances;
 // Start of user code (user defined imports)
 import com.google.appengine.archetypes.entities.Service;
 // End of user code
@@ -32,9 +32,16 @@ public class EmployeeForm {
 	 */
 	private List<Service> serivces;
 
-	// Start of user code (user defined methods for EmployeeForm)
+	/**
+	 * Description of the property password.
+	 */
+	private String password;
 
-	// End of user code
+	/**
+	 * Description of the property email.
+	 */
+	private String email;
+
 	
 	public EmployeeForm(){
 		
@@ -94,5 +101,38 @@ public class EmployeeForm {
 	public void setSerivces(List<Service> newSerivces) {
 		this.serivces = newSerivces;
 	}
+	
+	/**
+	 * Returns email.
+	 * @return email 
+	 */
+	public String getEmail() {
+		return this.email;
+	}
+
+	/**
+	 * Sets a value to attribute email. 
+	 * @param newEmail 
+	 */
+	public void setEmail(String newEmail) {
+		this.email = newEmail;
+	}
+	
+	/**
+	 * Returns password.
+	 * @return password 
+	 */
+	public String getPassword() {
+		return this.password;
+	}
+
+	/**
+	 * Sets a value to attribute password. 
+	 * @param newPassword 
+	 */
+	public void setPassword(String newPassword) {
+		this.password = newPassword;
+	}
+
 
 }

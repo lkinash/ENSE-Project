@@ -6,18 +6,18 @@ package com.google.appengine.archetypes.entities;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-// Start of user code (user defined imports)
+// Start of Account code (Account defined imports)
 import com.googlecode.objectify.annotation.Index;
 
-// End of user code
+// End of Account code
 
 /**
- * Description of User.
+ * Description of Account.
  * 
  * @author Lindsey
  */
 @Entity
-public class User {
+public class Account {
 	/**
 	 * Description of the property email.
 	 */
@@ -30,24 +30,24 @@ public class User {
 	private String password;
 
 	/**
-	 * Description of the property userId.
+	 * Description of the property AccountId.
 	 */
 	@Id
 	private long userId;
 
 
-	// Start of user code (user defined methods for User)
+	// Start of Account code (Account defined methods for Account)
 
-	// End of user code
+	// End of Account code
 	
-	public User(){
+	public Account(){
 		
 	}
 	
-	public User(String newEmail, String newPassword, long newUserId){
+	public Account(String newEmail, String newPassword, long newAccountId){
 		
 		this.email = newEmail;
-		this.userId = newUserId;
+		this.userId = newAccountId;
 		this.password = newPassword;
 	}
 	
@@ -85,19 +85,19 @@ public class User {
 	}
 
 	/**
-	 * Returns userId.
-	 * @return userId 
+	 * Returns AccountId.
+	 * @return AccountId 
 	 */
 	public long getUserId() {
 		return this.userId;
 	}
 
 	/**
-	 * Sets a value to attribute userId. 
-	 * @param newUserId 
+	 * Sets a value to attribute AccountId. 
+	 * @param newAccountId 
 	 */
-	public void setUserId(long newUserId) {
-		this.userId = newUserId;
+	public void setUserId(long newAccountId) {
+		this.userId = newAccountId;
 	}
 
 }

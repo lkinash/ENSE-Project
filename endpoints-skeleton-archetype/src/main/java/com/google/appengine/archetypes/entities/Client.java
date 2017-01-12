@@ -6,7 +6,7 @@ package com.google.appengine.archetypes.entities;
 import com.google.api.services.calendar.Calendar;
 import com.google.appengine.archetypes.entities.Appointment;
 import com.google.appengine.archetypes.entities.Clearances;
-import com.google.appengine.archetypes.entities.User;
+import com.google.appengine.archetypes.entities.Account;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -28,7 +28,7 @@ import com.googlecode.objectify.annotation.Index;
  * @author Lindsey
  */
 @Entity
-public class Client extends User {
+public class Client extends Account {
 	/**
 	 * Description of the property firstName.
 	 */

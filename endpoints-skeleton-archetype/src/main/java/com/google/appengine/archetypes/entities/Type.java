@@ -23,7 +23,7 @@ public class Type {
     private String type;
 	
 	@Id
-	private String typeId;
+	private long typeId;
 
 	/**
 	 * Description of the property type.
@@ -75,7 +75,7 @@ public class Type {
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setTypeId(String newTypeId) {
+	public void setTypeId(long newTypeId) {
 		
 		this.typeId = newTypeId;
 		
@@ -85,7 +85,7 @@ public class Type {
 	 * Returns type.
 	 * @return type 
 	 */
-	public String getTypeId(){
+	public long getTypeId(){
 		return this.typeId;
 	}
 

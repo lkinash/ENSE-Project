@@ -6,7 +6,7 @@ package com.google.appengine.archetypes.entities;
 import java.util.List;
 
 import com.google.appengine.archetypes.list.AdminClearances;
-import com.google.appengine.archetypes.entities.User;
+import com.google.appengine.archetypes.entities.Account;
 // Start of user code (user defined imports)
 
 import com.googlecode.objectify.annotation.Entity;
@@ -20,7 +20,7 @@ import com.googlecode.objectify.annotation.Id;
  * @author Lindsey
  */
 @Entity
-public class Admin extends User {
+public class Admin extends Account {
 	/**
 	 * Description of the property adminClearance.
 	 */

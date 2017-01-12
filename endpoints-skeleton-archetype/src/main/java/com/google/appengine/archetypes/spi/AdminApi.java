@@ -69,7 +69,8 @@ public class AdminApi {
         else 
         	calendar = new Calendar(null, null, null);				//if the calendar is unset it creates a new one
         
-  		Employee employee  = new Employee(calendar, employeeForm.getName(), employeeId);
+  		Employee employee  = new Employee(calendar, employeeForm.getName(), employeeForm.getEmail(), employeeForm.getPassword(), employeeId);
+  			
 
   		ofy().save().entities(employee).now();
   		
@@ -446,7 +447,7 @@ public class AdminApi {
   	 */
   	
   	@ApiMethod(name = "updateType", path = "updateType", httpMethod = "post")
- 	public Type updateType(final User user, TypeForm typeForm, @Named("typeId") final String typeId  ) throws UnauthorizedException {
+ 	public Type updateType(final User user, TypeForm typeForm, @Named("typeId") final long typeId  ) throws UnauthorizedException {
 
   		if (user == null) {
             throw new UnauthorizedException("Authorization required");

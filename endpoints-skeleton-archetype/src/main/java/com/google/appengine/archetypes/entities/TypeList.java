@@ -23,7 +23,7 @@ public class TypeList {
 	private static TypeList instance = null;
 	
 	@Id
-	private String typeListID;
+	private long typeListID;
 	
 	/**
 	 * Description of the property type.
