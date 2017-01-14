@@ -57,7 +57,7 @@ public class Type {
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(String newType) {
+	public void setTypeName(String newType) {
 		
 		this.type = newType;
 		
@@ -67,10 +67,17 @@ public class Type {
 	 * Returns type.
 	 * @return type 
 	 */
+	public void setIsService(boolean newIsService){
+		this.isService = newIsService;
+	}
+	
+	/**
+	 * Returns type.
+	 * @return type 
+	 */
 	public boolean getIsService(){
 		return this.isService;
 	}
-	
 	
 	/**
 	 * Sets a value to attribute type. 

@@ -1,7 +1,5 @@
 package com.google.appengine.archetypes.forms;
 
-
-
 public class TypeForm {
 
 	private String typeName;
@@ -32,7 +30,7 @@ public class TypeForm {
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(String newType){
+	public void setTypeName(String newType){
 		this.typeName = newType;
 	}
 	

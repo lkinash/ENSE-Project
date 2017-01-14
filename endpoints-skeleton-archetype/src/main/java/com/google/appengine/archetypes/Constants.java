@@ -2,7 +2,6 @@ package com.google.appengine.archetypes;
 
 import com.google.api.server.spi.Constant;
 
-
 /**
  * Contains the client IDs and scopes for allowed clients consuming the helloworld API.
  */
@@ -22,5 +21,4 @@ public class Constants {
   public static final String SENDGRID_USERNAME = "ENSE-Project";
   public static final String SENDGRID_PASSWORD = "Project-ENSE400";
   
-  public static final long TYPE_LIST_ID = 8675309;
 }
