@@ -66,14 +66,32 @@ public class ClientAPI {
        
         List<Appointment> newAppointments = null;
         List<Clearances> newClearances = null;
-        Calendar newCalendar = null;
+        Calendar newCalendar = new Calendar(null, null, null);
         // TODO 
         // Properly declare variables based on google calendar
 		
+        int phoneNumber;
+        Date birthday;
+        
+        if(clientForm.getPhoneNumber() < 1111111)
+        	phoneNumber = 1111111;
+        else 
+        	phoneNumber = clientForm.getPhoneNumber();
+        
+        if(clientForm.getBirthday() == null)
+        	//TODO
+        	//Set a defult birthday value here
+        	birthday = null;
+        else
+        	birthday = clientForm.getBirthday();
+        
+        
+        
+        // Client must enter first name, last name, email and a password
         
 		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
-				clientForm.getPhoneNumber(), clientForm.getBirthday(), newAppointments,
-				newClearances, newCalendar, clientForm.getEmail(), clientForm.getPassword(), clientId);
+				phoneNumber, birthday, newAppointments, newClearances, newCalendar,
+				clientForm.getEmail(), clientForm.getPassword(), clientId);
 			
   		ofy().save().entities(client).now();
         

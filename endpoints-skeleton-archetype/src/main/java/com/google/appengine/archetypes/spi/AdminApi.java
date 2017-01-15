@@ -68,6 +68,9 @@ public class AdminApi {
         else 
         	calendar = new Calendar(null, null, null);				//if the calendar is unset it creates a new one
         
+        
+        //employee must have a name, email and a password set
+        
   		Employee employee  = new Employee(calendar, employeeForm.getName(), employeeForm.getEmail(), employeeForm.getPassword(), employeeId);
   			
 
