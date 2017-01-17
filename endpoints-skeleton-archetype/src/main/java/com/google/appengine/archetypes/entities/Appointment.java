@@ -3,6 +3,7 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.entities;
 
+import com.google.api.client.util.DateTime;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.archetypes.list.Status;
@@ -39,17 +40,18 @@ public class Appointment{
 	@Id 
 	private Long eventId;
 
-	// Start of user code (user defined methods for Appointment)
-
-	// End of user code
+	@Index
+	private DateTime time;
+	
 
 	public Appointment(){
 		
 	}
 	
-	public Appointment(Status status, Long eventId) {
+	public Appointment(Status status, Long eventId, DateTime newDateTime) {
 		this.status = status;
 		this.eventId = eventId;
+		this.time = newDateTime;
 	}
 
 	/**
@@ -82,6 +84,22 @@ public class Appointment{
 	 */
 	public void setEventId(Long newEventId) {
 		this.eventId = newEventId;
+	}
+
+	/**
+	 * Returns eventId.
+	 * @return eventId 
+	 */
+	public DateTime getTime() {
+		return this.time;
+	}
+
+	/**
+	 * Sets a value to attribute eventId. 
+	 * @param newEventId 
+	 */
+	public void setTime(DateTime newDateTime) {
+		this.time = newDateTime;
 	}
 
 }
