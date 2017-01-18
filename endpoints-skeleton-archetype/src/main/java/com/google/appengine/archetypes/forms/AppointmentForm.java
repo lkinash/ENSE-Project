@@ -4,6 +4,7 @@
 package com.google.appengine.archetypes.forms;
 
 import com.google.appengine.archetypes.entities.Employee;
+import com.google.appengine.archetypes.entities.Service;
 import com.google.appengine.archetypes.entities.Type;
 
 
@@ -19,9 +20,9 @@ public class AppointmentForm {
 	private Type appointmentType;
 
 	/**
-	 * Description of the property treatment.
+	 * Description of the property service.
 	 */
-	private Object treatment;
+	private Service service;
 
 	/**
 	 * Description of the property preferedEmployee.
@@ -41,12 +42,12 @@ public class AppointmentForm {
 		
 	}
 	
-	public AppointmentForm(Type newType, Object newTreatment, Employee newPreferedEmployee, Long newClientId){
+	public AppointmentForm(Type newType, Service newService, Employee newPreferedEmployee, Long newClientId){
 		
 		this.appointmentType = newType;
 		this.clientId = newClientId;
 		this.preferedEmployee = newPreferedEmployee;
-		this.treatment = newTreatment;
+		this.service = newService;
 	}
 	
 	
@@ -67,19 +68,19 @@ public class AppointmentForm {
 	}
 
 	/**
-	 * Returns treatment.
-	 * @return treatment 
+	 * Returns service.
+	 * @return service 
 	 */
-	public Object getTreatment() {
-		return this.treatment;
+	public Service getService() {
+		return this.service;
 	}
 
 	/**
-	 * Sets a value to attribute treatment. 
-	 * @param newTreatment 
+	 * Sets a value to attribute service. 
+	 * @param newService 
 	 */
-	public void setTreatment(Object newTreatment) {
-		this.treatment = newTreatment;
+	public void setService(Service newService) {
+		this.service = newService;
 	}
 
 	/**

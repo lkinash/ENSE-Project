@@ -6,16 +6,26 @@ package com.google.appengine.archetypes.spi;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
 
+import java.io.IOException;
+import java.util.Arrays;
+
+import com.google.api.client.util.DateTime;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.EventReminder;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Appointment;
 import com.google.appengine.archetypes.entities.Client;
 import com.google.appengine.archetypes.forms.AppointmentForm;
 import com.google.appengine.archetypes.forms.CancelAppointmentForm;
+import com.google.appengine.archetypes.forms.EventForm;
 import com.google.appengine.archetypes.wrappers.*;
 import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.entities.Admin;
@@ -158,6 +168,61 @@ public class AppointmentAPI {
 		
 		return null;
 	}
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "createEvent", httpMethod = "post")
+  	public Event createEvent(final User user, @Named("calendarId") final String calendarId, Calendar calendar, EventForm eventForm) throws UnauthorizedException, IOException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        
+        Event event = new Event()
+        .setSummary(eventForm.getSummary())
+        .setLocation(eventForm.getLocation())
+        .setDescription(eventForm.getDescription());
+
+        DateTime startDateTime = eventForm.getStartDateTime();
+        EventDateTime start = new EventDateTime()
+        	.setDateTime(startDateTime)
+        	.setTimeZone("America/Los_Angeles");
+        event.setStart(start);
+
+        DateTime endDateTime = eventForm.getEndDateTime();
+        EventDateTime end = new EventDateTime()
+        	.setDateTime(endDateTime)
+        	.setTimeZone("America/Los_Angeles");
+        event.setEnd(end);
+
+        String[] recurrence = eventForm.getRecurrence();
+        event.setRecurrence(Arrays.asList(recurrence));
+
+        EventAttendee[] attendees = eventForm.getAttendees();
+        event.setAttendees(Arrays.asList(attendees));
+
+        EventReminder[] reminderOverrides = eventForm.getReminderOverrides();
+   
+        Event.Reminders reminders = new Event.Reminders()
+        	.setUseDefault(false)
+        	.setOverrides(Arrays.asList(reminderOverrides));
+        event.setReminders(reminders);
+
+        event = calendar.events().insert(calendarId, event).execute();
+
+        // TODO 
+        // 
+        
+		return event;
+	}
 
 	/**
 	 * Description of the method filterAppointments.
@@ -205,6 +270,8 @@ public class AppointmentAPI {
 		
 		return null;
 	} 
+	
+	
 	
 	private static boolean checkAuthorizationForPage(final User user){
   		

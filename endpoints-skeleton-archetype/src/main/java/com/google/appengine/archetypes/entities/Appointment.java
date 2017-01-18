@@ -3,14 +3,12 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.entities;
 
-import com.google.api.client.util.DateTime;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.archetypes.list.Status;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-// Start of user code (user defined imports)
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
@@ -38,20 +36,19 @@ public class Appointment{
 	 * Description of the property eventId.
 	 */
 	@Id 
-	private Long eventId;
+	private long eventId;
 
-	@Index
-	private DateTime time;
-	
+	// Start of user code (user defined methods for Appointment)
+
+	// End of user code
 
 	public Appointment(){
 		
 	}
 	
-	public Appointment(Status status, Long eventId, DateTime newDateTime) {
+	public Appointment(Status status, long eventId) {
 		this.status = status;
 		this.eventId = eventId;
-		this.time = newDateTime;
 	}
 
 	/**
@@ -74,7 +71,7 @@ public class Appointment{
 	 * Returns eventId.
 	 * @return eventId 
 	 */
-	public Long getEventId() {
+	public long getEventId() {
 		return this.eventId;
 	}
 
@@ -82,24 +79,8 @@ public class Appointment{
 	 * Sets a value to attribute eventId. 
 	 * @param newEventId 
 	 */
-	public void setEventId(Long newEventId) {
+	public void setEventId(long newEventId) {
 		this.eventId = newEventId;
-	}
-
-	/**
-	 * Returns eventId.
-	 * @return eventId 
-	 */
-	public DateTime getTime() {
-		return this.time;
-	}
-
-	/**
-	 * Sets a value to attribute eventId. 
-	 * @param newEventId 
-	 */
-	public void setTime(DateTime newDateTime) {
-		this.time = newDateTime;
 	}
 
 }
