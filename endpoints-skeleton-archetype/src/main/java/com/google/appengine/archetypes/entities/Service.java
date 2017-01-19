@@ -21,24 +21,19 @@ public class Service extends SaleItem {
 	 */
 	private boolean requiresClearance;
 
-	/**
-	 * Description of the property type.
-	 */
-	@Index
-    private Type type;
-
 
 	public Service(){
 		
 	}
 	
-	public Service(boolean newRequiresClearance, long newProductId, String newName, Type newType, double newPrice){
+	public Service(boolean newRequiresClearance, long newProductId, String newName, long newTypeId, double newPrice){
 	
-		super(newProductId, newName, newPrice);
+		super(newProductId, newName, newPrice, newTypeId);
 		
 		this.requiresClearance = newRequiresClearance;
-		this.type = newType;
+	
 	}
+	
 	
 	/**
 	 * Returns requiresClearance.
@@ -92,16 +87,16 @@ public class Service extends SaleItem {
 	 * Returns type.
 	 * @return type 
 	 */
-	public Type getType(){
-		return this.type;
+	public long getTypeId(){
+		return super.getTypeId();
 	}
 
 	/**
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(Type newType) {
-		this.type = newType;
+	public void setTypeId(long newTypeId) {
+		super.setTypeId(newTypeId);
 	}
 
 	/**

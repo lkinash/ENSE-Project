@@ -64,8 +64,8 @@ public class ClientAPI {
         final Key<Client> clientKey = factory().allocateId(Client.class);
         final long clientId = clientKey.getId();
        
-        List<Appointment> newAppointments = null;
-        List<Clearances> newClearances = null;
+        List<Long> newAppointmentIds = null;
+        List<Long> newClearanceIds = null;
         Calendar newCalendar = new Calendar(null, null, null);
         // TODO 
         // Properly declare variables based on google calendar
@@ -90,7 +90,7 @@ public class ClientAPI {
         // Client must enter first name, last name, email and a password
         
 		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
-				phoneNumber, birthday, newAppointments, newClearances, newCalendar,
+				phoneNumber, birthday, newAppointmentIds, newClearanceIds, newCalendar,
 				clientForm.getEmail(), clientForm.getPassword(), clientId);
 			
   		ofy().save().entities(client).now();
@@ -169,9 +169,9 @@ public class ClientAPI {
 
 		clearance.setRenewalDate(date);
 		
-		client.addClearance(clearance);
+		client.addClearance(clearance.getClearanceId());
 		
-  		ofy().save().entities(client).now();
+  		ofy().save().entities(client, clearance).now();
 		
 		return null;
 	}
@@ -197,9 +197,13 @@ public class ClientAPI {
 
 		Client client = getClient(user, clientId);
 		
-		client.removeClearance(clearance);
+		client.removeClearance(clearance.getClearanceId());
 		
   		ofy().save().entities(client).now();
+  		
+  		Key<Clearances> clearanceKey = Key.create(Clearances.class, clearance.getClearanceId());
+  		
+  		ofy().delete().key(clearanceKey).now();
 		
 		return null;
 	}

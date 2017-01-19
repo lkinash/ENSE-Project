@@ -30,7 +30,7 @@ public class ServiceForm {
 	/**
 	 * Description of the property type.
 	 */
-	private Type type;
+	private long typeId;
 
 	// Start of user code (user defined methods for ServiceForm)
 
@@ -40,12 +40,12 @@ public class ServiceForm {
 		
 	}
 
-	public ServiceForm(String newName, Type newType, double newPrice, boolean newClearanceRequired){
+	public ServiceForm(String newName, long newTypeId, double newPrice, boolean newClearanceRequired){
 		
 		this.clearanceRequired = newClearanceRequired;
 		this.name = newName;
 		this.price = newPrice;
-		this.type = newType;
+		this.typeId = newTypeId;
 	}
 	
 	/**
@@ -101,16 +101,16 @@ public class ServiceForm {
 	 * Returns type.
 	 * @return type 
 	 */
-	public Type getType() {
-		return this.type;
+	public long getTypeId() {
+		return this.typeId;
 	}
 
 	/**
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(Type newType) {
-		this.type = newType;
+	public void setTypeId(long newTypeId) {
+		this.typeId = newTypeId;
 	}
 
 }

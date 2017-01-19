@@ -16,7 +16,7 @@ public class ProductForm {
 	/**
 	 * Description of the property type.
 	 */
-	private Type type;
+	private long typeId;
 
 	/**
 	 * Description of the property name.
@@ -42,12 +42,12 @@ public class ProductForm {
 		
 	}
 
-	public ProductForm(Type newType, String newName, int newBarcodeNumber, double newPrice){
+	public ProductForm(long newTypeId, String newName, int newBarcodeNumber, double newPrice){
 		
 		this.barcodeNumber = newBarcodeNumber;
 		this.name = newName;
 		this.price = newPrice;
-		this.type = newType;
+		this.typeId = newTypeId;
 		
 	}
 	
@@ -55,16 +55,16 @@ public class ProductForm {
 	 * Returns type.
 	 * @return type 
 	 */
-	public Type getType() {
-		return this.type;
+	public long getTypeId() {
+		return this.typeId;
 	}
 
 	/**
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(Type newType) {
-		this.type = newType;
+	public void setTypeId(long newTypeId) {
+		this.typeId = newTypeId;
 	}
 
 

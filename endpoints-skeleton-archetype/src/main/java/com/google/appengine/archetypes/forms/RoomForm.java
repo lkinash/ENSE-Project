@@ -19,7 +19,7 @@ public class RoomForm {
 	/**
 	 * Description of the property services.
 	 */
-	private List<Service> services;
+	private List<Long> serviceIds;
 
 	/**
 	 * Description of the property roomNumber.
@@ -35,26 +35,26 @@ public class RoomForm {
 		
 	}
 	
-	public RoomForm(int newRoomNumber, List<Service> newServices){
+	public RoomForm(int newRoomNumber, List<Long> newServices){
 
 		this.roomNumber = newRoomNumber;
-		this.services = newServices;
+		this.serviceIds = newServices;
 	}
 	
 	/**
 	 * Returns services.
 	 * @return services 
 	 */
-	public List<Service> getServices() {
-		return services;
+	public List<Long> getServiceIds() {
+		return serviceIds;
 	}
 
 	/**
 	 * Sets a value to attribute services. 
 	 * @param newServices 
 	 */
-	public void setServices(List<Service> newServices) {
-		this.services = newServices;
+	public void setServiceIds(List<Long> newServiceIds) {
+		this.serviceIds = newServiceIds;
 	}
 
 	/**

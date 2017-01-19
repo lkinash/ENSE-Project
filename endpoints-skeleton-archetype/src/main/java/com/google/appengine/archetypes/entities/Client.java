@@ -54,13 +54,13 @@ public class Client extends Account {
 	/**
 	 * Description of the property clearances.
 	 */
-	private List<Clearances> clearances;
+	private List<Long> clearanceIds;
 
 	/**
-	 * Description of the property appointments.
+	 * Description of the property appointmentIds.
 	 */
 	@Index
-    private List<Appointment> appointments;
+    private List<Long> appointmentIds;
 
 	/**
 	 * Description of the property birthday.
@@ -75,17 +75,17 @@ public class Client extends Account {
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Appointment> newAppointments, List<Clearances> newClearances, Calendar newCalendar, String newEmail, String newPassword, long newUserId  ){
+	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments, List<Long> newClearanceIds, Calendar newCalendar, String newEmail, String newPassword, long newUserId  ){
 		
 		super(newEmail, newPassword, newUserId);
 		
 		this.birthday = newBirthday;
-		this.appointments = newAppointments;
+		this.appointmentIds = newAppointments;
 		this.calendar = newCalendar;
 		this.firstName = newFirstName;
 		this.lastName = newLastName;
 		this.phoneNumber = newPhoneNumber;
-		this.clearances = newClearances;
+		this.clearanceIds = newClearanceIds;
 	}
 	
 	/**
@@ -204,28 +204,28 @@ public class Client extends Account {
 	 * Returns clearances.
 	 * @return clearances 
 	 */
-	public List<Clearances> getClearances() {
-		return this.clearances;
+	public List<Long> getClearances() {
+		return this.clearanceIds;
 	}
 	
 	/**
 	 * Returns clearances.
 	 * @return clearances 
 	 */
-	public void addClearance(Clearances newClearance) {
-		this.clearances.add(newClearance);
+	public void addClearance(Long newClearance) {
+		this.clearanceIds.add(newClearance);
 	}
 	
 	/**
 	 * Returns clearances.
 	 * @return clearances 
 	 */
-	public boolean removeClearance(Clearances newClearance) {
+	public boolean removeClearance(Long newClearance) {
 		
-		Iterator<Clearances> temp = clearances.iterator();
+		Iterator<Long> temp = clearanceIds.iterator();
 		while (temp.hasNext()) {
-		  	Clearances tempClearance = temp.next();
-		   if(tempClearance.getClearanceId() == newClearance.getClearanceId()){
+		  	Long tempClearance = temp.next();
+		   if(tempClearance == newClearance){
 			   temp.remove();
 			   return true;
 		   }
@@ -236,19 +236,19 @@ public class Client extends Account {
 	
 
 	/**
-	 * Returns appointments.
-	 * @return appointments 
+	 * Returns appointmentIds.
+	 * @return appointmentIds 
 	 */
-	public List<Appointment> getAppointments() {
-		return this.appointments;
+	public List<Long> getAppointments() {
+		return this.appointmentIds;
 	}
 
 	/**
-	 * Sets a value to attribute appointments. 
+	 * Sets a value to attribute appointmentIds. 
 	 * @param newAppointments 
 	 */
-	public void setAppointments(List<Appointment> newAppointments) {
-		this.appointments = newAppointments;
+	public void setAppointments(List<Long> newAppointments) {
+		this.appointmentIds = newAppointments;
 	}
 
 	/**

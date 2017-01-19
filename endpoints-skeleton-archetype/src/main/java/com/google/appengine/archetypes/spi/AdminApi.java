@@ -71,7 +71,7 @@ public class AdminApi {
         
         //employee must have a name, email and a password set
         
-  		Employee employee  = new Employee(calendar, employeeForm.getName(), employeeForm.getEmail(), employeeForm.getPassword(), employeeId);
+  		Employee employee  = new Employee(calendar, employeeForm.getName(), employeeForm.getEmail(), employeeForm.getPassword(), employeeId, employeeForm.getServiceIds());
   			
 
   		ofy().save().entities(employee).now();
@@ -101,17 +101,17 @@ public class AdminApi {
         final long roomId = roomKey.getId();
         
         Calendar calendar = new Calendar(null, null, null);			
-        List <Service> service;
+        List <Long> service;
         
-        if(roomForm.getServices() != null)
-        	service = roomForm.getServices();
+        if(roomForm.getServiceIds() != null)
+        	service = roomForm.getServiceIds();
         else
         	service = null;
         
         //TODO
         //create a new list of services
         
-        Room room = new Room(roomForm.getRoomNumber(), roomForm.getServices(), calendar, roomId);
+        Room room = new Room(roomForm.getRoomNumber(), roomForm.getServiceIds(), calendar, roomId);
     		
   		ofy().save().entities(room).now(); 
    		
@@ -144,7 +144,7 @@ public class AdminApi {
         // Link to get this value from a list
         
         
-  		Service service  = new Service(requiresClearance , serviceId, serviceForm.getName(), serviceForm.getType(), serviceForm.getPrice());
+  		Service service  = new Service(requiresClearance , serviceId, serviceForm.getName(), serviceForm.getTypeId(), serviceForm.getPrice());
   		
   	    ofy().save().entities(service).now();
   		
@@ -178,7 +178,7 @@ public class AdminApi {
         else 
         	barcode = productForm.getBarcodeNumber();
         	
-  		Product product  = new Product(barcode , productId, productForm.getName(), productForm.getType(), productForm.getPrice());
+  		Product product  = new Product(barcode , productId, productForm.getName(), productForm.getTypeId(), productForm.getPrice());
   		
   	    ofy().save().entities(product).now();
   			
@@ -301,8 +301,8 @@ public class AdminApi {
 	    if(!(roomForm.getRoomNumber() == -1)){
 	    	room.setNumber(roomForm.getRoomNumber());
 	    }
-	    if(!(roomForm.getServices() == null)){
-	    	room.setServices(roomForm.getServices());
+	    if(!(roomForm.getServiceIds() == null)){
+	    	room.setServices(roomForm.getServiceIds());
 	    }
 	    
   		ofy().save().entities(room).now();
@@ -339,8 +339,8 @@ public class AdminApi {
 	    if(!(serviceForm.getClearanceRequired() == null)){
 	    	service.setRequiresClearance(serviceForm.getClearanceRequired());
 	    }
-	    if(!(serviceForm.getType() == null)){
-	    	service.setType(serviceForm.getType());
+	    if(!(serviceForm.getTypeId() < 1)){
+	    	service.setTypeId(serviceForm.getTypeId());
 	    }
 	    // TODO
 	    // Check what our default will be for numbers 
@@ -389,8 +389,8 @@ public class AdminApi {
 	    if(!(productForm.getPrice() == -1)){
 	    	product.setPrice(productForm.getPrice());
 	    }
-	    if(!(productForm.getType() == null)){
-	    	product.setType(productForm.getType());
+	    if(!(productForm.getTypeId() < 1)){
+	    	product.setTypeId(productForm.getTypeId());
 	    }
 	    
   		ofy().save().entities(product).now();

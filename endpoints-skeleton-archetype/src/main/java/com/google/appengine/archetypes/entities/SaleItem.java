@@ -37,20 +37,24 @@ public class SaleItem {
 	private long productId;
 
 
-	// Start of user code (user defined methods for SaleItem)
-
-	// End of user code
+	/**
+	 * Description of the property type.
+	 */
+	@Index
+    private long typeId;
+	
 	
 	public SaleItem(){
 		
 	}
 	
 
-	public SaleItem(long newProductId, String newName, double newPrice){
+	public SaleItem(long newProductId, String newName, double newPrice, long newTypeId ){
 		
 		this.productId = newProductId;
 		this.name = newName;
 		this.price = newPrice;
+		this.typeId = newTypeId;
 	}
 	
 	/**
@@ -99,6 +103,22 @@ public class SaleItem {
 	 */
 	public void setProductId(long newProductId) {
 		this.productId = newProductId;
+	}
+	
+	/**
+	 * Returns type.
+	 * @return type 
+	 */
+	public long getTypeId(){
+		return this.typeId;
+	}
+
+	/**
+	 * Sets a value to attribute type. 
+	 * @param newType 
+	 */
+	public void setTypeId(long newTypeId) {
+		this.typeId = newTypeId;
 	}
 
 }

@@ -22,32 +22,25 @@ import com.googlecode.objectify.annotation.Parent;
  */
 @Entity
 public class Product extends SaleItem {
+	
 	/**
 	 * Description of the property barcodeId.
 	 */
 	@Index
     private int barcodeNumber;
 	
-	/**
-	 * Description of the property type.
-	 */
-	@Index
-    private Type type;
-
 	
 	public Product(){
 		
 	}
 
-	public Product(int newBarcodeNumber, long newProductId, String newName, Type newType, double newPrice){
-		super(newProductId, newName, newPrice);
+	public Product(int newBarcodeNumber, long newProductId, String newName, long newTypeId, double newPrice){
+		super(newProductId, newName, newPrice, newTypeId);
 		this.barcodeNumber = newBarcodeNumber;
-		this.type = newType;
 	}
 
-	// Start of user code (user defined methods for Product)
 
-	// End of user code
+	
 	/**
 	 * Returns barcodeId.
 	 * @return barcodeId 
@@ -68,16 +61,16 @@ public class Product extends SaleItem {
 	 * Returns type.
 	 * @return type 
 	 */
-	public Type getType() {
-		return this.type;
+	public long getTypeId(){
+		return super.getTypeId();
 	}
 
 	/**
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setType(Type newType) {
-		this.type = newType;
+	public void setTypeId(long newTypeId) {
+		super.setTypeId(newTypeId);
 	}
 
 	
@@ -129,4 +122,5 @@ public class Product extends SaleItem {
 		super.setProductId(newProductId);
 	}
 
+	
 }

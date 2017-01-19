@@ -24,7 +24,7 @@ public class Admin extends Account {
 	/**
 	 * Description of the property adminClearance.
 	 */
-	private List<Clearances> clearance;
+	private List<AdminClearances> clearance;
 
 	// Start of user code (user defined attributes for Admin)
 
@@ -34,7 +34,7 @@ public class Admin extends Account {
 		
 	}
 	
-	public Admin(List<Clearances> adminClearance, String newEmail, String newPassword, long newUserId){
+	public Admin(List<AdminClearances> adminClearance, String newEmail, String newPassword, long newUserId){
 		
 		super(newEmail, newPassword, newUserId);
 		
@@ -92,7 +92,7 @@ public class Admin extends Account {
 	 * Returns adminClearance.
 	 * @return adminClearance 
 	 */
-	public List<Clearances> getAdminClearance() {
+	public List<AdminClearances> getAdminClearance() {
 		return this.clearance;
 	}
 
@@ -100,7 +100,7 @@ public class Admin extends Account {
 	 * Sets a value to attribute adminClearance. 
 	 * @param newAdminClearance 
 	 */
-	public void setAdminClearance(List<Clearances> newAdminClearance) {
+	public void setAdminClearance(List<AdminClearances> newAdminClearance) {
 		this.clearance = newAdminClearance;
 	}
 

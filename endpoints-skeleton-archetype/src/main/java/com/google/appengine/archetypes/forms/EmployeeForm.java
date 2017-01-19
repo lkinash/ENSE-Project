@@ -30,7 +30,7 @@ public class EmployeeForm {
 	/**
 	 * Description of the property serivces.
 	 */
-	private List<Service> serivces;
+	private List<Long> serviceIds;
 
 	/**
 	 * Description of the property password.
@@ -47,11 +47,11 @@ public class EmployeeForm {
 		
 	}
 	
-	public EmployeeForm(String newName, Calendar newCalendar, List<Service> newServices){
+	public EmployeeForm(String newName, Calendar newCalendar, List<Long> newServiceIds){
 		
 		this.calendar = newCalendar;
 		this.name = newName;
-		this.serivces = newServices;
+		this.serviceIds = newServiceIds;
 	}
 	
 	/**
@@ -87,19 +87,19 @@ public class EmployeeForm {
 	}
 
 	/**
-	 * Returns serivces.
-	 * @return serivces 
+	 * Returns services.
+	 * @return services 
 	 */
-	public List<Service> getSerivces() {
-		return this.serivces;
+	public List<Long> getServiceIds() {
+		return serviceIds;
 	}
 
 	/**
-	 * Sets a value to attribute serivces. 
-	 * @param newSerivces 
+	 * Sets a value to attribute services. 
+	 * @param newServices 
 	 */
-	public void setSerivces(List<Service> newSerivces) {
-		this.serivces = newSerivces;
+	public void setServiceIds(List<Long> newServiceIds) {
+		this.serviceIds = newServiceIds;
 	}
 	
 	/**

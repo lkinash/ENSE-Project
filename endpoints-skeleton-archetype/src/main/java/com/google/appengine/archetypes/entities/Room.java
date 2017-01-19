@@ -34,7 +34,7 @@ public class Room {
 	 * Description of the property service.
 	 */
 	@Index
-	private List<Service> services;
+	private List<Long> serviceIds;
 
 	/**
 	 * Description of the property calendar.
@@ -50,29 +50,29 @@ public class Room {
 		
 	}
 	
-	public Room(int newNumber, List<Service> newService, Calendar newCalendar, long newRoomId){
+	public Room(int newNumber, List<Long> newService, Calendar newCalendar, long newRoomId){
 		
 		this.number = newNumber;
 		this.calendar = newCalendar;
-		this.services = newService;
+		this.serviceIds = newService;
 		this.roomId = newRoomId;
 	}
 	
 
 	/**
 	 * Description of the method setServices.
-	 * @param services 
+	 * @param serviceIds 
 	 */
-	public void setServices(List<Service> newServices) {
-		this.services = newServices;
+	public void setServices(List<Long> newServices) {
+		this.serviceIds = newServices;
 	}
 
 	/**
 	 * Description of the method getServices.
 	 * @return 
 	 */
-	public List<Service> getServices() {
-		return this.services;
+	public List<Long> getServices() {
+		return this.serviceIds;
 	}
 
 	/**

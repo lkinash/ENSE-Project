@@ -4,6 +4,8 @@
 package com.google.appengine.archetypes.entities;
 
 
+import java.util.List;
+
 import com.google.api.services.calendar.Calendar;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -31,19 +33,44 @@ public class Employee extends Account {
 	@Index
 	private String name;
 
+	/**
+	 * Description of the property firstName.
+	 */
+	@Index
+	private List<Long> serviceIds;
+
+	
 	
 	public Employee(){
 		
 	}
 	
-	public Employee(Calendar newCalendar, String newName, String newEmail, String newPassword, long newUserId){
+	public Employee(Calendar newCalendar, String newName, String newEmail, String newPassword, long newUserId, List<Long> newServiceIds){
 		
 		super(newEmail, newPassword, newUserId);
 		
 		this.calendar = newCalendar;
 		this.name = newName;
+		this.serviceIds = newServiceIds;
 	}
 
+	
+	/**
+	 * Description of the method setServices.
+	 * @param serviceIds 
+	 */
+	public void setServiceIds(List<Long> newServices) {
+		this.serviceIds = newServices;
+	}
+
+	/**
+	 * Description of the method getServices.
+	 * @return 
+	 */
+	public List<Long> getServiceIds() {
+		return this.serviceIds;
+	}
+	
 	
 	/**
 	 * Returns calendar.
