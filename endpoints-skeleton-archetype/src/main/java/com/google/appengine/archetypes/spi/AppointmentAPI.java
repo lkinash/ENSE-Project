@@ -4,7 +4,6 @@
 package com.google.appengine.archetypes.spi;
 
 import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
-import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -14,23 +13,19 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
-import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.EventReminder;
+import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.Constants;
-import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Appointment;
-import com.google.appengine.archetypes.entities.Client;
 import com.google.appengine.archetypes.forms.AppointmentForm;
 import com.google.appengine.archetypes.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.forms.EventForm;
-import com.google.appengine.archetypes.wrappers.*;
-import com.google.appengine.api.users.User;
-import com.google.appengine.archetypes.entities.Admin;
-import com.google.appengine.archetypes.entities.Employee;
-import com.google.appengine.archetypes.forms.EmployeeForm;
+import com.google.appengine.archetypes.wrappers.WrappedBoolean;
+import com.googlecode.objectify.Key;
 
 
 
@@ -176,7 +171,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "createEvent", httpMethod = "post")
-  	public Event createEvent(final User user, @Named("calendarId") final String calendarId, Calendar calendar, EventForm eventForm) throws UnauthorizedException, IOException {
+  	public Event createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -186,6 +181,17 @@ public class AppointmentAPI {
         }
   		
         
+        
+        //Calendar calendar = getCalendar(calendarId);
+        
+        // Initialize Calendar service with valid OAuth credentials
+        
+        //Calendar service = new Calendar.Builder(Constants.HTTP_TRANSPORT, Constants.JSON_FACTORY, credentials).setApplicationName("applicationName").build();
+
+        // Retrieve the calendar
+        //Calendar calendar =  service.calendars().get(calendarId).execute();
+        
+        /*
         Event event = new Event()
         .setSummary(eventForm.getSummary())
         .setLocation(eventForm.getLocation())
@@ -215,13 +221,51 @@ public class AppointmentAPI {
         	.setUseDefault(false)
         	.setOverrides(Arrays.asList(reminderOverrides));
         event.setReminders(reminders);
-
-        event = calendar.events().insert(calendarId, event).execute();
+*/
+        //event = calendar.events().insert(calendarId, event).execute();
 
         // TODO 
         // 
+        Event event = new Event()
+        .setSummary("Google I/O 2015")
+        .setLocation("800 Howard St., San Francisco, CA 94103")
+        .setDescription("A chance to hear more about Google's developer products.");
+
+    DateTime startDateTime = new DateTime("2015-05-28T09:00:00-07:00");
+    EventDateTime start = new EventDateTime()
+        .setDateTime(startDateTime)
+        .setTimeZone("America/Los_Angeles");
+    event.setStart(start);
+
+    DateTime endDateTime = new DateTime("2015-05-28T17:00:00-07:00");
+    EventDateTime end = new EventDateTime()
+        .setDateTime(endDateTime)
+        .setTimeZone("America/Los_Angeles");
+    event.setEnd(end);
+
+    String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
+    event.setRecurrence(Arrays.asList(recurrence));
+
+    EventAttendee[] attendees = new EventAttendee[] {
+        new EventAttendee().setEmail("lpage@example.com"),
+        new EventAttendee().setEmail("sbrin@example.com"),
+    };
+    event.setAttendees(Arrays.asList(attendees));
+
+    EventReminder[] reminderOverrides = new EventReminder[] {
+        new EventReminder().setMethod("email").setMinutes(24 * 60),
+        new EventReminder().setMethod("popup").setMinutes(10),
+    };
+    Event.Reminders reminders = new Event.Reminders()
+        .setUseDefault(false)
+        .setOverrides(Arrays.asList(reminderOverrides));
+    event.setReminders(reminders);
+
+    //event = service.events().insert(calendarId, event).execute();
+    System.out.printf("Event created: %s\n", event.getHtmlLink());
         
 		return event;
+		
 	}
 
 	/**
@@ -271,6 +315,15 @@ public class AppointmentAPI {
 		return null;
 	} 
 	
+	
+	private Calendar getCalendar(String calendarId){
+		
+        Key<Calendar> key = Key.create(Calendar.class, calendarId);
+
+    	Calendar calendar = (Calendar) ofy().load().key(key).now();
+    	return calendar;
+		
+	}
 	
 	
 	private static boolean checkAuthorizationForPage(final User user){

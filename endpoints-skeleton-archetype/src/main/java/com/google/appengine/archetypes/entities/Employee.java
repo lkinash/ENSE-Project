@@ -25,7 +25,7 @@ public class Employee extends Account {
 	 * Description of the property calendar.
 	 */
 	@Index
-	private Calendar calendar;
+	private String calendarId;
 
 	/**
 	 * Description of the property firstName.
@@ -45,11 +45,11 @@ public class Employee extends Account {
 		
 	}
 	
-	public Employee(Calendar newCalendar, String newName, String newEmail, String newPassword, long newUserId, List<Long> newServiceIds){
+	public Employee(String newCalendarId, String newName, String newEmail, String newPassword, long newUserId, List<Long> newServiceIds){
 		
 		super(newEmail, newPassword, newUserId);
 		
-		this.calendar = newCalendar;
+		this.calendarId = newCalendarId;
 		this.name = newName;
 		this.serviceIds = newServiceIds;
 	}
@@ -73,19 +73,19 @@ public class Employee extends Account {
 	
 	
 	/**
-	 * Returns calendar.
-	 * @return calendar 
+	 * Returns calendarId.
+	 * @return calendarId 
 	 */
-	public Calendar getCalendar() {
-		return this.calendar;
+	public String getCalendarId() {
+		return this.calendarId;
 	}
 
 	/**
-	 * Sets a value to attribute calendar. 
-	 * @param newCalendar 
+	 * Sets a value to attribute calendarId. 
+	 * @param newCalendarId 
 	 */
-	public void setCalendar(Calendar newCalendar) {
-		this.calendar = newCalendar;
+	public void setCalendarId(String newCalendarId) {
+		this.calendarId = newCalendarId;
 	}
 
 	/**

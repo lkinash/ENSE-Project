@@ -69,6 +69,10 @@ public class ClientAPI {
         Calendar newCalendar = new Calendar(null, null, null);
         // TODO 
         // Properly declare variables based on google calendar
+        
+        String calendarId = "";
+        //TODO
+        //Get the calendar Id from the calendar
 		
         int phoneNumber;
         Date birthday;
@@ -90,10 +94,10 @@ public class ClientAPI {
         // Client must enter first name, last name, email and a password
         
 		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
-				phoneNumber, birthday, newAppointmentIds, newClearanceIds, newCalendar,
+				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId,
 				clientForm.getEmail(), clientForm.getPassword(), clientId);
 			
-  		ofy().save().entities(client).now();
+  		ofy().save().entities(client, newCalendar).now();
         
 		return client;
 		 

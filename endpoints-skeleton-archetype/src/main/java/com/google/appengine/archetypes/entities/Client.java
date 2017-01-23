@@ -47,9 +47,9 @@ public class Client extends Account {
 	private int phoneNumber;
 
 	/**
-	 * Description of the property calendar.
+	 * Description of the property calendarId.
 	 */
-	private Calendar calendar;
+	private String calendarId;
 
 	/**
 	 * Description of the property clearances.
@@ -75,13 +75,13 @@ public class Client extends Account {
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments, List<Long> newClearanceIds, Calendar newCalendar, String newEmail, String newPassword, long newUserId  ){
+	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments, List<Long> newClearanceIds, String newCalendarId, String newEmail, String newPassword, long newUserId  ){
 		
 		super(newEmail, newPassword, newUserId);
 		
 		this.birthday = newBirthday;
 		this.appointmentIds = newAppointments;
-		this.calendar = newCalendar;
+		this.calendarId = newCalendarId;
 		this.firstName = newFirstName;
 		this.lastName = newLastName;
 		this.phoneNumber = newPhoneNumber;
@@ -185,19 +185,19 @@ public class Client extends Account {
 	}
 
 	/**
-	 * Returns calendar.
-	 * @return calendar 
+	 * Returns calendarId.
+	 * @return calendarId 
 	 */
-	public Calendar getCalendar() {
-		return this.calendar;
+	public String getCalendarId() {
+		return this.calendarId;
 	}
 
 	/**
-	 * Sets a value to attribute calendar. 
-	 * @param newCalendar 
+	 * Sets a value to attribute calendarId. 
+	 * @param newCalendarId 
 	 */
-	public void setCalendar(Calendar newCalendar) {
-		this.calendar = newCalendar;
+	public void setCalendarId(String newCalendarId) {
+		this.calendarId = newCalendarId;
 	}
 
 	/**

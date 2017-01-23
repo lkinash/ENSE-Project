@@ -68,13 +68,21 @@ public class AdminApi {
         else 
         	calendar = new Calendar(null, null, null);				//if the calendar is unset it creates a new one
         
+        // TODO 
+        // Properly declare variables based on google calendar
+        
+        String calendarId = "";
+        //TODO
+        //Get the calendar Id from the calendar
+		
+        
         
         //employee must have a name, email and a password set
         
-  		Employee employee  = new Employee(calendar, employeeForm.getName(), employeeForm.getEmail(), employeeForm.getPassword(), employeeId, employeeForm.getServiceIds());
+  		Employee employee  = new Employee(calendarId, employeeForm.getName(), employeeForm.getEmail(), employeeForm.getPassword(), employeeId, employeeForm.getServiceIds());
   			
 
-  		ofy().save().entities(employee).now();
+  		ofy().save().entities(employee, calendar).now();
   		
 		return employee;
   	}
@@ -262,9 +270,13 @@ public class AdminApi {
 		 
 	    Employee employee = getEmployee(user, employeeId);
 	    
-	    if(!(employeeForm.getCalendar() == null)){
-	    	employee.setCalendar(employeeForm.getCalendar());
-	    }
+	    //if(!(employeeForm.getCalendar() == null)){
+	    	//employee.setCalendarId(employeeForm.getCalendar());
+	    //}
+	   
+	    //TODO
+	    //Fix this
+	    
 	    if(!(employeeForm.getName() == null)){
 	    	employee.setName(employeeForm.getName());
 	    }

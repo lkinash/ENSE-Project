@@ -31,6 +31,7 @@ public class OfyDatabaseService {
         factory().register(SaleItem.class);
         factory().register(Account.class);
         factory().register(Type.class);
+        
     }
 
     /**
