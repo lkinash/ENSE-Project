@@ -6,18 +6,28 @@ package com.google.appengine.archetypes.spi;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.List;
 
-import com.google.api.client.util.DateTime;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.extensions.appengine.datastore.AppEngineDataStoreFactory;
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventAttendee;
-import com.google.api.services.calendar.model.EventDateTime;
-import com.google.api.services.calendar.model.EventReminder;
 import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Appointment;
@@ -26,7 +36,6 @@ import com.google.appengine.archetypes.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.forms.EventForm;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
 import com.googlecode.objectify.Key;
-
 
 
 /**
@@ -186,8 +195,20 @@ public class AppointmentAPI {
         
         // Initialize Calendar service with valid OAuth credentials
         
-        //Calendar service = new Calendar.Builder(Constants.HTTP_TRANSPORT, Constants.JSON_FACTORY, credentials).setApplicationName("applicationName").build();
+        //GoogleCredential credentials = new GoogleCredential.Builder().setTransport(GoogleNetHttpTransport.newTrustedTransport())
+        	//	  .setJsonFactory(new GsonFactory())
+        		//  .setServiceAccountId("<service account email address>@developer.gserviceaccount.com")
+        	//	  .setServiceAccountScopes(Arrays.asList("https://www.googleapis.com/auth/calendar.readonly"))
+        		//  .setServiceAccountPrivateKeyFromP12File(new File("<private key for service account in P12 format>-privatekey.p12"))
+        	//	.build();
+        //Calendar client = new Calendar.Builder(GoogleNetHttpTransport.newTrustedTransport(), new GsonFactory(), credentials).build();
+        		
+        		
+        
+        //Calendar service = new Calendar.Builder(GoogleNetHttpTransport.newTrustedTransport(), Constants.JSON_FACTORY, authorize()).setApplicationName("applicationName").build();
 
+        
+        
         // Retrieve the calendar
         //Calendar calendar =  service.calendars().get(calendarId).execute();
         
@@ -221,7 +242,7 @@ public class AppointmentAPI {
         	.setUseDefault(false)
         	.setOverrides(Arrays.asList(reminderOverrides));
         event.setReminders(reminders);
-*/
+
         //event = calendar.events().insert(calendarId, event).execute();
 
         // TODO 
@@ -261,11 +282,12 @@ public class AppointmentAPI {
         .setOverrides(Arrays.asList(reminderOverrides));
     event.setReminders(reminders);
 
-    //event = service.events().insert(calendarId, event).execute();
+    event = service.events().insert(calendarId, event).execute();
     System.out.printf("Event created: %s\n", event.getHtmlLink());
         
 		return event;
-		
+		*/
+        return null;
 	}
 
 	/**
@@ -318,10 +340,10 @@ public class AppointmentAPI {
 	
 	private Calendar getCalendar(String calendarId){
 		
-        Key<Calendar> key = Key.create(Calendar.class, calendarId);
+		//TODO
+		//get calendar based on id passed in
 
-    	Calendar calendar = (Calendar) ofy().load().key(key).now();
-    	return calendar;
+    	return null;
 		
 	}
 	
@@ -343,4 +365,5 @@ public class AppointmentAPI {
   		return true;
   	}
 
+	
 }
