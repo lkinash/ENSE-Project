@@ -29,9 +29,6 @@ import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventAttendee;
-import com.google.api.services.calendar.model.EventDateTime;
-import com.google.api.services.calendar.model.EventReminder;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.Constants;
@@ -42,6 +39,7 @@ import com.google.appengine.archetypes.forms.EventForm;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
 import com.googlecode.objectify.Key;
 import com.google.appengine.archetypes.service.CalendarUtility;
+import com.google.appengine.archetypes.service.Quickstart;
 
 /**
  * Description of AppointmentAPI.
@@ -249,7 +247,7 @@ public class AppointmentAPI {
         event.setReminders(reminders);
 
         //event = calendar.events().insert(calendarId, event).execute();
-*/
+
         // TODO 
         // 
         Event event = new Event()
@@ -268,7 +266,7 @@ public class AppointmentAPI {
         .setDateTime(endDateTime)
         .setTimeZone("America/Los_Angeles");
     event.setEnd(end);
-/*
+
     String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
     event.setRecurrence(Arrays.asList(recurrence));
 
@@ -287,11 +285,12 @@ public class AppointmentAPI {
         .setOverrides(Arrays.asList(reminderOverrides));
     event.setReminders(reminders);
 */
-    event = service.events().insert(calendarId, event).execute();
-    System.out.printf("Event created: %s\n", event.getHtmlLink());
+   // event = service.events().insert(calendarId, event).execute();
+    //System.out.printf("Event created: %s\n", event.getHtmlLink());
         
-		return event;
+		//return event;
 
+        return null;
 	}
 
 	/**
@@ -351,7 +350,7 @@ public class AppointmentAPI {
 		
 		//TODO
 		//get calendar based on id passed in
-
+/*
 		String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
 	    Credential credential = null;
 		try {
@@ -377,6 +376,16 @@ public class AppointmentAPI {
 		
 		
     	return calendar;
+    	*/
+		
+		try {
+			Quickstart.addEvent(calendarId);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 		
 	}
 	
