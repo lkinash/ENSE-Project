@@ -20,15 +20,20 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.EventReminder;
 import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Appointment;
 import com.google.appengine.archetypes.forms.AppointmentForm;
@@ -36,7 +41,7 @@ import com.google.appengine.archetypes.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.forms.EventForm;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
 import com.googlecode.objectify.Key;
-
+import com.google.appengine.archetypes.service.CalendarUtility;
 
 /**
  * Description of AppointmentAPI.
@@ -206,8 +211,8 @@ public class AppointmentAPI {
         		
         
         //Calendar service = new Calendar.Builder(GoogleNetHttpTransport.newTrustedTransport(), Constants.JSON_FACTORY, authorize()).setApplicationName("applicationName").build();
-
         
+        Calendar service = CalendarUtility.loadCalendarClient(user.getUserId());
         
         // Retrieve the calendar
         //Calendar calendar =  service.calendars().get(calendarId).execute();
@@ -244,7 +249,7 @@ public class AppointmentAPI {
         event.setReminders(reminders);
 
         //event = calendar.events().insert(calendarId, event).execute();
-
+*/
         // TODO 
         // 
         Event event = new Event()
@@ -252,18 +257,18 @@ public class AppointmentAPI {
         .setLocation("800 Howard St., San Francisco, CA 94103")
         .setDescription("A chance to hear more about Google's developer products.");
 
-    DateTime startDateTime = new DateTime("2015-05-28T09:00:00-07:00");
+    DateTime startDateTime = new DateTime("2017-05-28T09:00:00-07:00");
     EventDateTime start = new EventDateTime()
         .setDateTime(startDateTime)
         .setTimeZone("America/Los_Angeles");
     event.setStart(start);
 
-    DateTime endDateTime = new DateTime("2015-05-28T17:00:00-07:00");
+    DateTime endDateTime = new DateTime("2017-05-28T17:00:00-07:00");
     EventDateTime end = new EventDateTime()
         .setDateTime(endDateTime)
         .setTimeZone("America/Los_Angeles");
     event.setEnd(end);
-
+/*
     String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
     event.setRecurrence(Arrays.asList(recurrence));
 
@@ -281,13 +286,12 @@ public class AppointmentAPI {
         .setUseDefault(false)
         .setOverrides(Arrays.asList(reminderOverrides));
     event.setReminders(reminders);
-
+*/
     event = service.events().insert(calendarId, event).execute();
     System.out.printf("Event created: %s\n", event.getHtmlLink());
         
 		return event;
-		*/
-        return null;
+
 	}
 
 	/**
@@ -337,13 +341,42 @@ public class AppointmentAPI {
 		return null;
 	} 
 	
+	/**
+	 * Description of the method filterAppointments.
+	 * @throws UnauthorizedException 
+	 */
 	
-	private Calendar getCalendar(String calendarId){
+	@ApiMethod(name = "getCalendar", httpMethod = "post")
+	public com.google.api.services.calendar.model.Calendar getCalendar(@Named("calendarId") final String calendarId, final User user){
 		
 		//TODO
 		//get calendar based on id passed in
 
-    	return null;
+		String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
+	    Credential credential = null;
+		try {
+			credential = CalendarUtility.newFlow().loadCredential(userId);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Calendar service = new Calendar.Builder(CalendarUtility.HTTP_TRANSPORT, CalendarUtility.JSON_FACTORY, credential)
+	    .setApplicationName("applicationName").build();
+	// Retrieve the calendar
+		com.google.api.services.calendar.model.Calendar calendar = null;
+		
+		try {
+			calendar = service.calendars().get(calendarId).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println(calendar.getSummary());
+		
+		
+    	return calendar;
 		
 	}
 	

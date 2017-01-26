@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Yaniv Inbar
  */
-class CalendarUtility {
+public class CalendarUtility {
 
   /**
    * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single
@@ -36,14 +36,14 @@ class CalendarUtility {
       AppEngineDataStoreFactory.getDefaultInstance();
   
   /** Global instance of the HTTP transport. */
-  static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
+  public static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
 
   /** Global instance of the JSON factory. */
-  static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+  public static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
   private static GoogleClientSecrets clientSecrets = null;
 
-  static GoogleClientSecrets getClientCredential() throws IOException {
+  public static GoogleClientSecrets getClientCredential() throws IOException {
     if (clientSecrets == null) {
       clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
           new InputStreamReader(CalendarUtility.class.getResourceAsStream("/client_secrets.json")));
@@ -55,20 +55,20 @@ class CalendarUtility {
     return clientSecrets;
   }
 
-  static String getRedirectUri(HttpServletRequest req) {
+  public static String getRedirectUri(HttpServletRequest req) {
     GenericUrl url = new GenericUrl(req.getRequestURL().toString());
     url.setRawPath("/oauth2callback");
     return url.build();
   }
 
-  static GoogleAuthorizationCodeFlow newFlow() throws IOException {
+  public static GoogleAuthorizationCodeFlow newFlow() throws IOException {
     return new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
         getClientCredential(), Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(
         DATA_STORE_FACTORY).setAccessType("offline").build();
   }
 
-  static Calendar loadCalendarClient() throws IOException {
-    String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
+  public static Calendar loadCalendarClient(String userId) throws IOException {
+    userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
     Credential credential = newFlow().loadCredential(userId);
     return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).build();
   }
