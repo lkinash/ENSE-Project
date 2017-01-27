@@ -379,7 +379,7 @@ public class AppointmentAPI {
     	*/
 		
 		try {
-			Quickstart.addEvent(calendarId);
+			Quickstart.addEvent(calendarId, user);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

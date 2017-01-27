@@ -1,6 +1,7 @@
 package com.google.appengine.archetypes.service;
 
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.appengine.api.users.User;
 import com.google.api.client.extensions.appengine.datastore.AppEngineDataStoreFactory;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -67,7 +68,7 @@ public class Quickstart {
      * @return an authorized Credential object.
      * @throws IOException
      */
-    public static Credential authorize() throws IOException {
+    public static Credential authorize(final User user) throws IOException {
         // Load client secrets.
         InputStream in =
             Quickstart.class.getResourceAsStream("/client_secret.json");
@@ -82,7 +83,7 @@ public class Quickstart {
                 .setAccessType("offline")
                 .build();
         Credential credential = new AuthorizationCodeInstalledApp(
-            flow, new LocalServerReceiver()).authorize("user");
+            flow, new LocalServerReceiver()).authorize(user.getUserId());
         System.out.println(
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
@@ -93,21 +94,20 @@ public class Quickstart {
      * @return an authorized Calendar client service
      * @throws IOException
      */
-    public static com.google.api.services.calendar.Calendar
-        getCalendarService() throws IOException {
-        Credential credential = authorize();
+    public static com.google.api.services.calendar.Calendar getCalendarService(final User user) throws IOException {
+        Credential credential = authorize(user);
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
 
-    public static WrappedBoolean addEvent(String calendarId) throws IOException {
+    public static WrappedBoolean addEvent(String calendarId, final User user) throws IOException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
         com.google.api.services.calendar.Calendar service =
-            getCalendarService();
+            getCalendarService(user);
 
         // List the next 10 events from the primary calendar.
         DateTime now = new DateTime(System.currentTimeMillis());
