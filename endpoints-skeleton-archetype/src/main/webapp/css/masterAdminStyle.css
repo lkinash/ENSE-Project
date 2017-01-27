@@ -1,0 +1,75 @@
+@charset "utf-8";
+/* CSS Document */
+html,
+body {
+  height: 100%;
+  margin: 0;	
+}
+
+.head h3{
+	color:#0A25BF;
+	margin-top: 0px;
+	display: inline;
+}
+
+.hright .dropdown{
+	display: inline;
+}
+
+.dropdown button{
+	background-color: lightgrey;
+	border: none;
+}
+.hright{
+	display:inline;
+	float:right;
+}
+
+.head{
+	color:#0A25BF;
+	background-color: lightgrey;
+	padding:15px;
+}
+.container{
+	margin:0;
+	padding: 0;
+	display: inline-flex;
+	width: 100%;
+	height:100%;	
+
+}
+
+.container .leftNav{
+	height: 100%;
+	width:200px;
+}
+
+.container .rightContent{
+
+	height:100%;
+	width: 100%;
+	margin: 0;
+}
+.container .leftNav ul{
+	list-style-type: none;
+	margin:0;
+	padding: 0;
+}
+.container .leftNav ul li{
+	margin:0;
+	list-style-type: none;
+	text-decoration: none;
+}
+.panel-group{
+	margin:0;
+	
+}
+.leftNav h4{
+	text-align: center;
+}
+
+
+.caret {
+	margin-left: 1%;
+    border-width: 8px;
+}
