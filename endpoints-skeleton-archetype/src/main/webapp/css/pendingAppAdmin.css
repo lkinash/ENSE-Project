@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+
+.rightContent h2{
+	text-align: center;
+	padding-bottom:2%;
+	color:#0A25BF;
+}
+.rightContent .appHolder{
+	margin-left: auto;
+	margin-right: auto;
+	width:50%;
+}
+
+.caret {
+	margin-left: 1%;
+    border-width: 8px;
+}
+.cname{
+	display: inline;
+	padding-left: 10%;
+
+}
+.btnApp{
+	padding:0;
+	margin:0;
+	border: none;
+	display: inline;
+	float: right;
+	
+}
+
+table{
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+table tr td{
+	width: 50%;
+}
+table tr td label{
+	color: black;
+}
+

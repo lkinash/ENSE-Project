@@ -1,0 +1,88 @@
+@charset "utf-8";
+/* CSS Document */
+
+#nclient{
+	display: none;
+}
+label{
+	color: black;
+}
+.login{
+	
+	margin-top: 30%;
+	padding:5%;
+	border:solid;
+	border-color: white;
+	border-radius:25px;
+	background-color: lightgray;
+	text-align: center;
+	
+}
+
+body h2{
+	color:#0A25BF;
+}
+.hright{
+	display:inline;
+	color:#fff;
+	float:right;
+}
+
+
+.login h2{
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+.login .form-group table{
+
+	margin-left: auto;
+	margin-right:auto;	
+		
+}
+.forgotP{
+	margin-bottom: 5%;
+}
+.forgotP a{
+	text-decoration: none;
+	font-weight: bold;
+    
+}
+.drop{
+	padding-left: 5%;
+	padding-bottom: 5%; 
+}
+
+.container{
+	height: 100%;
+	width: 100%;
+
+}
+
+@media(min-width: 1024px){
+	
+	.login{
+	width: 30%;
+	height: 32%;
+	padding: 0px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin-top: 10%;
+	margin-left: auto;
+	margin-right:auto;
+	border:solid;
+	border-color: white;
+	border-radius:25px;
+	background-color:lightgray;
+	}
+	#subBtn{
+		margin-bottom: 10%;
+	
+	}
+	body{
+		text-align: left;
+	}
+	
+	#nclient{
+		display: inline-flex;
+	}
+}

@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Add Room</title>
+	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  	<link href="/css/masterAdminStyle.css" rel="stylesheet">
+   	<link href="/css/addRoomAdmin.css" rel="stylesheet">
+</head>
+<body>
+<div class="head">
+		<h3>Scheduler App</h3>
+			<div class="hright">
+				<label class="username">Admin User</label>
+				<div class="dropdown">
+					<button type="button" data-toggle="dropdown">
+					<span class="caret"></span></button>
+					<ul class="dropdown-menu dropdown-menu-right">
+					<li><a href="/partials/adminEditProfile.html">Edit Profile</a></li>
+					<li><a href="#">Logout</a></li>
+					</ul>
+				</div>
+			</div>
+	</div>
+	
+	<div class="container">
+		
+		<div class="leftNav">
+			<div class="admin">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse10009">Admin</a>
+      						</h4>
+    					</div>
+    					<div id="collapse10009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="/partials/pendingAppAdmin.html">Pending Appointment</a></li>
+     						 	<li><a href="#">Add Admin</a></li>
+     						 	<li><a href="/partials/viewAdminAccount.html">View List Admins</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+			
+			<div class="product">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse20009">Product</a>
+      						</h4>
+    					</div>
+    					<div id="collapse20009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="#">Add Product</a></li>
+     						 	<li><a href="#">View Prodcuts</a></li>
+     						 	<li><a href="#">CheckOut</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+			<div class="services">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse30009">Services</a>
+      						</h4>
+    					</div>
+    					<div id="collapse30009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="#">Add Service</a></li>
+     						 	<li><a href="/partials/viewServiceAdmin.html">View Services</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+			<div class="employee">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse40009">Employee</a>
+      						</h4>
+    					</div>
+    					<div id="collapse40009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="/partials/addEmployeeAdmin.html">Add Employee</a></li>
+     						 	<li><a href="/partials/viewEmployeeAdmin.html">View Employee</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+			<div class="room">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse50009">Room</a>
+      						</h4>
+    					</div>
+    					<div id="collapse50009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="/partials/addRoomAdmin.html">Add Room</a></li>
+     						 	<li><a href="/partials/viewRoomAdmin.html">View Room</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="rightContent">
+			<h2>Add Room</h2>
+			<div class="mainHolder">
+					<div class="roomInfoHolder">
+						<div class="roomNameHolder">
+							<h4>Room Name</h4>
+							<input type="text" class="form-control" id="roomName">
+						</div>
+						<div class="serviceOffered">
+							<div class="heading">
+								<h5>Services Preformed</h5>
+									<div class="plusMinus">
+										<button type="button" class="btn btn-default">
+										<h5>+ / -</h5>
+										</button>
+									</div>
+							</div>
+							<div class="infoCategory">
+								<div class="type">
+									<h5>Service Type</h5>
+								</div>
+								<div class="name">
+									<h5>Service Name</h5>
+								</div>
+							</div>
+							<div class="serviceType">
+								<div class="form-group">
+								  <select class="form-control" id="sel1">
+									<option>Type</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								  </select>
+								</div>
+								<div class="serviceName">
+								  <select class="form-control" id="sel2">
+									<option>Service Name</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								  </select>
+								</div>	
+						</div>
+					</div>
+					<div class="submitBtn">
+						<button type="button" class="btn btn-default">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+.container{
+	
+	width: 600px;
+	height: 400px;
+	margin-top: 10%;
+	margin-left: auto;
+	margin-right:auto;
+	border-radius:25px;
+	background-color: lightgray;
+	
+}
+.inner h2{
+	color:#0A25BF;
+	text-align: center;
+}
+.information table{
+	margin-top:5%;
+	margin-bottom: 6%;
+	white-space: nowrap;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.innerTh{
+	padding-left: 5%;
+	padding-bottom:1%;
+	width:60%;
+}
+.container button{
+	float: right;
+	margin-right: 15%
+}
+
