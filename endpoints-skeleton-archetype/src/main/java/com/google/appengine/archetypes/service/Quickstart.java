@@ -15,6 +15,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.*;
+import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
 
 import java.io.IOException;
@@ -24,17 +25,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Quickstart {
+
     /** Application name. */
     private static final String APPLICATION_NAME =
         "Google Calendar API Java Quickstart";
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
-        System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
+        System.getProperty("user.home"),
+    		".credentials/calendar-java-quickstart");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-   // private static FileDataStoreFactory DATA_STORE_FACTORY;
+    private static FileDataStoreFactory DATA_STORE_FACTORY;
 
+    
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY =
         JacksonFactory.getDefaultInstance();
@@ -42,8 +46,7 @@ public class Quickstart {
     /** Global instance of the HTTP transport. */
     private static HttpTransport HTTP_TRANSPORT;
 
-    private static final AppEngineDataStoreFactory DATA_STORE_FACTORY =
-    	      AppEngineDataStoreFactory.getDefaultInstance();
+    //private static final AppEngineDataStoreFactory DATA_STORE_FACTORY = AppEngineDataStoreFactory.getDefaultInstance();
     
     /** Global instance of the scopes required by this quickstart.
      *
@@ -56,7 +59,7 @@ public class Quickstart {
     static {
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            //DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
@@ -68,10 +71,10 @@ public class Quickstart {
      * @return an authorized Credential object.
      * @throws IOException
      */
-    public static Credential authorize(final User user) throws IOException {
+    public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-            Quickstart.class.getResourceAsStream("/client_secret.json");
+            Quickstart.class.getResourceAsStream("/resources/client_secret.json");
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -83,7 +86,7 @@ public class Quickstart {
                 .setAccessType("offline")
                 .build();
         Credential credential = new AuthorizationCodeInstalledApp(
-            flow, new LocalServerReceiver()).authorize(user.getUserId());
+            flow, new LocalServerReceiver()).authorize("kinash.lindsey@gmail.com");
         System.out.println(
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
@@ -95,7 +98,7 @@ public class Quickstart {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar getCalendarService(final User user) throws IOException {
-        Credential credential = authorize(user);
+        Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)

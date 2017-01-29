@@ -2,6 +2,7 @@ package com.google.appengine.archetypes.servlets;
 
 // import Sendgrid class in order to send emails 
 import com.google.appengine.archetypes.Constants;
+import com.google.appengine.archetypes.ConstantsSecret;
 import com.google.appengine.archetypes.servlets.Sendgrid;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class GoogleSendgridJavaServlet extends HttpServlet {
             try {
                 // initialize Sendgrid class
                 // please replace "<sendgrid_username>" and "<sendgrid_password>" with your SendGrid credentials
-                Sendgrid mail = new Sendgrid(Constants.SENDGRID_USERNAME,Constants.SENDGRID_PASSWORD);
+                Sendgrid mail = new Sendgrid(ConstantsSecret.SENDGRID_USERNAME,ConstantsSecret.SENDGRID_PASSWORD);
                 // set to address, from address, subject, the html/text content and send the email 
                 mail.setTo(req.getParameter("emailto"))
                     // update the <from_address> with your email address

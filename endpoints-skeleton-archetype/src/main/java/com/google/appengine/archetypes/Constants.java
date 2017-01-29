@@ -22,31 +22,6 @@ public class Constants {
   public static final String ANDROID_AUDIENCE = WEB_CLIENT_ID;
 
   public static final String EMAIL_SCOPE = "https://www.googleapis.com/auth/userinfo.email";
-  
-  public static final String SENDGRID_USERNAME = "ENSE-Project";
-  public static final String SENDGRID_PASSWORD = "";
-  
 
-  /** Directory to store user credentials for this application. */
-  public static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
-  
-  /** Global instance of the {@link FileDataStoreFactory}. */
-  public static FileDataStoreFactory DATA_STORE_FACTORY;
-
-  /** Global instance of the JSON factory. */
-  public static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-
-  /** Global instance of the HTTP transport. */
-  public static HttpTransport HTTP_TRANSPORT;
-  
-  static {
-      try {
-          HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-          DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
-      } catch (Throwable t) {
-          t.printStackTrace();
-          System.exit(1);
-      }
-  }
   
 }

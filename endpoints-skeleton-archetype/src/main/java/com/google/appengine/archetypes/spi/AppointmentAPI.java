@@ -346,7 +346,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "getCalendar", httpMethod = "post")
-	public com.google.api.services.calendar.model.Calendar getCalendar(@Named("calendarId") final String calendarId, final User user){
+	public com.google.api.services.calendar.model.Calendar getCalendar( final User user){
 		
 		//TODO
 		//get calendar based on id passed in
@@ -378,6 +378,9 @@ public class AppointmentAPI {
     	return calendar;
     	*/
 		
+		String calendarId = "j6pq7ifpumics69e9948q2bhdc@group.calendar.google.com";
+		
+	
 		try {
 			Quickstart.addEvent(calendarId, user);
 		} catch (IOException e) {
