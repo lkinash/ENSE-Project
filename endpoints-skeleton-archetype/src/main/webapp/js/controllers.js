@@ -19,3 +19,7 @@ var schedulerApplication = schedulerApplication || {};
 schedulerApplication.controllers = angular.module('schedulerController', ['ui.bootstrap']);
 
 
+conferenceApp.controllers.controller('AddEmployeeCtrl',
+	    function ($scope, $modalInstance, $rootScope, oauth2Provider) {
+	 
+	    });
