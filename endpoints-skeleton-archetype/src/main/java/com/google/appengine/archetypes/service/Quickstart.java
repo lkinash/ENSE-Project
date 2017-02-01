@@ -26,14 +26,15 @@ import java.util.List;
 
 public class Quickstart {
 
+	
     /** Application name. */
     private static final String APPLICATION_NAME =
         "Google Calendar API Java Quickstart";
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
-        System.getProperty("user.home"),
-    		".credentials/calendar-java-quickstart");
+       // System.getProperty("user.home"),
+    		"/credentials/calendar-java-quickstart.json");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory DATA_STORE_FACTORY;

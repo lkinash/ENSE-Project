@@ -31,6 +31,11 @@ public enum Status {
 					 * Description of present.
 					 */
 					present,
+					
+					/**
+					 * Description of present.
+					 */
+					inProgress,
 
 					/**
 					 * Description of checkout.
