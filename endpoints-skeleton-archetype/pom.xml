@@ -20,6 +20,7 @@
     <gcloud.plugin.version>3.8.0</gcloud.plugin.version>
     <app.id>ense-project</app.id>
     <maven.compiler.source>1.7</maven.compiler.source>
+    
   </properties>
   <dependencies>
     <dependency>
@@ -127,13 +128,6 @@
     <artifactId>spring-web</artifactId>
     <version>4.3.6.RELEASE</version>
 </dependency>
-<!-- https://mvnrepository.com/artifact/com.google.gdata/gdata-calendar-2.0 -->
-<dependency>
-    <groupId>com.google.gdata</groupId>
-    <artifactId>gdata-calendar-2.0</artifactId>
-    <version>1.41.5</version>
-</dependency>
-
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-stubs</artifactId>
@@ -146,6 +140,11 @@
       <version>v3-rev230-1.22.0</version>
       <scope>compile</scope>
     </dependency>
+	<dependency>
+	    <groupId>com.google.gdata</groupId>
+	    <artifactId>gdata-calendar-2.0</artifactId>
+	    <version>1.46.0</version>
+	</dependency>
   </dependencies>
   <repositories>
     <repository>
@@ -156,6 +155,30 @@
       <name>Central Repository</name>
       <url>http://repo.maven.apache.org/maven2</url>
     </repository>
+    		<repository>
+			<id>google-api-services</id>
+			<url>http://google-api-client-libraries.appspot.com/mavenrepo</url>
+		</repository>
+		<!-- this repository for xero oauth access. -->
+		<repository>
+			<id>oauth</id>
+			<name>OAuth Repository</name>
+			<url>http://oauth.googlecode.com/svn/code/maven</url>
+		</repository>
+		   <repository>
+      <id>jboss-eap-repository-group</id>
+      <name>JBoss EAP Maven Repository</name>
+      <url>file:///path/to/repo/jboss-eap-6.x.0-maven-repository/</url>
+      <layout>default</layout>
+      <releases>
+         <enabled>true</enabled>
+         <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+         <enabled>true</enabled>
+         <updatePolicy>never</updatePolicy>
+      </snapshots>
+   </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
@@ -169,7 +192,19 @@
       <name>Central Repository</name>
       <url>http://repo.maven.apache.org/maven2</url>
     </pluginRepository>
-  </pluginRepositories>
+
+   <pluginRepository>
+      <id>jboss-eap-repository-group</id>
+      <name>JBoss EAP Maven Repository</name>
+      <url>file:///path/to/repo/jboss-eap-6.x.0-maven-repository/</url>
+      <releases>
+         <enabled>true</enabled>
+      </releases>
+      <snapshots>
+         <enabled>true</enabled>
+      </snapshots>
+   </pluginRepository>
+</pluginRepositories>
   <build>
     <sourceDirectory>/Users/Lindsey/ENSE-Project/endpoints-skeleton-archetype/src/main/java</sourceDirectory>
     <scriptSourceDirectory>/Users/Lindsey/ENSE-Project/endpoints-skeleton-archetype/src/main/scripts</scriptSourceDirectory>
@@ -233,6 +268,18 @@
       </plugins>
     </pluginManagement>
     <plugins>
+        <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerArgument>-Xlint:-path</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>2.6</version>

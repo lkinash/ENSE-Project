@@ -1,24 +1,21 @@
 package com.google.appengine.archetypes.spi;
 
-import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
+import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 
 import java.util.List;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.calendar.Calendar;
+import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.Constants;
-import com.google.appengine.archetypes.wrappers.*;
 import com.google.appengine.archetypes.entities.Admin;
-import com.google.appengine.archetypes.entities.Client;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.entities.Product;
 import com.google.appengine.archetypes.entities.Room;
-import com.google.appengine.archetypes.entities.SaleItem;
 import com.google.appengine.archetypes.entities.Service;
 import com.google.appengine.archetypes.entities.Type;
 import com.google.appengine.archetypes.forms.AdminForm;
@@ -27,9 +24,9 @@ import com.google.appengine.archetypes.forms.ProductForm;
 import com.google.appengine.archetypes.forms.RoomForm;
 import com.google.appengine.archetypes.forms.ServiceForm;
 import com.google.appengine.archetypes.forms.TypeForm;
-import com.google.appengine.archetypes.list.AdminClearances;
-import com.google.appengine.api.users.User;
+import com.google.appengine.archetypes.wrappers.WrappedBoolean;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.cmd.Query;
 
 @Api(
 	    name = "admin",
@@ -660,13 +657,105 @@ public class AdminApi {
   	}
 
   	/**
+  	 * Returns services.
+  	 * @return services 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "getAllServices", httpMethod = "get")
+ 	public List<Service> getAllService(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        Query<Service> query =  ofy().load().type(Service.class);
+    	query = query.order("name");
+    	
+        return query.list();
+        
+  	}
+
+  	/**
+  	 * Returns saleItems.
+  	 * @return saleItems 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "getAllEmployee", httpMethod = "get")
+ 	public List<Employee> getAllEmployee(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        Query<Employee> query =  ofy().load().type(Employee.class);
+    	query = query.order("name");
+    	
+        return query.list();
+  		
+  	}
+
+  	/**
+  	 * Returns products.
+  	 * @return products 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "getAllProducts", httpMethod = "get")
+ 	public List<Product> getAllProduct(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+        
+        Query<Product> query =  ofy().load().type(Product.class);
+    	query = query.order("name");
+    	
+        return query.list();
+  		
+  	}
+
+  	/**
+  	 * Returns admins.
+  	 * @return admins 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "getAllAdmin", httpMethod = "get")
+ 	public List<Admin> getAllAdmin(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+        
+        Query<Admin> query =  ofy().load().type(Admin.class);
+    	query = query.order("email");
+    	
+        return query.list();
+        
+  	}
+  	
+ 	/**
   	 * Returns rooms.
   	 * @return rooms 
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getRooms", httpMethod = "get")
- 	public Room getRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
+  	@ApiMethod(name = "getAllRooms", httpMethod = "get")
+ 	public List<Room> getAllRoom(final User user) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -675,11 +764,10 @@ public class AdminApi {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
-        Key<Room> key = Key.create(Room.class, roomId);
-        		
-        Room room = (Room) ofy().load().key(key).now();
-  		
-  		return room;
+        Query<Room> query =  ofy().load().type(Room.class);
+    	query = query.order("name");
+    	
+        return query.list();
   	}
 
   	/**
@@ -775,6 +863,29 @@ public class AdminApi {
   	}
   	
   	/**
+	 * Returns rooms.
+	 * @return rooms 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "getRooms", httpMethod = "get")
+	public Room getRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }       
+	    if (!checkAdminAuthorizationForPage(user)) {
+	        throw new UnauthorizedException("Authorization level too low.");
+	    }
+		
+	    Key<Room> key = Key.create(Room.class, roomId);
+	    		
+	    Room room = (Room) ofy().load().key(key).now();
+		
+		return room;
+	}
+
+	/**
   	 * Returns types.
   	 * @return types 
   	 * @throws UnauthorizedException 

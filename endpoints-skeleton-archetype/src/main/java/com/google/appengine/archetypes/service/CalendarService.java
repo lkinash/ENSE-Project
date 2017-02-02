@@ -46,7 +46,7 @@ public class CalendarService {
 	     * @return list of names of a user's public and private calendars.
 	     */
 	    public List<String> getCalendarNames(String accessToken, String accessTokenSecret) throws Exception {
-	        CalendarService calendarService = new CalendarService("apache-camel-2.3"); 
+	        CalendarService calendarService = new CalendarService(); 
 	        OAuthParameters params = getOAuthParams(accessToken, accessTokenSecret);
 	        calendarService.setOAuthCredentials(params, new OAuthHmacSha1Signer());
 	        URL feedUrl = new URL("http://www.google.com/calendar/feeds/default/");
