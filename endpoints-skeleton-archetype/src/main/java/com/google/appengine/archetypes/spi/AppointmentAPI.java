@@ -28,7 +28,6 @@ import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Event;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.Constants;
@@ -183,7 +182,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "createEvent", httpMethod = "post")
-  	public Event createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+  	public WrappedBoolean createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -210,7 +209,7 @@ public class AppointmentAPI {
         
         //Calendar service = new Calendar.Builder(GoogleNetHttpTransport.newTrustedTransport(), Constants.JSON_FACTORY, authorize()).setApplicationName("applicationName").build();
         
-        Calendar service = CalendarUtility.loadCalendarClient(user.getUserId());
+        //Calendar service = CalendarUtility.loadCalendarClient(user.getUserId());
         
         // Retrieve the calendar
         //Calendar calendar =  service.calendars().get(calendarId).execute();
@@ -290,6 +289,9 @@ public class AppointmentAPI {
         
 		//return event;
 
+        
+        Quickstart.addEvent(calendarId, user);
+        
         return null;
 	}
 
@@ -346,7 +348,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "getCalendar", httpMethod = "post")
-	public com.google.api.services.calendar.model.Calendar getCalendar( final User user){
+	public Calendar getCalendar( final User user){
 		
 		//TODO
 		//get calendar based on id passed in
@@ -363,7 +365,7 @@ public class AppointmentAPI {
 		Calendar service = new Calendar.Builder(CalendarUtility.HTTP_TRANSPORT, CalendarUtility.JSON_FACTORY, credential)
 	    .setApplicationName("applicationName").build();
 	// Retrieve the calendar
-		com.google.api.services.calendar.model.Calendar calendar = null;
+		Calendar calendar = null;
 		
 		try {
 			calendar = service.calendars().get(calendarId).execute();

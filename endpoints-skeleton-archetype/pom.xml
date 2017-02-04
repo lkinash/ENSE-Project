@@ -10,7 +10,7 @@
     <maven>3.3.9</maven>
   </prerequisites>
   <properties>
-    <appengine.target.version>1.9.21</appengine.target.version>
+    <appengine.target.version>1.9.49</appengine.target.version>
     <app.version>1</app.version>
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
     <maven.compiler.target>1.7</maven.compiler.target>

@@ -19,13 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  
 import com.google.gdata.client.authn.oauth.OAuthHmacSha1Signer;
 import com.google.gdata.client.authn.oauth.OAuthParameters;
-import com.google.gdata.client.calendar.CalendarService;
+//import com.google.gdata.client.calendar.CalendarService;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.calendar.CalendarFeed;
  
 
 public class CalendarService {
 
+	
 	  private Properties credentials;
 	  
 	    /**
@@ -44,7 +45,7 @@ public class CalendarService {
 	     * @param accessToken OAuth access token.
 	     * @param accessTokenSecret OAuth access token secret.
 	     * @return list of names of a user's public and private calendars.
-	     */
+	     *//*
 	    public List<String> getCalendarNames(String accessToken, String accessTokenSecret) throws Exception {
 	        CalendarService calendarService = new CalendarService(); 
 	        OAuthParameters params = getOAuthParams(accessToken, accessTokenSecret);
@@ -107,4 +108,5 @@ public class CalendarService {
 	        return getCookieValue(request.getCookies(), "TUTORIAL-ACCESS-TOKEN-SECRET");
 	    }
 	 
+	    */
 }

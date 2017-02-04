@@ -37,7 +37,7 @@ public class Quickstart {
     		"/credentials/calendar-java-quickstart.json");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+   // private static FileDataStoreFactory DATA_STORE_FACTORY;
 
     
     /** Global instance of the JSON factory. */
@@ -47,7 +47,7 @@ public class Quickstart {
     /** Global instance of the HTTP transport. */
     private static HttpTransport HTTP_TRANSPORT;
 
-    //private static final AppEngineDataStoreFactory DATA_STORE_FACTORY = AppEngineDataStoreFactory.getDefaultInstance();
+    private static final AppEngineDataStoreFactory DATA_STORE_FACTORY = AppEngineDataStoreFactory.getDefaultInstance();
     
     /** Global instance of the scopes required by this quickstart.
      *
@@ -64,12 +64,7 @@ public class Quickstart {
             t.printStackTrace();
             System.exit(1);
         }
-        try {
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            System.exit(1);
-        }
+
     }
 
     /**
@@ -80,7 +75,7 @@ public class Quickstart {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-            Quickstart.class.getResourceAsStream("/resources/client_secret.json");
+            Quickstart.class.getResourceAsStream("/resources/service_client_secret.json");
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -117,7 +112,7 @@ public class Quickstart {
         //   com.google.api.services.calendar.model.Calendar class.
         com.google.api.services.calendar.Calendar service =
             getCalendarService(user);
-
+/*
         // List the next 10 events from the primary calendar.
         DateTime now = new DateTime(System.currentTimeMillis());
         Events events = service.events().list(calendarId)
@@ -139,7 +134,28 @@ public class Quickstart {
                 System.out.printf("%s (%s)\n", event.getSummary(), start);
             }
         }
+        */
         
+        Event event = new Event()
+        .setSummary("Google I/O 2015")
+        .setLocation("800 Howard St., San Francisco, CA 94103")
+        .setDescription("A chance to hear more about Google's developer products.");
+
+    DateTime startDateTime = new DateTime("2017-05-27T09:00:00-07:00");
+    EventDateTime start = new EventDateTime()
+        .setDateTime(startDateTime)
+        .setTimeZone("America/Los_Angeles");
+    event.setStart(start);
+
+    DateTime endDateTime = new DateTime("2017-05-27T17:00:00-07:00");
+    EventDateTime end = new EventDateTime()
+        .setDateTime(endDateTime)
+        .setTimeZone("America/Los_Angeles");
+    event.setEnd(end);
+    
+    event = service.events().insert(calendarId, event).execute();
+    System.out.printf("Event created: %s\n", event.getHtmlLink());
+    
         return null;
     }
 
