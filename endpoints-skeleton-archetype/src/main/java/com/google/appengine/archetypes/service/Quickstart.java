@@ -17,6 +17,7 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.*;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
+import com.google.common.collect.Lists;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,8 +42,7 @@ public class Quickstart {
 
     
     /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY =
-        JacksonFactory.getDefaultInstance();
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
     /** Global instance of the HTTP transport. */
     private static HttpTransport HTTP_TRANSPORT;
@@ -54,9 +54,11 @@ public class Quickstart {
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/calendar-java-quickstart
      */
-    private static final List<String> SCOPES =
-        Arrays.asList(CalendarScopes.CALENDAR_READONLY);
+    private static final List<String> SCOPES = Lists.newArrayList("https://www.googleapis.com/auth/calendar");
+        //Arrays.asList(CalendarScopes.CALENDAR_READONLY);
 
+        
+        
     static {
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -75,7 +77,7 @@ public class Quickstart {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-            Quickstart.class.getResourceAsStream("/resources/new_client_secret.json");
+            Quickstart.class.getResourceAsStream("/resources/client_secret.json");
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
