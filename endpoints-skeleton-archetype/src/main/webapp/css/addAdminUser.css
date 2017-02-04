@@ -1,0 +1,54 @@
+@charset "utf-8";
+/* CSS Document */
+h2{
+	color:#0A25BF;
+	text-align: center;
+}
+.mainContainer{
+	background-color: lightgray;
+	width:80%;
+	height:50%;
+	border-radius:25px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.mainContainer table{
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 50px;
+	
+}
+.adminInfo{
+	padding-top: 5%;
+	width:30%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.adminInfo table{
+
+	width: 100%;
+}
+.adminPriv{
+	margin-top: 2%;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.adminPriv table{
+	width: 100%;
+	text-align: center;
+	border-bottom: solid;
+}
+.adminPriv table th{
+	white-space:nowrap;
+	text-align: center;
+	border-bottom: solid;
+}
+.checkbox{
+	height: 10px;
+}
+.btnSubmit{
+	margin-top: 5%;
+	text-align: center;
+
+}

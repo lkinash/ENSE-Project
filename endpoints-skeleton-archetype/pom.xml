@@ -431,6 +431,7 @@
           </reportPlugins>
         </configuration>
       </plugin>
+      
     </plugins>
   </build>
   <reporting>
