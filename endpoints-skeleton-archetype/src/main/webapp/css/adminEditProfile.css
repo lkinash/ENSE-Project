@@ -12,7 +12,7 @@
 }
 .rightContent h2{
 	text-align: center;
-	margin-bottom: 5%;
+	margin-bottom: 2%;
 	color:#0A25BF;
 }
 .editProfile table{
@@ -28,7 +28,9 @@
 
 .editProfile table tr th{
 	padding-left: 5%;
+	white-space:nowrap;
 }
+
 
 
 
