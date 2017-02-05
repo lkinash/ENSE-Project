@@ -9,6 +9,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
@@ -16,6 +17,7 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.*;
 import com.google.appengine.archetypes.Constants;
+import com.google.appengine.archetypes.ConstantsSecret;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
 import com.google.common.collect.Lists;
 
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Quickstart {
@@ -76,18 +79,29 @@ public class Quickstart {
      */
     public static Credential authorize() throws IOException {
         // Load client secrets.
-        InputStream in =
-            Quickstart.class.getResourceAsStream("/resources/client_secret.json");
-        GoogleClientSecrets clientSecrets =
-            GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        //InputStream in =
+          //  Quickstart.class.getResourceAsStream("/resources/client_secret.json");
+        //GoogleClientSecrets clientSecrets =
+          //  GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow =
-                new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(DATA_STORE_FACTORY)
-                .setAccessType("offline")
-                .build();
+        //GoogleAuthorizationCodeFlow flow =
+          //      new GoogleAuthorizationCodeFlow.Builder(
+            //            HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+              //  .setDataStoreFactory(DATA_STORE_FACTORY)
+               // .setAccessType("offline")
+              //  .build();
+    	
+    	//GoogleAuthorizationCodeFlow flow = flow_from_clientsecrets("resources/client_secrets.json",
+          //      scope="https://www.googleapis.com/auth/calendar'",
+            //redirect_uri="http://example.com/auth_return");
+              
+    	GoogleAuthorizationCodeFlow flow =  new GoogleAuthorizationCodeFlow.Builder(
+    	        new NetHttpTransport(), JacksonFactory.getDefaultInstance(),
+    	        ConstantsSecret.client_id, ConstantsSecret.client_secret,
+    	        Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(
+    	        DATA_STORE_FACTORY).setAccessType("offline").build();
+    	
         Credential credential = new AuthorizationCodeInstalledApp(
             flow, new LocalServerReceiver()).authorize("kinash.lindsey@gmail.com");
         System.out.println(
