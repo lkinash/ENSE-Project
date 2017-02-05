@@ -41,7 +41,6 @@ public class Quickstart {
     		"/credentials/calendar-java-quickstart.json");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-   // private static FileDataStoreFactory DATA_STORE_FACTORY;
 
     
     /** Global instance of the JSON factory. */
@@ -57,8 +56,7 @@ public class Quickstart {
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/calendar-java-quickstart
      */
-    private static final List<String> SCOPES = Lists.newArrayList("https://www.googleapis.com/auth/calendar");
-        //Arrays.asList(CalendarScopes.CALENDAR_READONLY);
+    private static final List<String> SCOPES = Lists.newArrayList(Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE, Constants.EMAIL_SCOPE);
 
         
         
@@ -77,33 +75,15 @@ public class Quickstart {
      * @return an authorized Credential object.
      * @throws IOException
      */
-    public static Credential authorize() throws IOException {
-        // Load client secrets.
-        //InputStream in =
-          //  Quickstart.class.getResourceAsStream("/resources/client_secret.json");
-        //GoogleClientSecrets clientSecrets =
-          //  GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-        // Build flow and trigger user authorization request.
-        //GoogleAuthorizationCodeFlow flow =
-          //      new GoogleAuthorizationCodeFlow.Builder(
-            //            HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-              //  .setDataStoreFactory(DATA_STORE_FACTORY)
-               // .setAccessType("offline")
-              //  .build();
-    	
-    	//GoogleAuthorizationCodeFlow flow = flow_from_clientsecrets("resources/client_secrets.json",
-          //      scope="https://www.googleapis.com/auth/calendar'",
-            //redirect_uri="http://example.com/auth_return");
+    public static Credential authorize(final User user) throws IOException {
               
     	GoogleAuthorizationCodeFlow flow =  new GoogleAuthorizationCodeFlow.Builder(
-    	        new NetHttpTransport(), JacksonFactory.getDefaultInstance(),
+    	        HTTP_TRANSPORT, JSON_FACTORY,
     	        ConstantsSecret.client_id, ConstantsSecret.client_secret,
-    	        Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(
-    	        DATA_STORE_FACTORY).setAccessType("offline").build();
-    	
+    	        SCOPES).setDataStoreFactory(DATA_STORE_FACTORY).build();
+    	        
         Credential credential = new AuthorizationCodeInstalledApp(
-            flow, new LocalServerReceiver()).authorize("kinash.lindsey@gmail.com");
+            flow, new LocalServerReceiver()).authorize(Constants.API_EXPLORER_CLIENT_ID);
         System.out.println(
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
@@ -115,7 +95,7 @@ public class Quickstart {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar getCalendarService(final User user) throws IOException {
-        Credential credential = authorize();
+        Credential credential = authorize(user);
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
@@ -128,29 +108,7 @@ public class Quickstart {
         //   com.google.api.services.calendar.model.Calendar class.
         com.google.api.services.calendar.Calendar service =
             getCalendarService(user);
-/*
-        // List the next 10 events from the primary calendar.
-        DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = service.events().list(calendarId)
-            .setMaxResults(10)
-            .setTimeMin(now)
-            .setOrderBy("startTime")
-            .setSingleEvents(true)
-            .execute();
-        List<Event> items = events.getItems();
-        if (items.size() == 0) {
-            System.out.println("No upcoming events found.");
-        } else {
-            System.out.println("Upcoming events");
-            for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
-                if (start == null) {
-                    start = event.getStart().getDate();
-                }
-                System.out.printf("%s (%s)\n", event.getSummary(), start);
-            }
-        }
-        */
+
         
         Event event = new Event()
         .setSummary("Google I/O 2015")

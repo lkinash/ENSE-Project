@@ -37,7 +37,6 @@ import com.google.appengine.archetypes.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.forms.EventForm;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
 import com.googlecode.objectify.Key;
-import com.google.appengine.archetypes.service.CalendarUtility;
 import com.google.appengine.archetypes.service.Quickstart;
 
 /**
@@ -48,7 +47,7 @@ import com.google.appengine.archetypes.service.Quickstart;
 @Api(
 	    name = "appointment",
 	    version = "v1",
-	    scopes = {Constants.EMAIL_SCOPE},
+	    scopes = {Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE},
 	    clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID, Constants.IOS_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID},
 	    description = "An API for making appointments."
 	)
