@@ -1,7 +1,6 @@
 package com.google.appengine.archetypes.service;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.appengine.api.users.User;
 import com.google.api.client.extensions.appengine.datastore.AppEngineDataStoreFactory;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -16,6 +15,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.*;
+import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.ConstantsSecret;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
@@ -83,12 +83,13 @@ public class Quickstart {
     	        SCOPES).setDataStoreFactory(DATA_STORE_FACTORY).build();
     	        
         Credential credential = new AuthorizationCodeInstalledApp(
-            flow, new LocalServerReceiver()).authorize(Constants.API_EXPLORER_CLIENT_ID);
+            flow, new LocalServerReceiver()).authorize(user.getUserId());
         System.out.println(
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 
+    
     /**
      * Build and return an authorized Calendar client service.
      * @return an authorized Calendar client service
@@ -132,5 +133,5 @@ public class Quickstart {
     
         return null;
     }
-
+    
 }
