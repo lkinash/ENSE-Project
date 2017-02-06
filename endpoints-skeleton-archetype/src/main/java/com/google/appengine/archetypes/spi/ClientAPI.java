@@ -265,6 +265,56 @@ public class ClientAPI {
   		
 		return null;
   	}
+  	
+	/**
+  	 * Description of the method removeAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "removeClient",  path = "removeClient", httpMethod = "post")
+ 	public List<Appointment> getClientAppointments(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
+  	
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkClientAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        //TODO
+        //Get the appointments associated with this user
+        
+        
+        return null;
+  	}
+  	
+	
+	/**
+  	 * Description of the method removeAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "removeClient",  path = "removeClient", httpMethod = "post")
+ 	public List<Appointment> getClientProducts(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
+  	
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkClientAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        
+        //TODO
+        //Get the products purchased by this user
+        
+        
+        return null;
+  	}
 	
 	private static boolean checkClientAuthorizationForPage(final User user){
   		

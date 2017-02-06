@@ -6,6 +6,7 @@ import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInsta
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -37,7 +38,6 @@ public class Quickstart {
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
-       // System.getProperty("user.home"),
     		"/credentials/calendar-java-quickstart.json");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
@@ -81,10 +81,14 @@ public class Quickstart {
     	        HTTP_TRANSPORT, JSON_FACTORY,
     	        ConstantsSecret.client_id, ConstantsSecret.client_secret,
     	        SCOPES).setDataStoreFactory(DATA_STORE_FACTORY).build();
-    	        
+    	       
+    	LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
+    	
         Credential credential = new AuthorizationCodeInstalledApp(
-            flow, new LocalServerReceiver()).authorize(user.getUserId());
-        System.out.println(
+           flow, localReceiver).authorize(user.getUserId());
+        
+    	
+    	System.out.println(
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
