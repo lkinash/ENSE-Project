@@ -267,43 +267,25 @@
       </plugins>
     </pluginManagement>
     <plugins>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <id>default-war</id>
-            <phase>package</phase>
-            <goals>
-              <goal>war</goal>
-            </goals>
-            <configuration>
-              <webXml>/Users/Lindsey/ENSE-Project/endpoints-skeleton-archetype/target/generated-sources/appengine-endpoints/WEB-INF/web.xml</webXml>
-              <webResources>
-                <resource>
-                  <directory>/Users/Lindsey/ENSE-Project/endpoints-skeleton-archetype/target/generated-sources/appengine-endpoints</directory>
-                  <includes>
-                    <include>WEB-INF/*.discovery</include>
-                    <include>WEB-INF/*.api</include>
-                  </includes>
-                </resource>
-              </webResources>
-            </configuration>
-          </execution>
-        </executions>
-        <configuration>
-          <webXml>/Users/Lindsey/ENSE-Project/endpoints-skeleton-archetype/target/generated-sources/appengine-endpoints/WEB-INF/web.xml</webXml>
-          <webResources>
-            <resource>
-              <directory>/Users/Lindsey/ENSE-Project/endpoints-skeleton-archetype/target/generated-sources/appengine-endpoints</directory>
-              <includes>
-                <include>WEB-INF/*.discovery</include>
-                <include>WEB-INF/*.api</include>
-              </includes>
-            </resource>
-          </webResources>
-        </configuration>
-      </plugin>
+       <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <webXml>${project.build.directory}/generated-sources/appengine-endpoints/WEB-INF/web.xml</webXml>
+                    <webResources>
+                        <resource>
+                            <!-- this is relative to the pom.xml directory -->
+                            <directory>${project.build.directory}/generated-sources/appengine-endpoints</directory>
+                            <!-- the list has a default value of ** -->
+                            <includes>
+                                <include>WEB-INF/*.discovery</include>
+                                <include>WEB-INF/*.api</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
       <plugin>
         <groupId>com.google.appengine</groupId>
         <artifactId>appengine-maven-plugin</artifactId>
