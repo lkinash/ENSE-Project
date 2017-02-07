@@ -16,6 +16,7 @@ import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Appointment;
 import com.google.appengine.archetypes.entities.Client;
 import com.google.appengine.archetypes.entities.Employee;
+import com.google.appengine.archetypes.entities.Product;
 import com.google.appengine.archetypes.forms.EmployeeForm;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -273,7 +274,7 @@ public class ClientAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "removeClient",  path = "removeClient", httpMethod = "post")
+  	@ApiMethod(name = "getClientAppointments",  path = "getClientAppointments", httpMethod = "post")
  	public List<Appointment> getClientAppointments(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
   	
         if (user == null) {
@@ -298,8 +299,8 @@ public class ClientAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "removeClient",  path = "removeClient", httpMethod = "post")
- 	public List<Appointment> getClientProducts(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
+  	@ApiMethod(name = "getClientProducts",  path = "getClientProducts", httpMethod = "post")
+ 	public List<Product> getClientProducts(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
   	
         if (user == null) {
             throw new UnauthorizedException("Authorization required");

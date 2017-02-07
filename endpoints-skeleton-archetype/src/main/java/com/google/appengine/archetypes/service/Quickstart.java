@@ -84,8 +84,9 @@ public class Quickstart {
     	       
     	LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
     	
+    	
         Credential credential = new AuthorizationCodeInstalledApp(
-           flow, localReceiver).authorize(user.getUserId());
+           flow, localReceiver).authorize(ConstantsSecret.client_id);
         
     	
     	System.out.println(
@@ -111,6 +112,10 @@ public class Quickstart {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
+    	
+        System.out.println(user.getEmail() + "   " +  user.getAuthDomain());
+        
+    	
         com.google.api.services.calendar.Calendar service =
             getCalendarService(user);
 
@@ -120,13 +125,13 @@ public class Quickstart {
         .setLocation("800 Howard St., San Francisco, CA 94103")
         .setDescription("A chance to hear more about Google's developer products.");
 
-    DateTime startDateTime = new DateTime("2017-05-27T09:00:00-07:00");
+    DateTime startDateTime = new DateTime("2017-05-22T09:00:00-07:00");
     EventDateTime start = new EventDateTime()
         .setDateTime(startDateTime)
         .setTimeZone("America/Los_Angeles");
     event.setStart(start);
 
-    DateTime endDateTime = new DateTime("2017-05-27T17:00:00-07:00");
+    DateTime endDateTime = new DateTime("2017-05-22T17:00:00-07:00");
     EventDateTime end = new EventDateTime()
         .setDateTime(endDateTime)
         .setTimeZone("America/Los_Angeles");
