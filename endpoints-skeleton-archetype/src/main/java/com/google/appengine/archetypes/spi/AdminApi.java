@@ -57,14 +57,7 @@ public class AdminApi {
         
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
-        
-        Calendar calendar;
-        
-        if(employeeForm.getCalendar() != null)
-        	calendar = employeeForm.getCalendar();					//get the calendar 
-        else 
-        	calendar = new Calendar(null, null, null);				//if the calendar is unset it creates a new one
-        
+   
         // TODO 
         // Properly declare variables based on google calendar
         
@@ -79,7 +72,7 @@ public class AdminApi {
   		Employee employee  = new Employee(calendarId, employeeForm.getName(), employeeForm.getEmail(), employeeForm.getPassword(), employeeId, employeeForm.getServiceIds());
   			
 
-  		ofy().save().entities(employee, calendar).now();
+  		ofy().save().entities(employee).now();
   		
 		return employee;
   	}

@@ -5,17 +5,21 @@
  */
 
 
-var app = angular.module('schedulerApplication',
-	    ['schedulerController', 'ngRoute', 'ui.bootstrap']).
-	    config(['$routeProvider',
+var app = angular.module('schedulerApplication', ['schedulerController', 'ngRoute', 'ui.bootstrap']).
+	config(['$routeProvider',
 	        function ($routeProvider) {
-	            $routeProvider.
+	        
+				$routeProvider.
+	                when('/admin/viewEmployee', {
+	                    templateUrl: '/partials/viewEmployeeAdmin.html',
+	                    controller: 'ViewEmployeeCtrl'
+	                }).
 	                when('/admin/addEmployee', {
 	                    templateUrl: '/partials/addEmployeeAdmin.html',
-	                    controller: 'AddEmployeeCtrl'
+	                  
 	                }).
 	                when('/', {
-	                    templateUrl: '/partials/homeIndex.html'
+	                    templateUrl: '/partials/home.html'
 	                }).
 	                otherwise({
 	                    redirectTo: '/'
@@ -69,7 +73,7 @@ app.constant('HTTP_ERRORS', {
  */
 app.factory('oauth2Provider', function ($modal) {
     var oauth2Provider = {
-        CLIENT_ID: '1032207459940-kl5tt995gsvp5j15ec0stmoastj68ame.apps.googleusercontent.com',
+        CLIENT_ID: '',
         SCOPES: 'https://www.googleapis.com/auth/userinfo.email profile',
         signedIn: false
     };

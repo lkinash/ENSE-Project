@@ -9,6 +9,9 @@
    	
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
+    <script src="http://code.angularjs.org/snapshot/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    
     <script>
         /**
          * Initializes the Google API JavaScript client. Bootstrap the angular module after loading the Google libraries
@@ -28,6 +31,15 @@
 
 
 <div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="rootMessages" class="alert alert-{{alertStatus}}" ng-show="rootMessages">
+                <span ng-bind="rootMessages"></span>
+                <i class="dismiss-messages pull-right glyphicon glyphicon-remove" ng-click="rootMessages = ''"
+                   ng-show="rootMessages"></i>
+            </div>
+        </div>
+    </div>
     <ng-view></ng-view>
 </div>
 
@@ -36,6 +48,12 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script src="/js/application.js"></script>
 <script src="/js/controllers.js"></script>
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/angular.js"></script>
+
+<!-- Put the signInButton to invoke the gapi.signin.render to restore the credential if stored in cookie. -->
+<span id="signInButton" style="display: none" disabled="true"></span>
+
 
 </body>
 </html>
