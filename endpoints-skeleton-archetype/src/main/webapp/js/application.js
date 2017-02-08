@@ -1,121 +1,47 @@
-'use strict';
+(function(angular) {
+  'use strict';
 
-/**
- *		Scheduler Application
- */
+angular.module('schedulerApplication', ['ngRoute'])
 
+.controller('MainController', function($scope, $route, $routeParams, $location) {
+     $scope.$route = $route;
+     $scope.$location = $location;
+     $scope.$routeParams = $routeParams;
+ })
+ 
+  .controller('ViewEmployeeController', function($scope, $routeParams) {
+     $scope.name = 'ViewEmployeeController';
+     $scope.params = $routeParams;
+ })
 
-var app = angular.module('schedulerApplication', ['schedulerController', 'ngRoute', 'ui.bootstrap']).
-	config(['$routeProvider',
-	        function ($routeProvider) {
-	        
-				$routeProvider.
-	                when('/admin/viewEmployee', {
-	                    templateUrl: '/partials/viewEmployeeAdmin.html',
-	                    controller: 'ViewEmployeeCtrl'
-	                }).
-	                when('/admin/addEmployee', {
-	                    templateUrl: '/partials/addEmployeeAdmin.html',
-	                  
-	                }).
-	                when('/', {
-	                    templateUrl: '/partials/home.html'
-	                }).
-	                otherwise({
-	                    redirectTo: '/'
-	                });
-	        }]);
+ .controller('AddEmployeeController', function($scope, $routeParams) {
+     $scope.name = 'AddEmployeeController';
+     $scope.params = $routeParams;
+ })
+ 
+ .config(	function($routeProvider, $locationProvider) {
+	 $routeProvider
 
+     .when('/admin/viewEmployee', {
+         templateUrl: '/partials/viewEmployeeAdmin.html',
+         controller: 'ViewEmployeeController'
+     })
+     .when('/admin/addEmployee', {
+         templateUrl: '/partials/addEmployeeAdmin.html',
+         controller: 'AddEmployeeController'
+     })
+     .when('/', {
+         templateUrl: '/partials/homeIndex.html'
+     })
+     .otherwise({
+         redirectTo: '/'
+     });
 
-/**
- * @ngdoc filter
- * @name startFrom
- *
- * @description
- * A filter that extracts an array from the specific index.
- *
- */
-app.filter('startFrom', function () {
-    /**
-     * Extracts an array from the specific index.
-     *
-     * @param {Array} data
-     * @param {Integer} start
-     * @returns {Array|*}
-     */
-    var filter = function (data, start) {
-        return data.slice(start);
-    }
-    return filter;
+  // configure html5 to get links working on jsfiddle
+  $locationProvider.html5Mode(true);
 });
+ 
+})(window.angular);
 
-
-/**
- * @ngdoc constant
- * @name HTTP_ERRORS
- *
- * @description
- * Holds the constants that represent HTTP error codes.
- *
- */
-app.constant('HTTP_ERRORS', {
-    'UNAUTHORIZED': 401
-});
-
-
-/**
- * @ngdoc service
- * @name oauth2Provider
- *
- * @description
- * Service that holds the OAuth2 information shared across all the pages.
- *
- */
-app.factory('oauth2Provider', function ($modal) {
-    var oauth2Provider = {
-        CLIENT_ID: '',
-        SCOPES: 'https://www.googleapis.com/auth/userinfo.email profile',
-        signedIn: false
-    };
-
-    /**
-     * Calls the OAuth2 authentication method.
-     */
-    oauth2Provider.signIn = function (callback) {
-        gapi.auth.signIn({
-            'clientid': oauth2Provider.CLIENT_ID,
-            'cookiepolicy': 'single_host_origin',
-            'accesstype': 'online',
-            'approveprompt': 'auto',
-            'scope': oauth2Provider.SCOPES,
-            'callback': callback
-        });
-    };
-
-    /**
-     * Logs out the user.
-     */
-    oauth2Provider.signOut = function () {
-        gapi.auth.signOut();
-        // Explicitly set the invalid access token in order to make the API calls fail.
-        gapi.auth.setToken({access_token: ''})
-        oauth2Provider.signedIn = false;
-    };
-
-    /**
-     * Shows the modal with Google+ sign in button.
-     *
-     * @returns {*|Window}
-     */
-    oauth2Provider.showLoginModal = function() {
-        var modalInstance = $modal.open({
-            templateUrl: '/partials/login.modal.html',
-            controller: 'OAuth2LoginModalCtrl'
-        });
-        return modalInstance;
-    };
-
-    return oauth2Provider;
-});
 
 
