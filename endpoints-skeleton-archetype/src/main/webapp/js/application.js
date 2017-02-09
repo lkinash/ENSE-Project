@@ -1,68 +1,70 @@
 (function(angular) {
   'use strict';
 
-angular.module('schedulerApplication', ['ngRoute'])
+var app = angular.module('schedulerApplication', ['ngRoute']);
 
-.controller('MainController', function($scope, $route, $routeParams, $location) {
+app.controller('MainController', function($scope, $route, $routeParams, $location) {
      $scope.$route = $route;
      $scope.$location = $location;
      $scope.$routeParams = $routeParams;
- })
+ });
  
-  .controller('ViewEmployeeController', function($scope, $routeParams) {
+  app.controller('ViewEmployeeController', function($scope, $route, $routeParams, $location) {
      $scope.name = 'ViewEmployeeController';
      $scope.params = $routeParams;
- })
+     $scope.page = $routeParams.id;
+ });
 
- .controller('AddEmployeeController', function($scope, $routeParams) {
-     $scope.name = 'AddEmployeeController';
-     $scope.params = $routeParams;
- })
+ app.controller('AddEmployeeController', function($scope, $route, $routeParams, $location) {
+     $scope.$route = $route;
+     $scope.$location = $location;
+     $scope.$routeParams = $routeParams;
+ });
  
- .config(	function($routeProvider, $locationProvider) {
+ app.config(function($routeProvider, $locationProvider) {
 	 $routeProvider
 
      .when('/admin/viewEmployee', {
-         templateUrl: '/partials/viewEmployeeAdmin.html',
+         templateUrl: 'partials/viewEmployeeAdmin.html',
          controller: 'ViewEmployeeController'
      })
+     
      .when('/admin/viewCalendar', {
-         templateUrl: '/partials/viewCalendarMainAdmin.html',
+         templateUrl: 'partials/viewCalendarMainAdmin.html',
          controller: 'ViewCalendarMainController'
      })
      .when('/admin/viewRoom', {
-         templateUrl: '/partials/viewRoomAdmin.html',
+         templateUrl: 'partials/viewRoomAdmin.html',
          controller: 'ViewRoomController'
      })
      .when('/admin/viewService', {
-         templateUrl: '/partials/viewServiceAdmin.html',
+         templateUrl: 'partials/viewServiceAdmin.html',
          controller: 'ViewServiceController'
      })
      .when('/admin/addEmployee', {
-         templateUrl: '/partials/addEmployeeAdmin.html',
+         templateUrl: 'partials/addEmployeeAdmin.html',
          controller: 'AddEmployeeController'
      })
      .when('/admin/addAdmin', {
-         templateUrl: '/partials/addAdminUser.html',
+         templateUrl: 'partials/addAdminUser.html',
          controller: 'AddAdminController'
      })
      .when('/admin/addRoom', {
-         templateUrl: '/partials/addRoomAdmin.html',
+         templateUrl: 'partials/addRoomAdmin.html',
          controller: 'AddRoomController'
      })
      .when('/admin/addService', {
-         templateUrl: '/partials/addServiceAdmin.html',
+         templateUrl: 'partials/addServiceAdmin.html',
          controller: 'AddServiceController'
      })
+     
      .when('/', {
-         templateUrl: '/partials/homeIndex.html'
+         templateUrl: 'partials/viewCalendarMainAdmin.html',
+         controller: 'MainController'
      })
-     .otherwise({
-         redirectTo: '/'
-     });
-
-  // configure html5 to get links working on jsfiddle
-  $locationProvider.html5Mode(true);
+     .otherwise({  redirectTo: '/' });
+	 
+	 $locationProvider.html5Mode(true); //activate HTML5 Mode
 });
  
 })(window.angular);
