@@ -10,9 +10,9 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
  });
  
   app.controller('ViewEmployeeController', function($scope, $route, $routeParams, $location) {
-     $scope.name = 'ViewEmployeeController';
-     $scope.params = $routeParams;
-     $scope.page = $routeParams.id;
+	 $scope.$route = $route;
+	 $scope.$location = $location;
+	 $scope.$routeParams = $routeParams;
  });
 
  app.controller('AddEmployeeController', function($scope, $route, $routeParams, $location) {
@@ -20,6 +20,37 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.$location = $location;
      $scope.$routeParams = $routeParams;
  });
+ 
+ app.controller('ViewServiceController', function($scope, $route, $routeParams, $location) {
+	 $scope.$route = $route;
+	 $scope.$location = $location;
+	 $scope.$routeParams = $routeParams;
+ });
+
+ app.controller('AddServiceController', function($scope, $route, $routeParams, $location) {
+     $scope.$route = $route;
+     $scope.$location = $location;
+     $scope.$routeParams = $routeParams;
+ });
+ 
+ app.controller('ViewRoomController', function($scope, $route, $routeParams, $location) {
+	 $scope.$route = $route;
+	 $scope.$location = $location;
+	 $scope.$routeParams = $routeParams;
+ });
+
+ app.controller('AddRoomController', function($scope, $route, $routeParams, $location) {
+     $scope.$route = $route;
+     $scope.$location = $location;
+     $scope.$routeParams = $routeParams;
+ });
+
+ app.controller('AddAdminController', function($scope, $route, $routeParams, $location) {
+     $scope.$route = $route;
+     $scope.$location = $location;
+     $scope.$routeParams = $routeParams;
+ });
+ 
  
  app.config(function($routeProvider, $locationProvider) {
 	 $routeProvider
@@ -29,10 +60,6 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
          controller: 'ViewEmployeeController'
      })
      
-     .when('/admin/viewCalendar', {
-         templateUrl: 'partials/viewCalendarMainAdmin.html',
-         controller: 'ViewCalendarMainController'
-     })
      .when('/admin/viewRoom', {
          templateUrl: 'partials/viewRoomAdmin.html',
          controller: 'ViewRoomController'
