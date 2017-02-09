@@ -98,14 +98,16 @@ public class AdminApi {
         final Key<Room> roomKey = factory().allocateId(Room.class);
         final long roomId = roomKey.getId();
         
-        Calendar calendar = new Calendar(null, null, null);			
-        List <Long> service;
-        
+        Calendar calendar = null;
+        		//new Calendar(null, null, null);			
+        List <Long> service = null;
+      
+        /*
         if(roomForm.getServiceIds() != null)
         	service = roomForm.getServiceIds();
         else
         	service = null;
-        
+        */
         //TODO
         //create a new list of services
         
