@@ -26,9 +26,33 @@ angular.module('schedulerApplication', ['ngRoute'])
          templateUrl: '/partials/viewEmployeeAdmin.html',
          controller: 'ViewEmployeeController'
      })
+     .when('/admin/viewCalendar', {
+         templateUrl: '/partials/viewCalendarMainAdmin.html',
+         controller: 'ViewCalendarMainController'
+     })
+     .when('/admin/viewRoom', {
+         templateUrl: '/partials/viewRoomAdmin.html',
+         controller: 'ViewRoomController'
+     })
+     .when('/admin/viewService', {
+         templateUrl: '/partials/viewServiceAdmin.html',
+         controller: 'ViewServiceController'
+     })
      .when('/admin/addEmployee', {
          templateUrl: '/partials/addEmployeeAdmin.html',
          controller: 'AddEmployeeController'
+     })
+     .when('/admin/addAdmin', {
+         templateUrl: '/partials/addAdminUser.html',
+         controller: 'AddAdminController'
+     })
+     .when('/admin/addRoom', {
+         templateUrl: '/partials/addRoomAdmin.html',
+         controller: 'AddRoomController'
+     })
+     .when('/admin/addService', {
+         templateUrl: '/partials/addServiceAdmin.html',
+         controller: 'AddServiceController'
      })
      .when('/', {
          templateUrl: '/partials/homeIndex.html'
