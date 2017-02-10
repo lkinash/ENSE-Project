@@ -12,8 +12,22 @@
     <script src="http://code.angularjs.org/snapshot/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/lib/angularjs/1.5.7/angular-route.min.js" ></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 	<script src="/js/application.js"></script>
+
+    <script>
+        /**
+         * Initializes the Google API JavaScript client. Bootstrap the angular module after loading the Google libraries
+         * so that Google JavaScript library ready in the angular modules.
+         */
+        function init() {
+            gapi.client.load('conference', 'v1', null, '//' + window.location.host + '/_ah/api');
+            gapi.client.load('oauth2', 'v2', function () {
+                angular.bootstrap(document, ['conferenceApp']);
+            });
+        };
+    </script>
 
   <script>document.write('<base href="' + document.location + '" />');</script>
  
@@ -47,7 +61,13 @@
 			
 		</div>
 
-<div ng-controller="MainController">
+            
+<div ng-controller="MainController"  ng-init="initSignInButton()">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li id="signInLink" ng-hide="getSignedInState()"><a ng-click="signIn();">Google+ SignIn</a></li>
+                <li id="signOutLink" ng-show="getSignedInState()"><a ng-click="signOut(); ">Log out</a></li>
+            </ul>
 
   <div ng-view> </div>
 

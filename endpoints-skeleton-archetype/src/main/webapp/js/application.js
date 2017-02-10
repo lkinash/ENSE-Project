@@ -7,6 +7,55 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.$route = $route;
      $scope.$location = $location;
      $scope.$routeParams = $routeParams;
+     
+
+     /**
+      * Returns the OAuth2 signedIn state.
+      *
+      * @returns {oauth2Provider.signedIn|*} true if siendIn, false otherwise.
+      */
+     $scope.getSignedInState = function () {
+         return oauth2Provider.signedIn;
+     };
+
+     /**
+      * Calls the OAuth2 authentication method.
+      */
+     $scope.signIn = function () {
+         oauth2Provider.signIn(function () {
+             gapi.client.oauth2.userinfo.get().execute(function (resp) {
+                 $scope.$apply(function () {
+                     if (resp.email) {
+                         oauth2Provider.signedIn = true;
+                         $scope.alertStatus = 'success';
+                         $scope.rootMessages = 'Logged in with ' + resp.email;
+                     }
+                 });
+             });
+         });
+     };
+     
+     
+     /**
+      * Render the signInButton and restore the credential if it's stored in the cookie.
+      * (Just calling this to restore the credential from the stored cookie. So hiding the signInButton immediately
+      *  after the rendering)
+      */
+     $scope.initSignInButton = function () {
+         gapi.signin.render('signInButton', {
+             'callback': function () {
+                 jQuery('#signInButton button').attr('disabled', 'true').css('cursor', 'default');
+                 if (gapi.auth.getToken() && gapi.auth.getToken().access_token) {
+                     $scope.$apply(function () {
+                         oauth2Provider.signedIn = true;
+                     });
+                 }
+             },
+             'clientid': oauth2Provider.CLIENT_ID,
+             'cookiepolicy': 'single_host_origin',
+             'scope': oauth2Provider.SCOPES
+         });
+     };
  });
  
  app.controller('ViewEmployeeController', function($scope, $route, $routeParams, $location) {
@@ -19,6 +68,17 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.$route = $route;
      $scope.$location = $location;
      $scope.$routeParams = $routeParams;
+     
+     
+     $scope.addEmployee= function() {
+    	    $scope.employeeForm = {
+    	      "email" : $scope.email,
+    	      "name" : $scope.name,
+    	      "password" : $scope.password
+    	    };
+     
+    	    gapi.client.admin.addEmployee($scope.employeeForm).execute();
+     }
  });
  
  app.controller('ViewServiceController', function($scope, $route, $routeParams, $location) {
@@ -255,5 +315,71 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
 	 
 	 $locationProvider.html5Mode(true); //activate HTML5 Mode
 });
+ 
+ 
+ 
+ app.factory('oauth2Provider', function ($modal) {
+	    var oauth2Provider = {
+	        CLIENT_ID: '1032207459940-kl5tt995gsvp5j15ec0stmoastj68ame.apps.googleusercontent.com',
+	        SCOPES: 'https://www.googleapis.com/auth/userinfo.email profile',
+	        signedIn: false
+	    };
+
+	    /**
+	     * Calls the OAuth2 authentication method.
+	     */
+	    oauth2Provider.signIn = function (callback) {
+	        gapi.auth.signIn({
+	            'clientid': oauth2Provider.CLIENT_ID,
+	            'cookiepolicy': 'single_host_origin',
+	            'accesstype': 'online',
+	            'approveprompt': 'auto',
+	            'scope': oauth2Provider.SCOPES,
+	            'callback': callback
+	        });
+	    };
+
+	    /**
+	     * Logs out the user.
+	     */
+	    oauth2Provider.signOut = function () {
+	        gapi.auth.signOut();
+	        // Explicitly set the invalid access token in order to make the API calls fail.
+	        gapi.auth.setToken({access_token: ''})
+	        oauth2Provider.signedIn = false;
+	    };
+
+	    /**
+	     * Shows the modal with Google+ sign in button.
+	     *
+	     * @returns {*|Window}
+	     */
+	    oauth2Provider.showLoginModal = function() {
+	        var modalInstance = $modal.open({
+	            templateUrl: '/partials/login.modal.html',
+	            controller: 'OAuth2LoginModalCtrl'
+	        });
+	        return modalInstance;
+	    };
+
+	    return oauth2Provider;
+	}); 
+ 
+app.controller('OAuth2LoginModalCtrl',
+		    function ($scope, $modalInstance, $rootScope, oauth2Provider) {
+		        $scope.singInViaModal = function () {
+		            oauth2Provider.signIn(function () {
+		                gapi.client.oauth2.userinfo.get().execute(function (resp) {
+		                    $scope.$root.$apply(function () {
+		                        oauth2Provider.signedIn = true;
+		                        $scope.$root.alertStatus = 'success';
+		                        $scope.$root.rootMessages = 'Logged in with ' + resp.email;
+		                    });
+
+		                    $modalInstance.close();
+		                });
+		            });
+		        };
+		    });
  
 })(window.angular);
