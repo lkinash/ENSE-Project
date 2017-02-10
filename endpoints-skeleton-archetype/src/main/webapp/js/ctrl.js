@@ -1,4 +1,4 @@
-
+/*
 'use strict';
 
 var schedulerApplication = schedulerApplication || {};
@@ -137,5 +137,5 @@ schedulerApplication.controllers.controller('ForgotPasswordController', function
      $scope.$location = $location;
      $scope.$routeParams = $routeParams;
  });
- 
+ */
 	        
