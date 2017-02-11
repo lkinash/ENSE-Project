@@ -1,0 +1,271 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Client Booking</title>
+	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  	<link href="/css/masterAdminStyle.css" rel="stylesheet">
+   	<link href="/css/clientBookingAdmin.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="head">
+		<h3>Scheduler App</h3>
+			<div class="hright">
+				<label class="username">Admin User</label>
+				<div class="dropdown">
+					<button type="button" data-toggle="dropdown">
+					<span class="caret"></span></button>
+					<ul class="dropdown-menu dropdown-menu-right">
+					<li><a href="/partials/adminEditProfile.html">Edit Profile</a></li>
+					<li><a href="#">Logout</a></li>
+					</ul>
+				</div>
+			</div>
+	</div>
+	
+	<div class="container">
+		
+		<div class="leftNav">
+			<div class="admin">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse10009">Admin</a>
+      						</h4>
+    					</div>
+    					<div id="collapse10009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="/partials/pendingAppAdmin.html">Pending Appointment</a></li>
+     						 	<li><a href="/partials/addAdminUser.html">Add Admin</a></li>
+     						 	<li><a href="/partials/viewAdminAccount.html">View List Admins</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+			
+			<div class="product">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse20009">Product</a>
+      						</h4>
+    					</div>
+    					<div id="collapse20009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="#">Add Product</a></li>
+     						 	<li><a href="#">View Prodcuts</a></li>
+     						 	<li><a href="#">CheckOut</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+			<div class="services">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse30009">Services</a>
+      						</h4>
+    					</div>
+    					<div id="collapse30009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="/partials/addServiceAdmin.html">Add Service</a></li>
+     						 	<li><a href="/partials/viewServiceAdmin.html">View Services</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+			<div class="employee">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse40009">Employee</a>
+      						</h4>
+    					</div>
+    					<div id="collapse40009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="/partials/addEmployeeAdmin.html">Add Employee</a></li>
+     						 	<li><a href="/partials/viewEmployeeAdmin.html">View Employee</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+			<div class="room">
+				<div class="panel-group">
+ 				 	<div class="panel panel-default">
+    					<div class="panel-heading">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#collapse50009">Room</a>
+      						</h4>
+    					</div>
+    					<div id="collapse50009" class="panel-collapse collapse">
+     						 <div class="panel-body">
+     						 <ul>
+     						 	<li><a href="/partials/addRoomAdmin.html">Add Room</a></li>
+     						 	<li><a href="/partials/viewRoomAdmin.html">View Room</a></li>
+     						 </ul>
+     						 </div>
+   
+    					</div>
+ 					 </div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="rightContent">
+		<h2>Booking for X Service with Employee1</h2>
+			<div class="outContainer">
+			<div class="container2">
+		
+			<div class="left">
+			
+			<!-- this script got from www.htmlbestcodes.com-Coded by: Krishna Eydat -->
+
+				<script language="javascript" type="text/javascript">
+				var day_of_week = new Array('Sun','Mon','Tue','Wed','Thu','Fri','Sat');
+				var month_of_year = new Array('January','February','March','April','May','June','July','August','September','October','November','December');
+
+				//  DECLARE AND INITIALIZE VARIABLES
+				var Calendar = new Date();
+
+				var year = Calendar.getFullYear();     // Returns year
+				var month = Calendar.getMonth();    // Returns month (0-11)
+				var today = Calendar.getDate();    // Returns day (1-31)
+				var weekday = Calendar.getDay();    // Returns day (1-31)
+
+				var DAYS_OF_WEEK = 7;    // "constant" for number of days in a week
+				var DAYS_OF_MONTH = 31;    // "constant" for number of days in a month
+				var cal;    // Used for printing
+
+				Calendar.setDate(1);    // Start the calendar day at '1'
+				Calendar.setMonth(month);    // Start the calendar month at now
+
+
+				/* VARIABLES FOR FORMATTING
+				NOTE: You can format the 'BORDER', 'BGCOLOR', 'CELLPADDING', 'BORDERCOLOR'
+					  tags to customize your caledanr's look. */
+
+				var TR_start = '<TR>';
+				var TR_end = '</TR>';
+				var highlight_start = '<TD WIDTH="30"><TABLE CELLSPACING=0 BORDER=1 BGCOLOR=DEDEFF BORDERCOLOR=CCCCCC><TR><TD WIDTH=20><B><CENTER>';
+				var highlight_end   = '</CENTER></TD></TR></TABLE></B>';
+				var TD_start = '<TD WIDTH="30"><CENTER>';
+				var TD_end = '</CENTER></TD>';
+
+				/* BEGIN CODE FOR CALENDAR
+				NOTE: You can format the 'BORDER', 'BGCOLOR', 'CELLPADDING', 'BORDERCOLOR'
+				tags to customize your calendar's look.*/
+
+				cal =  '<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0 BORDERCOLOR=BBBBBB><TR><TD>';
+				cal += '<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=2>' + TR_start;
+				cal += '<TD COLSPAN="' + DAYS_OF_WEEK + '" BGCOLOR="#EFEFEF"><CENTER><B>';
+				cal += month_of_year[month]  + '   ' + year + '</B>' + TD_end + TR_end;
+				cal += TR_start;
+
+				//   DO NOT EDIT BELOW THIS POINT  //
+
+				// LOOPS FOR EACH DAY OF WEEK
+				for(index=0; index < DAYS_OF_WEEK; index++)
+				{
+
+				// BOLD TODAY'S DAY OF WEEK
+				if(weekday == index)
+				cal += TD_start + '<B>' + day_of_week[index] + '</B>' + TD_end;
+
+				// PRINTS DAY
+				else
+				cal += TD_start + day_of_week[index] + TD_end;
+				}
+
+				cal += TD_end + TR_end;
+				cal += TR_start;
+
+				// FILL IN BLANK GAPS UNTIL TODAY'S DAY
+				for(index=0; index < Calendar.getDay(); index++)
+				cal += TD_start + '  ' + TD_end;
+
+				// LOOPS FOR EACH DAY IN CALENDAR
+				for(index=0; index < DAYS_OF_MONTH; index++)
+				{
+				if( Calendar.getDate() > index )
+				{
+				  // RETURNS THE NEXT DAY TO PRINT
+				  week_day =Calendar.getDay();
+
+				  // START NEW ROW FOR FIRST DAY OF WEEK
+				  if(week_day == 0)
+				  cal += TR_start;
+
+				  if(week_day != DAYS_OF_WEEK)
+				  {
+
+				  // SET VARIABLE INSIDE LOOP FOR INCREMENTING PURPOSES
+				  var day  = Calendar.getDate();
+
+				  // HIGHLIGHT TODAY'S DATE
+				  if( today==Calendar.getDate() )
+				  cal += highlight_start + day + highlight_end + TD_end;
+
+				  // PRINTS DAY
+				  else
+				  cal += TD_start + day + TD_end;
+				  }
+
+				  // END ROW FOR LAST DAY OF WEEK
+				  if(week_day == DAYS_OF_WEEK)
+				  cal += TR_end;
+				  }
+
+				  // INCREMENTS UNTIL END OF THE MONTH
+				  Calendar.setDate(Calendar.getDate()+1);
+
+				}// end for loop
+
+				cal += '</TD></TR></TABLE></TABLE>';
+
+				//  PRINT CALENDAR
+				document.write(cal);
+
+				//  End -->
+				</script>
+			<div class="test">
+					<label><input type="checkbox" value="">Show Any Employees</label>
+				</div>
+			</div>
+			
+			<div class="right">
+				<iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showPrint=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;src=cg89si5anf3b89vgt3oid00as0%40group.calendar.google.com&amp;color=%230F4B38&amp;ctz=America%2FRegina" style="border:solid 1px #777" width="400" height="400" frameborder="0" scrolling="no"></iframe>
+				
+				<div class="rightBtn">
+					<button type="submit" class="btn btn-default">Book Now</button>
+				</div>
+			</div>
+	</div>
+	</div>
+		
+		</div>
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

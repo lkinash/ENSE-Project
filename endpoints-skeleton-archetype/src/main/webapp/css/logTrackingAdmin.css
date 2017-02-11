@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* CSS Document */
+
+h2{
+	text-align: center;
+	color:#0A25BF;
+}
+.logArea{
+	background-color: aqua;
+	width: 80%;
+	height:80%;
+	margin-left: auto;
+	margin-right: auto;
+}
