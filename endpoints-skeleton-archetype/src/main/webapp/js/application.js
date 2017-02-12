@@ -316,7 +316,27 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
 	 $locationProvider.html5Mode(true); //activate HTML5 Mode
 });
  
- 
+ /**
+  * @ngdoc filter
+  * @name startFrom
+  *
+  * @description
+  * A filter that extracts an array from the specific index.
+  *
+  */
+ app.filter('startFrom', function () {
+     /**
+      * Extracts an array from the specific index.
+      *
+      * @param {Array} data
+      * @param {Integer} start
+      * @returns {Array|*}
+      */
+     var filter = function (data, start) {
+         return data.slice(start);
+     }
+     return filter;
+ });
  
  app.factory('oauth2Provider', function ($modal) {
 	    var oauth2Provider = {
