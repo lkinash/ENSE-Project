@@ -760,8 +760,7 @@ public class AdminApi {
         }
   		
         Query<Room> query =  ofy().load().type(Room.class);
-    	query = query.order("name");
-    	
+  
         return query.list();
   	}
 
