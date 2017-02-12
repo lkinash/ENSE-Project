@@ -135,11 +135,13 @@
 		<div class="rightContent">
 			<h2>Add Room</h2>
 			<div ng-controller="addRoomCtrl">
+			<form name="RoomForm" novalidate role="form">
 			<div class="mainHolder">
 					<div class="roomInfoHolder">
 						<div class="roomNameHolder">
 							<h4>Room Name</h4>
-							<input type="text" class="form-control" id="roomName">
+							<input id="roomNumber" type="text" name="roomNumber" ng-model="room.name" class="form-control"
+                           ng-required="true"/>
 						</div>
 						<div class="serviceOffered">
 							<div class="heading">
@@ -178,10 +180,12 @@
 						</div>
 					</div>
 					<div class="submitBtn">
-						<button type="button" class="btn btn-default">Submit</button>
+						  <button ng-click="createRoom(RoomForm)" class="btn btn-primary"
+                        >Submit</button>
 					</div>
 				</div>
 			</div>
+			</form>
 			</div>		
 		</div>
 	</div>
