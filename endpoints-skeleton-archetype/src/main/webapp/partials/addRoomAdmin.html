@@ -134,13 +134,18 @@
 		
 		<div class="rightContent">
 			<h2>Add Room</h2>
+			   <div id="messages" class="alert alert-{{alertStatus}}" ng-show="messages">
+                <span ng-bind="messages"></span>
+                <i class="dismiss-messages pull-right glyphicon glyphicon-remove" ng-click="messages = ''"
+                   ng-show="messages"></i>
+            </div>
 			<div ng-controller="addRoomCtrl">
 			<form name="RoomForm" novalidate role="form">
 			<div class="mainHolder">
 					<div class="roomInfoHolder">
 						<div class="roomNameHolder">
 							<h4>Room Name</h4>
-							<input id="roomNumber" type="text" name="roomNumber" ng-model="room.name" class="form-control"
+							<input id="roomNumber" type="text" name="roomNumber" ng-model="room.number" class="form-control"
                            ng-required="true"/>
 						</div>
 						<div class="serviceOffered">
@@ -180,7 +185,7 @@
 						</div>
 					</div>
 					<div class="submitBtn">
-						  <button ng-click="createRoom(RoomForm)" class="btn btn-primary"
+						  <button ng-click="addRoom(RoomForm)" class="btn btn-primary"
                         >Submit</button>
 					</div>
 				</div>

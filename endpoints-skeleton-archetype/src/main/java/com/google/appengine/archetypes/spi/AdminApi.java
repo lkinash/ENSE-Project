@@ -86,7 +86,7 @@ public class AdminApi {
      
    	@ApiMethod(name = "addRoom", path = "addRoom", httpMethod = "post")
   	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
-
+   		/*
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
@@ -94,7 +94,7 @@ public class AdminApi {
             throw new UnauthorizedException("Authorization level too low.");
         }
         
-  		
+  		*/
         final Key<Room> roomKey = factory().allocateId(Room.class);
         final long roomId = roomKey.getId();
         
