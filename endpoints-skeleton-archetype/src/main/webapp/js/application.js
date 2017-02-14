@@ -381,7 +381,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
 	    oauth2Provider.signOut = function () {
 	        gapi.auth.signOut();
 	        // Explicitly set the invalid access token in order to make the API calls fail.
-	        gapi.auth.setToken({access_token: ''})
+	        gapi.auth.setToken({access_token: ''});
 	        oauth2Provider.signedIn = false;
 	    };
 
