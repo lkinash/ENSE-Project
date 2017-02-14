@@ -8,7 +8,23 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.$location = $location;
      $scope.$routeParams = $routeParams;
      
+     
 
+
+     function onSignIn(googleUser) {
+    	  var profile = googleUser.getBasicProfile();
+    	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    	  console.log('Name: ' + profile.getName());
+    	  console.log('Image URL: ' + profile.getImageUrl());
+    	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    	}
+     
+     function init() {
+    	  window.init();
+    	  var ROOT = '//' + window.location.host + '/_ah/api';
+    	  gapi.client.load('admin', 'v1', null, ROOT);
+    	}
+     
      /**
       * Returns the OAuth2 signedIn state.
       *
