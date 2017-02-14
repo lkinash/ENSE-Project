@@ -173,7 +173,7 @@ schedulerApplication.controllers.controller('addRoomCtrl',
             }
 */
             $scope.loading = true;
-            gapi.client.adminAPI.addRoom($scope.room).
+            gapi.client.admin.addRoom($scope.room).
                 execute(function (resp) {
                     $scope.$apply(function () {
                         $scope.loading = false;
