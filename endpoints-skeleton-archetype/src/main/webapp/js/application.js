@@ -23,7 +23,21 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
     	  window.init();
     	  var ROOT = '//' + window.location.host + '/_ah/api';
     	  gapi.client.load('admin', 'v1', null, ROOT);
-    	}
+    	 $scope.room = {};
+              $scope.loading = true;
+              gapi.client.admin.getRoom("4").
+                  execute(function (resp) {
+                      $scope.$apply(function () {
+                          $scope.loading = false;
+
+                              $scope.room.number = resp.result.number;
+
+                          
+                      });
+                  }
+              );
+          
+     }
      
      /**
       * Returns the OAuth2 signedIn state.
@@ -86,14 +100,14 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.$routeParams = $routeParams;
      
      
-     $scope.addEmployee= function() {
+     $scope.addEmployee = function() {
     	    $scope.employeeForm = {
     	      "email" : $scope.email,
     	      "name" : $scope.name,
     	      "password" : $scope.password
     	    };
      
-    	    gapi.client.admin.addEmployee($scope.employeeForm).execute();
+    	 gapi.client.admin.addEmployee($scope.employeeForm).execute();
      }
  });
  

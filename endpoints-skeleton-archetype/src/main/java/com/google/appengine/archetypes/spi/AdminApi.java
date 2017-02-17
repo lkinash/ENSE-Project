@@ -54,6 +54,8 @@ public class AdminApi {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
+        System.out.println("Name: " + employeeForm.getName());
+        System.out.println("Email: " + employeeForm.getEmail());
         
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
@@ -862,7 +864,7 @@ public class AdminApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getRooms", httpMethod = "get")
+	@ApiMethod(name = "getRoom", httpMethod = "get")
 	public Room getRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -872,6 +874,8 @@ public class AdminApi {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
+	    System.out.println("Get Room Called");
+	    
 	    Key<Room> key = Key.create(Room.class, roomId);
 	    		
 	    Room room = (Room) ofy().load().key(key).now();
