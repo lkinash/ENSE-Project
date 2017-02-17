@@ -51,14 +51,9 @@ public class Quickstart {
 
     private static final AppEngineDataStoreFactory DATA_STORE_FACTORY = AppEngineDataStoreFactory.getDefaultInstance();
     
-    /** Global instance of the scopes required by this quickstart.
-     *
-     * If modifying these scopes, delete your previously saved credentials
-     * at ~/.credentials/calendar-java-quickstart
-     */
+    /** Global instance of the scopes required by this quickstart.     */
     private static final List<String> SCOPES = Lists.newArrayList(Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE, Constants.EMAIL_SCOPE);
 
-        
         
     static {
         try {
