@@ -6,10 +6,14 @@ package com.google.appengine.archetypes.spi;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONException;
+
 import com.google.appengine.archetypes.Constants;
+import com.google.appengine.archetypes.servlets.Sendgrid;
 import com.google.appengine.archetypes.wrappers.*;
 import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.entities.Admin;
@@ -28,7 +32,19 @@ import com.google.appengine.archetypes.entities.Clearances;
 import com.google.appengine.archetypes.forms.ClientForm;
 import com.google.common.base.Strings;
 import com.googlecode.objectify.Key;
+import com.google.appengine.archetypes.Constants;
+import com.google.appengine.archetypes.servlets.Sendgrid;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
+
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -239,6 +255,7 @@ public class ClientAPI {
     	return client;
 	}
 	
+<<<<<<< HEAD
 	/**
   	 * Description of the method removeAdmin.
   	 * @param admin 
@@ -316,6 +333,37 @@ public class ClientAPI {
         
         return null;
   	}
+=======
+	@ApiMethod(name = "sendEmail", httpMethod = "post")
+  	public WrappedBoolean sendEmail(final User user,@Named("email") final String email, @Named("subject") final String subject, @Named("content") final String content) throws UnauthorizedException {
+	
+		 try {
+             // initialize Sendgrid class
+             // please replace "<sendgrid_username>" and "<sendgrid_password>" with your SendGrid credentials
+             Sendgrid mail = new Sendgrid(Constants.SENDGRID_USERNAME,Constants.SENDGRID_PASSWORD);
+             // set to address, from address, subject, the html/text content and send the email 
+             mail.setTo(email)
+                 // update the <from_address> with your email address
+                 .setFrom("<Scheduler_App>")
+                 .setSubject(subject)
+                 .setText(content)
+                 .setHtml("")
+                 .send();
+
+             // check the response and display proper message
+             if (mail.getServerResponse() == "success") {
+                 return new WrappedBoolean(true);
+             } else {
+            	 return new WrappedBoolean(false, "Request failed  - " + mail.getServerResponse());
+             }
+
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+		
+		return null;
+	}
+>>>>>>> origin/EmailAPI
 	
 	private static boolean checkClientAuthorizationForPage(final User user){
   		
