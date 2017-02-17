@@ -255,7 +255,6 @@ public class ClientAPI {
     	return client;
 	}
 	
-<<<<<<< HEAD
 	/**
   	 * Description of the method removeAdmin.
   	 * @param admin 
@@ -333,7 +332,7 @@ public class ClientAPI {
         
         return null;
   	}
-=======
+
 	@ApiMethod(name = "sendEmail", httpMethod = "post")
   	public WrappedBoolean sendEmail(final User user,@Named("email") final String email, @Named("subject") final String subject, @Named("content") final String content) throws UnauthorizedException {
 	
@@ -363,7 +362,7 @@ public class ClientAPI {
 		
 		return null;
 	}
->>>>>>> origin/EmailAPI
+
 	
 	private static boolean checkClientAuthorizationForPage(final User user){
   		
