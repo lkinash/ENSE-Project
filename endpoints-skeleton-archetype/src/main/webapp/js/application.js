@@ -22,6 +22,9 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      function init() {
     	  window.init();
     	  var ROOT = '//' + window.location.host + '/_ah/api';
+    	  
+    	  $scope.room.number = "number";
+          
     	  gapi.client.load('admin', 'v1', null, ROOT);
     	 $scope.room = {};
               $scope.loading = true;
@@ -30,7 +33,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
                       $scope.$apply(function () {
                           $scope.loading = false;
 
-                              $scope.room.number = resp.result.number;
+                              //$scope.room.number = resp.result.number;
 
                           
                       });

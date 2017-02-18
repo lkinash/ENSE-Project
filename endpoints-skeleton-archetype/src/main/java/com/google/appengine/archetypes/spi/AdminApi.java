@@ -146,7 +146,7 @@ public class AdminApi {
         // Link to get this value from a list
         
         
-  		Service service  = new Service(requiresClearance , serviceId, serviceForm.getName(), serviceForm.getTypeId(), serviceForm.getPrice());
+  		Service service  = new Service(serviceForm.getDefaultLength(), requiresClearance , serviceId, serviceForm.getName(), serviceForm.getTypeId(), serviceForm.getPrice());
   		
   	    ofy().save().entities(service).now();
   		
@@ -348,6 +348,10 @@ public class AdminApi {
 	    if(!(serviceForm.getTypeId() < 1)){
 	    	service.setTypeId(serviceForm.getTypeId());
 	    }
+	    if(!(serviceForm.getDefaultLength() < 1)){
+	    	service.setDefaultLength(serviceForm.getDefaultLength());
+	    }
+	    
 	    // TODO
 	    // Check what our default will be for numbers 
 	    if(!(serviceForm.getPrice() == -1)){

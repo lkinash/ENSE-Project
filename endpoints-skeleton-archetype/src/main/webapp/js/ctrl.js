@@ -1,8 +1,8 @@
-'use strict';
+//'use strict';
 
-var schedulerApplication = schedulerApplication || {};
+//var schedulerApplication = schedulerApplication || {};
 
-schedulerApplication.controllers = angular.module('schedulerControllers', ['ui.bootstrap']);
+//schedulerApplication.controllers = angular.module('schedulerControllers', ['ui.bootstrap']);
 /*
 'use strict';
 
@@ -151,27 +151,27 @@ schedulerApplication.controllers.controller('ForgotPasswordController', function
  *
  * @description
  * A controller used for the AddRoomAdmin page.
- */
+ *//*
 schedulerApplication.controllers.controller('addRoomCtrl',
     function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 
         /**
          * The Room object being edited in the page.
          * @type {{}|*}
-         */
+         *//*
         $scope.room = $scope.room || {};
-
+*/
 
         /**
          * Invokes the admin.addRoom API.
          *
          * @param conferenceForm the form object.
-         */
+         *//*
         $scope.addRoom = function (RoomForm) {
           /*  if (!$scope.isValidConference(RoomForm)) {
                 return;
             }
-*/
+*//*
             $scope.loading = true;
             gapi.client.admin.addRoom($scope.room).
                 execute(function (resp) {
@@ -200,5 +200,5 @@ schedulerApplication.controllers.controller('addRoomCtrl',
                 });
         };
     });
-
+*/
 	        

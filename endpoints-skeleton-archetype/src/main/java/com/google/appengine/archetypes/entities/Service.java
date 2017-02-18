@@ -21,16 +21,18 @@ public class Service extends SaleItem {
 	 */
 	private boolean requiresClearance;
 
+	private int defaultLength;
 
 	public Service(){
 		
 	}
 	
-	public Service(boolean newRequiresClearance, long newProductId, String newName, long newTypeId, double newPrice){
+	public Service(int newDefaultLength, boolean newRequiresClearance, long newProductId, String newName, long newTypeId, double newPrice){
 	
 		super(newProductId, newName, newPrice, newTypeId);
 		
 		this.requiresClearance = newRequiresClearance;
+		this.defaultLength = newDefaultLength;
 	
 	}
 	
@@ -83,6 +85,23 @@ public class Service extends SaleItem {
 		super.setPrice(newPrice);
 	}
 
+
+	/**
+	 * Returns type.
+	 * @return type 
+	 */
+	public int getDefaultLength(){
+		return defaultLength;
+	}
+
+	/**
+	 * Sets a value to attribute type. 
+	 * @param newType 
+	 */
+	public void setDefaultLength(int newDefaultLength) {
+		this.defaultLength = newDefaultLength;
+	}
+	
 	/**
 	 * Returns type.
 	 * @return type 
