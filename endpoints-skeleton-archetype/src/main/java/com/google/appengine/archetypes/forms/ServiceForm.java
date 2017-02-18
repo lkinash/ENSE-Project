@@ -32,15 +32,13 @@ public class ServiceForm {
 	 */
 	private long typeId;
 
-	// Start of user code (user defined methods for ServiceForm)
-
-	// End of user code
+	private int defaultLength;
 	
 	public ServiceForm(){
 		
 	}
 
-	public ServiceForm(String newName, long newTypeId, double newPrice, boolean newClearanceRequired){
+	public ServiceForm(int newDefaultLength, String newName, long newTypeId, double newPrice, boolean newClearanceRequired){
 		
 		this.clearanceRequired = newClearanceRequired;
 		this.name = newName;
@@ -113,4 +111,21 @@ public class ServiceForm {
 		this.typeId = newTypeId;
 	}
 
+	/**
+	 * Returns type.
+	 * @return type 
+	 */
+	public int getDefaultLength(){
+		return defaultLength;
+	}
+
+	/**
+	 * Sets a value to attribute type. 
+	 * @param newType 
+	 */
+	public void setDefaultLength(int newDefaultLength) {
+		this.defaultLength = newDefaultLength;
+	}
+	
+	
 }
