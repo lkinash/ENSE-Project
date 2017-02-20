@@ -9,7 +9,8 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.$routeParams = $routeParams;
      
      
-
+	  $scope.room.number = "number";
+      
 
      function onSignIn(googleUser) {
     	  var profile = googleUser.getBasicProfile();
@@ -23,8 +24,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
     	  window.init();
     	  var ROOT = '//' + window.location.host + '/_ah/api';
     	  
-    	  $scope.room.number = "number";
-          
+
     	  gapi.client.load('admin', 'v1', null, ROOT);
     	 $scope.room = {};
               $scope.loading = true;
