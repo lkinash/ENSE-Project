@@ -111,7 +111,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
     	    };
      
     	 gapi.client.admin.addEmployee($scope.employeeForm).execute();
-     }
+     };
  });
  
  app.controller('ViewServiceController', function($scope, $route, $routeParams, $location) {
@@ -136,6 +136,15 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.$route = $route;
      $scope.$location = $location;
      $scope.$routeParams = $routeParams;
+     
+     $scope.addEmployee = function() {
+ 	    $scope.roomForm = {
+ 	      "name" : $scope.name,
+ 	    };
+  
+ 	 gapi.client.admin.addRoom($scope.roomForm).execute();
+  };
+  
  });
 
  app.controller('AddAdminController', function($scope, $route, $routeParams, $location) {
