@@ -104,13 +104,13 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      
      
      $scope.addEmployee = function() {
-    	    $scope.employeeForm = {
+    	    $scope.EmployeeForm = {
     	      "email" : $scope.email,
     	      "name" : $scope.name,
     	      "password" : $scope.password
     	    };
      
-    	 gapi.client.admin.addEmployee($scope.employeeForm).execute();
+    	 gapi.client.admin.addEmployee($scope.EmployeeForm).execute();
      };
  });
  
@@ -137,7 +137,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.$location = $location;
      $scope.$routeParams = $routeParams;
      
-     $scope.addEmployee = function() {
+     $scope.addRoom = function() {
  	    $scope.roomForm = {
  	      "name" : $scope.name,
  	    };
