@@ -3,7 +3,7 @@
         <servlet-name>SystemServiceServletAdmin</servlet-name>
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
-            <param-name>services</param-name>
+            <param-name>AdminServices</param-name>
             <param-value>com.google.appengine.archetypes.spi.AdminApi</param-value>
         </init-param>
 	</servlet>
@@ -11,7 +11,7 @@
         <servlet-name>SystemServiceServletClient</servlet-name>
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
-            <param-name>services</param-name>
+            <param-name>ClientServices</param-name>
             <param-value>com.google.appengine.archetypes.spi.ClientApi</param-value>
         </init-param>
     </servlet>
@@ -19,7 +19,7 @@
         <servlet-name>SystemServiceServletAppointment</servlet-name>
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
-            <param-name>services</param-name>
+            <param-name>AppointmentServices</param-name>
             <param-value>com.google.appengine.archetypes.spi.AppointmentApi</param-value>
         </init-param>
     </servlet>
