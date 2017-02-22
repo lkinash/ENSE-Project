@@ -14,7 +14,17 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 	<script src="/js/application.js"></script>
-
+    <script>
+        /**
+         * Initializes the Google API JavaScript client. Bootstrap the angular module after loading the Google libraries
+         * so that Google JavaScript library ready in the angular modules.
+         */
+        function init() {
+            gapi.client.load('admin', 'v1', null, '//' + window.location.host + '/_ah/api');
+            });
+        };
+    </script>
+    <script src="//apis.google.com/js/client:plusone.js?onload=init"></script>
 
   <script>document.write('<base href="' + document.location + '" />');</script>
   

@@ -1,187 +1,51 @@
-<!doctype html>
-<html>
+
 <head>
-<meta charset="utf-8">
-<title>Book Client Appointment</title>
-	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  	<link href="/css/masterAdminStyle.css" rel="stylesheet">
-   	<link href="/css/bookAppointment.css" rel="stylesheet">
+<link href="/css/bookAppointment.css" rel="stylesheet">
 </head>
 
 <body>
-<div class="head">
-		<h3>Scheduler App</h3>
-			<div class="hright">
-				<label class="username">Admin User</label>
-				<div class="dropdown">
-					<button type="button" data-toggle="dropdown">
-					<span class="caret"></span></button>
-					<ul class="dropdown-menu dropdown-menu-right">
-					<li><a href="/partials/adminEditProfile.html">Edit Profile</a></li>
-					<li><a href="#">Logout</a></li>
-					</ul>
-				</div>
-			</div>
-	</div>
-	
-	<div class="container">
-		
-		<div class="leftNav">
-			<div class="admin">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse10009">Admin</a>
-      						</h4>
-    					</div>
-    					<div id="collapse10009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="/partials/pendingAppAdmin.html">Pending Appointment</a></li>
-     						 	<li><a href="/partials/addAdminUser.html">Add Admin</a></li>
-     						 	<li><a href="/partials/viewAdminAccount.html">View List Admins</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
-			</div>
-			
-			<div class="product">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse20009">Product</a>
-      						</h4>
-    					</div>
-    					<div id="collapse20009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="#">Add Product</a></li>
-     						 	<li><a href="#">View Prodcuts</a></li>
-     						 	<li><a href="#">CheckOut</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
-			</div>
-			<div class="services">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse30009">Services</a>
-      						</h4>
-    					</div>
-    					<div id="collapse30009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="/partials/addServiceAdmin.html">Add Service</a></li>
-     						 	<li><a href="/partials/viewServiceAdmin.html">View Services</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
-			</div>
-			<div class="employee">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse40009">Employee</a>
-      						</h4>
-    					</div>
-    					<div id="collapse40009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="/partials/addEmployeeAdmin.html">Add Employee</a></li>
-     						 	<li><a href="/partials/viewEmployeeAdmin.html">View Employee</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
-			</div>
-			<div class="room">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse50009">Room</a>
-      						</h4>
-    					</div>
-    					<div id="collapse50009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="/partials/addRoomAdmin.html">Add Room</a></li>
-     						 	<li><a href="/partials/viewRoomAdmin.html">View Room</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="rightContent">
+
+	<div class="rightContent">
 		<div class="bookAppointment">
-		<h2> Schedule Appointment</h2>
-		<table>
-			<tr>
-			<th>
-			<p>Select a Service Type</p>
-			</th>
-			<th class="drop">
-   				<select>
-   					<option value="default">Service</option>
-   					<option value="Service1">Service 1</option>
-   					<option value="Service2">Service 2</option>
-   					<option value="Service3">Service 3</option>
-   				</select>
- 			</th>
-			</tr>
-			<tr>
-				<th>
-					<p>Select a Treament Area</p>
-				</th>
-				<th class="drop">
-					<select>
-   					<option value="default">Area</option>
-   					<option value="Service1">Area 1</option>
-   					<option value="Service2">Area 2</option>
-   					<option value="Service3">Area 3</option>
-   					</select>
-				</th>
-			</tr>
-			<tr>
-				<th>
-					<p>Preffered Staff Member</p>
-				</th>
-				<th class="drop">
-					<select>
-   					<option value="default">Member</option>
-   					<option value="Service1">Member 1</option>
-   					<option value="Service2">Member 2</option>
-   					<option value="Service3">Member 3</option>
-   					</select>
-				</th>
-			</tr>
-		</table>
-		<button type="submit" class="btn btn-default">Select Time</button>
-	</div>
-		
+			<h2>Schedule Appointment</h2>
+			<table>
+				<tr>
+					<th>
+						<p>Select a Service Type</p>
+					</th>
+					<th class="drop"><select>
+							<option value="default">Service</option>
+							<option value="Service1">Service 1</option>
+							<option value="Service2">Service 2</option>
+							<option value="Service3">Service 3</option>
+					</select></th>
+				</tr>
+				<tr>
+					<th>
+						<p>Select a Treament Area</p>
+					</th>
+					<th class="drop"><select>
+							<option value="default">Area</option>
+							<option value="Service1">Area 1</option>
+							<option value="Service2">Area 2</option>
+							<option value="Service3">Area 3</option>
+					</select></th>
+				</tr>
+				<tr>
+					<th>
+						<p>Preffered Staff Member</p>
+					</th>
+					<th class="drop"><select>
+							<option value="default">Member</option>
+							<option value="Service1">Member 1</option>
+							<option value="Service2">Member 2</option>
+							<option value="Service3">Member 3</option>
+					</select></th>
+				</tr>
+			</table>
+			<button type="submit" class="btn btn-default">Select Time</button>
 		</div>
+
 	</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
 </body>
-</html>
+

@@ -1,33 +1,33 @@
 <head>
-   	<link href="/css/addRoomAdmin.css" rel="stylesheet">
+<link href="/css/addRoomAdmin.css" rel="stylesheet">
 </head>
 <body>
 
-		
-		<div class="rightContent">
-			<h2>Add Room</h2>
-			   <div id="messages" class="alert alert-{{alertStatus}}" ng-show="messages">
-                <span ng-bind="messages"></span>
-                <i class="dismiss-messages pull-right glyphicon glyphicon-remove" ng-click="messages = ''"
-                   ng-show="messages"></i>
-            </div>
-			<div ng-controller="addRoomCtrl">
-			<form name="RoomForm" novalidate role="form">
-			<div class="mainHolder">
+	<div class="rightContent">
+		<h2>Add Room</h2>
+		<div id="messages" class="alert alert-{{alertStatus}}"
+			ng-show="messages">
+			<span ng-bind="messages"></span> <i
+				class="dismiss-messages pull-right glyphicon glyphicon-remove"
+				ng-click="messages = ''" ng-show="messages"></i>
+		</div>
+		<div ng-controller="addRoomCtrl">
+			<form name="RoomForm" novalidate role="form" action="">
+				<div class="mainHolder">
 					<div class="roomInfoHolder">
 						<div class="roomNameHolder">
 							<h4>Room Name</h4>
-							<input id="roomNumber" type="text" name="roomNumber" ng-model="room.number" class="form-control"
-                           ng-required="true"/>
+							<input id="roomNumber" type="text" name="roomNumber"
+								ng-model="room.number" class="form-control" ng-required="true" />
 						</div>
 						<div class="serviceOffered">
 							<div class="heading">
 								<h5>Services Preformed</h5>
-									<div class="plusMinus">
-										<button type="button" class="btn btn-default">
+								<div class="plusMinus">
+									<button type="button" class="btn btn-default">
 										<h5>+ / -</h5>
-										</button>
-									</div>
+									</button>
+								</div>
 							</div>
 							<div class="infoCategory">
 								<div class="type">
@@ -39,30 +39,29 @@
 							</div>
 							<div class="serviceType">
 								<div class="form-group">
-								  <select class="form-control" id="sel1">
-									<option>Type</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-								  </select>
+									<select class="form-control" id="sel1">
+										<option>Type</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+									</select>
 								</div>
 								<div class="serviceName">
-								  <select class="form-control" id="sel2">
-									<option>Service Name</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-								  </select>
-								</div>	
+									<select class="form-control" id="sel2">
+										<option>Service Name</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="submitBtn">
+							<button class="btn btn-primary">Submit</button>
 						</div>
 					</div>
-					<div class="submitBtn">
-						  <button class="btn btn-primary"
-                        >Submit</button>
-					</div>
 				</div>
-			</div>
 			</form>
-			</div>		
 		</div>
+	</div>
 </body>
