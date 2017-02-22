@@ -9,8 +9,6 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.$routeParams = $routeParams;
      
      
-
-
      function onSignIn(googleUser) {
     	  var profile = googleUser.getBasicProfile();
     	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -19,14 +17,14 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
     	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     	}
      
-     function init() {
+     $scope.init = function () {
     	  window.init();
     	  var ROOT = '//' + window.location.host + '/_ah/api';
-    	  
-    	  $scope.room.number = "number";
-          
+
     	  gapi.client.load('admin', 'v1', null, ROOT);
-    	 $scope.room = {};
+    	
+    	  /*
+    	  $scope.room = {};
               $scope.loading = true;
               gapi.client.admin.getRoom("4").
                   execute(function (resp) {
@@ -39,7 +37,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
                       });
                   }
               );
-          
+          */
      }
      
      /**
@@ -88,8 +86,70 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
              'cookiepolicy': 'single_host_origin',
              'scope': oauth2Provider.SCOPES
          });
+     
+   	  window.init();
+	  var ROOT = '//' + window.location.host + '/_ah/api';
+
+	  gapi.client.load('admin', 'v1', null, ROOT);
+	
+         
      };
  });
+
+/**
+ * @ngdoc service
+ * @name oauth2Provider
+ *
+ * @description
+ * Service that holds the OAuth2 information shared across all the pages.
+ *
+ */
+app.factory('oauth2Provider', function ($modal) {
+    var oauth2Provider = {
+        CLIENT_ID: '573107621545-m9kr231t053m9sprflhffl349vcqrcb6.apps.googleusercontent.com',
+        SCOPES: 'https://www.googleapis.com/auth/userinfo.email profile',
+        signedIn: false
+    };
+
+    /**
+     * Calls the OAuth2 authentication method.
+     */
+    oauth2Provider.signIn = function (callback) {
+        gapi.auth.signIn({
+            'clientid': oauth2Provider.CLIENT_ID,
+            'cookiepolicy': 'single_host_origin',
+            'accesstype': 'online',
+            'approveprompt': 'auto',
+            'scope': oauth2Provider.SCOPES,
+            'callback': callback
+        });
+    };
+
+    /**
+     * Logs out the user.
+     */
+    oauth2Provider.signOut = function () {
+        gapi.auth.signOut();
+        // Explicitly set the invalid access token in order to make the API calls fail.
+        gapi.auth.setToken({access_token: ''})
+        oauth2Provider.signedIn = false;
+    };
+
+    /**
+     * Shows the modal with Google+ sign in button.
+     *
+     * @returns {*|Window}
+     */
+    oauth2Provider.showLoginModal = function() {
+        var modalInstance = $modal.open({
+            templateUrl: '/partials/login.modal.html',
+            controller: 'OAuth2LoginModalCtrl'
+        });
+        return modalInstance;
+    };
+
+    return oauth2Provider;
+});
  
  app.controller('ViewEmployeeController', function($scope, $route, $routeParams, $location) {
 	 $scope.$route = $route;

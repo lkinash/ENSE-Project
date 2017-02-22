@@ -54,8 +54,8 @@ public class AdminApi {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
-        System.out.println("Name: " + employeeForm.getName());
-        System.out.println("Email: " + employeeForm.getEmail());
+        //System.out.println("Name: " + employeeForm.getName());
+        //System.out.println("Email: " + employeeForm.getEmail());
         
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
@@ -878,7 +878,7 @@ public class AdminApi {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
-	    System.out.println("Get Room Called");
+	    //System.out.println("Get Room Called");
 	    
 	    Key<Room> key = Key.create(Room.class, roomId);
 	    		
