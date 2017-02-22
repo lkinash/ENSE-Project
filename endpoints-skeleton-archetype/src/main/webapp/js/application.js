@@ -23,21 +23,6 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
 
     	  gapi.client.load('admin', 'v1', null, ROOT);
     	
-    	  /*
-    	  $scope.room = {};
-              $scope.loading = true;
-              gapi.client.admin.getRoom("4").
-                  execute(function (resp) {
-                      $scope.$apply(function () {
-                          $scope.loading = false;
-
-                              //$scope.room.number = resp.result.number;
-
-                          
-                      });
-                  }
-              );
-          */
      }
      
      /**
@@ -152,51 +137,46 @@ app.factory('oauth2Provider', function ($modal) {
 });
  
  app.controller('ViewEmployeeController', function($scope, $route, $routeParams, $location) {
-	 $scope.$route = $route;
-	 $scope.$location = $location;
-	 $scope.$routeParams = $routeParams;
+
+	 
+	 
  });
 
  app.controller('AddEmployeeController', function($scope, $route, $routeParams, $location) {
-     $scope.$route = $route;
-     $scope.$location = $location;
-     $scope.$routeParams = $routeParams;
+
      
      
-     $scope.addEmployee = function() {
-    	    $scope.EmployeeForm = {
-    	      "email" : $scope.email,
-    	      "name" : $scope.name,
-    	      "password" : $scope.password
+     $scope.addRoom = function() {
+    	    $scope.roomForm = {
+    	      "roomNumber" : $scope.roomNumber
     	    };
      
-    	 gapi.client.admin.addEmployee($scope.EmployeeForm).execute();
+    	 gapi.client.admin.addRoom($scope.roomForm).execute();
      };
  });
  
  app.controller('ViewServiceController', function($scope, $route, $routeParams, $location) {
-	 $scope.$route = $route;
-	 $scope.$location = $location;
-	 $scope.$routeParams = $routeParams;
+
+
+	 
  });
 
  app.controller('AddServiceController', function($scope, $route, $routeParams, $location) {
-     $scope.$route = $route;
-     $scope.$location = $location;
-     $scope.$routeParams = $routeParams;
+
+
+	 
  });
  
  app.controller('ViewRoomController', function($scope, $route, $routeParams, $location) {
-	 $scope.$route = $route;
-	 $scope.$location = $location;
-	 $scope.$routeParams = $routeParams;
+
+
+	 
  });
 
  app.controller('AddRoomController', function($scope, $route, $routeParams, $location) {
-     $scope.$route = $route;
-     $scope.$location = $location;
-     $scope.$routeParams = $routeParams;
-     
+
+
+	 
      $scope.addRoom = function() {
  	    $scope.roomForm = {
  	      "name" : $scope.name,
@@ -208,95 +188,93 @@ app.factory('oauth2Provider', function ($modal) {
  });
 
  app.controller('AddAdminController', function($scope, $route, $routeParams, $location) {
-     $scope.$route = $route;
-     $scope.$location = $location;
-     $scope.$routeParams = $routeParams;
+
+
+	 
  });
 
  app.controller('ForgotPasswordController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	 
   });
   
   app.controller('ClientEditProfileController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	  
   });
   
   app.controller('ClientLoginController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	  
   });
   
   app.controller('ClientBookingController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+  
+
+	  
   });
   
   app.controller('ClientCancelAppointmentController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	  
   });
   
   app.controller('ClientBookAppointmentController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	  
   });
   
   app.controller('AdminEditProfileController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	  
   });
   
   app.controller('ViewClientAppointmentController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	  
   });
       
   app.controller('HomeController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	  
   });
   
    app.controller('LoginController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	   
   });
   
    app.controller('PendingController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	   
   }); 
   
   app.controller('RejectController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	  
   });
   
    app.controller('SignupController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
+
+
+	   
   });     
   
    app.controller('ViewAccountController', function($scope, $route, $routeParams, $location) {
-      $scope.$route = $route;
-      $scope.$location = $location;
-      $scope.$routeParams = $routeParams;
-  });
 
+
+  });
 
 
  

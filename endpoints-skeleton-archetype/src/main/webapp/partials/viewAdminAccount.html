@@ -1,237 +1,105 @@
-<!doctype html>
-<html>
+
 <head>
-<meta charset="utf-8">
-<title>View Room</title>
-	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  	<link href="/css/masterAdminStyle.css" rel="stylesheet">
-   	<link href="/css/viewAdminAccount.css" rel="stylesheet">
+<link href="/css/viewAdminAccount.css" rel="stylesheet">
 </head>
 
 <body>
-<div class="head">
-		<h3>Scheduler App</h3>
-			<div class="hright">
-				<label class="username">Admin User</label>
-				<div class="dropdown">
-					<button type="button" data-toggle="dropdown">
-					<span class="caret"></span></button>
-					<ul class="dropdown-menu dropdown-menu-right">
-					<li><a href="/partials/adminEditProfile.html">Edit Profile</a></li>
-					<li><a href="#">Logout</a></li>
-					</ul>
-				</div>
-			</div>
-	</div>
-	
-	<div class="container">
-		
-		<div class="leftNav">
-			<div class="admin">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse10009">Admin</a>
-      						</h4>
-    					</div>
-    					<div id="collapse10009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="/partials/pendingAppAdmin.html">Pending Appointment</a></li>
-     						 	<li><a href="/partials/addAdminUser.html">Add Admin</a></li>
-     						 	<li><a href="/partials/viewAdminAccount.html">View List Admins</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
-			</div>
-			
-			<div class="product">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse20009">Product</a>
-      						</h4>
-    					</div>
-    					<div id="collapse20009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="#">Add Product</a></li>
-     						 	<li><a href="#">View Prodcuts</a></li>
-     						 	<li><a href="#">CheckOut</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
-			</div>
-			<div class="services">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse30009">Services</a>
-      						</h4>
-    					</div>
-    					<div id="collapse30009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="/partials/addServiceAdmin.html">Add Service</a></li>
-     						 	<li><a href="/partials/viewServiceAdmin.html">View Services</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
-			</div>
-			<div class="employee">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse40009">Employee</a>
-      						</h4>
-    					</div>
-    					<div id="collapse40009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="/partials/addEmployeeAdmin.html">Add Employee</a></li>
-     						 	<li><a href="/partials/viewEmployeeAdmin.html">View Employee</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
-			</div>
-			<div class="room">
-				<div class="panel-group">
- 				 	<div class="panel panel-default">
-    					<div class="panel-heading">
-      						<h4 class="panel-title">
-        						<a data-toggle="collapse" href="#collapse50009">Room</a>
-      						</h4>
-    					</div>
-    					<div id="collapse50009" class="panel-collapse collapse">
-     						 <div class="panel-body">
-     						 <ul>
-     						 	<li><a href="/partials/addRoomAdmin.html">Add Room</a></li>
-     						 	<li><a href="/partials/viewRoomAdmin.html">View Room</a></li>
-     						 </ul>
-     						 </div>
-   
-    					</div>
- 					 </div>
-				</div>
+	<div class="rightContent">
+		<div class="mainTitle">
+			<h2>View Admin Account</h2>
+			<div class="addSign">
+				<a href="#"> <span class="glyphicon glyphicon-plus"></span>
+				</a>
 			</div>
 		</div>
-		
-		
-		<div class="rightContent">
-			<div class="mainTitle">
-				<h2>View Admin Account</h2>
-				<div class="addSign">
-				<a href="#">
-					<span class="glyphicon glyphicon-plus"></span>
-				</a>
-				</div>
-			</div>
-			<div class="adminContainer">
-				<div class="admin">
-					<div class="panel-group">
-					  <div class="panel panel-default">
+		<div class="adminContainer">
+			<div class="admin">
+				<div class="panel-group">
+					<div class="panel panel-default">
 						<div class="panel-heading">
-						    <label>Admin #1 Name </label>
-							<a data-toggle="collapse" href="#collapse1"><span class="caret"></span></a>
+							<label>Admin #1 Name </label> <a data-toggle="collapse"
+								href="#collapse1"><span class="caret"></span></a>
 						</div>
 						<div id="collapse1" class="panel-collapse collapse">
 							<div class="panel-body">
-								<div class="adminArea">		
+								<div class="adminArea">
 									<div class="listAdmin">
-											<table>
-												<tr>
-													<th>User Privileges</th>
-													<th>View only</th>
-													<th>View + Edit</th>
-												</tr>
-												<tr>
-													<td>Service of Type 1</td>
-													<td>
-														<div class="checkbox">
-														  <label><input type="checkbox" value=""></label>
-														</div>
-													</td>
-													<td>
-														<div class="checkbox">
-														  <label><input type="checkbox" value=""></label>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>Service of Type 2</td>
-													<td>
-														<div class="checkbox">
-														  <label><input type="checkbox" value=""></label>
-														</div>
-													</td>
-													<td>
-														<div class="checkbox">
-														  <label><input type="checkbox" value=""></label>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>Service of Type 3</td>
+										<table>
+											<tr>
+												<th>User Privileges</th>
+												<th>View only</th>
+												<th>View + Edit</th>
+											</tr>
+											<tr>
+												<td>Service of Type 1</td>
 												<td>
-														<div class="checkbox">
-														  <label><input type="checkbox" value=""></label>
-														</div>
-													</td>
-													<td>
-														<div class="checkbox">
-														  <label><input type="checkbox" value=""></label>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>Service of Type 4</td>
-													<td>
-														<div class="checkbox">
-														  <label><input type="checkbox" value=""></label>
-														</div>
-													</td>
-													<td>
-														<div class="checkbox">
-														  <label><input type="checkbox" value=""></label>
-														</div>
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div class="opt">
+													<div class="checkbox">
+														<label><input type="checkbox" value=""></label>
+													</div>
+												</td>
+												<td>
+													<div class="checkbox">
+														<label><input type="checkbox" value=""></label>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>Service of Type 2</td>
+												<td>
+													<div class="checkbox">
+														<label><input type="checkbox" value=""></label>
+													</div>
+												</td>
+												<td>
+													<div class="checkbox">
+														<label><input type="checkbox" value=""></label>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>Service of Type 3</td>
+												<td>
+													<div class="checkbox">
+														<label><input type="checkbox" value=""></label>
+													</div>
+												</td>
+												<td>
+													<div class="checkbox">
+														<label><input type="checkbox" value=""></label>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>Service of Type 4</td>
+												<td>
+													<div class="checkbox">
+														<label><input type="checkbox" value=""></label>
+													</div>
+												</td>
+												<td>
+													<div class="checkbox">
+														<label><input type="checkbox" value=""></label>
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div class="opt">
 										<div class="rmvEmp">
-											<button type="button" class="btn btn-danger">Remove Admin</button>
+											<button type="button" class="btn btn-danger">Remove
+												Admin</button>
 										</div>
 										<div class="saveBtn">
 											<button type="button" class="btn btn-default">Save</button>
 										</div>
 									</div>
-									</div>
+								</div>
 							</div>
-						</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
 </body>
-</html>
+
