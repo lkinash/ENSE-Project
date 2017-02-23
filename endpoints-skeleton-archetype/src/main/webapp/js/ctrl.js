@@ -1,25 +1,14 @@
+//'use strict';
+
+//var schedulerApplication = schedulerApplication || {};
+
+//schedulerApplication.controllers = angular.module('schedulerControllers', ['ui.bootstrap']);
+/*
 'use strict';
 
 var schedulerApplication = schedulerApplication || {};
 
 schedulerApplication.controllers = angular.module('schedulerControllers', ['ui.bootstrap']);
-
-schedulerApplication.controllers.controller('AddEmployeeController', function($scope, $route, $routeParams, $location) {
-
-	  $scope.addEmployee = function() {
-  	    $scope.employeeForm = {
-  	      "email" : $scope.email,
-  	      "name" : $scope.name,
-  	      "password" : $scope.password
-  	    };
-   
-  	 gapi.client.admin.addEmployee($scope.employeeForm).execute();
-   };
-    
-});
-
-
-/*
 
 	          
 schedulerApplication.controllers.controller('MainController', function($scope, $route, $routeParams, $location) {
