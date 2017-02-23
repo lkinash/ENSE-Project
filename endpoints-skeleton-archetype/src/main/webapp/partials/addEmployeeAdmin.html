@@ -4,10 +4,18 @@
 </head>
 
 <body>
+	<form ng-submit="addEmployee()">
+  			<input type="text" ng-model="email" size="50"><br>
+		    <input type="text" ng-model="name" size="50"><br>
+		    <input type="text" ng-model="password" size="50"><br>
+ 		    <input type="submit" class="btn" value="Post">
+	</form>
+		<!--  
 	<form ng-submit="addRoom()" >
 		<input type="text" ng-model="number" size="50"><br>
 		<input type="submit" class="btn" value="Post">
 	</form>
+	-->
 
 	<div class="rightContent">
 		<h2>Add Employee</h2>
