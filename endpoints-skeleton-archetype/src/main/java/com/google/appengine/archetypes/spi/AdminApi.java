@@ -97,6 +97,7 @@ public class AdminApi {
         }
         
   		*/
+
         final Key<Room> roomKey = factory().allocateId(Room.class);
         final long roomId = roomKey.getId();
         
@@ -113,7 +114,7 @@ public class AdminApi {
         //TODO
         //create a new list of services
         
-        Room room = new Room(roomForm.getRoomNumber(), roomForm.getServiceIds(), calendar, roomId);
+        Room room = new Room(roomForm.getNumber(), roomForm.getServiceIds(), calendar, roomId);
     		
   		ofy().save().entities(room).now(); 
    		
@@ -304,8 +305,8 @@ public class AdminApi {
 	    
 	    // TODO
 	    // Check what the default value will be 
-	    if(!(roomForm.getRoomNumber() == -1)){
-	    	room.setNumber(roomForm.getRoomNumber());
+	    if(!(roomForm.getNumber() == -1)){
+	    	room.setNumber(roomForm.getNumber());
 	    }
 	    if(!(roomForm.getServiceIds() == null)){
 	    	room.setServices(roomForm.getServiceIds());

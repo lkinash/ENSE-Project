@@ -17,11 +17,10 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
     	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     	}
      
-     $scope.init = function () {
+     function init() {
     	  window.init();
-    	  var ROOT = '//' + window.location.host + '/_ah/api';
-
-    	  gapi.client.load('admin', 'v1', null, ROOT);
+    	
+          gapi.client.load('admin', 'v1', null, '//' + window.location.host + '/_ah/api');
     	
      }
      
@@ -71,13 +70,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
              'cookiepolicy': 'single_host_origin',
              'scope': oauth2Provider.SCOPES
          });
-     
-   	  window.init();
-	  var ROOT = '//' + window.location.host + '/_ah/api';
-
-	  gapi.client.load('admin', 'v1', null, ROOT);
-	
-         
+              
      };
  });
 
@@ -136,6 +129,19 @@ app.factory('oauth2Provider', function ($modal) {
     return oauth2Provider;
 });
  
+app.controller('AddRoomController', function($scope, $route, $routeParams, $location) {
+
+	
+    $scope.addRoom = function() {
+	    roomForm = {
+	      "number" : $scope.number
+	    };
+ 
+	 gapi.client.admin.addRoom(roomForm).execute();
+  };
+ 
+});
+
  app.controller('ViewEmployeeController', function($scope, $route, $routeParams, $location) {
 
 	 
@@ -171,20 +177,6 @@ app.factory('oauth2Provider', function ($modal) {
 
 
 	 
- });
-
- app.controller('AddRoomController', function($scope, $route, $routeParams, $location) {
-
-
-	 
-     $scope.addRoom = function() {
- 	    $scope.roomForm = {
- 	      "name" : $scope.name,
- 	    };
-  
- 	 gapi.client.admin.addRoom($scope.roomForm).execute();
-  };
-  
  });
 
  app.controller('AddAdminController', function($scope, $route, $routeParams, $location) {

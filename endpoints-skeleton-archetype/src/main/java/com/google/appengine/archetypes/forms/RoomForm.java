@@ -22,9 +22,9 @@ public class RoomForm {
 	private List<Long> serviceIds;
 
 	/**
-	 * Description of the property roomNumber.
+	 * Description of the property number.
 	 */
-	private int roomNumber;
+	private int number;
 
 
 	// Start of user code (user defined methods for RoomForm)
@@ -35,9 +35,9 @@ public class RoomForm {
 		
 	}
 	
-	public RoomForm(int newRoomNumber, List<Long> newServices){
+	public RoomForm(int newNumber, List<Long> newServices){
 
-		this.roomNumber = newRoomNumber;
+		this.number = newNumber;
 		this.serviceIds = newServices;
 	}
 	
@@ -58,19 +58,19 @@ public class RoomForm {
 	}
 
 	/**
-	 * Returns roomNumber.
-	 * @return roomNumber 
+	 * Returns number.
+	 * @return number 
 	 */
-	public int getRoomNumber() {
-		return this.roomNumber;
+	public int getNumber() {
+		return this.number;
 	}
 
 	/**
-	 * Sets a value to attribute roomNumber. 
-	 * @param newRoomNumber 
+	 * Sets a value to attribute number. 
+	 * @param newNumber 
 	 */
-	public void setRoomNumber(int newRoomNumber) {
-		this.roomNumber = newRoomNumber;
+	public void setNumber(int newNumber) {
+		this.number = newNumber;
 	}
 
 
