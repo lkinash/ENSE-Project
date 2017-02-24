@@ -6,7 +6,7 @@ package com.google.appengine.archetypes.forms;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.entities.Service;
 import com.google.appengine.archetypes.entities.Type;
-
+import com.googlecode.objectify.Key;
 
 /**
  * Description of AppointmentForm.
@@ -25,29 +25,27 @@ public class AppointmentForm {
 	private Service service;
 
 	/**
-	 * Description of the property preferedEmployee.
+	 * Description of the property employeeKey.
 	 */
-	private Employee preferedEmployee;
+	private Key<Employee> employeeKey;
 
 	/**
 	 * Description of the property clientId.
 	 */
 	private Long clientId;
 
-	// Start of user code (user defined methods for AppointmentForm)
-
-	// End of user code
 	
 	public AppointmentForm(){
 		
 	}
 	
-	public AppointmentForm(Type newType, Service newService, Employee newPreferedEmployee, Long newClientId){
-		
+	public AppointmentForm(Type newType, Service newService, Key<Employee> newEmployeeKey, Long newClientId){
+
+		this.service = newService;
 		this.appointmentType = newType;
 		this.clientId = newClientId;
-		this.preferedEmployee = newPreferedEmployee;
-		this.service = newService;
+		this.employeeKey = newEmployeeKey;
+		
 	}
 	
 	
@@ -84,19 +82,19 @@ public class AppointmentForm {
 	}
 
 	/**
-	 * Returns preferedEmployee.
-	 * @return preferedEmployee 
+	 * Returns employeeKey.
+	 * @return employeeKey 
 	 */
-	public Employee getPreferedEmployee() {
-		return this.preferedEmployee;
+	public Key<Employee> getEmployeeKey() {
+		return this.employeeKey;
 	}
 
 	/**
-	 * Sets a value to attribute preferedEmployee. 
-	 * @param newPreferedEmployee 
+	 * Sets a value to attribute employeeKey. 
+	 * @param newEmployeeKey 
 	 */
-	public void setPreferedEmployee(Employee newPreferedEmployee) {
-		this.preferedEmployee = newPreferedEmployee;
+	public void setEmployeeKey(Key<Employee> newEmployeeKey) {
+		this.employeeKey = newEmployeeKey;
 	}
 
 	/**

@@ -1,5 +1,5 @@
-(function(angular) {
-  'use strict';
+
+'use strict';
 
 var app = angular.module('schedulerApplication', ['ngRoute']);
 
@@ -484,4 +484,4 @@ app.controller('OAuth2LoginModalCtrl',
 		        };
 		    });
  
-})(window.angular);
+

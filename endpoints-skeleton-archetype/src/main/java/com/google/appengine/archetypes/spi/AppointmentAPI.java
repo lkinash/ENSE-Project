@@ -3,6 +3,7 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.spi;
 
+import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 
 import java.io.IOException;
@@ -32,11 +33,14 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Appointment;
+import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.forms.AppointmentForm;
 import com.google.appengine.archetypes.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.forms.EventForm;
+import com.google.appengine.archetypes.list.Status;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.cmd.Query;
 import com.google.appengine.archetypes.service.Quickstart;
 
 /**
@@ -60,7 +64,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "createAppointment", httpMethod = "post")
-  	public WrappedBoolean createAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException {
+  	public Appointment createAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -72,9 +76,20 @@ public class AppointmentAPI {
         
         // TODO 
         // 
-		
         
-		return null;
+        
+        final long eventId = 0;
+        
+        Key<Employee> employeeKey = appointmentForm.getEmployeeKey();
+
+        final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
+        final long appointmentId = appointmentKey.getId();
+        
+        Appointment appointment = new Appointment(Status.booked, appointmentId, eventId, employeeKey, appointmentForm.getappointmentType(), appointmentForm.getService());
+    		
+  		ofy().save().entities(appointment).now();
+  		
+		return appointment;
 	}
 
 	/**

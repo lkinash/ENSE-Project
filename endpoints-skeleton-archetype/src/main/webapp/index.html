@@ -23,30 +23,19 @@
 <body ng-app = "schedulerApplication">
 
 <div class="head">
-		<h3>Scheduler App</h3>
+		<a href="/"><h3>Scheduler App</h3></a>
 			
-			<!-- 
 			<div class="hright">
-				<a href="#" >Getting Started</a>
-				<a href="#" >Help</a>
-				<a href="#" >Contact</a>
-			</div>
-			 -->
-			
-
-			<div class="hright">
-				<label class="username">Admin User</label>
+				<div class="g-signin2" data-onsuccess="onSignIn"> </div>
 				<div class="dropdown">
 					<button type="button" data-toggle="dropdown">
 					<span class="caret"></span></button>
 					<ul class="dropdown-menu dropdown-menu-right">
-					<li><a href="/partials/adminEditProfile.html">Edit Profile</a></li>
+					<li><a href="/admin/editProfile">Edit Profile</a></li>
 					<li><a href="#">Logout</a></li>
 					</ul>
 				</div>
-				<div class="g-signin2" data-onsuccess="onSignIn"></div>
 			</div>
-		
 		</div>
             
 <div ng-controller="MainController"  ng-init="initSignInButton()">

@@ -30,25 +30,46 @@ public class Appointment{
 
     @Parent
     @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-    private Key<Client> clientKey;
+    private Key<Employee> employeeKey;
 	
 	/**
 	 * Description of the property eventId.
 	 */
 	@Id 
 	private long eventId;
+	
+	/**
+	 * Description of the property eventId.
+	 */
+	@Id 
+	private long appointmentId;
+	
+	/**
+	 * Description of the property appointmentType.
+	 */
+	@Id
+	private Type appointmentType;
 
-	// Start of user code (user defined methods for Appointment)
+	/**
+	 * Description of the property service.
+	 */
+	@Id
+	private Service service;
 
-	// End of user code
 
 	public Appointment(){
 		
 	}
 	
-	public Appointment(Status status, long eventId) {
+	public Appointment(Status status, long eventId, long newAppointmentId, Key<Employee> newEmployeeKey, Type newType, Service newService) {
+		
 		this.status = status;
 		this.eventId = eventId;
+		this.employeeKey = newEmployeeKey;
+		this.appointmentId = newAppointmentId;
+		this.service = newService;
+		this.appointmentType = newType;
+		
 	}
 
 	/**
@@ -81,6 +102,70 @@ public class Appointment{
 	 */
 	public void setEventId(long newEventId) {
 		this.eventId = newEventId;
+	}
+	
+	/**
+	 * Returns eventId.
+	 * @return eventId 
+	 */
+	public long getAppointmentId() {
+		return this.appointmentId;
+	}
+
+	/**
+	 * Sets a value to attribute eventId. 
+	 * @param newEventId 
+	 */
+	public void setAppointmentId(long newAppointmentId) {
+		this.eventId = newAppointmentId;
+	}
+	
+	/**
+	 * Returns eventId.
+	 * @return eventId 
+	 */
+	public Key<Employee> getEmployeeKey() {
+		return this.employeeKey;
+	}
+
+	/**
+	 * Sets a value to attribute eventId. 
+	 * @param newEventId 
+	 */
+	public void setEmployeeKey(Key<Employee> newEmployeeKey) {
+		this.employeeKey = newEmployeeKey;
+	}
+
+	/**
+	 * Returns appointmentType.
+	 * @return appointmentType 
+	 */
+	public Type getappointmentType() {
+		return this.appointmentType;
+	}
+
+	/**
+	 * Sets a value to attribute appointmentType. 
+	 * @param newappointmentType 
+	 */
+	public void setappointmentType(Type newappointmentType) {
+		this.appointmentType = newappointmentType;
+	}
+
+	/**
+	 * Returns service.
+	 * @return service 
+	 */
+	public Service getService() {
+		return this.service;
+	}
+
+	/**
+	 * Sets a value to attribute service. 
+	 * @param newService 
+	 */
+	public void setService(Service newService) {
+		this.service = newService;
 	}
 
 }
