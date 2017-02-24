@@ -1,4 +1,4 @@
-(function(angular) {
+
   'use strict';
 
 var app = angular.module('schedulerApplication', ['ngRoute']);
@@ -152,13 +152,15 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
 
      
      
-     $scope.addRoom = function() {
-    	    $scope.roomForm = {
-    	      "roomNumber" : $scope.roomNumber
-    	    };
-     
-    	 gapi.client.admin.addRoom($scope.roomForm).execute();
-     };
+	  $scope.addEmployee = function() {
+	  	    $scope.employeeForm = {
+	  	      "email" : $scope.email,
+	  	      "name" : $scope.name,
+	  	      "password" : $scope.password
+	  	    };
+	   
+	  	 gapi.client.admin.addEmployee($scope.employeeForm).execute();
+	   };
  });
  
  app.controller('ViewServiceController', function($scope, $route, $routeParams, $location) {
@@ -474,4 +476,4 @@ app.controller('OAuth2LoginModalCtrl',
 		        };
 		    });
  
-})(window.angular);
+

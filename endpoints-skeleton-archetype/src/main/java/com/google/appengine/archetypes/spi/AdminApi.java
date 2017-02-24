@@ -46,14 +46,14 @@ public class AdminApi {
 	
 	@ApiMethod(name = "addEmployee", path = "addEmployee", httpMethod = "post")
   	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
-
+/*
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         if (!checkAdminAuthorizationForPage(user)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
-  		
+  		*/
         //System.out.println("Name: " + employeeForm.getName());
         //System.out.println("Email: " + employeeForm.getEmail());
         
