@@ -36,7 +36,7 @@ public class Appointment{
 	 * Description of the property eventId.
 	 */
 	@Id 
-	private long eventId;
+	private String eventId;
 	
 	/**
 	 * Description of the property eventId.
@@ -56,12 +56,19 @@ public class Appointment{
 	@Id
 	private Service service;
 
+	/**
+	 * Description of the property service.
+	 */
+	@Id
+	private long clientId;
+
+		
 
 	public Appointment(){
 		
 	}
 	
-	public Appointment(Status status, long eventId, long newAppointmentId, Key<Employee> newEmployeeKey, Type newType, Service newService) {
+	public Appointment(Status status, String eventId, long newAppointmentId, Key<Employee> newEmployeeKey, Type newType, Service newService) {
 		
 		this.status = status;
 		this.eventId = eventId;
@@ -92,7 +99,7 @@ public class Appointment{
 	 * Returns eventId.
 	 * @return eventId 
 	 */
-	public long getEventId() {
+	public String getEventId() {
 		return this.eventId;
 	}
 
@@ -100,7 +107,7 @@ public class Appointment{
 	 * Sets a value to attribute eventId. 
 	 * @param newEventId 
 	 */
-	public void setEventId(long newEventId) {
+	public void setEventId(String newEventId) {
 		this.eventId = newEventId;
 	}
 	
@@ -117,7 +124,23 @@ public class Appointment{
 	 * @param newEventId 
 	 */
 	public void setAppointmentId(long newAppointmentId) {
-		this.eventId = newAppointmentId;
+		this.appointmentId = newAppointmentId;
+	}
+	
+	/**
+	 * Returns eventId.
+	 * @return eventId 
+	 */
+	public long getclientId() {
+		return this.clientId;
+	}
+
+	/**
+	 * Sets a value to attribute eventId. 
+	 * @param newEventId 
+	 */
+	public void setclientId(long newclientId) {
+		this.clientId = newclientId;
 	}
 	
 	/**

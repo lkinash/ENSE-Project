@@ -39,6 +39,7 @@ import com.google.appengine.archetypes.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.forms.EventForm;
 import com.google.appengine.archetypes.list.Status;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
+import com.google.appengine.archetypes.wrappers.WrappedId;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 import com.google.appengine.archetypes.service.Quickstart;
@@ -61,10 +62,11 @@ public class AppointmentAPI {
 	/**
 	 * Description of the method createAppointment.
 	 * @throws UnauthorizedException 
+	 * @throws IOException 
 	 */
 	
 	@ApiMethod(name = "createAppointment", httpMethod = "post")
-  	public Appointment createAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException {
+  	public Appointment createAppointment(final User user, AppointmentForm appointmentForm, EventForm eventForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -75,17 +77,26 @@ public class AppointmentAPI {
   		
         
         // TODO 
-        // 
-        
-        
-        final long eventId = 0;
+        // Create the event
+        //
+        //
         
         Key<Employee> employeeKey = appointmentForm.getEmployeeKey();
 
+    	Employee employee = (Employee) ofy().load().key(employeeKey).now();
+
+        final String calendarId = employee.getCalendarId();
+        
+        
+        WrappedId wrappedId = createEvent(user, calendarId, eventForm);
+        
+        final String eventId = wrappedId.getId();
+        
+        
         final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
         final long appointmentId = appointmentKey.getId();
         
-        Appointment appointment = new Appointment(Status.booked, appointmentId, eventId, employeeKey, appointmentForm.getappointmentType(), appointmentForm.getService());
+        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getappointmentType(), appointmentForm.getService());
     		
   		ofy().save().entities(appointment).now();
   		
@@ -171,8 +182,8 @@ public class AppointmentAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "queryAppointments", httpMethod = "post")
-  	public Appointment queryAppointments(final User user) throws UnauthorizedException {
+	@ApiMethod(name = "getClientAppointments", httpMethod = "post")
+  	public List<Appointment> getClientAppointments(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -182,11 +193,11 @@ public class AppointmentAPI {
         }
   		
         
-        // TODO 
-        // 
+    	Query<Appointment> query =  ofy().load().type(Appointment.class);
+    	query = query.filter("clientId =", clientId);
+    	
+        return query.list();
         
-		
-		return null;
 	}
 	
 	/**
@@ -196,7 +207,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "createEvent", httpMethod = "post")
-  	public WrappedBoolean createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+  	public WrappedId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -308,6 +319,45 @@ public class AppointmentAPI {
         
         return null;
 	}
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "deleteEvent", httpMethod = "post")
+  	public WrappedId deleteEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+	
+        return null;
+	}
+	
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "modifyEvent", httpMethod = "post")
+  	public WrappedBoolean modifyEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+	
+        return null;
+	}
 
 	/**
 	 * Description of the method filterAppointments.
@@ -362,7 +412,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "getCalendar", httpMethod = "post")
-	public Calendar getCalendar( final User user){
+	public Calendar getCalendarService( final User user){
 		
 		//TODO
 		//get calendar based on id passed in
@@ -394,6 +444,8 @@ public class AppointmentAPI {
     	return calendar;
     	*/
 		
+		Calendar service = null;
+		
 		String calendarId = "j6pq7ifpumics69e9948q2bhdc@group.calendar.google.com";
 		
 	
@@ -404,7 +456,7 @@ public class AppointmentAPI {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return service;
 		
 	}
 	
