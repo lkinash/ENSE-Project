@@ -1,6 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
-
+.rightContent{
+	display:block;
+}
 .heading{
 	width: 100%;
 	border-bottom: solid;
