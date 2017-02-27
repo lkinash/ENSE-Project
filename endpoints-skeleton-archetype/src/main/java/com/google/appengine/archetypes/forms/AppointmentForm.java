@@ -25,18 +25,24 @@ public class AppointmentForm {
 	/**
 	 * Description of the property clientId.
 	 */
-	private Long clientId;
+	private long clientId;
 
+	/**
+	 * Description of the property clientId.
+	 */
+	private EventForm eventForm;	
+	
 	
 	public AppointmentForm(){
 		
 	}
 	
-	public AppointmentForm(Type newType, Service newService, Long newClientId){
+	public AppointmentForm(Type newType, Service newService, long newClientId, EventForm newEventForm){
 
 		this.service = newService;
 		this.appointmentType = newType;
 		this.clientId = newClientId;
+		this.eventForm = newEventForm;
 		
 	}
 	
@@ -45,7 +51,7 @@ public class AppointmentForm {
 	 * Returns appointmentType.
 	 * @return appointmentType 
 	 */
-	public Type getappointmentType() {
+	public Type getAppointmentType() {
 		return this.appointmentType;
 	}
 
@@ -53,8 +59,24 @@ public class AppointmentForm {
 	 * Sets a value to attribute appointmentType. 
 	 * @param newappointmentType 
 	 */
-	public void setappointmentType(Type newappointmentType) {
-		this.appointmentType = newappointmentType;
+	public void setAppointmentType(Type newAppointmentType) {
+		this.appointmentType = newAppointmentType;
+	}
+	
+	/**
+	 * Returns EventForm.
+	 * @return EventForm 
+	 */
+	public EventForm getEventForm() {
+		return this.eventForm;
+	}
+
+	/**
+	 * Sets a value to attribute EventForm. 
+	 * @param newEventForm 
+	 */
+	public void setEventForm(EventForm newEventForm) {
+		this.eventForm = newEventForm;
 	}
 
 	/**
@@ -77,7 +99,7 @@ public class AppointmentForm {
 	 * Returns clientId.
 	 * @return clientId 
 	 */
-	public Long getClientId() {
+	public long getClientId() {
 		return this.clientId;
 	}
 
@@ -85,7 +107,7 @@ public class AppointmentForm {
 	 * Sets a value to attribute clientId. 
 	 * @param newClientId 
 	 */
-	public void setClientId(Long newClientId) {
+	public void setClientId(long newClientId) {
 		this.clientId = newClientId;
 	}
 

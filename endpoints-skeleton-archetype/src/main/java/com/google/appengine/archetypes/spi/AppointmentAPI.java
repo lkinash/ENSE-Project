@@ -67,7 +67,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "createAppointment", httpMethod = "post")
-  	public Appointment createAppointment(final User user, AppointmentForm appointmentForm, EventForm eventForm) throws UnauthorizedException, IOException {
+  	public Appointment createAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -82,7 +82,9 @@ public class AppointmentAPI {
         //
         //
         
-        /*
+        EventForm eventForm = appointmentForm.getEventForm();
+        
+        
         //Key<Employee> employeeKey = appointmentForm.getEmployeeKey();
 
     	//Employee employee = (Employee) ofy().load().key(employeeKey).now();
@@ -105,7 +107,7 @@ public class AppointmentAPI {
   		//ofy().save().entities(appointment).now();
   		
 		//return appointment;
-	*/
+	
         return null;
 	}
 
