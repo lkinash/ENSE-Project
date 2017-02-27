@@ -32,6 +32,7 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.Constants;
+import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Appointment;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.forms.AppointmentForm;
@@ -160,7 +161,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "updateAppointmentStatus", httpMethod = "post")
-  	public WrappedBoolean updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId) throws UnauthorizedException {
+  	public WrappedBoolean updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId,  @Named("status") final Status status) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -170,10 +171,14 @@ public class AppointmentAPI {
         }
   		
         
-        // TODO 
-        // 
-		
+        Appointment appointment = getAppointment(user, appointmentId);
+        appointment.setStatus(status);
         
+  		ofy().save().entities(appointment).now();
+        
+        // TODO 
+        // Return value set
+  		
 		return null;
 	}
 
@@ -197,6 +202,29 @@ public class AppointmentAPI {
     	query = query.filter("clientId =", clientId);
     	
         return query.list();
+        
+	}
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "getAppointment", httpMethod = "post")
+  	public Appointment getAppointment(final User user, @Named("appointmentId") final long appointmentId) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        
+        Key<Appointment> key = Key.create(Appointment.class, appointmentId);
+
+       	Appointment appointment = (Appointment) ofy().load().key(key).now();
+       	return appointment;
         
 	}
 	
@@ -359,7 +387,7 @@ public class AppointmentAPI {
         return null;
 	}
 
-	/**
+	/**         
 	 * Description of the method filterAppointments.
 	 * @throws UnauthorizedException 
 	 */

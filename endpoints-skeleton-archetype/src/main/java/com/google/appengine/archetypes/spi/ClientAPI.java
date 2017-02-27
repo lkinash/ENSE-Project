@@ -13,6 +13,7 @@ import java.util.List;
 import org.json.JSONException;
 
 import com.google.appengine.archetypes.Constants;
+import com.google.appengine.archetypes.ConstantsSecret;
 import com.google.appengine.archetypes.servlets.Sendgrid;
 import com.google.appengine.archetypes.wrappers.*;
 import com.google.appengine.api.users.User;
@@ -339,7 +340,7 @@ public class ClientAPI {
 		 try {
              // initialize Sendgrid class
              // please replace "<sendgrid_username>" and "<sendgrid_password>" with your SendGrid credentials
-             Sendgrid mail = new Sendgrid(Constants.SENDGRID_USERNAME,Constants.SENDGRID_PASSWORD);
+             Sendgrid mail = new Sendgrid(ConstantsSecret.SENDGRID_USERNAME,ConstantsSecret.SENDGRID_PASSWORD);
              // set to address, from address, subject, the html/text content and send the email 
              mail.setTo(email)
                  // update the <from_address> with your email address

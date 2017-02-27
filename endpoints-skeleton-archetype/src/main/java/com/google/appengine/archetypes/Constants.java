@@ -24,8 +24,5 @@ public class Constants {
   public static final String CALENDAR_SCOPE = "https://www.googleapis.com/auth/calendar";
   public static final String CALENDAR_READONLY_SCOPE = "https://www.googleapis.com/auth/calendar.readonly";
   
-  public static final String SENDGRID_USERNAME = "ENSE-Project";
-  public static final String SENDGRID_PASSWORD = "";
-  
   public static final String TYPE_LIST_ID = "01type12list23ID34";
 }
