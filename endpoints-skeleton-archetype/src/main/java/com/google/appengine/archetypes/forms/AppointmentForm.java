@@ -3,10 +3,8 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.forms;
 
-import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.entities.Service;
 import com.google.appengine.archetypes.entities.Type;
-import com.googlecode.objectify.Key;
 
 /**
  * Description of AppointmentForm.
@@ -25,11 +23,6 @@ public class AppointmentForm {
 	private Service service;
 
 	/**
-	 * Description of the property employeeKey.
-	 */
-	private Key<Employee> employeeKey;
-
-	/**
 	 * Description of the property clientId.
 	 */
 	private Long clientId;
@@ -39,12 +32,11 @@ public class AppointmentForm {
 		
 	}
 	
-	public AppointmentForm(Type newType, Service newService, Key<Employee> newEmployeeKey, Long newClientId){
+	public AppointmentForm(Type newType, Service newService, Long newClientId){
 
 		this.service = newService;
 		this.appointmentType = newType;
 		this.clientId = newClientId;
-		this.employeeKey = newEmployeeKey;
 		
 	}
 	
@@ -79,22 +71,6 @@ public class AppointmentForm {
 	 */
 	public void setService(Service newService) {
 		this.service = newService;
-	}
-
-	/**
-	 * Returns employeeKey.
-	 * @return employeeKey 
-	 */
-	public Key<Employee> getEmployeeKey() {
-		return this.employeeKey;
-	}
-
-	/**
-	 * Sets a value to attribute employeeKey. 
-	 * @param newEmployeeKey 
-	 */
-	public void setEmployeeKey(Key<Employee> newEmployeeKey) {
-		this.employeeKey = newEmployeeKey;
 	}
 
 	/**
