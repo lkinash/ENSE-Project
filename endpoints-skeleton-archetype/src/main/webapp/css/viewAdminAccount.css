@@ -83,3 +83,10 @@ table th{
 .saveBtn{
 	margin-left: 75%;
 }
+.mainTitle{
+	display:block;
+	background-color:blue;
+}
+.adminContainer{
+	display:block;
+}
