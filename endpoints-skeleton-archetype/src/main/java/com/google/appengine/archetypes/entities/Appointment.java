@@ -35,7 +35,7 @@ public class Appointment{
 	/**
 	 * Description of the property eventId.
 	 */
-	@Id 
+	@Index 
 	private String eventId;
 	
 	/**
@@ -47,19 +47,19 @@ public class Appointment{
 	/**
 	 * Description of the property appointmentType.
 	 */
-	@Id
+	@Index
 	private Type appointmentType;
 
 	/**
 	 * Description of the property service.
 	 */
-	@Id
+	@Index
 	private Service service;
 
 	/**
 	 * Description of the property service.
 	 */
-	@Id
+	@Index
 	private long clientId;
 
 		

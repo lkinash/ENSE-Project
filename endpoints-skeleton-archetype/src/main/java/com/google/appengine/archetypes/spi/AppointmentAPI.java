@@ -82,11 +82,13 @@ public class AppointmentAPI {
         //
         //
         
-        Key<Employee> employeeKey = appointmentForm.getEmployeeKey();
+        /*
+        //Key<Employee> employeeKey = appointmentForm.getEmployeeKey();
 
-    	Employee employee = (Employee) ofy().load().key(employeeKey).now();
+    	//Employee employee = (Employee) ofy().load().key(employeeKey).now();
 
-        final String calendarId = employee.getCalendarId();
+        final String calendarId = "";
+        		//employee.getCalendarId();
         
         
         WrappedId wrappedId = createEvent(user, calendarId, eventForm);
@@ -94,14 +96,17 @@ public class AppointmentAPI {
         final String eventId = wrappedId.getId();
         
         
-        final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
-        final long appointmentId = appointmentKey.getId();
+        //final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
+        final long appointmentId = 0;
+        		//appointmentKey.getId();
         
-        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getappointmentType(), appointmentForm.getService());
+        //Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getappointmentType(), appointmentForm.getService());
     		
-  		ofy().save().entities(appointment).now();
+  		//ofy().save().entities(appointment).now();
   		
-		return appointment;
+		//return appointment;
+	*/
+        return null;
 	}
 
 	/**
