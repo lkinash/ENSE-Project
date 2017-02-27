@@ -7,7 +7,7 @@
 	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   	<link href="/css/masterAdminStyle.css" rel="stylesheet">
    	<link href="/css/index.css" rel="stylesheet">
-   	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+   	
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.js"></script>
     <script src="http://code.angularjs.org/snapshot/angular.js"></script>
@@ -23,7 +23,6 @@
 <body ng-app = "schedulerApplication">
 
 <div class="head">
-<md-toolbar>
 		<a href="/"><h3>Scheduler App</h3></a>
 			
 			<div class="hright">
@@ -37,15 +36,13 @@
 					</ul>
 				</div>
 			</div>
-</md-toolbar>
 		</div>
             
 <div ng-controller="MainController"  ng-init="initSignInButton()">
 	
-	<div class="container" layout="column" flex>
+	<div class="container">
 			
-	<div class="leftNav" layout="row">
-	<md-sidenav md-is-locked-open="true">
+	<div class="leftNav">
 			<div class="admin">
 				<div class="panel-group">
  				 	<div class="panel panel-default">
@@ -149,12 +146,11 @@
  					 </div>
 				</div>
 			</div>
-			</md-sidenav>
 		</div>
 
               
 
-  <div class="rightContent" ng-view layout="row" flex> </div>
+  <div class="rightContent" ng-view> </div>
 </div>
 </div>
 
