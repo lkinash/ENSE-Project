@@ -34,7 +34,9 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Appointment;
+import com.google.appengine.archetypes.entities.Client;
 import com.google.appengine.archetypes.entities.Employee;
+import com.google.appengine.archetypes.entities.Product;
 import com.google.appengine.archetypes.forms.AppointmentForm;
 import com.google.appengine.archetypes.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.forms.EventForm;
@@ -85,12 +87,11 @@ public class AppointmentAPI {
         EventForm eventForm = appointmentForm.getEventForm();
         
         
-        //Key<Employee> employeeKey = appointmentForm.getEmployeeKey();
+        Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
 
-    	//Employee employee = (Employee) ofy().load().key(employeeKey).now();
+    	Employee employee = (Employee) ofy().load().key(employeeKey).now();
 
-        final String calendarId = "";
-        		//employee.getCalendarId();
+        final String calendarId = employee.getCalendarId();
         
         
         WrappedId wrappedId = createEvent(user, calendarId, eventForm);
@@ -98,26 +99,25 @@ public class AppointmentAPI {
         final String eventId = wrappedId.getId();
         
         
-        //final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
-        final long appointmentId = 0;
-        		//appointmentKey.getId();
+        final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
+        final long appointmentId = appointmentKey.getId();
         
-        //Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getappointmentType(), appointmentForm.getService());
+        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getAppointmentType(), appointmentForm.getService());
     		
-  		//ofy().save().entities(appointment).now();
+  		ofy().save().entities(appointment).now();
   		
-		//return appointment;
-	
-        return null;
+		return appointment;
+
 	}
 
 	/**
-	 * Description of the method modifyAppointment.
+	 * Description of the method updateAppointment.
 	 * @throws UnauthorizedException 
+	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "modifyAppointment", httpMethod = "post")
-  	public WrappedBoolean modifyAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException {
+	@ApiMethod(name = "updateAppointment", httpMethod = "post")
+  	public Appointment updateAppointment(final User user, @Named("clientId") final long clientId, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -130,8 +130,18 @@ public class AppointmentAPI {
         // TODO 
         // 
 		
+        Appointment appointment = getAppointment(user, appointmentId);
         
-		return null;
+        //TODO
+        //
+        // Update the variables of the appointment
+        //
+        
+        updateEvent(user, getClientCalendarId(user, clientId).getId(), appointmentForm.getEventForm());
+        
+        ofy().save().entities(appointment).now();
+        
+		return appointment;
 	}
 
 	/**
@@ -140,10 +150,11 @@ public class AppointmentAPI {
 	 * @param appointmentId 
 	 * @param removeAppointmentForm 
 	 * @throws UnauthorizedException 
+	 * @throws IOException 
 	 */
 	
 	@ApiMethod(name = "cancelAppointment", httpMethod = "post")
-  	public WrappedBoolean cancelAppointment(final User user,@Named("userAppointmentId") final long userAppointmentId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException {
+  	public WrappedBoolean cancelAppointment(final User user, @Named("appointmentId") final long appointmentId, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -156,7 +167,14 @@ public class AppointmentAPI {
         // TODO 
         // 
         
+        Appointment appointment = getAppointment(user, appointmentId);
+        
+        deleteEvent(user, calendarId, appointment.getEventId());
+    	
+	    Key<Appointment> key = Key.create(Appointment.class, appointmentId);
 		
+		ofy().delete().key(key).now();
+        
 		return null;
 	}
 
@@ -238,11 +256,34 @@ public class AppointmentAPI {
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "getClientCalendarId", httpMethod = "post")
+  	public WrappedId getClientCalendarId(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        
+        Key<Client> key = Key.create(Client.class, clientId);
+
+        Client client = (Client) ofy().load().key(key).now();
+       	
+        return new WrappedId(client.getCalendarId());
+        
+	}
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
 	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "createEvent", httpMethod = "post")
-  	public WrappedId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+  	private static WrappedId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -361,8 +402,7 @@ public class AppointmentAPI {
 	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "deleteEvent", httpMethod = "post")
-  	public WrappedId deleteEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+	private static WrappedId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -371,6 +411,8 @@ public class AppointmentAPI {
             throw new UnauthorizedException("Authorization level too low.");
         }
 	
+        //service.events().delete(calendarId, eventId).execute();
+        
         return null;
 	}
 	
@@ -381,8 +423,7 @@ public class AppointmentAPI {
 	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "modifyEvent", httpMethod = "post")
-  	public WrappedBoolean modifyEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+	private static WrappedBoolean updateEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -390,6 +431,16 @@ public class AppointmentAPI {
         if (!checkAuthorizationForPage(user)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
+        
+        
+       // Event event = service.events().get("primary", "eventId").execute();
+
+     // Make a change
+   //  event.setSummary("Appointment at Somewhere");
+
+     // Update the event
+     //Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
+
 	
         return null;
 	}
@@ -447,7 +498,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "getCalendar", httpMethod = "post")
-	public Calendar getCalendarService( final User user){
+	public Calendar getCalendarService( final User user,  @Named("calendarId") final String calendarId ){
 		
 		//TODO
 		//get calendar based on id passed in
@@ -481,7 +532,7 @@ public class AppointmentAPI {
 		
 		Calendar service = null;
 		
-		String calendarId = "j6pq7ifpumics69e9948q2bhdc@group.calendar.google.com";
+		//calendarId = "j6pq7ifpumics69e9948q2bhdc@group.calendar.google.com";
 		
 	
 		try {

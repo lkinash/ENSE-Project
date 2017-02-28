@@ -30,6 +30,11 @@ public class AppointmentForm {
 	/**
 	 * Description of the property clientId.
 	 */
+	private long employeeId;
+	
+	/**
+	 * Description of the property clientId.
+	 */
 	private EventForm eventForm;	
 	
 	
@@ -37,11 +42,12 @@ public class AppointmentForm {
 		
 	}
 	
-	public AppointmentForm(Type newType, Service newService, long newClientId, EventForm newEventForm){
+	public AppointmentForm(Type newType, Service newService, long newClientId, long newEmployeeId, EventForm newEventForm){
 
 		this.service = newService;
 		this.appointmentType = newType;
 		this.clientId = newClientId;
+		this.employeeId = newEmployeeId;
 		this.eventForm = newEventForm;
 		
 	}
@@ -109,6 +115,22 @@ public class AppointmentForm {
 	 */
 	public void setClientId(long newClientId) {
 		this.clientId = newClientId;
+	}
+	
+	/**
+	 * Returns employeeId.
+	 * @return employeeId 
+	 */
+	public long getEmployeeId() {
+		return this.employeeId;
+	}
+
+	/**
+	 * Sets a value to attribute employeeId. 
+	 * @param newEmployeeId 
+	 */
+	public void setEmployeeId(long newEmployeeId) {
+		this.employeeId = newEmployeeId;
 	}
 
 }

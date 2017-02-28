@@ -3,8 +3,11 @@ package com.google.appengine.archetypes.spi;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import com.google.api.client.util.DateTime;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
@@ -13,6 +16,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.entities.Admin;
+import com.google.appengine.archetypes.entities.Changes;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.entities.Product;
 import com.google.appengine.archetypes.entities.Room;
@@ -46,7 +50,7 @@ public class AdminApi {
 	
 	@ApiMethod(name = "addEmployee", path = "addEmployee", httpMethod = "post")
   	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
-/*
+		/*
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
@@ -54,8 +58,6 @@ public class AdminApi {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		*/
-        //System.out.println("Name: " + employeeForm.getName());
-        //System.out.println("Email: " + employeeForm.getEmail());
         
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
@@ -243,6 +245,37 @@ public class AdminApi {
   		ofy().save().entities(newType).now();
   		
 		return newType;
+		
+  	}
+  	
+  	/**
+  	 * Description of the method addAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "addChange", path = "addChange", httpMethod = "post")
+ 	public Changes addChange(final User user, @Named("adminId") final long adminId, @Named("change") final String change ) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  	
+
+        final Key<Changes> changeKey = factory().allocateId(Changes.class);
+        final long changeId = changeKey.getId();
+        
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        
+        Changes newChange = new Changes(timeStamp, adminId, changeId, change);
+        
+  		ofy().save().entities(newChange).now();
+  		
+		return newChange;
 		
   	}
 
