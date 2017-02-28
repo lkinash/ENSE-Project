@@ -1,7 +1,7 @@
 
 'use strict';
 
-var app = angular.module('schedulerApplication', ['ngRoute','routeStyles']);
+var app = angular.module('schedulerApplication', ['ngRoute']);
 
 app.controller('MainController', function($scope, $route, $routeParams, $location) {
      $scope.$route = $route;
@@ -376,8 +376,7 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
      
      .when('/admin/viewEmployee', {
          templateUrl: 'partials/viewEmployeeAdmin.html',
-         controller: 'ViewEmployeeController',
-       	 css:'css/viewEmployeeAdmin.css'
+         controller: 'ViewEmployeeController'
      })
     
      .when('/admin/viewRoom', {
