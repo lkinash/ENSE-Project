@@ -351,8 +351,7 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
      
      .when('/admin/pending', {
          templateUrl: 'partials/pendingAppAdmin.html',
-         controller: 'PendingController',
-         css:'css/pendingAppAdmin.css'
+         controller: 'PendingController'
      })    
      
      .when('/admin/reject', {
@@ -383,7 +382,7 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
      .when('/admin/viewRoom', {
          templateUrl: 'partials/viewRoomAdmin.html',
          controller: 'ViewRoomController',
-         css:'css/viewRoomAdmin.css'
+         css:'/css/viewRoomAdmin.css'
      })
      
      .when('/admin/viewService', {
