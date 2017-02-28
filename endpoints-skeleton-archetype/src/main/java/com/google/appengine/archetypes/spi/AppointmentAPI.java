@@ -154,7 +154,7 @@ public class AppointmentAPI {
 	 */
 	
 	@ApiMethod(name = "cancelAppointment", httpMethod = "post")
-  	public WrappedBoolean cancelAppointment(final User user, @Named("appointmentId") final long appointmentId, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException, IOException {
+  	public WrappedBoolean cancelAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -167,14 +167,14 @@ public class AppointmentAPI {
         // TODO 
         // 
         
-        Appointment appointment = getAppointment(user, appointmentId);
+        Appointment appointment = getAppointment(user, removeAppointmentForm.getAppointmentId());
         
         deleteEvent(user, calendarId, appointment.getEventId());
     	
-	    Key<Appointment> key = Key.create(Appointment.class, appointmentId);
+	    Key<Appointment> key = Key.create(Appointment.class, removeAppointmentForm.getAppointmentId());
 		
 		ofy().delete().key(key).now();
-        
+		
 		return null;
 	}
 

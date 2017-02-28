@@ -803,6 +803,27 @@ public class AdminApi {
   
         return query.list();
   	}
+  	
+ 	/**
+  	 * Returns changess.
+  	 * @return changess 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "getAllChangess", httpMethod = "get")
+ 	public List<Changes> getAllChanges(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }       
+        if (!checkAdminAuthorizationForPage(user)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        Query<Changes> query =  ofy().load().type(Changes.class);
+  
+        return query.list();
+  	}
 
   	/**
   	 * Returns services.

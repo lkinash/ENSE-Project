@@ -23,6 +23,7 @@ public class OfyDatabaseService {
         factory().register(Admin.class);
         factory().register(Appointment.class);
         factory().register(Clearances.class);
+        factory().register(Changes.class);
         factory().register(Client.class);
         factory().register(Employee.class);
         factory().register(Product.class);
