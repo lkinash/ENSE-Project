@@ -73,3 +73,7 @@ body {
 	margin-left: 1%;
     border-width: 8px;
 }
+.rightContent{
+	width:100%;
+	background-color:yellow;
+}
