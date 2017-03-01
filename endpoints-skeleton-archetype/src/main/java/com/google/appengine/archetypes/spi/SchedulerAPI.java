@@ -1,126 +1,50 @@
 package com.google.appengine.archetypes.spi;
 
-import com.google.api.server.spi.config.Api;
-import com.google.appengine.archetypes.Constants;
-
-import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
-import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
 import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.extensions.appengine.datastore.AppEngineDataStoreFactory;
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
-import com.google.api.client.util.store.FileDataStoreFactory;
+import org.json.JSONException;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.calendar.Calendar;
-import com.google.api.services.calendar.CalendarScopes;
 import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.Constants;
+import com.google.appengine.archetypes.ConstantsSecret;
 import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Appointment;
-import com.google.appengine.archetypes.entities.Client;
-import com.google.appengine.archetypes.entities.Employee;
-import com.google.appengine.archetypes.entities.Product;
-import com.google.appengine.archetypes.forms.AppointmentForm;
-import com.google.appengine.archetypes.forms.CancelAppointmentForm;
-import com.google.appengine.archetypes.forms.EventForm;
-import com.google.appengine.archetypes.list.Status;
-import com.google.appengine.archetypes.wrappers.WrappedBoolean;
-import com.google.appengine.archetypes.wrappers.WrappedId;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.cmd.Query;
-import com.google.appengine.archetypes.service.Quickstart;
-import com.google.api.client.util.DateTime;
-import com.google.api.server.spi.config.Api;
-import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.Named;
-import com.google.api.server.spi.response.UnauthorizedException;
-import com.google.api.services.calendar.Calendar;
-import com.google.appengine.api.users.User;
-import com.google.appengine.archetypes.Constants;
-import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Changes;
+import com.google.appengine.archetypes.entities.Clearances;
+import com.google.appengine.archetypes.entities.Client;
 import com.google.appengine.archetypes.entities.Employee;
 import com.google.appengine.archetypes.entities.Product;
 import com.google.appengine.archetypes.entities.Room;
 import com.google.appengine.archetypes.entities.Service;
 import com.google.appengine.archetypes.entities.Type;
 import com.google.appengine.archetypes.forms.AdminForm;
+import com.google.appengine.archetypes.forms.AppointmentForm;
+import com.google.appengine.archetypes.forms.CancelAppointmentForm;
+import com.google.appengine.archetypes.forms.ClientForm;
 import com.google.appengine.archetypes.forms.EmployeeForm;
+import com.google.appengine.archetypes.forms.EventForm;
 import com.google.appengine.archetypes.forms.ProductForm;
 import com.google.appengine.archetypes.forms.RoomForm;
 import com.google.appengine.archetypes.forms.ServiceForm;
 import com.google.appengine.archetypes.forms.TypeForm;
+import com.google.appengine.archetypes.list.Status;
+import com.google.appengine.archetypes.service.Quickstart;
+import com.google.appengine.archetypes.servlets.Sendgrid;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
+import com.google.appengine.archetypes.wrappers.WrappedId;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
-
-import static com.google.appengine.archetypes.service.OfyDatabaseService.ofy;
-import static com.google.appengine.archetypes.service.OfyDatabaseService.factory;
-
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
-import org.json.JSONException;
-
-import com.google.appengine.archetypes.Constants;
-import com.google.appengine.archetypes.ConstantsSecret;
-import com.google.appengine.archetypes.servlets.Sendgrid;
-import com.google.appengine.archetypes.wrappers.*;
-import com.google.appengine.api.users.User;
-import com.google.appengine.archetypes.entities.Admin;
-import com.google.appengine.archetypes.entities.Appointment;
-import com.google.appengine.archetypes.entities.Client;
-import com.google.appengine.archetypes.entities.Employee;
-import com.google.appengine.archetypes.entities.Product;
-import com.google.appengine.archetypes.forms.EmployeeForm;
-import com.google.api.server.spi.config.Api;
-import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.Named;
-import com.google.api.server.spi.response.UnauthorizedException;
-import com.google.api.services.calendar.Calendar;
-import com.google.appengine.archetypes.Constants;
-import com.google.appengine.archetypes.entities.Clearances;
-import com.google.appengine.archetypes.forms.ClientForm;
-import com.google.common.base.Strings;
-import com.googlecode.objectify.Key;
-import com.google.appengine.archetypes.Constants;
-import com.google.appengine.archetypes.servlets.Sendgrid;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 
@@ -129,7 +53,7 @@ import org.json.JSONObject;
 	    version = "v1",
 	    scopes = {Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE},
 	    clientIds = {Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID},
-	    description = "Admin side API."
+	    description = "Scheduler Application API."
 
 	)
 public class SchedulerAPI {
@@ -142,7 +66,7 @@ public class SchedulerAPI {
   	 * @param employeeForm 
   	 */
 	
-	@ApiMethod(name = "addEmployee", path = "admin.addEmployee", httpMethod = "post")
+	@ApiMethod(name = "admin.addEmployee", path = "admin.addEmployee", httpMethod = "post")
   	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
 		/*
         if (user == null) {
@@ -182,7 +106,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
      
-   	@ApiMethod(name = "addRoom", path = "admin.addRoom", httpMethod = "post")
+   	@ApiMethod(name = "admin.addRoom", path = "admin.addRoom", httpMethod = "post")
   	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
    		/*
         if (user == null) {
@@ -224,7 +148,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
       
-  	@ApiMethod(name = "addService",  path = "admin.addService", httpMethod = "post")
+  	@ApiMethod(name = "admin.addService",  path = "admin.addService", httpMethod = "post")
  	public Service addService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
 
         if (user == null) {
@@ -257,7 +181,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "addProduct",  path = "admin.addProduct", httpMethod = "post")
+  	@ApiMethod(name = "admin.addProduct",  path = "admin.addProduct", httpMethod = "post")
  	public Product addProduct(final User user, ProductForm productForm) throws UnauthorizedException {
 
         if (user == null) {
@@ -291,7 +215,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "addAdmin", path = "admin.addAdmin", httpMethod = "post")
+  	@ApiMethod(name = "admin.addAdmin", path = "admin.addAdmin", httpMethod = "post")
  	public Admin addAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
 
         if (user == null) {
@@ -320,7 +244,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "addType", path = "admin.addType", httpMethod = "post")
+  	@ApiMethod(name = "admin.addType", path = "admin.addType", httpMethod = "post")
  	public Type addType(final User user, TypeForm typeForm) throws UnauthorizedException {
 
         if (user == null) {
@@ -349,7 +273,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "addChange", path = "admin.addChange", httpMethod = "post")
+  	@ApiMethod(name = "admin.addChange", path = "admin.addChange", httpMethod = "post")
  	public Changes addChange(final User user, @Named("adminId") final long adminId, @Named("change") final String change ) throws UnauthorizedException {
 
         if (user == null) {
@@ -380,7 +304,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateEmployee", path = "admin.updateEmployee", httpMethod = "post")
+	@ApiMethod(name = "admin.updateEmployee", path = "admin.updateEmployee", httpMethod = "post")
 	public Employee updateEmployee(final User user, EmployeeForm employeeForm, @Named("employeeId") final long employeeId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -418,7 +342,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateRoom", path = "admin.updateRoom", httpMethod = "post")
+	@ApiMethod(name = "admin.updateRoom", path = "admin.updateRoom", httpMethod = "post")
 	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -454,7 +378,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateService", path = "admin.updateService", httpMethod = "post")
+	@ApiMethod(name = "admin.updateService", path = "admin.updateService", httpMethod = "post")
 	public Service updateService(final User user, ServiceForm serviceForm, @Named("serviceId") final long serviceId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -502,7 +426,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateProduct", path = "admin.updateProduct", httpMethod = "post")
+	@ApiMethod(name = "admin.updateProduct", path = "admin.updateProduct", httpMethod = "post")
 	public Product updateProduct(final User user, ProductForm productForm, @Named("productId") final long productId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -546,7 +470,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "updateAdmin", path = "admin.updateAdmin", httpMethod = "post")
+  	@ApiMethod(name = "admin.updateAdmin", path = "admin.updateAdmin", httpMethod = "post")
  	public Admin updateAdmin(final User user, AdminForm adminForm, @Named("adminId") final long adminId) throws UnauthorizedException {
 
         if (user == null) {
@@ -585,7 +509,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "updateType", path = "admin.updateType", httpMethod = "post")
+  	@ApiMethod(name = "admin.updateType", path = "admin.updateType", httpMethod = "post")
  	public Type updateType(final User user, TypeForm typeForm, @Named("typeId") final long typeId  ) throws UnauthorizedException {
 
   		if (user == null) {
@@ -621,7 +545,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "removeService", path = "admin.removeService", httpMethod = "post")
+	@ApiMethod(name = "admin.removeService", path = "admin.removeService", httpMethod = "post")
 	public WrappedBoolean removeService(final User user, @Named("serviceId") final long serviceId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -649,7 +573,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "removeProduct", path = "admin.removeProduct", httpMethod = "post")
+	@ApiMethod(name = "admin.removeProduct", path = "admin.removeProduct", httpMethod = "post")
 	public WrappedBoolean removeProduct(final User user, @Named("productId") final long productId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -678,7 +602,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "removeRoom",  path = "admin.removeRoom", httpMethod = "post")
+	@ApiMethod(name = "admin.removeRoom",  path = "admin.removeRoom", httpMethod = "post")
 	public WrappedBoolean removeRoom(final User user, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -706,7 +630,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "removeEmployee", path = "admin.removeEmployee", httpMethod = "post")
+	@ApiMethod(name = "admin.removeEmployee", path = "admin.removeEmployee", httpMethod = "post")
 	public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -735,7 +659,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "removeAdmin",  path = "admin.removeAdmin", httpMethod = "post")
+  	@ApiMethod(name = "admin.removeAdmin",  path = "admin.removeAdmin", httpMethod = "post")
  	public WrappedBoolean removeAdmin(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
 
         if (user == null) {
@@ -763,7 +687,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "removeType", path = "admin.removeType", httpMethod = "post")
+  	@ApiMethod(name = "admin.removeType", path = "admin.removeType", httpMethod = "post")
  	public WrappedBoolean removeType(final User user, @Named("typeId") final long typeId ) throws UnauthorizedException {
 
         if (user == null) {
@@ -791,7 +715,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAllServices", httpMethod = "get")
+  	@ApiMethod(name = "admin.getAllServices", path = "admin.getAllServices", httpMethod = "get")
  	public List<Service> getAllService(final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -814,7 +738,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAllEmployee", httpMethod = "get")
+  	@ApiMethod(name = "admin.getAllEmployee", path = "admin.getAllEmployee", httpMethod = "get")
  	public List<Employee> getAllEmployee(final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -837,7 +761,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAllProducts", httpMethod = "get")
+  	@ApiMethod(name = "admin.getAllProducts", path = "admin.getAllProducts", httpMethod = "get")
  	public List<Product> getAllProduct(final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -860,7 +784,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAllAdmin", httpMethod = "get")
+  	@ApiMethod(name = "admin.getAllAdmin", path = "admin.getAllAdmin", httpMethod = "get")
  	public List<Admin> getAllAdmin(final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -883,7 +807,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAllRooms", httpMethod = "get")
+  	@ApiMethod(name = "admin.getAllRooms", path = "admin.getAllRooms", httpMethod = "get")
  	public List<Room> getAllRoom(final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -904,7 +828,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAllChangess", httpMethod = "get")
+  	@ApiMethod(name = "admin.getAllChanges", path = "admin.getAllChanges", httpMethod = "get")
  	public List<Changes> getAllChanges(final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -925,7 +849,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getServices", httpMethod = "get")
+  	@ApiMethod(name = "admin.getServices", path = "admin.getServices", httpMethod = "get")
  	public Service getService(final User user,  @Named("serviceId") final long serviceId) throws UnauthorizedException {
 
         if (user == null) {
@@ -948,7 +872,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getEmployee", httpMethod = "get")
+  	@ApiMethod(name = "admin.getEmployee", path = "admin.getEmployee", httpMethod = "get")
  	public Employee getEmployee(final User user, @Named("employeeId") final long employeeId) throws UnauthorizedException {
 
         if (user == null) {
@@ -971,7 +895,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getProducts", httpMethod = "get")
+  	@ApiMethod(name = "admin.getProducts", path = "admin.getProducts", httpMethod = "get")
  	public Product getProduct(final User user, @Named("productId") final long productId) throws UnauthorizedException {
 
         if (user == null) {
@@ -994,7 +918,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAdmin", httpMethod = "get")
+  	@ApiMethod(name = "admin.getAdmin", path = "admin.getAdmin", httpMethod = "get")
  	public Admin getAdmin(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
 
         if (user == null) {
@@ -1017,7 +941,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getRoom", httpMethod = "get")
+	@ApiMethod(name = "admin.getRoom", path = "admin.getRoom", httpMethod = "get")
 	public Room getRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -1042,7 +966,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getType", httpMethod = "get")
+  	@ApiMethod(name = "admin.getType", path = "admin.getType", httpMethod = "get")
  	public Type getType(final User user, @Named("typeId") final long typeId) throws UnauthorizedException {
 
         if (user == null) {
@@ -1060,7 +984,7 @@ public class SchedulerAPI {
   	}
   	
   	
-  	@ApiMethod(name = "getIsAType", httpMethod = "get")
+  	@ApiMethod(name = "admin.getIsAType", path = "admin.getIsAType", httpMethod = "get")
  	public WrappedBoolean getIsAType(final User user, Type testType, @Named("typeId") final long typeId) throws UnauthorizedException {
 
        if (user == null) {
@@ -1089,7 +1013,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "createClient", path = "client.createClient", httpMethod = "post")
+	@ApiMethod(name = "client.createClient", path = "client.createClient", httpMethod = "post")
   	public Client createClient(final User user, ClientForm clientForm) throws UnauthorizedException {
 
   		if (user == null) {
@@ -1151,7 +1075,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "modifyClient", path = "client.modifyClient", httpMethod = "post")
+	@ApiMethod(name = "client.modifyClient", path = "client.modifyClient", httpMethod = "post")
   	public Client modifyClient(ClientForm clientForm, final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
@@ -1197,7 +1121,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	 
-	@ApiMethod(name = "addClientClearance", path = "client.addClientClearance", httpMethod = "post")
+	@ApiMethod(name = "client.addClientClearance", path = "client.addClientClearance", httpMethod = "post")
   	public WrappedBoolean addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
 
 
@@ -1227,7 +1151,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	 
-	@ApiMethod(name = "removeClientClearance", path = "client.removeClientClearance", httpMethod = "post")
+	@ApiMethod(name = "client.removeClientClearance", path = "client.removeClientClearance", httpMethod = "post")
   	public WrappedBoolean removeClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
 
 
@@ -1252,7 +1176,7 @@ public class SchedulerAPI {
 	}
 	
 	
-	@ApiMethod(name = "getClient", path = "client.getClient", httpMethod = "get")
+	@ApiMethod(name = "client.getClient", path = "client.getClient", httpMethod = "get")
   	public Client getClient(final User user,@Named("clientId") final long clientId) throws UnauthorizedException {
 		//pass in a client ID to access a client other than the current user
 
@@ -1284,7 +1208,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "removeClient", path = "client.removeClient", httpMethod = "post")
+  	@ApiMethod(name = "client.removeClient", path = "client.removeClient", httpMethod = "post")
  	public WrappedBoolean removeClient(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
@@ -1313,7 +1237,7 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getClientProducts",  path = "client.getClientProducts",  httpMethod = "post")
+  	@ApiMethod(name = "client.getClientProducts",  path = "client.getClientProducts",  httpMethod = "post")
  	public List<Product> getClientProducts(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
   	
         if (user == null) {
@@ -1331,7 +1255,7 @@ public class SchedulerAPI {
         return null;
   	}
 
-	@ApiMethod(name = "sendEmail", path = "client.sendEmail", httpMethod = "post")
+	@ApiMethod(name = "client.sendEmail", path = "client.sendEmail", httpMethod = "post")
   	public WrappedBoolean sendEmail(final User user,@Named("email") final String email, @Named("subject") final String subject, @Named("content") final String content) throws UnauthorizedException {
 	
 		 try {
@@ -1368,7 +1292,7 @@ public class SchedulerAPI {
 	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "createAppointment", path = "appointment.createAppointment", httpMethod = "post")
+	@ApiMethod(name = "appointment.createAppointment", path = "appointment.createAppointment", httpMethod = "post")
   	public Appointment createAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
@@ -1416,7 +1340,7 @@ public class SchedulerAPI {
 	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "updateAppointment", path = "appointment.updateAppointment",  httpMethod = "post")
+	@ApiMethod(name = "appointment.updateAppointment", path = "appointment.updateAppointment",  httpMethod = "post")
   	public Appointment updateAppointment(final User user, @Named("clientId") final long clientId, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
@@ -1453,7 +1377,7 @@ public class SchedulerAPI {
 	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "cancelAppointment", path = "appointment.cancelAppointment", httpMethod = "post")
+	@ApiMethod(name = "appointment.cancelAppointment", path = "appointment.cancelAppointment", httpMethod = "post")
   	public WrappedBoolean cancelAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
@@ -1485,7 +1409,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateAppointmentStatus", path = "appointment.updateAppointmentStatus", httpMethod = "post")
+	@ApiMethod(name = "appointment.updateAppointmentStatus", path = "appointment.updateAppointmentStatus", httpMethod = "post")
   	public WrappedBoolean updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId,  @Named("status") final Status status) throws UnauthorizedException {
 
         if (user == null) {
@@ -1512,7 +1436,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getClientAppointments", path = "appointment.getClientAppointments", httpMethod = "post")
+	@ApiMethod(name = "appointment.getClientAppointments", path = "appointment.getClientAppointments", httpMethod = "post")
   	public List<Appointment> getClientAppointments(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
@@ -1535,7 +1459,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getAppointment", path = "appointment.getAppointment", httpMethod = "post")
+	@ApiMethod(name = "appointment.getAppointment", path = "appointment.getAppointment", httpMethod = "post")
   	public Appointment getAppointment(final User user, @Named("appointmentId") final long appointmentId) throws UnauthorizedException {
 
         if (user == null) {
@@ -1558,7 +1482,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getClientCalendarId", path = "appointment.getClientCalendarId", httpMethod = "post")
+	@ApiMethod(name = "appointment.getClientCalendarId", path = "appointment.getClientCalendarId", httpMethod = "post")
   	public WrappedId getClientCalendarId(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
@@ -1750,7 +1674,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "filterAppointments", path = "appointment.filterAppointments", httpMethod = "post")
+	@ApiMethod(name = "appointment.filterAppointments", path = "appointment.filterAppointments", httpMethod = "post")
   	public WrappedBoolean filterAppointments(final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -1774,7 +1698,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "findAvailableAppointmentTimes", path = "appointment.findAvailableAppointmentTimes", httpMethod = "get")
+	@ApiMethod(name = "appointment.findAvailableAppointmentTimes", path = "appointment.findAvailableAppointmentTimes", httpMethod = "get")
   	public Object findAvailableAppointmentTimes(AppointmentForm appointmentForm, final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -1797,7 +1721,7 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getCalendarService", path = "appointment.getCalendarService", httpMethod = "post")
+	@ApiMethod(name = "appointment.getCalendarService", path = "appointment.getCalendarService", httpMethod = "post")
 	public Calendar getCalendarService( final User user,  @Named("calendarId") final String calendarId ){
 		
 		//TODO
