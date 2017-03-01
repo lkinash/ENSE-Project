@@ -48,7 +48,7 @@ public class AdminApi {
   	 * @param employeeForm 
   	 */
 	
-	@ApiMethod(name = "addEmployee", path = "addEmployee", httpMethod = "post")
+	@ApiMethod(name = "addEmployee", path = "admin.addEmployee", httpMethod = "post")
   	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
 		/*
         if (user == null) {
@@ -88,7 +88,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
      
-   	@ApiMethod(name = "addRoom", path = "addRoom", httpMethod = "post")
+   	@ApiMethod(name = "addRoom", path = "admin.addRoom", httpMethod = "post")
   	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
    		/*
         if (user == null) {
@@ -130,7 +130,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
       
-  	@ApiMethod(name = "addService",  path = "addService", httpMethod = "post")
+  	@ApiMethod(name = "addService",  path = "admin.addService", httpMethod = "post")
  	public Service addService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
 
         if (user == null) {
@@ -163,7 +163,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "addProduct",  path = "addProduct", httpMethod = "post")
+  	@ApiMethod(name = "addProduct",  path = "admin.addProduct", httpMethod = "post")
  	public Product addProduct(final User user, ProductForm productForm) throws UnauthorizedException {
 
         if (user == null) {
@@ -197,7 +197,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "addAdmin", path = "addAdmin", httpMethod = "post")
+  	@ApiMethod(name = "addAdmin", path = "admin.addAdmin", httpMethod = "post")
  	public Admin addAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
 
         if (user == null) {
@@ -226,7 +226,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "addType", path = "addType", httpMethod = "post")
+  	@ApiMethod(name = "addType", path = "admin.addType", httpMethod = "post")
  	public Type addType(final User user, TypeForm typeForm) throws UnauthorizedException {
 
         if (user == null) {
@@ -255,7 +255,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "addChange", path = "addChange", httpMethod = "post")
+  	@ApiMethod(name = "addChange", path = "admin.addChange", httpMethod = "post")
  	public Changes addChange(final User user, @Named("adminId") final long adminId, @Named("change") final String change ) throws UnauthorizedException {
 
         if (user == null) {
@@ -286,7 +286,7 @@ public class AdminApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateEmployee", path = "updateEmployee", httpMethod = "post")
+	@ApiMethod(name = "updateEmployee", path = "admin.updateEmployee", httpMethod = "post")
 	public Employee updateEmployee(final User user, EmployeeForm employeeForm, @Named("employeeId") final long employeeId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -324,7 +324,7 @@ public class AdminApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateRoom", path = "updateRoom", httpMethod = "post")
+	@ApiMethod(name = "updateRoom", path = "admin.updateRoom", httpMethod = "post")
 	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -360,7 +360,7 @@ public class AdminApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateService", path = "updateService", httpMethod = "post")
+	@ApiMethod(name = "updateService", path = "admin.updateService", httpMethod = "post")
 	public Service updateService(final User user, ServiceForm serviceForm, @Named("serviceId") final long serviceId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -408,7 +408,7 @@ public class AdminApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateProduct", path = "updateProduct", httpMethod = "post")
+	@ApiMethod(name = "updateProduct", path = "admin.updateProduct", httpMethod = "post")
 	public Product updateProduct(final User user, ProductForm productForm, @Named("productId") final long productId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -452,7 +452,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "updateAdmin", path = "updateAdmin", httpMethod = "post")
+  	@ApiMethod(name = "updateAdmin", path = "admin.updateAdmin", httpMethod = "post")
  	public Admin updateAdmin(final User user, AdminForm adminForm, @Named("adminId") final long adminId) throws UnauthorizedException {
 
         if (user == null) {
@@ -491,7 +491,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "updateType", path = "updateType", httpMethod = "post")
+  	@ApiMethod(name = "updateType", path = "admin.updateType", httpMethod = "post")
  	public Type updateType(final User user, TypeForm typeForm, @Named("typeId") final long typeId  ) throws UnauthorizedException {
 
   		if (user == null) {
@@ -527,7 +527,7 @@ public class AdminApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "removeService", path = "removeService", httpMethod = "post")
+	@ApiMethod(name = "removeService", path = "admin.removeService", httpMethod = "post")
 	public WrappedBoolean removeService(final User user, @Named("serviceId") final long serviceId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -555,7 +555,7 @@ public class AdminApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "removeProduct", path = "removeProduct", httpMethod = "post")
+	@ApiMethod(name = "removeProduct", path = "admin.removeProduct", httpMethod = "post")
 	public WrappedBoolean removeProduct(final User user, @Named("productId") final long productId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -584,7 +584,7 @@ public class AdminApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "removeRoom",  path = "removeRoom", httpMethod = "post")
+	@ApiMethod(name = "removeRoom",  path = "admin.removeRoom", httpMethod = "post")
 	public WrappedBoolean removeRoom(final User user, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -612,7 +612,7 @@ public class AdminApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "removeEmployee", path = "removeEmployee", httpMethod = "post")
+	@ApiMethod(name = "removeEmployee", path = "admin.removeEmployee", httpMethod = "post")
 	public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId) throws UnauthorizedException {
 	
 	    if (user == null) {
@@ -641,7 +641,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "removeAdmin",  path = "removeAdmin", httpMethod = "post")
+  	@ApiMethod(name = "removeAdmin",  path = "admin.removeAdmin", httpMethod = "post")
  	public WrappedBoolean removeAdmin(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
 
         if (user == null) {
@@ -669,7 +669,7 @@ public class AdminApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "removeType", path = "removeType", httpMethod = "post")
+  	@ApiMethod(name = "removeType", path = "admin.removeType", httpMethod = "post")
  	public WrappedBoolean removeType(final User user, @Named("typeId") final long typeId ) throws UnauthorizedException {
 
         if (user == null) {

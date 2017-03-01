@@ -68,7 +68,7 @@ public class AppointmentAPI {
 	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "createAppointment", httpMethod = "post")
+	@ApiMethod(name = "createAppointment", path = "appointment.createAppointment", httpMethod = "post")
   	public Appointment createAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
@@ -116,7 +116,7 @@ public class AppointmentAPI {
 	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "updateAppointment", httpMethod = "post")
+	@ApiMethod(name = "updateAppointment", path = "appointment.updateAppointment",  httpMethod = "post")
   	public Appointment updateAppointment(final User user, @Named("clientId") final long clientId, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
@@ -153,7 +153,7 @@ public class AppointmentAPI {
 	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "cancelAppointment", httpMethod = "post")
+	@ApiMethod(name = "cancelAppointment", path = "appointment.cancelAppointment", httpMethod = "post")
   	public WrappedBoolean cancelAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
@@ -185,7 +185,7 @@ public class AppointmentAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateAppointmentStatus", httpMethod = "post")
+	@ApiMethod(name = "updateAppointmentStatus", path = "appointment.updateAppointmentStatus", httpMethod = "post")
   	public WrappedBoolean updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId,  @Named("status") final Status status) throws UnauthorizedException {
 
         if (user == null) {
@@ -212,7 +212,7 @@ public class AppointmentAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getClientAppointments", httpMethod = "post")
+	@ApiMethod(name = "getClientAppointments", path = "appointment.getClientAppointments", httpMethod = "post")
   	public List<Appointment> getClientAppointments(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
@@ -235,7 +235,7 @@ public class AppointmentAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getAppointment", httpMethod = "post")
+	@ApiMethod(name = "getAppointment", path = "appointment.getAppointment", httpMethod = "post")
   	public Appointment getAppointment(final User user, @Named("appointmentId") final long appointmentId) throws UnauthorizedException {
 
         if (user == null) {
@@ -258,7 +258,7 @@ public class AppointmentAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getClientCalendarId", httpMethod = "post")
+	@ApiMethod(name = "getClientCalendarId", path = "appointment.getClientCalendarId", httpMethod = "post")
   	public WrappedId getClientCalendarId(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
@@ -450,7 +450,7 @@ public class AppointmentAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "filterAppointments", httpMethod = "post")
+	@ApiMethod(name = "filterAppointments", path = "appointment.filterAppointments", httpMethod = "post")
   	public WrappedBoolean filterAppointments(final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -474,7 +474,7 @@ public class AppointmentAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "findAvailableAppointmentTimes", httpMethod = "get")
+	@ApiMethod(name = "findAvailableAppointmentTimes", path = "appointment.findAvailableAppointmentTimes", httpMethod = "get")
   	public Object findAvailableAppointmentTimes(AppointmentForm appointmentForm, final User user) throws UnauthorizedException {
 
         if (user == null) {
@@ -497,7 +497,7 @@ public class AppointmentAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getCalendar", httpMethod = "post")
+	@ApiMethod(name = "getCalendarService", path = "appointment.getCalendarService", httpMethod = "post")
 	public Calendar getCalendarService( final User user,  @Named("calendarId") final String calendarId ){
 		
 		//TODO

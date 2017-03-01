@@ -68,7 +68,7 @@ public class ClientAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "createClient", httpMethod = "post")
+	@ApiMethod(name = "createClient", path = "client.createClient", httpMethod = "post")
   	public Client createClient(final User user, ClientForm clientForm) throws UnauthorizedException {
 
   		if (user == null) {
@@ -130,7 +130,7 @@ public class ClientAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "modifyClient", httpMethod = "post")
+	@ApiMethod(name = "modifyClient", path = "client.modifyClient", httpMethod = "post")
   	public Client modifyClient(ClientForm clientForm, final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
@@ -176,7 +176,7 @@ public class ClientAPI {
 	 * @throws UnauthorizedException 
 	 */
 	 
-	@ApiMethod(name = "addClientClearance", httpMethod = "post")
+	@ApiMethod(name = "addClientClearance", path = "client.addClientClearance", httpMethod = "post")
   	public WrappedBoolean addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
 
 
@@ -206,7 +206,7 @@ public class ClientAPI {
 	 * @throws UnauthorizedException 
 	 */
 	 
-	@ApiMethod(name = "removeClientClearance", httpMethod = "post")
+	@ApiMethod(name = "removeClientClearance", path = "client.removeClientClearance", httpMethod = "post")
   	public WrappedBoolean removeClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
 
 
@@ -231,7 +231,7 @@ public class ClientAPI {
 	}
 	
 	
-	@ApiMethod(name = "getClient", httpMethod = "get")
+	@ApiMethod(name = "getClient", path = "client.getClient", httpMethod = "get")
   	public Client getClient(final User user,@Named("clientId") final long clientId) throws UnauthorizedException {
 		//pass in a client ID to access a client other than the current user
 
@@ -263,7 +263,7 @@ public class ClientAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "removeClient",  path = "removeClient", httpMethod = "post")
+  	@ApiMethod(name = "removeClient", path = "client.removeClient", httpMethod = "post")
  	public WrappedBoolean removeClient(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
@@ -291,7 +291,7 @@ public class ClientAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getClientAppointments",  path = "getClientAppointments", httpMethod = "post")
+  	@ApiMethod(name = "getClientAppointments", path = "client.getClientAppointments", httpMethod = "post")
  	public List<Appointment> getClientAppointments(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
   	
         if (user == null) {
@@ -316,7 +316,7 @@ public class ClientAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getClientProducts",  path = "getClientProducts", httpMethod = "post")
+  	@ApiMethod(name = "getClientProducts",  path = "client.getClientProducts",  httpMethod = "post")
  	public List<Product> getClientProducts(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
   	
         if (user == null) {
@@ -334,7 +334,7 @@ public class ClientAPI {
         return null;
   	}
 
-	@ApiMethod(name = "sendEmail", httpMethod = "post")
+	@ApiMethod(name = "sendEmail", path = "client.sendEmail", httpMethod = "post")
   	public WrappedBoolean sendEmail(final User user,@Named("email") final String email, @Named("subject") final String subject, @Named("content") final String content) throws UnauthorizedException {
 	
 		 try {
