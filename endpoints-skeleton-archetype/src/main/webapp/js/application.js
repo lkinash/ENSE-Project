@@ -278,7 +278,25 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
 
   });
 
+   
+   app.controller('AddClientController', function($scope, $route, $routeParams, $location) {
 
+
+   });
+   
+   app.controller('ViewClientController', function($scope, $route, $routeParams, $location) {
+
+
+   });
+   
+   
+   app.controller('LogController', function($scope, $route, $routeParams, $location) {
+
+
+   });
+
+   
+   
  
  app.config(function($routeProvider, $locationProvider) {
 	 $routeProvider
@@ -304,9 +322,19 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
          controller: 'AddServiceController'
      })
      
+     .when('/admin/addClient', {
+         templateUrl: 'partials/addClientAdmin.html',
+         controller: 'AddClientController'
+     })
+     
      .when('/admin/editProfile', {
          templateUrl: 'partials/adminEditProfile.html',
          controller: 'AdminEditProfileController'
+     })
+     
+     .when('/admin/logChanges', {
+         templateUrl: 'partials/logTrackingAdmin.html',
+         controller: 'LogController'
      })
      
      .when('/client/bookAppointment', {
@@ -377,6 +405,11 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
      .when('/admin/viewEmployee', {
          templateUrl: 'partials/viewEmployeeAdmin.html',
          controller: 'ViewEmployeeController'
+     })
+     
+     .when('/admin/viewClient', {
+         templateUrl: 'partials/viewClientAdmin.html',
+         controller: 'ViewClientController'
      })
     
      .when('/admin/viewRoom', {

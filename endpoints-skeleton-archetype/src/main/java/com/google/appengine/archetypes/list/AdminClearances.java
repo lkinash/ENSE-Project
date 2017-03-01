@@ -5,10 +5,7 @@ package com.google.appengine.archetypes.list;
 
 
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-// Start of user code (user defined imports)
 
-// End of user code
 
 /**
  * Description of AdminClearances.

@@ -46,8 +46,6 @@ import com.google.appengine.archetypes.wrappers.WrappedId;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 
-
-
 @Api(
 	    name = "scheduler",
 	    version = "v1",
@@ -57,7 +55,6 @@ import com.googlecode.objectify.cmd.Query;
 
 	)
 public class SchedulerAPI {
-
 	
 	
 	/**
