@@ -19,6 +19,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.ConstantsSecret;
+import com.google.appengine.archetypes.Defaults;
 import com.google.appengine.archetypes.entities.Admin;
 import com.google.appengine.archetypes.entities.Appointment;
 import com.google.appengine.archetypes.entities.Changes;
@@ -313,9 +314,6 @@ public class SchedulerAPI {
 	    
   		ofy().save().entities(employee).now();
 	    
-	    // TODO 
-	    // Ensure in the form elements that are not set are set to null
-		
 		return employee;
 	}
 
@@ -347,9 +345,6 @@ public class SchedulerAPI {
 	    
   		ofy().save().entities(room).now();
 	    
-	    // TODO 
-	    // Ensure in the form elements that are not set are set to null
-		
 		return room;
 	}
 
@@ -391,9 +386,6 @@ public class SchedulerAPI {
 	    }
 	    
   		ofy().save().entities(service).now();
-	    
-	    // TODO 
-	    // Ensure in the form elements that are not set are set to null
 		
 		return service;
 	}
@@ -434,9 +426,6 @@ public class SchedulerAPI {
 	    
   		ofy().save().entities(product).now();
 	    
-	    // TODO 
-	    // Ensure in the form elements that are not set are set to null
-		
 		return product;
 	}
 
@@ -474,11 +463,7 @@ public class SchedulerAPI {
 	    
 	    
   		ofy().save().entities(admin).now();
-	    
-  		
-	    // TODO 
-	    // Ensure in the form elements that are not set are set to null
-		
+	   
 		return admin;
   	}
   	
@@ -537,13 +522,9 @@ public class SchedulerAPI {
 		
 	    Key<Service> key = Key.create(Service.class, serviceId);
 		
-		ofy().delete().key(key).now();
-	   
-		
-		// TODO 
-	    // Test and Set Return Value
+	    ofy().delete().key(key).now();
 	    
-		return null;
+		return new WrappedBoolean(true);
 	}
 
   	/**
@@ -566,13 +547,8 @@ public class SchedulerAPI {
 	    Key<Product> key = Key.create(Product.class, productId);
 		
 		ofy().delete().key(key).now();
-	   
-		
-		// TODO 
-	    // Test and Set Return Value
-		
-	    
-		return null;
+	   	    
+		return new WrappedBoolean(true);
 	}
 
 	/**
@@ -596,11 +572,7 @@ public class SchedulerAPI {
 		
 		ofy().delete().key(key).now();
 	    
-		// TODO 
-	    // Test and Set Return Value
-		
-		
-		return null;
+		return new WrappedBoolean(true);
 	}
 
 	/**
@@ -625,11 +597,7 @@ public class SchedulerAPI {
 	
 		ofy().delete().key(key).now();
 		
-	    
-	    // TODO 
-	    // return value setting
-		
-		return null;
+		return new WrappedBoolean(true);
 	}
 
 	/**
@@ -653,11 +621,7 @@ public class SchedulerAPI {
 		
 		ofy().delete().key(key).now();
 	   
-		
-		// TODO 
-	    // Test and Set Return Value
-  		
-		return null;
+		return new WrappedBoolean(true);
   	}
   	
   	/**
@@ -682,10 +646,7 @@ public class SchedulerAPI {
 		
 		ofy().delete().key(key).now();
 	   
-		// TODO 
-	    // Test and Set Return Value
-  		
-		return null;
+		return new WrappedBoolean(true);
 		
   	}
 
@@ -930,9 +891,7 @@ public class SchedulerAPI {
 	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
-		
-	    //System.out.println("Get Room Called");
-	    
+
 	    Key<Room> key = Key.create(Room.class, roomId);
 	    		
 	    Room room = (Room) ofy().load().key(key).now();
@@ -1022,12 +981,9 @@ public class SchedulerAPI {
         	phoneNumber = clientForm.getPhoneNumber();
         
         if(clientForm.getBirthday() == null)
-        	//TODO
-        	//Set a defult birthday value here
-        	birthday = null;
+        	birthday = Defaults.BIRTHDAY;
         else
         	birthday = clientForm.getBirthday();
-        
         
         
         // Client must enter first name, last name, email and a password
@@ -1039,10 +995,7 @@ public class SchedulerAPI {
   		ofy().save().entities(client).now();
         
 		return client;
-		 
-        // TODO 
-        // Set the return value 
-		
+
 	}
 
 	/**
@@ -1324,7 +1277,6 @@ public class SchedulerAPI {
         Appointment appointment = getAppointment(user, appointmentId, pageNumber);
         
         //TODO
-        //
         // Update the variables of the appointment
         //
         
@@ -1460,74 +1412,6 @@ public class SchedulerAPI {
         
 	}
 	
-	/**
-	 * Description of the method queryAppointments.
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 */
-	
-  	private static WrappedId createCalendar(final User user) throws UnauthorizedException, IOException {
-
-        
-        //TODO
-        //create a calendar
-        
-		return null;
-  	}
-	
-	/**
-	 * Description of the method queryAppointments.
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 */
-	
-  	private static WrappedId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
-        
-        
-       Event event = EventCreator.createEvent(eventForm);
-
-        Quickstart.addEvent(calendarId, user, event);
-        
-        return null;
-	}
-	
-	/**
-	 * Description of the method queryAppointments.
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 */
-	
-	private static WrappedId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException {
-
-		//TODO
-        //service.events().delete(calendarId, eventId).execute();
-        
-        return null;
-	}
-	
-	
-	/**
-	 * Description of the method queryAppointments.
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 */
-	
-	private static WrappedBoolean updateEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
-
-		//TODO
-        
-       // Event event = service.events().get("primary", "eventId").execute();
-
-     // Make a change
-   //  event.setSummary("Appointment at Somewhere");
-
-     // Update the event
-     //Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
-
-	
-        return null;
-	}
-
 
 	/**
 	 * Description of the method findAvailableAppointmentTimes.
@@ -1554,18 +1438,77 @@ public class SchedulerAPI {
 	} 
 	
 	/**
-	 * Description of the method filterAppointments.
-	 * @throws IOException 
+	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
+	 * @throws IOException 
 	 */
 	
-	@ApiMethod(name = "appointment.getCalendarService", path = "appointment.getCalendarService", httpMethod = "post")
-	public Calendar getCalendarService( final User user,  @Named("calendarId") final String calendarId , @Named("pageNumber") final int pageNumber) throws IOException{
+  	private static WrappedId createCalendar(final User user) throws UnauthorizedException, IOException {
+
+        
+        //TODO
+        //create a calendar
+        
+		return null;
+  	}
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+  	private static WrappedId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+        
+  		Event event = EventCreator.createEvent(eventForm);
+
+        Quickstart.addEvent(calendarId, user, event);
+        
+        return null;
+	}
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	private static WrappedId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException {
+
+		Calendar service = getCalendarService(user);
+        service.events().delete(calendarId, eventId).execute();
+        
+        return null;
+	}
+	
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	private static WrappedBoolean updateEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+
+		//TODO
+        
+       // Event event = service.events().get("primary", "eventId").execute();
+
+     // Make a change
+   //  event.setSummary("Appointment at Somewhere");
+
+     // Update the event
+     //Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
+
+	
+        return null;
+	}
+	
+	
+	private static Calendar getCalendarService(final User user) throws IOException{
 		
 		Calendar service = null;
-		
-		//calendarId = "j6pq7ifpumics69e9948q2bhdc@group.calendar.google.com";
-	
+
 		service = Quickstart.getCalendarService(user);
 		
 		return service;
@@ -1578,11 +1521,10 @@ public class SchedulerAPI {
 		
 		// TODO 
         // Get the user clearances
-		
-		
-		// TODO 
-        // Check the user clearances against the page ID
+		// Check the user clearances against the page ID
   		
+	 
+        
   		
   		return true;
   	}
