@@ -132,7 +132,7 @@ public class Quickstart {
                 .build();
     }
 
-    public static WrappedBoolean addEvent(String calendarId, final User user) throws IOException {
+    public static WrappedBoolean addEvent(String calendarId, final User user, Event event) throws IOException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -143,23 +143,6 @@ public class Quickstart {
         com.google.api.services.calendar.Calendar service =
             getCalendarService(user);
 
-        
-        Event event = new Event()
-        .setSummary("Google I/O 2015")
-        .setLocation("800 Howard St., San Francisco, CA 94103")
-        .setDescription("A chance to hear more about Google's developer products.");
-
-    DateTime startDateTime = new DateTime("2017-05-22T09:00:00-07:00");
-    EventDateTime start = new EventDateTime()
-        .setDateTime(startDateTime)
-        .setTimeZone("America/Los_Angeles");
-    event.setStart(start);
-
-    DateTime endDateTime = new DateTime("2017-05-22T17:00:00-07:00");
-    EventDateTime end = new EventDateTime()
-        .setDateTime(endDateTime)
-        .setTimeZone("America/Los_Angeles");
-    event.setEnd(end);
     
     event = service.events().insert(calendarId, event).execute();
     System.out.printf("Event created: %s\n", event.getHtmlLink());

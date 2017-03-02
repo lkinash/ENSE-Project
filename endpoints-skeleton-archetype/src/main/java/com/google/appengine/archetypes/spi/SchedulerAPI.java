@@ -15,6 +15,7 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
 import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.Constants;
 import com.google.appengine.archetypes.ConstantsSecret;
@@ -39,6 +40,7 @@ import com.google.appengine.archetypes.forms.RoomForm;
 import com.google.appengine.archetypes.forms.ServiceForm;
 import com.google.appengine.archetypes.forms.TypeForm;
 import com.google.appengine.archetypes.list.Status;
+import com.google.appengine.archetypes.service.EventCreator;
 import com.google.appengine.archetypes.service.Quickstart;
 import com.google.appengine.archetypes.servlets.Sendgrid;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
@@ -99,11 +101,12 @@ public class SchedulerAPI {
   	 * @param admin 
   	 * @param roomForm 
   	 * @throws UnauthorizedException 
+  	 * @throws IOException 
   	 */
      
    	@ApiMethod(name = "admin.addRoom", path = "admin.addRoom", httpMethod = "post")
-  	public Room addRoom(final User user, RoomForm roomForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-   		/*
+  	public Room addRoom(final User user, RoomForm roomForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
+   		
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
@@ -111,25 +114,21 @@ public class SchedulerAPI {
             throw new UnauthorizedException("Authorization level too low.");
         }
         
-  		*/
 
         final Key<Room> roomKey = factory().allocateId(Room.class);
         final long roomId = roomKey.getId();
         
-        Calendar calendar = null;
-        		//new Calendar(null, null, null);			
+        String calendar = createCalendar(user).getId();
+        		
         List <Long> service = null;
       
-        /*
         if(roomForm.getServiceIds() != null)
         	service = roomForm.getServiceIds();
         else
         	service = null;
-        */
-        //TODO
-        //create a new list of services
+
         
-        Room room = new Room(roomForm.getNumber(), roomForm.getServiceIds(), calendar, roomId);
+        Room room = new Room(roomForm.getNumber(), service, calendar, roomId);
     		
   		ofy().save().entities(room).now(); 
    		
@@ -157,10 +156,7 @@ public class SchedulerAPI {
         final long serviceId = serviceKey.getId();
         
         
-        boolean requiresClearance = true;
-        // TODO 
-        // Link to get this value from a list
-        
+        boolean requiresClearance = serviceForm.getClearanceRequired();
         
   		Service service  = new Service(serviceForm.getDefaultLength(), requiresClearance , serviceId, serviceForm.getName(), serviceForm.getTypeId(), serviceForm.getPrice());
   		
@@ -311,13 +307,6 @@ public class SchedulerAPI {
 		 
 	    Employee employee = getEmployee(user, employeeId, pageNumber);
 	    
-	    //if(!(employeeForm.getCalendar() == null)){
-	    	//employee.setCalendarId(employeeForm.getCalendar());
-	    //}
-	   
-	    //TODO
-	    //Fix this
-	    
 	    if(!(employeeForm.getName() == null)){
 	    	employee.setName(employeeForm.getName());
 	    }
@@ -348,9 +337,7 @@ public class SchedulerAPI {
 	    }
 	    
 	    Room room = getRoom(user, roomId, pageNumber);
-	    
-	    // TODO
-	    // Check what the default value will be 
+	   
 	    if(!(roomForm.getNumber() == -1)){
 	    	room.setNumber(roomForm.getNumber());
 	    }
@@ -428,9 +415,7 @@ public class SchedulerAPI {
 	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
-		
-  		//new Product(productForm.getBarcodeNumber() , productId, productForm.getName(), productForm.getType(), productForm.getPrice());
-  		
+
 	    Product product = getProduct(user, productId, pageNumber);
 	    
 	    if(!(productForm.getBarcodeNumber() == -1)){
@@ -439,8 +424,7 @@ public class SchedulerAPI {
 	    if(!(productForm.getName() == null)){
 	    	product.setName(productForm.getName());
 	    }
-	    // TODO
-	    // Check the default values for this 
+
 	    if(!(productForm.getPrice() == -1)){
 	    	product.setPrice(productForm.getPrice());
 	    }
@@ -484,11 +468,14 @@ public class SchedulerAPI {
 	    if(!(adminForm.getPassword() == null)){
 	    	admin.setPassword(adminForm.getPassword());
 	    }
+	    
 	    // TODO
 	    // Create a secure password send method
 	    
+	    
   		ofy().save().entities(admin).now();
 	    
+  		
 	    // TODO 
 	    // Ensure in the form elements that are not set are set to null
 		
@@ -1290,15 +1277,9 @@ public class SchedulerAPI {
         if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
-  		
-        
-        // TODO 
-        // Create the event
-        //
-        //
+  
         
         EventForm eventForm = appointmentForm.getEventForm();
-        
         
         Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
 
@@ -1503,103 +1484,9 @@ public class SchedulerAPI {
   	private static WrappedId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
         
         
-        //Calendar calendar = getCalendar(calendarId);
-        
-        // Initialize Calendar service with valid OAuth credentials
-        
-        //GoogleCredential credentials = new GoogleCredential.Builder().setTransport(GoogleNetHttpTransport.newTrustedTransport())
-        	//	  .setJsonFactory(new GsonFactory())
-        		//  .setServiceAccountId("<service account email address>@developer.gserviceaccount.com")
-        	//	  .setServiceAccountScopes(Arrays.asList("https://www.googleapis.com/auth/calendar.readonly"))
-        		//  .setServiceAccountPrivateKeyFromP12File(new File("<private key for service account in P12 format>-privatekey.p12"))
-        	//	.build();
-        //Calendar client = new Calendar.Builder(GoogleNetHttpTransport.newTrustedTransport(), new GsonFactory(), credentials).build();
-        		
-        		
-        
-        //Calendar service = new Calendar.Builder(GoogleNetHttpTransport.newTrustedTransport(), Constants.JSON_FACTORY, authorize()).setApplicationName("applicationName").build();
-        
-        //Calendar service = CalendarUtility.loadCalendarClient(user.getUserId());
-        
-        // Retrieve the calendar
-        //Calendar calendar =  service.calendars().get(calendarId).execute();
-        
-        /*
-        Event event = new Event()
-        .setSummary(eventForm.getSummary())
-        .setLocation(eventForm.getLocation())
-        .setDescription(eventForm.getDescription());
+       Event event = EventCreator.createEvent(eventForm);
 
-        DateTime startDateTime = eventForm.getStartDateTime();
-        EventDateTime start = new EventDateTime()
-        	.setDateTime(startDateTime)
-        	.setTimeZone("America/Los_Angeles");
-        event.setStart(start);
-
-        DateTime endDateTime = eventForm.getEndDateTime();
-        EventDateTime end = new EventDateTime()
-        	.setDateTime(endDateTime)
-        	.setTimeZone("America/Los_Angeles");
-        event.setEnd(end);
-
-        String[] recurrence = eventForm.getRecurrence();
-        event.setRecurrence(Arrays.asList(recurrence));
-
-        EventAttendee[] attendees = eventForm.getAttendees();
-        event.setAttendees(Arrays.asList(attendees));
-
-        EventReminder[] reminderOverrides = eventForm.getReminderOverrides();
-   
-        Event.Reminders reminders = new Event.Reminders()
-        	.setUseDefault(false)
-        	.setOverrides(Arrays.asList(reminderOverrides));
-        event.setReminders(reminders);
-
-        //event = calendar.events().insert(calendarId, event).execute();
-
-        // TODO 
-        // 
-        Event event = new Event()
-        .setSummary("Google I/O 2015")
-        .setLocation("800 Howard St., San Francisco, CA 94103")
-        .setDescription("A chance to hear more about Google's developer products.");
-
-    DateTime startDateTime = new DateTime("2017-05-28T09:00:00-07:00");
-    EventDateTime start = new EventDateTime()
-        .setDateTime(startDateTime)
-        .setTimeZone("America/Los_Angeles");
-    event.setStart(start);
-
-    DateTime endDateTime = new DateTime("2017-05-28T17:00:00-07:00");
-    EventDateTime end = new EventDateTime()
-        .setDateTime(endDateTime)
-        .setTimeZone("America/Los_Angeles");
-    event.setEnd(end);
-
-    String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
-    event.setRecurrence(Arrays.asList(recurrence));
-
-    EventAttendee[] attendees = new EventAttendee[] {
-        new EventAttendee().setEmail("lpage@example.com"),
-        new EventAttendee().setEmail("sbrin@example.com"),
-    };
-    event.setAttendees(Arrays.asList(attendees));
-
-    EventReminder[] reminderOverrides = new EventReminder[] {
-        new EventReminder().setMethod("email").setMinutes(24 * 60),
-        new EventReminder().setMethod("popup").setMinutes(10),
-    };
-    Event.Reminders reminders = new Event.Reminders()
-        .setUseDefault(false)
-        .setOverrides(Arrays.asList(reminderOverrides));
-    event.setReminders(reminders);
-*/
-   // event = service.events().insert(calendarId, event).execute();
-    //System.out.printf("Event created: %s\n", event.getHtmlLink());
-        
-		//return event;
-
-        Quickstart.addEvent(calendarId, user);
+        Quickstart.addEvent(calendarId, user, event);
         
         return null;
 	}
@@ -1612,7 +1499,7 @@ public class SchedulerAPI {
 	
 	private static WrappedId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException {
 
-	
+		//TODO
         //service.events().delete(calendarId, eventId).execute();
         
         return null;
@@ -1641,28 +1528,6 @@ public class SchedulerAPI {
         return null;
 	}
 
-	/**         
-	 * Description of the method filterAppointments.
-	 * @throws UnauthorizedException 
-	 */
-	
-	@ApiMethod(name = "appointment.filterAppointments", path = "appointment.filterAppointments", httpMethod = "post")
-  	public WrappedBoolean filterAppointments(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-  		
-        
-        // TODO 
-        // 
-		
-        
-		return null;
-	}
 
 	/**
 	 * Description of the method findAvailableAppointmentTimes.
@@ -1682,7 +1547,7 @@ public class SchedulerAPI {
   		
         
         // TODO 
-        // 
+        // write function
         
 		
 		return null;
@@ -1709,9 +1574,6 @@ public class SchedulerAPI {
 	
 	
 	private static boolean checkAuthorizationForPage(final User user, @Named("pageNumber") final int pageNumber){
-  		
-        // TODO 
-        // Get the page ID
   		
 		
 		// TODO 

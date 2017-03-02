@@ -21,6 +21,7 @@ import com.googlecode.objectify.annotation.Index;
  */
 @Entity
 public class Employee extends Account {
+
 	/**
 	 * Description of the property calendar.
 	 */

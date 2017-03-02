@@ -40,7 +40,7 @@ public class Room {
 	 * Description of the property calendar.
 	 */
 	@Index
-    private Calendar calendar;
+	private String calendarId;
 	
 	// Start of user code (user defined attributes for Room)
 	
@@ -50,10 +50,10 @@ public class Room {
 		
 	}
 	
-	public Room(int newNumber, List<Long> newService, Calendar newCalendar, long newRoomId){
+	public Room(int newNumber, List<Long> newService, String newCalendar, long newRoomId){
 		
 		this.number = newNumber;
-		this.calendar = newCalendar;
+		this.calendarId = newCalendar;
 		this.serviceIds = newService;
 		this.roomId = newRoomId;
 	}
@@ -95,16 +95,16 @@ public class Room {
 	 * Returns calendar.
 	 * @return calendar 
 	 */
-	public Calendar getCalendar() {
-		return this.calendar;
+	public String getCalendar() {
+		return this.calendarId;
 	}
 
 	/**
 	 * Sets a value to attribute calendar. 
 	 * @param newCalendar 
 	 */
-	public void setCalendar(Calendar newCalendar) {
-		this.calendar = newCalendar;
+	public void setCalendar(String newCalendar) {
+		this.calendarId = newCalendar;
 	}
 	
 	public long getRoomId(){
