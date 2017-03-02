@@ -47,13 +47,13 @@
 
 	<div ng-controller="MainController" ng-init="initSignInButton()">
 
-		<md-content layout="row" flex>
-		<div class="container" >
+		<div class="container">
 
+			<md-content height="1px" layout="column">
 			<ng-view></ng-view>
+			</md-content>
 
 		</div>
-		</md-content>
 	</div>
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>
