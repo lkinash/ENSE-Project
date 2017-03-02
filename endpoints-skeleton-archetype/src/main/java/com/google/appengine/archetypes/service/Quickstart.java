@@ -87,6 +87,35 @@ public class Quickstart {
     	System.out.println(
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
+        /*
+		String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
+	    Credential credential = null;
+		try {
+			credential = CalendarUtility.newFlow().loadCredential(userId);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Calendar service = new Calendar.Builder(CalendarUtility.HTTP_TRANSPORT, CalendarUtility.JSON_FACTORY, credential)
+	    .setApplicationName("applicationName").build();
+	// Retrieve the calendar
+		Calendar calendar = null;
+		
+		try {
+			calendar = service.calendars().get(calendarId).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println(calendar.getSummary());
+		
+		
+    	return calendar;
+    	*/
+    
+    
     }
 
     

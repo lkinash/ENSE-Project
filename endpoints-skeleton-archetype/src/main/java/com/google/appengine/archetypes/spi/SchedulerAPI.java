@@ -64,15 +64,15 @@ public class SchedulerAPI {
   	 */
 	
 	@ApiMethod(name = "admin.addEmployee", path = "admin.addEmployee", httpMethod = "post")
-  	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
-		/*
+  	public Employee addEmployee(final User user, EmployeeForm employeeForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException{
+		
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
-  		*/
+  		
         
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
@@ -83,8 +83,6 @@ public class SchedulerAPI {
         String calendarId = "";
         //TODO
         //Get the calendar Id from the calendar
-		
-        
         
         //employee must have a name, email and a password set
         
@@ -104,12 +102,12 @@ public class SchedulerAPI {
   	 */
      
    	@ApiMethod(name = "admin.addRoom", path = "admin.addRoom", httpMethod = "post")
-  	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException {
+  	public Room addRoom(final User user, RoomForm roomForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
    		/*
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
         
@@ -146,12 +144,12 @@ public class SchedulerAPI {
   	 */
       
   	@ApiMethod(name = "admin.addService",  path = "admin.addService", httpMethod = "post")
- 	public Service addService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
+ 	public Service addService(final User user, ServiceForm serviceForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -179,12 +177,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.addProduct",  path = "admin.addProduct", httpMethod = "post")
- 	public Product addProduct(final User user, ProductForm productForm) throws UnauthorizedException {
+ 	public Product addProduct(final User user, ProductForm productForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
  		
@@ -213,12 +211,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.addAdmin", path = "admin.addAdmin", httpMethod = "post")
- 	public Admin addAdmin(final User user, AdminForm adminForm) throws UnauthorizedException {
+ 	public Admin addAdmin(final User user, AdminForm adminForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -242,12 +240,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.addType", path = "admin.addType", httpMethod = "post")
- 	public Type addType(final User user, TypeForm typeForm) throws UnauthorizedException {
+ 	public Type addType(final User user, TypeForm typeForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   	
@@ -271,12 +269,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.addChange", path = "admin.addChange", httpMethod = "post")
- 	public Changes addChange(final User user, @Named("adminId") final long adminId, @Named("change") final String change ) throws UnauthorizedException {
+ 	public Changes addChange(final User user, @Named("adminId") final long adminId, @Named("change") final String change , @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   	
@@ -302,16 +300,16 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "admin.updateEmployee", path = "admin.updateEmployee", httpMethod = "post")
-	public Employee updateEmployee(final User user, EmployeeForm employeeForm, @Named("employeeId") final long employeeId) throws UnauthorizedException {
+	public Employee updateEmployee(final User user, EmployeeForm employeeForm, @Named("employeeId") final long employeeId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
-	    if (!checkAuthorizationForPage(user)) {
+	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		 
-	    Employee employee = getEmployee(user, employeeId);
+	    Employee employee = getEmployee(user, employeeId, pageNumber);
 	    
 	    //if(!(employeeForm.getCalendar() == null)){
 	    	//employee.setCalendarId(employeeForm.getCalendar());
@@ -340,16 +338,16 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "admin.updateRoom", path = "admin.updateRoom", httpMethod = "post")
-	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final int roomId) throws UnauthorizedException {
+	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final int roomId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
-	    if (!checkAuthorizationForPage(user)) {
+	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 	    
-	    Room room = getRoom(user, roomId);
+	    Room room = getRoom(user, roomId, pageNumber);
 	    
 	    // TODO
 	    // Check what the default value will be 
@@ -376,17 +374,17 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "admin.updateService", path = "admin.updateService", httpMethod = "post")
-	public Service updateService(final User user, ServiceForm serviceForm, @Named("serviceId") final long serviceId) throws UnauthorizedException {
+	public Service updateService(final User user, ServiceForm serviceForm, @Named("serviceId") final long serviceId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
-	    if (!checkAuthorizationForPage(user)) {
+	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
 
-	    Service service = getService(user, serviceId);
+	    Service service = getService(user, serviceId, pageNumber);
 	    
 	    if(!(serviceForm.getName() == null)){
 	    	service.setName(serviceForm.getName());
@@ -401,8 +399,6 @@ public class SchedulerAPI {
 	    	service.setDefaultLength(serviceForm.getDefaultLength());
 	    }
 	    
-	    // TODO
-	    // Check what our default will be for numbers 
 	    if(!(serviceForm.getPrice() == -1)){
 	    	service.setPrice(serviceForm.getPrice());
 	    }
@@ -424,18 +420,18 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "admin.updateProduct", path = "admin.updateProduct", httpMethod = "post")
-	public Product updateProduct(final User user, ProductForm productForm, @Named("productId") final long productId) throws UnauthorizedException {
+	public Product updateProduct(final User user, ProductForm productForm, @Named("productId") final long productId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
-	    if (!checkAuthorizationForPage(user)) {
+	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
   		//new Product(productForm.getBarcodeNumber() , productId, productForm.getName(), productForm.getType(), productForm.getPrice());
   		
-	    Product product = getProduct(user, productId);
+	    Product product = getProduct(user, productId, pageNumber);
 	    
 	    if(!(productForm.getBarcodeNumber() == -1)){
 	    	product.setBarcodeNumber(productForm.getBarcodeNumber());
@@ -468,16 +464,16 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.updateAdmin", path = "admin.updateAdmin", httpMethod = "post")
- 	public Admin updateAdmin(final User user, AdminForm adminForm, @Named("adminId") final long adminId) throws UnauthorizedException {
+ 	public Admin updateAdmin(final User user, AdminForm adminForm, @Named("adminId") final long adminId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
-  		Admin admin = getAdmin(user, adminId);
+  		Admin admin = getAdmin(user, adminId, pageNumber);
   			    
 	    if(!(adminForm.getClearance() == null)){
 	    	admin.setAdminClearance(adminForm.getClearance());
@@ -507,17 +503,17 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.updateType", path = "admin.updateType", httpMethod = "post")
- 	public Type updateType(final User user, TypeForm typeForm, @Named("typeId") final long typeId  ) throws UnauthorizedException {
+ 	public Type updateType(final User user, TypeForm typeForm, @Named("typeId") final long typeId  , @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
   		if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
         
         
-  		Type type = getType(user, typeId);
+  		Type type = getType(user, typeId, pageNumber);
 		    
 	    if(!(typeForm.getIsService() == type.getIsService())){
 	    	type.setIsService(typeForm.getIsService());
@@ -543,12 +539,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "admin.removeService", path = "admin.removeService", httpMethod = "post")
-	public WrappedBoolean removeService(final User user, @Named("serviceId") final long serviceId) throws UnauthorizedException {
+	public WrappedBoolean removeService(final User user, @Named("serviceId") final long serviceId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
-	    if (!checkAuthorizationForPage(user)) {
+	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
@@ -571,12 +567,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "admin.removeProduct", path = "admin.removeProduct", httpMethod = "post")
-	public WrappedBoolean removeProduct(final User user, @Named("productId") final long productId) throws UnauthorizedException {
+	public WrappedBoolean removeProduct(final User user, @Named("productId") final long productId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
-	    if (!checkAuthorizationForPage(user)) {
+	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
@@ -600,12 +596,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "admin.removeRoom",  path = "admin.removeRoom", httpMethod = "post")
-	public WrappedBoolean removeRoom(final User user, @Named("roomId") final int roomId) throws UnauthorizedException {
+	public WrappedBoolean removeRoom(final User user, @Named("roomId") final int roomId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
-	    if (!checkAuthorizationForPage(user)) {
+	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
@@ -628,12 +624,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "admin.removeEmployee", path = "admin.removeEmployee", httpMethod = "post")
-	public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId) throws UnauthorizedException {
+	public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
-	    if (!checkAuthorizationForPage(user)) {
+	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
@@ -657,12 +653,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.removeAdmin",  path = "admin.removeAdmin", httpMethod = "post")
- 	public WrappedBoolean removeAdmin(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
+ 	public WrappedBoolean removeAdmin(final User user, @Named("adminId") final long adminId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -685,12 +681,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.removeType", path = "admin.removeType", httpMethod = "post")
- 	public WrappedBoolean removeType(final User user, @Named("typeId") final long typeId ) throws UnauthorizedException {
+ 	public WrappedBoolean removeType(final User user, @Named("typeId") final long typeId , @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
 
@@ -713,12 +709,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getAllServices", path = "admin.getAllServices", httpMethod = "get")
- 	public List<Service> getAllService(final User user) throws UnauthorizedException {
+ 	public List<Service> getAllService(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -736,12 +732,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getAllEmployee", path = "admin.getAllEmployee", httpMethod = "get")
- 	public List<Employee> getAllEmployee(final User user) throws UnauthorizedException {
+ 	public List<Employee> getAllEmployee(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -759,12 +755,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getAllProducts", path = "admin.getAllProducts", httpMethod = "get")
- 	public List<Product> getAllProduct(final User user) throws UnauthorizedException {
+ 	public List<Product> getAllProduct(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
         
@@ -782,12 +778,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getAllAdmin", path = "admin.getAllAdmin", httpMethod = "get")
- 	public List<Admin> getAllAdmin(final User user) throws UnauthorizedException {
+ 	public List<Admin> getAllAdmin(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
         
@@ -805,12 +801,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getAllRooms", path = "admin.getAllRooms", httpMethod = "get")
- 	public List<Room> getAllRoom(final User user) throws UnauthorizedException {
+ 	public List<Room> getAllRoom(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }       
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -826,12 +822,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getAllChanges", path = "admin.getAllChanges", httpMethod = "get")
- 	public List<Changes> getAllChanges(final User user) throws UnauthorizedException {
+ 	public List<Changes> getAllChanges(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }       
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -847,12 +843,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getServices", path = "admin.getServices", httpMethod = "get")
- 	public Service getService(final User user,  @Named("serviceId") final long serviceId) throws UnauthorizedException {
+ 	public Service getService(final User user,  @Named("serviceId") final long serviceId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -870,12 +866,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getEmployee", path = "admin.getEmployee", httpMethod = "get")
- 	public Employee getEmployee(final User user, @Named("employeeId") final long employeeId) throws UnauthorizedException {
+ 	public Employee getEmployee(final User user, @Named("employeeId") final long employeeId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -893,12 +889,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getProducts", path = "admin.getProducts", httpMethod = "get")
- 	public Product getProduct(final User user, @Named("productId") final long productId) throws UnauthorizedException {
+ 	public Product getProduct(final User user, @Named("productId") final long productId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
         
@@ -916,12 +912,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getAdmin", path = "admin.getAdmin", httpMethod = "get")
- 	public Admin getAdmin(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
+ 	public Admin getAdmin(final User user, @Named("adminId") final long adminId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
         
@@ -939,12 +935,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "admin.getRoom", path = "admin.getRoom", httpMethod = "get")
-	public Room getRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
+	public Room getRoom(final User user, @Named("roomId") final long roomId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }       
-	    if (!checkAuthorizationForPage(user)) {
+	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
 		
@@ -964,12 +960,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "admin.getType", path = "admin.getType", httpMethod = "get")
- 	public Type getType(final User user, @Named("typeId") final long typeId) throws UnauthorizedException {
+ 	public Type getType(final User user, @Named("typeId") final long typeId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
         
@@ -982,12 +978,12 @@ public class SchedulerAPI {
   	
   	
   	@ApiMethod(name = "admin.getIsAType", path = "admin.getIsAType", httpMethod = "get")
- 	public WrappedBoolean getIsAType(final User user, Type testType, @Named("typeId") final long typeId) throws UnauthorizedException {
+ 	public WrappedBoolean getIsAType(final User user, Type testType, @Named("typeId") final long typeId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
        if (user == null) {
            throw new UnauthorizedException("Authorization required");
        }
-       if (!checkAuthorizationForPage(user)) {
+       if (!checkAuthorizationForPage(user, pageNumber)) {
            throw new UnauthorizedException("Authorization level too low.");
        }
 
@@ -1008,15 +1004,16 @@ public class SchedulerAPI {
 	 * Description of the method createClient.
 	 * @param clientForm 
 	 * @throws UnauthorizedException 
+	 * @throws IOException 
 	 */
 	
 	@ApiMethod(name = "client.createClient", path = "client.createClient", httpMethod = "post")
-  	public Client createClient(final User user, ClientForm clientForm) throws UnauthorizedException {
+  	public Client createClient(final User user, ClientForm clientForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
 
   		if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -1026,13 +1023,8 @@ public class SchedulerAPI {
        
         List<Long> newAppointmentIds = null;
         List<Long> newClearanceIds = null;
-        Calendar newCalendar = new Calendar(null, null, null);
-        // TODO 
-        // Properly declare variables based on google calendar
         
-        String calendarId = "";
-        //TODO
-        //Get the calendar Id from the calendar
+        String calendarId = createCalendar(user).getId();
 		
         int phoneNumber;
         Date birthday;
@@ -1057,7 +1049,7 @@ public class SchedulerAPI {
 				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId,
 				clientForm.getEmail(), clientForm.getPassword(), clientId);
 			
-  		ofy().save().entities(client, newCalendar).now();
+  		ofy().save().entities(client).now();
         
 		return client;
 		 
@@ -1073,16 +1065,16 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "client.modifyClient", path = "client.modifyClient", httpMethod = "post")
-  	public Client modifyClient(ClientForm clientForm, final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
+  	public Client modifyClient(ClientForm clientForm, final User user, @Named("clientId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
 
-	    Client client = getClient(user, clientId);
+	    Client client = getClient(user, clientId, pageNumber);
 	    
 	    if(!(clientForm.getFirstName() == null)){
 	    	client.setFirstName(clientForm.getFirstName());
@@ -1119,17 +1111,17 @@ public class SchedulerAPI {
 	 */
 	 
 	@ApiMethod(name = "client.addClientClearance", path = "client.addClientClearance", httpMethod = "post")
-  	public WrappedBoolean addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
+  	public WrappedBoolean addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
 
-		Client client = getClient(user, clientId);
+		Client client = getClient(user, clientId, pageNumber);
 
 		clearance.setRenewalDate(date);
 		
@@ -1149,17 +1141,17 @@ public class SchedulerAPI {
 	 */
 	 
 	@ApiMethod(name = "client.removeClientClearance", path = "client.removeClientClearance", httpMethod = "post")
-  	public WrappedBoolean removeClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
+  	public WrappedBoolean removeClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
 
-		Client client = getClient(user, clientId);
+		Client client = getClient(user, clientId, pageNumber);
 		
 		client.removeClearance(clearance.getClearanceId());
 		
@@ -1174,13 +1166,13 @@ public class SchedulerAPI {
 	
 	
 	@ApiMethod(name = "client.getClient", path = "client.getClient", httpMethod = "get")
-  	public Client getClient(final User user,@Named("clientId") final long clientId) throws UnauthorizedException {
+  	public Client getClient(final User user,@Named("clientId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 		//pass in a client ID to access a client other than the current user
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
 
@@ -1206,12 +1198,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "client.removeClient", path = "client.removeClient", httpMethod = "post")
- 	public WrappedBoolean removeClient(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
+ 	public WrappedBoolean removeClient(final User user, @Named("adminId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -1235,12 +1227,12 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "client.getClientProducts",  path = "client.getClientProducts",  httpMethod = "post")
- 	public List<Product> getClientProducts(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
+ 	public List<Product> getClientProducts(final User user, @Named("adminId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
   	
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -1253,7 +1245,7 @@ public class SchedulerAPI {
   	}
 
 	@ApiMethod(name = "client.sendEmail", path = "client.sendEmail", httpMethod = "post")
-  	public WrappedBoolean sendEmail(final User user,@Named("email") final String email, @Named("subject") final String subject, @Named("content") final String content) throws UnauthorizedException {
+  	public WrappedBoolean sendEmail(final User user,@Named("email") final String email, @Named("subject") final String subject, @Named("content") final String content, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 	
 		 try {
              // initialize Sendgrid class
@@ -1290,12 +1282,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "appointment.createAppointment", path = "appointment.createAppointment", httpMethod = "post")
-  	public Appointment createAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
+  	public Appointment createAppointment(final User user, AppointmentForm appointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -1338,27 +1330,24 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "appointment.updateAppointment", path = "appointment.updateAppointment",  httpMethod = "post")
-  	public Appointment updateAppointment(final User user, @Named("clientId") final long clientId, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
+  	public Appointment updateAppointment(final User user, @Named("clientId") final long clientId, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
-        
-        // TODO 
-        // 
 		
-        Appointment appointment = getAppointment(user, appointmentId);
+        Appointment appointment = getAppointment(user, appointmentId, pageNumber);
         
         //TODO
         //
         // Update the variables of the appointment
         //
         
-        updateEvent(user, getClientCalendarId(user, clientId).getId(), appointmentForm.getEventForm());
+        updateEvent(user, getClientCalendarId(user, clientId, pageNumber).getId(), appointmentForm.getEventForm());
         
         ofy().save().entities(appointment).now();
         
@@ -1375,20 +1364,16 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "appointment.cancelAppointment", path = "appointment.cancelAppointment", httpMethod = "post")
-  	public WrappedBoolean cancelAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException, IOException {
+  	public WrappedBoolean cancelAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
-  		
         
-        // TODO 
-        // 
-        
-        Appointment appointment = getAppointment(user, removeAppointmentForm.getAppointmentId());
+        Appointment appointment = getAppointment(user, removeAppointmentForm.getAppointmentId(), pageNumber);
         
         deleteEvent(user, calendarId, appointment.getEventId());
     	
@@ -1407,25 +1392,22 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "appointment.updateAppointmentStatus", path = "appointment.updateAppointmentStatus", httpMethod = "post")
-  	public WrappedBoolean updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId,  @Named("status") final Status status) throws UnauthorizedException {
+  	public Status updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId,  @Named("status") final Status status, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
         
-        Appointment appointment = getAppointment(user, appointmentId);
+        Appointment appointment = getAppointment(user, appointmentId, pageNumber);
         appointment.setStatus(status);
         
   		ofy().save().entities(appointment).now();
-        
-        // TODO 
-        // Return value set
-  		
-		return null;
+
+		return status;
 	}
 
 	/**
@@ -1434,12 +1416,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "appointment.getClientAppointments", path = "appointment.getClientAppointments", httpMethod = "post")
-  	public List<Appointment> getClientAppointments(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
+  	public List<Appointment> getClientAppointments(final User user, @Named("clientId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -1457,16 +1439,15 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "appointment.getAppointment", path = "appointment.getAppointment", httpMethod = "post")
-  	public Appointment getAppointment(final User user, @Named("appointmentId") final long appointmentId) throws UnauthorizedException {
+  	public Appointment getAppointment(final User user, @Named("appointmentId") final long appointmentId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
-        
         Key<Appointment> key = Key.create(Appointment.class, appointmentId);
 
        	Appointment appointment = (Appointment) ofy().load().key(key).now();
@@ -1480,12 +1461,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "appointment.getClientCalendarId", path = "appointment.getClientCalendarId", httpMethod = "post")
-  	public WrappedId getClientCalendarId(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
+  	public WrappedId getClientCalendarId(final User user, @Named("clientId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -1504,15 +1485,22 @@ public class SchedulerAPI {
 	 * @throws IOException 
 	 */
 	
-  	private static WrappedId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+  	private static WrappedId createCalendar(final User user) throws UnauthorizedException, IOException {
 
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-  		
+        
+        //TODO
+        //create a calendar
+        
+		return null;
+  	}
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+  	private static WrappedId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
         
         
         //Calendar calendar = getCalendar(calendarId);
@@ -1611,7 +1599,6 @@ public class SchedulerAPI {
         
 		//return event;
 
-        
         Quickstart.addEvent(calendarId, user);
         
         return null;
@@ -1625,12 +1612,6 @@ public class SchedulerAPI {
 	
 	private static WrappedId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException {
 
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
 	
         //service.events().delete(calendarId, eventId).execute();
         
@@ -1646,13 +1627,7 @@ public class SchedulerAPI {
 	
 	private static WrappedBoolean updateEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
 
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-        
+		//TODO
         
        // Event event = service.events().get("primary", "eventId").execute();
 
@@ -1672,12 +1647,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "appointment.filterAppointments", path = "appointment.filterAppointments", httpMethod = "post")
-  	public WrappedBoolean filterAppointments(final User user) throws UnauthorizedException {
+  	public WrappedBoolean filterAppointments(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -1696,12 +1671,12 @@ public class SchedulerAPI {
 	 */
 	
 	@ApiMethod(name = "appointment.findAvailableAppointmentTimes", path = "appointment.findAvailableAppointmentTimes", httpMethod = "get")
-  	public Object findAvailableAppointmentTimes(AppointmentForm appointmentForm, final User user) throws UnauthorizedException {
+  	public Object findAvailableAppointmentTimes(AppointmentForm appointmentForm, final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        if (!checkAuthorizationForPage(user)) {
+        if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
   		
@@ -1715,60 +1690,25 @@ public class SchedulerAPI {
 	
 	/**
 	 * Description of the method filterAppointments.
+	 * @throws IOException 
 	 * @throws UnauthorizedException 
 	 */
 	
 	@ApiMethod(name = "appointment.getCalendarService", path = "appointment.getCalendarService", httpMethod = "post")
-	public Calendar getCalendarService( final User user,  @Named("calendarId") final String calendarId ){
-		
-		//TODO
-		//get calendar based on id passed in
-/*
-		String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
-	    Credential credential = null;
-		try {
-			credential = CalendarUtility.newFlow().loadCredential(userId);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Calendar service = new Calendar.Builder(CalendarUtility.HTTP_TRANSPORT, CalendarUtility.JSON_FACTORY, credential)
-	    .setApplicationName("applicationName").build();
-	// Retrieve the calendar
-		Calendar calendar = null;
-		
-		try {
-			calendar = service.calendars().get(calendarId).execute();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		System.out.println(calendar.getSummary());
-		
-		
-    	return calendar;
-    	*/
+	public Calendar getCalendarService( final User user,  @Named("calendarId") final String calendarId , @Named("pageNumber") final int pageNumber) throws IOException{
 		
 		Calendar service = null;
 		
 		//calendarId = "j6pq7ifpumics69e9948q2bhdc@group.calendar.google.com";
-		
 	
-		try {
-			Quickstart.addEvent(calendarId, user);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		service = Quickstart.getCalendarService(user);
 		
 		return service;
 		
 	}
 	
 	
-	private static boolean checkAuthorizationForPage(final User user){
+	private static boolean checkAuthorizationForPage(final User user, @Named("pageNumber") final int pageNumber){
   		
         // TODO 
         // Get the page ID

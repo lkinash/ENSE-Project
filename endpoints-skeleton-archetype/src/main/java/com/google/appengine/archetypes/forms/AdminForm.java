@@ -22,7 +22,7 @@ public class AdminForm {
 	/**
 	 * Description of the property clearance.
 	 */
-	private List<AdminClearances> clearance;
+	private AdminClearances clearance;
 
 	/**
 	 * Description of the property email.
@@ -34,7 +34,7 @@ public class AdminForm {
 		
 	}
 	
-	public AdminForm(String newPassword, List<AdminClearances> newClearances, String newEmail){
+	public AdminForm(String newPassword, AdminClearances newClearances, String newEmail){
 		
 		this.password = newPassword;
 		this.email = newEmail;
@@ -64,7 +64,7 @@ public class AdminForm {
 	 * Returns clearance.
 	 * @return clearance 
 	 */
-	public List<AdminClearances> getClearance() {
+	public AdminClearances getClearance() {
 		return this.clearance;
 	}
 
@@ -72,7 +72,7 @@ public class AdminForm {
 	 * Sets a value to attribute clearance. 
 	 * @param newClearance 
 	 */
-	public void setClearance(List<AdminClearances> newClearance) {
+	public void setClearance(AdminClearances newClearance) {
 		this.clearance = newClearance;
 	}
 
