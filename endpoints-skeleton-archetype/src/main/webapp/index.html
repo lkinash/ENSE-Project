@@ -9,9 +9,6 @@
 <link href="/css/masterAdminStyle.css" rel="stylesheet">
 <link href="/css/index.css" rel="stylesheet">
 <link href="/css/viewRoomAdmin.css" rel="stylesheet">
-<link href="/dhtmlxSample/dhtmlxCSS/dhtmlxScheduler.css" rel="stylesheet">
-<script src="/dhtmlxSample/dhtmlxJS/dhtmlxscheduler_minical.js"></script>
-<script src="/dhtmlxSample/dhtmlxJS/dhtmlxScheduler.js"></script>
 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
 <script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.js"></script>
@@ -20,42 +17,6 @@
 
 <script src="/js/application.js"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
-<style type="text/css" media="screen">
-	html, body{
-		margin:0px;
-		padding:0px;
-		height:100%;
-		overflow: hidden;
-	}
-	
-	.dhx_calendar_click {
-		background-color: #C2D5FC !important;
-	}
-</style>
-
-<script type="text/javascript" charset="utf-8">
-	var prev = null;
-	var curr = null;
-	var next = null;
-
-	function doOnLoad2() {
-		scheduler.config.multi_day = true;
-		scheduler.config.xml_date="%Y-%m-%d %H:%i";
-		
-		scheduler.init('scheduler_here',new Date(2014,9,11),"week");
-		scheduler.load("./data/events.xml");
-		
-		var calendar = scheduler.renderCalendar({
-			container:"cal_here", 
-			navigation:true,
-			handler:function(date){
-				scheduler.setCurrentView(date, scheduler._mode);
-			}
-		});
-		scheduler.linkCalendar(calendar);
-		scheduler.setCurrentView(scheduler._date, scheduler._mode);
-	}
-</script>
 
 <script>
 	document.write('<base href="' + document.location + '" />');
