@@ -449,7 +449,7 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
      })
      
      .when('/', {
-         templateUrl: 'partials/viewCalendarMainAdmin.html',
+         templateUrl: 'partials/viewRoomAdmin.html',
          controller: 'MainController'
      })
      .otherwise({  redirectTo: '/' });
