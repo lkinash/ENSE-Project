@@ -1,48 +1,9 @@
 <head>
 	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
-	<link href="/dhtmlxSample/dhtmlxCSS/dhtmlxScheduler.css" rel="stylesheet">
-	<script src="/dhtmlxSample/dhtmlxJS/dhtmlxscheduler_minical.js"></script>
-	<script src="/dhtmlxSample/dhtmlxJS/dhtmlxScheduler.js"></script>
-	
-	<style type="text/css" media="screen">
-	html, body{
-		margin:0px;
-		padding:0px;
-		height:100%;
-		overflow: hidden;
-	}
-	
-	.dhx_calendar_click {
-		background-color: #C2D5FC !important;
-	}
-</style>
 
-<script type="text/javascript" charset="utf-8">
-	var prev = null;
-	var curr = null;
-	var next = null;
-
-	function doOnLoad() {
-		scheduler.config.multi_day = true;
-		scheduler.config.xml_date="%Y-%m-%d %H:%i";
-		
-		scheduler.init('scheduler_here',new Date(2014,9,11),"week");
-		scheduler.load("./data/events.xml");
-		
-		var calendar = scheduler.renderCalendar({
-			container:"cal_here", 
-			navigation:true,
-			handler:function(date){
-				scheduler.setCurrentView(date, scheduler._mode);
-			}
-		});
-		scheduler.linkCalendar(calendar);
-		scheduler.setCurrentView(scheduler._date, scheduler._mode);
-	}
-</script>
 </head>
 	
-<body onload="doOnLoad();">
+<body>
 
 <md-sidenav>		
 	<div class="leftNav" layout="row">
@@ -193,10 +154,10 @@
 		  <div class="masterCalendar">
 		</div>-->
 		
-		<div style='float: left; padding:10px;'>
-		<div id="cal_here" style='width:250px;'></div>
-		</div>
-	</div>
+		<div id="test">
+		<div id="cal_here" ></div>
+		
+
 	
 	<div id="scheduler_here" class="dhx_cal_container" style='width:auto; height:100%;'>
 		<div class="dhx_cal_navline">
@@ -214,5 +175,9 @@
 		</div>
 	</div>
 	</div>
+<script type="text/javascript">
+	doOnLoad2('test');
+</script>
+	
 </body>
 
