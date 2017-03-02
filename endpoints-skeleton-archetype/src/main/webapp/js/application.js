@@ -184,9 +184,34 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
  });
  
  app.controller('ViewRoomController', function($scope, $route, $routeParams, $location) {
+	 	var rooms=[
+		 	           {
+		 	        	   name: "room1",
+		 	        	   services: [
+		 	        	              {name: "service01"},
+		 	        	              {name: "service02"},
+		 	        	              {name: "service03"},
+		 	        	              ]
+		 	           },
+		 	          {
+		 	        	   name: "room5",
+		 	        	   services: [
+		 	        	              {name: "service012"},
+		 	        	              {name: "service022"},
+		 	        	              {name: "service032"},
+		 	        	              ]
+		 	           },
+		 	          {
+		 	        	   name: "room3",
+		 	        	   services: [
+		 	        	              {name: "service0123"},
+		 	        	              {name: "service0223"},
+		 	        	              {name: "service0323"},
+		 	        	              ]
+		 	           }
+	 	           ];
 
-
-	 
+	 	$scope.rooms=rooms;
  });
 
  app.controller('AddAdminController', function($scope, $route, $routeParams, $location) {
