@@ -4,61 +4,62 @@
 <meta charset="utf-8">
 <meta name="google-signin-client_id" content="573107621545-si8jv3f90624dd6haotsuffu805hbcm8.apps.googleusercontent.com">
 <title>Scheduler App</title>
-	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  	<link href="/css/masterAdminStyle.css" rel="stylesheet">
-   	<link href="/css/index.css" rel="stylesheet">
-   	<link href="/css/viewRoomAdmin.css" rel="stylesheet">
- 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.js"></script>
-    <script src="http://code.angularjs.org/snapshot/angular.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
 
-	<script src="/js/application.js"></script>
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/masterAdminStyle.css" rel="stylesheet">
+<link href="/css/index.css" rel="stylesheet">
+<link href="/css/viewRoomAdmin.css" rel="stylesheet">
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.js"></script>
+<script src="http://code.angularjs.org/snapshot/angular.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<script src="/js/application.js"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 
-  <script>document.write('<base href="' + document.location + '" />');</script>
-  
+<script>
+	document.write('<base href="' + document.location + '" />');
+</script>
+
 </head>
 
-<body ng-app = "schedulerApplication" layout="column">
+<body ng-app="schedulerApplication" layout="column">
 
-<md-toolbar>
-<div class="head" layout="column">
+	<md-toolbar>
+	<div class="head" layout="column">
 		<a href="/"><h3>Scheduler App</h3></a>
-			
-			<div class="hright">
-				<div class="g-signin2" data-onsuccess="onSignIn"> </div>
-				<div class="dropdown">
-					<button type="button" data-toggle="dropdown">
-					<span class="caret"></span></button>
-					<ul class="dropdown-menu dropdown-menu-right">
+
+		<div class="hright">
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+			<div class="dropdown">
+				<button type="button" data-toggle="dropdown">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-right">
 					<li><a href="/admin/editProfile">Edit Profile</a></li>
 					<li><a href="#">Logout</a></li>
-					</ul>
-				</div>
+				</ul>
 			</div>
 		</div>
-	</md-toolbar>
-            
-<div ng-controller="MainController"  ng-init="initSignInButton()">
-	
-	<div class="container">
-		
-	<md-content height="1px" layout="column">
-  	<ng-view></ng-view>
-  	</md-content>
-
 	</div>
-</div>
+	</md-toolbar>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<div ng-controller="MainController" ng-init="initSignInButton()">
+
+		<div class="container">
+
+			<md-content height="1px" layout="column">
+			<ng-view></ng-view>
+			</md-content>
+
+		</div>
+	</div>
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>
+	<script	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
 </body>
-<footer>
-	<p>Created by Lindsey Kinash, Archana Gumber and Dominique Belhumeur</p>
-</footer>
 </html>
