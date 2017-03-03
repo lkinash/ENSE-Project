@@ -6,7 +6,6 @@ package com.google.appengine.archetypes.entities;
 import com.google.api.services.calendar.Calendar;
 import com.google.appengine.archetypes.entities.Appointment;
 import com.google.appengine.archetypes.entities.Clearances;
-import com.google.appengine.archetypes.entities.Account;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -28,7 +27,7 @@ import com.googlecode.objectify.annotation.Index;
  * @author Lindsey
  */
 @Entity
-public class Client extends Account {
+public class Client{
 	/**
 	 * Description of the property firstName.
 	 */
@@ -67,18 +66,22 @@ public class Client extends Account {
 	 */
 	private Date birthday;
 
-	// Start of user code (user defined attributes for Client)
-
-	// End of user code
-
+	
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Id
+	private long userId;
+	
+	
+	
 	public Client(){
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments, List<Long> newClearanceIds, String newCalendarId, String newEmail, String newPassword, long newUserId  ){
-		
-		super(newEmail, newPassword, newUserId);
-		
+	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments, List<Long> newClearanceIds, String newCalendarId, long newUserId  ){
+
+		this.userId = newUserId;
 		this.birthday = newBirthday;
 		this.appointmentIds = newAppointments;
 		this.calendarId = newCalendarId;
@@ -88,54 +91,24 @@ public class Client extends Account {
 		this.clearanceIds = newClearanceIds;
 	}
 	
+	
+
 	/**
-	 * Description of the method getUserId.
-	 * @return 
+	 * Returns AccountId.
+	 * @return AccountId 
 	 */
 	public long getUserId() {
-		return super.getUserId();
+		return this.userId;
+	}
+
+	/**
+	 * Sets a value to attribute AccountId. 
+	 * @param newAccountId 
+	 */
+	public void setUserId(long newAccountId) {
+		this.userId = newAccountId;
 	}
 	
-	public void setUserId(long newUserId) {
-		super.setUserId(newUserId);
-	}
-
-	/**
-	 * Description of the method getEmail.
-	 * @return 
-	 */
-	public String getEmail() {
-		return super.getEmail();
-	}
-
-	/**
-	 * Description of the method setEmail.
-	 * @param email 
-	 */
-	public void setEmail(String newEmail) {
-		super.setEmail(newEmail);
-	}
-
-
-	/**
-	 * Description of the method getPassword.
-	 * @return 
-	 */
-	public String getPassword() {
-		return super.getPassword();
-	}
-
-	/**
-	 * Description of the method setPassword.
-	 * @param password 
-	 */
-	public void setPassword(String newPassword) {
-		super.setPassword(newPassword);
-	}
-
-	// Start of user code (user defined methods for Client)
-
-	// End of user code
 	/**
 	 * Returns firstName.
 	 * @return firstName 

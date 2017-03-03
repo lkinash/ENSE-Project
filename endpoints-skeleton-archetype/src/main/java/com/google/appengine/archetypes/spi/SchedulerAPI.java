@@ -91,7 +91,7 @@ public class SchedulerAPI {
         
         //employee must have a name, email and a password set
         
-  		Employee employee  = new Employee(calendarId, employeeForm.getName(), employeeForm.getEmail(), employeeForm.getPassword(), employeeId, employeeForm.getServiceIds());
+  		Employee employee  = new Employee(calendarId, employeeForm.getName(), employeeId, employeeForm.getServiceIds());
   			
 
   		ofy().save().entities(employee).now();
@@ -124,12 +124,6 @@ public class SchedulerAPI {
         String calendar = createCalendar(user).getId();
         		
         List <Long> service = null;
-      
-        if(roomForm.getServiceIds() != null)
-        	service = roomForm.getServiceIds();
-        else
-        	service = null;
-
         
         Room room = new Room(roomForm.getNumber(), service, calendar, roomId);
     		
@@ -223,7 +217,7 @@ public class SchedulerAPI {
         final long adminId = adminKey.getId();
         
         
-  		Admin admin  = new Admin(adminForm.getClearance(), adminForm.getEmail(),adminForm.getPassword(), adminId);
+  		Admin admin  = new Admin(adminForm.getClearance(),  adminId);
   			
   		ofy().save().entities(admin).now();
   		
@@ -334,8 +328,7 @@ public class SchedulerAPI {
         // Client must enter first name, last name, email and a password
         
 		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
-				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId,
-				clientForm.getEmail(), clientForm.getPassword(), clientId);
+				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId, clientId);
 			
   		ofy().save().entities(client).now();
         
@@ -581,12 +574,7 @@ public class SchedulerAPI {
 	    if(!(adminForm.getClearance() == null)){
 	    	admin.setAdminClearance(adminForm.getClearance());
 	    }
-	    if(!(adminForm.getEmail() == null)){
-	    	admin.setEmail(adminForm.getEmail());
-	    }
-	    if(!(adminForm.getPassword() == null)){
-	    	admin.setPassword(adminForm.getPassword());
-	    }
+
 	    
 	    // TODO
 	    // Create a secure password send method
@@ -664,9 +652,7 @@ public class SchedulerAPI {
 	    if(!(clientForm.getBirthday() == null)){
 	    	client.setBirthday(clientForm.getBirthday());
 	    }
-	    if(!(clientForm.getPassword() == null)){
-	    	client.setPassword(clientForm.getPassword());
-	    }
+
 	    
   		ofy().save().entities(client).now();
 	    

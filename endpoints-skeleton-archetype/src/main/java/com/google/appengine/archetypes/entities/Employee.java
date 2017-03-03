@@ -20,7 +20,7 @@ import com.googlecode.objectify.annotation.Index;
  * @author Lindsey
  */
 @Entity
-public class Employee extends Account {
+public class Employee {
 
 	/**
 	 * Description of the property calendar.
@@ -41,15 +41,20 @@ public class Employee extends Account {
 	private List<Long> serviceIds;
 
 	
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Id
+	private long userId;
+	
 	
 	public Employee(){
 		
 	}
 	
-	public Employee(String newCalendarId, String newName, String newEmail, String newPassword, long newUserId, List<Long> newServiceIds){
+	public Employee(String newCalendarId, String newName, long newUserId, List<Long> newServiceIds){
 		
-		super(newEmail, newPassword, newUserId);
-		
+		this.userId = newUserId;
 		this.calendarId = newCalendarId;
 		this.name = newName;
 		this.serviceIds = newServiceIds;
@@ -106,50 +111,20 @@ public class Employee extends Account {
 	}
 
 	/**
-	 * Description of the method getUserId.
-	 * @return 
+	 * Returns AccountId.
+	 * @return AccountId 
 	 */
 	public long getUserId() {
-		return super.getUserId();
-	}
-	
-	public void setUserId(long newUserId) {
-		super.setUserId(newUserId);
+		return this.userId;
 	}
 
 	/**
-	 * Description of the method getEmail.
-	 * @return 
+	 * Sets a value to attribute AccountId. 
+	 * @param newAccountId 
 	 */
-	public String getEmail() {
-		return super.getEmail();
+	public void setUserId(long newAccountId) {
+		this.userId = newAccountId;
 	}
-
-	/**
-	 * Description of the method setEmail.
-	 * @param email 
-	 */
-	public void setEmail(String newEmail) {
-		super.setEmail(newEmail);
-	}
-
-
-	/**
-	 * Description of the method getPassword.
-	 * @return 
-	 */
-	public String getPassword() {
-		return super.getPassword();
-	}
-
-	/**
-	 * Description of the method setPassword.
-	 * @param password 
-	 */
-	public void setPassword(String newPassword) {
-		super.setPassword(newPassword);
-	}
-
 
 
 }

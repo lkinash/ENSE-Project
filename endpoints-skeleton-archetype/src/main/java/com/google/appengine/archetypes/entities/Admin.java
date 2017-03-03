@@ -6,8 +6,6 @@ package com.google.appengine.archetypes.entities;
 import java.util.List;
 
 import com.google.appengine.archetypes.list.AdminClearances;
-import com.google.appengine.archetypes.entities.Account;
-// Start of user code (user defined imports)
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -20,71 +18,47 @@ import com.googlecode.objectify.annotation.Id;
  * @author Lindsey
  */
 @Entity
-public class Admin extends Account {
+public class Admin{
 	/**
 	 * Description of the property adminClearance.
 	 */
 	private AdminClearances clearance;
+
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Id
+	private long userId;
 
 
 	public Admin(){
 		
 	}
 	
-	public Admin(AdminClearances adminClearance, String newEmail, String newPassword, long newUserId){
+	public Admin(AdminClearances adminClearance, long newUserId){
 		
-		super(newEmail, newPassword, newUserId);
-		
+		this.userId = newUserId;
 		this.clearance = adminClearance;
 	}
 	
+	
 	/**
-	 * Description of the method getUserId.
-	 * @return 
+	 * Returns AccountId.
+	 * @return AccountId 
 	 */
 	public long getUserId() {
-		return super.getUserId();
+		return this.userId;
+	}
+
+	/**
+	 * Sets a value to attribute AccountId. 
+	 * @param newAccountId 
+	 */
+	public void setUserId(long newAccountId) {
+		this.userId = newAccountId;
 	}
 	
-	public void setUserId(long newUserId) {
-		super.setUserId(newUserId);
-	}
-
-	/**
-	 * Description of the method getEmail.
-	 * @return 
-	 */
-	public String getEmail() {
-		return super.getEmail();
-	}
-
-	/**
-	 * Description of the method setEmail.
-	 * @param email 
-	 */
-	public void setEmail(String newEmail) {
-		super.setEmail(newEmail);
-	}
-
-
-	/**
-	 * Description of the method getPassword.
-	 * @return 
-	 */
-	public String getPassword() {
-		return super.getPassword();
-	}
-
-	/**
-	 * Description of the method setPassword.
-	 * @param password 
-	 */
-	public void setPassword(String newPassword) {
-		super.setPassword(newPassword);
-	}
-	// Start of user code (user defined methods for Admin)
-
-	// End of user code
+	
 	/**
 	 * Returns adminClearance.
 	 * @return adminClearance 
