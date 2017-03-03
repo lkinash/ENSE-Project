@@ -440,7 +440,6 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
      .when('/admin/viewRoom', {
          templateUrl: 'partials/viewRoomAdmin.html',
          controller: 'ViewRoomController',
-         css:'/css/viewRoomAdmin.css'
      })
      
      .when('/admin/viewService', {

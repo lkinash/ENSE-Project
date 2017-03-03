@@ -9,6 +9,8 @@
 <link href="/css/masterAdminStyle.css" rel="stylesheet">
 <link href="/css/index.css" rel="stylesheet">
 <link href="/css/viewRoomAdmin.css" rel="stylesheet">
+<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
+<link href="/css/pendingAppAdmin.css" rel="stylesheet">
 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
 <script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.js"></script>
@@ -47,11 +49,11 @@
 
 	<div ng-controller="MainController" ng-init="initSignInButton()">
 
-		<div class="container">
+		<div class="container" layout="row" flex>
 
-			<md-content height="1px" layout="column">
+			
 			<ng-view></ng-view>
-			</md-content>
+			
 
 		</div>
 	</div>
