@@ -46,6 +46,7 @@ import com.google.appengine.archetypes.service.Quickstart;
 import com.google.appengine.archetypes.servlets.Sendgrid;
 import com.google.appengine.archetypes.wrappers.WrappedBoolean;
 import com.google.appengine.archetypes.wrappers.WrappedId;
+import com.google.appengine.archetypes.wrappers.WrapperStatus;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 
@@ -80,12 +81,13 @@ public class SchedulerAPI {
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
    
+        
         // TODO 
         // Properly declare variables based on google calendar
-        
-        String calendarId = "";
-        //TODO
         //Get the calendar Id from the calendar
+        
+        
+        String calendarId = "";     
         
         //employee must have a name, email and a password set
         
@@ -288,7 +290,135 @@ public class SchedulerAPI {
 		return newChange;
 		
   	}
+  	
+  	/**
+	 * Description of the method createClient.
+	 * @param clientForm 
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "client.addClient", path = "client.addClient", httpMethod = "post")
+  	public Client addClient(final User user, ClientForm clientForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
 
+  		if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+		
+        final Key<Client> clientKey = factory().allocateId(Client.class);
+        final long clientId = clientKey.getId();
+       
+        List<Long> newAppointmentIds = null;
+        List<Long> newClearanceIds = null;
+        
+        String calendarId = createCalendar(user).getId();
+		
+        int phoneNumber;
+        Date birthday;
+        
+        if(clientForm.getPhoneNumber() < 1111111)
+        	phoneNumber = 1111111;
+        else 
+        	phoneNumber = clientForm.getPhoneNumber();
+        
+        if(clientForm.getBirthday() == null)
+        	birthday = Defaults.BIRTHDAY;
+        else
+        	birthday = clientForm.getBirthday();
+        
+        
+        // Client must enter first name, last name, email and a password
+        
+		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
+				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId,
+				clientForm.getEmail(), clientForm.getPassword(), clientId);
+			
+  		ofy().save().entities(client).now();
+        
+		return client;
+
+	}
+
+	/**
+	 * Description of the method addClientClearances.
+	 * @param clientId 
+	 * @param clearance 
+	 * @param date 
+	 * @throws UnauthorizedException 
+	 */
+	 
+	@ApiMethod(name = "client.addClientClearance", path = "client.addClientClearance", httpMethod = "post")
+  	public WrappedBoolean addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+
+		Client client = getClient(user, clientId, pageNumber);
+
+		clearance.setRenewalDate(date);
+		
+		client.addClearance(clearance.getClearanceId());
+		
+  		ofy().save().entities(client, clearance).now();
+		
+		return null;
+	}
+	
+	
+
+	/**
+	 * Description of the method createAppointment.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "appointment.addAppointment", path = "appointment.addAppointment", httpMethod = "post")
+  	public Appointment addAppointment(final User user, AppointmentForm appointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  
+        
+        EventForm eventForm = appointmentForm.getEventForm();
+        
+        Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
+
+    	Employee employee = (Employee) ofy().load().key(employeeKey).now();
+
+        final String calendarId = employee.getCalendarId();
+        
+        
+        WrappedId wrappedId = createEvent(user, calendarId, eventForm);
+        
+        final String eventId = wrappedId.getId();
+        
+        
+        final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
+        final long appointmentId = appointmentKey.getId();
+        
+        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getAppointmentType(), appointmentForm.getService());
+    		
+  		ofy().save().entities(appointment).now();
+  		
+		return appointment;
+
+	}
+
+	
+	
   	/**
 	 * Description of the method updateEmployee.
 	 * @param admin 
@@ -502,6 +632,110 @@ public class SchedulerAPI {
 		return type;
 		
   	}
+  	
+  	
+  	/**
+	 * Description of the method updateClient.
+	 * @param clientForm 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "client.updateClient", path = "client.updateClient", httpMethod = "post")
+  	public Client updateClient(ClientForm clientForm, final User user, @Named("clientId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+
+	    Client client = getClient(user, clientId, pageNumber);
+	    
+	    if(!(clientForm.getFirstName() == null)){
+	    	client.setFirstName(clientForm.getFirstName());
+	    }
+	    if(!(clientForm.getLastName() == null)){
+	    	client.setLastName(clientForm.getLastName());
+	    }
+	    if(!(clientForm.getPhoneNumber() == -1)){
+	    	client.setPhoneNumber(clientForm.getPhoneNumber());
+	    }
+	    if(!(clientForm.getBirthday() == null)){
+	    	client.setBirthday(clientForm.getBirthday());
+	    }
+	    if(!(clientForm.getPassword() == null)){
+	    	client.setPassword(clientForm.getPassword());
+	    }
+	    
+  		ofy().save().entities(client).now();
+	    
+	    // TODO 
+	    // Ensure in the form elements that are not set are set to null
+		
+		return client;
+	}
+	
+	
+	/**
+	 * Description of the method updateAppointment.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "appointment.updateAppointment", path = "appointment.updateAppointment",  httpMethod = "post")
+  	public Appointment updateAppointment(final User user, @Named("clientId") final long clientId, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+		
+        Appointment appointment = getAppointment(user, appointmentId, pageNumber);
+        
+        //TODO
+        // Update the variables of the appointment
+        //
+        
+        updateEvent(user, getClientCalendarId(user, clientId, pageNumber).getId(), appointmentForm.getEventForm());
+        
+        ofy().save().entities(appointment).now();
+        
+		return appointment;
+	}
+
+	
+
+	/**
+	 * Description of the method updateAppointmentStatus.
+	 * @param admin 
+	 * @param appointmentId 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "appointment.updateAppointmentStatus", path = "appointment.updateAppointmentStatus", httpMethod = "post")
+  	public WrapperStatus updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId,  @Named("status") final Status status, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        
+        Appointment appointment = getAppointment(user, appointmentId, pageNumber);
+        appointment.setStatus(status);
+        
+  		ofy().save().entities(appointment).now();
+
+		return new WrapperStatus(status);
+	}
+
+	
 
   	/**
 	 * Description of the method removeProductService.
@@ -650,6 +884,98 @@ public class SchedulerAPI {
 		
   	}
 
+  	/**
+	 * Description of the method cancelAppointment.
+	 * @param client 
+	 * @param appointmentId 
+	 * @param removeAppointmentForm 
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "appointment.removeAppointment", path = "appointment.removeAppointment", httpMethod = "post")
+  	public WrappedBoolean removeAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+        
+        Appointment appointment = getAppointment(user, removeAppointmentForm.getAppointmentId(), pageNumber);
+        
+        deleteEvent(user, calendarId, appointment.getEventId());
+    	
+	    Key<Appointment> key = Key.create(Appointment.class, removeAppointmentForm.getAppointmentId());
+		
+		ofy().delete().key(key).now();
+		
+		return null;
+	}
+	
+	
+	/**
+  	 * Description of the method removeAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "client.removeClient", path = "client.removeClient", httpMethod = "post")
+ 	public WrappedBoolean removeClient(final User user, @Named("adminId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+	    Key<Client> key = Key.create(Client.class, clientId);
+		
+		ofy().delete().key(key).now();
+	   
+		
+		// TODO 
+	    // Test and Set Return Value
+  		
+		return null;
+  	}
+  	
+  	/**
+	 * Description of the method addClientClearances.
+	 * @param clientId 
+	 * @param clearance 
+	 * @param date 
+	 * @throws UnauthorizedException 
+	 */
+	 
+	@ApiMethod(name = "client.removeClientClearance", path = "client.removeClientClearance", httpMethod = "post")
+  	public WrappedBoolean removeClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+
+		Client client = getClient(user, clientId, pageNumber);
+		
+		client.removeClearance(clearance.getClearanceId());
+		
+  		ofy().save().entities(client).now();
+  		
+  		Key<Clearances> clearanceKey = Key.create(Clearances.class, clearance.getClearanceId());
+  		
+  		ofy().delete().key(clearanceKey).now();
+		
+		return null;
+	}
+	
+  	
   	/**
   	 * Returns services.
   	 * @return services 
@@ -944,405 +1270,6 @@ public class SchedulerAPI {
         
   	}
   	
-
-
-	/**
-	 * Description of the method createClient.
-	 * @param clientForm 
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 */
-	
-	@ApiMethod(name = "client.createClient", path = "client.createClient", httpMethod = "post")
-  	public Client createClient(final User user, ClientForm clientForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
-
-  		if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-  		
-		
-        final Key<Client> clientKey = factory().allocateId(Client.class);
-        final long clientId = clientKey.getId();
-       
-        List<Long> newAppointmentIds = null;
-        List<Long> newClearanceIds = null;
-        
-        String calendarId = createCalendar(user).getId();
-		
-        int phoneNumber;
-        Date birthday;
-        
-        if(clientForm.getPhoneNumber() < 1111111)
-        	phoneNumber = 1111111;
-        else 
-        	phoneNumber = clientForm.getPhoneNumber();
-        
-        if(clientForm.getBirthday() == null)
-        	birthday = Defaults.BIRTHDAY;
-        else
-        	birthday = clientForm.getBirthday();
-        
-        
-        // Client must enter first name, last name, email and a password
-        
-		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
-				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId,
-				clientForm.getEmail(), clientForm.getPassword(), clientId);
-			
-  		ofy().save().entities(client).now();
-        
-		return client;
-
-	}
-
-	/**
-	 * Description of the method modifyClient.
-	 * @param clientForm 
-	 * @throws UnauthorizedException 
-	 */
-	
-	@ApiMethod(name = "client.modifyClient", path = "client.modifyClient", httpMethod = "post")
-  	public Client modifyClient(ClientForm clientForm, final User user, @Named("clientId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-
-	    Client client = getClient(user, clientId, pageNumber);
-	    
-	    if(!(clientForm.getFirstName() == null)){
-	    	client.setFirstName(clientForm.getFirstName());
-	    }
-	    if(!(clientForm.getLastName() == null)){
-	    	client.setLastName(clientForm.getLastName());
-	    }
-	    if(!(clientForm.getPhoneNumber() == -1)){
-	    	client.setPhoneNumber(clientForm.getPhoneNumber());
-	    }
-	    if(!(clientForm.getBirthday() == null)){
-	    	client.setBirthday(clientForm.getBirthday());
-	    }
-	    if(!(clientForm.getPassword() == null)){
-	    	client.setPassword(clientForm.getPassword());
-	    }
-	    
-  		ofy().save().entities(client).now();
-	    
-	    // TODO 
-	    // Ensure in the form elements that are not set are set to null
-		
-		return client;
-	}
-
-
-
-	/**
-	 * Description of the method addClientClearances.
-	 * @param clientId 
-	 * @param clearance 
-	 * @param date 
-	 * @throws UnauthorizedException 
-	 */
-	 
-	@ApiMethod(name = "client.addClientClearance", path = "client.addClientClearance", httpMethod = "post")
-  	public WrappedBoolean addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-
-		Client client = getClient(user, clientId, pageNumber);
-
-		clearance.setRenewalDate(date);
-		
-		client.addClearance(clearance.getClearanceId());
-		
-  		ofy().save().entities(client, clearance).now();
-		
-		return null;
-	}
-	
-	/**
-	 * Description of the method addClientClearances.
-	 * @param clientId 
-	 * @param clearance 
-	 * @param date 
-	 * @throws UnauthorizedException 
-	 */
-	 
-	@ApiMethod(name = "client.removeClientClearance", path = "client.removeClientClearance", httpMethod = "post")
-  	public WrappedBoolean removeClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-
-		Client client = getClient(user, clientId, pageNumber);
-		
-		client.removeClearance(clearance.getClearanceId());
-		
-  		ofy().save().entities(client).now();
-  		
-  		Key<Clearances> clearanceKey = Key.create(Clearances.class, clearance.getClearanceId());
-  		
-  		ofy().delete().key(clearanceKey).now();
-		
-		return null;
-	}
-	
-	
-	@ApiMethod(name = "client.getClient", path = "client.getClient", httpMethod = "get")
-  	public Client getClient(final User user,@Named("clientId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-		//pass in a client ID to access a client other than the current user
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-
-        Key<Client> key = null;
-        
-        if(clientId < 1){
-        	String userId = user.getUserId();
-        	key = Key.create(Client.class, userId);
-        }
-        else{
-        	key = Key.create(Client.class, clientId);
-        }
-        
-    	Client client = (Client) ofy().load().key(key).now();
-    	return client;
-	}
-	
-	/**
-  	 * Description of the method removeAdmin.
-  	 * @param admin 
-  	 * @param adminForm 
-  	 * @throws UnauthorizedException 
-  	 */
-  	
-  	@ApiMethod(name = "client.removeClient", path = "client.removeClient", httpMethod = "post")
- 	public WrappedBoolean removeClient(final User user, @Named("adminId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-  		
-	    Key<Client> key = Key.create(Client.class, clientId);
-		
-		ofy().delete().key(key).now();
-	   
-		
-		// TODO 
-	    // Test and Set Return Value
-  		
-		return null;
-  	}
-  	  	
-	
-	/**
-  	 * Description of the method removeAdmin.
-  	 * @param admin 
-  	 * @param adminForm 
-  	 * @throws UnauthorizedException 
-  	 */
-  	
-  	@ApiMethod(name = "client.getClientProducts",  path = "client.getClientProducts",  httpMethod = "post")
- 	public List<Product> getClientProducts(final User user, @Named("adminId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-  	
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-  		
-        
-        //TODO
-        //Get the products purchased by this user
-        
-        
-        return null;
-  	}
-
-	@ApiMethod(name = "client.sendEmail", path = "client.sendEmail", httpMethod = "post")
-  	public WrappedBoolean sendEmail(final User user,@Named("email") final String email, @Named("subject") final String subject, @Named("content") final String content, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-	
-		 try {
-             // initialize Sendgrid class
-             // please replace "<sendgrid_username>" and "<sendgrid_password>" with your SendGrid credentials
-             Sendgrid mail = new Sendgrid(ConstantsSecret.SENDGRID_USERNAME,ConstantsSecret.SENDGRID_PASSWORD);
-             // set to address, from address, subject, the html/text content and send the email 
-             mail.setTo(email)
-                 // update the <from_address> with your email address
-                 .setFrom("<Scheduler_App>")
-                 .setSubject(subject)
-                 .setText(content)
-                 .setHtml("")
-                 .send();
-
-             // check the response and display proper message
-             if (mail.getServerResponse() == "success") {
-                 return new WrappedBoolean(true);
-             } else {
-            	 return new WrappedBoolean(false, "Request failed  - " + mail.getServerResponse());
-             }
-
-         } catch (JSONException e) {
-             e.printStackTrace();
-         }
-		
-		return null;
-	}
-
-	
-	/**
-	 * Description of the method createAppointment.
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 */
-	
-	@ApiMethod(name = "appointment.createAppointment", path = "appointment.createAppointment", httpMethod = "post")
-  	public Appointment createAppointment(final User user, AppointmentForm appointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-  
-        
-        EventForm eventForm = appointmentForm.getEventForm();
-        
-        Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
-
-    	Employee employee = (Employee) ofy().load().key(employeeKey).now();
-
-        final String calendarId = employee.getCalendarId();
-        
-        
-        WrappedId wrappedId = createEvent(user, calendarId, eventForm);
-        
-        final String eventId = wrappedId.getId();
-        
-        
-        final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
-        final long appointmentId = appointmentKey.getId();
-        
-        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getAppointmentType(), appointmentForm.getService());
-    		
-  		ofy().save().entities(appointment).now();
-  		
-		return appointment;
-
-	}
-
-	/**
-	 * Description of the method updateAppointment.
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 */
-	
-	@ApiMethod(name = "appointment.updateAppointment", path = "appointment.updateAppointment",  httpMethod = "post")
-  	public Appointment updateAppointment(final User user, @Named("clientId") final long clientId, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-  		
-		
-        Appointment appointment = getAppointment(user, appointmentId, pageNumber);
-        
-        //TODO
-        // Update the variables of the appointment
-        //
-        
-        updateEvent(user, getClientCalendarId(user, clientId, pageNumber).getId(), appointmentForm.getEventForm());
-        
-        ofy().save().entities(appointment).now();
-        
-		return appointment;
-	}
-
-	/**
-	 * Description of the method cancelAppointment.
-	 * @param client 
-	 * @param appointmentId 
-	 * @param removeAppointmentForm 
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 */
-	
-	@ApiMethod(name = "appointment.cancelAppointment", path = "appointment.cancelAppointment", httpMethod = "post")
-  	public WrappedBoolean cancelAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-        
-        Appointment appointment = getAppointment(user, removeAppointmentForm.getAppointmentId(), pageNumber);
-        
-        deleteEvent(user, calendarId, appointment.getEventId());
-    	
-	    Key<Appointment> key = Key.create(Appointment.class, removeAppointmentForm.getAppointmentId());
-		
-		ofy().delete().key(key).now();
-		
-		return null;
-	}
-
-	/**
-	 * Description of the method updateAppointmentStatus.
-	 * @param admin 
-	 * @param appointmentId 
-	 * @throws UnauthorizedException 
-	 */
-	
-	@ApiMethod(name = "appointment.updateAppointmentStatus", path = "appointment.updateAppointmentStatus", httpMethod = "post")
-  	public Status updateAppointmentStatus(final User user, @Named("appointmentId") final long appointmentId,  @Named("status") final Status status, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        if (!checkAuthorizationForPage(user, pageNumber)) {
-            throw new UnauthorizedException("Authorization level too low.");
-        }
-  		
-        
-        Appointment appointment = getAppointment(user, appointmentId, pageNumber);
-        appointment.setStatus(status);
-        
-  		ofy().save().entities(appointment).now();
-
-		return status;
-	}
-
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
@@ -1411,7 +1338,76 @@ public class SchedulerAPI {
         return new WrappedId(client.getCalendarId());
         
 	}
+  	
+
+
 	
+	
+
+
+
+	
+	
+	
+	
+	@ApiMethod(name = "client.getClient", path = "client.getClient", httpMethod = "get")
+  	public Client getClient(final User user,@Named("clientId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+		//pass in a client ID to access a client other than the current user
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+
+        Key<Client> key = null;
+        
+        if(clientId < 1){
+        	String userId = user.getUserId();
+        	key = Key.create(Client.class, userId);
+        }
+        else{
+        	key = Key.create(Client.class, clientId);
+        }
+        
+    	Client client = (Client) ofy().load().key(key).now();
+    	return client;
+	}
+	
+	
+  	  	
+	
+	/**
+  	 * Description of the method removeAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "client.getClientProducts",  path = "client.getClientProducts",  httpMethod = "post")
+ 	public List<Product> getClientProducts(final User user, @Named("adminId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+  	
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        
+        //TODO
+        //Get the products purchased by this user
+        
+        
+        return null;
+  	}
+
+	
+
+
+	
+
 
 	/**
 	 * Description of the method findAvailableAppointmentTimes.
@@ -1436,6 +1432,36 @@ public class SchedulerAPI {
 		
 		return null;
 	} 
+	
+	@ApiMethod(name = "client.sendEmail", path = "client.sendEmail", httpMethod = "post")
+  	public WrappedBoolean sendEmail(final User user,@Named("email") final String email, @Named("subject") final String subject, @Named("content") final String content, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+	
+		 try {
+             // initialize Sendgrid class
+             // please replace "<sendgrid_username>" and "<sendgrid_password>" with your SendGrid credentials
+             Sendgrid mail = new Sendgrid(ConstantsSecret.SENDGRID_USERNAME,ConstantsSecret.SENDGRID_PASSWORD);
+             // set to address, from address, subject, the html/text content and send the email 
+             mail.setTo(email)
+                 // update the <from_address> with your email address
+                 .setFrom("<Scheduler_App>")
+                 .setSubject(subject)
+                 .setText(content)
+                 .setHtml("")
+                 .send();
+
+             // check the response and display proper message
+             if (mail.getServerResponse() == "success") {
+                 return new WrappedBoolean(true);
+             } else {
+            	 return new WrappedBoolean(false, "Request failed  - " + mail.getServerResponse());
+             }
+
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+		
+		return null;
+	}
 	
 	/**
 	 * Description of the method queryAppointments.
