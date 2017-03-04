@@ -107,21 +107,24 @@ public class SchedulerAPI {
   	 * @throws IOException 
   	 */
      
-   	@ApiMethod(name = "admin.addRoom", path = "admin.addRoom", httpMethod = "post")
-  	public Room addRoom(final User user, RoomForm roomForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
+   	@ApiMethod(name = "addRoom", path = "addRoom", httpMethod = "post")
+  	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException, IOException {
    		
+   		/*
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
-        
+        */
 
         final Key<Room> roomKey = factory().allocateId(Room.class);
         final long roomId = roomKey.getId();
         
-        String calendar = createCalendar(user).getId();
+        String calendar = "";
+        		
+        		//createCalendar(user).getId();
         		
         List <Long> service = null;
         
@@ -447,17 +450,19 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "admin.updateRoom", path = "admin.updateRoom", httpMethod = "post")
-	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final int roomId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+	@ApiMethod(name = "updateRoom", path = "updateRoom", httpMethod = "post")
+	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
+		/*
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
-	    
-	    Room room = getRoom(user, roomId, pageNumber);
+	    */
+		
+	    Room room = getRoom(user, roomId);
 	   
 	    if(!(roomForm.getNumber() == -1)){
 	    	room.setNumber(roomForm.getNumber());
@@ -778,15 +783,17 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "admin.removeRoom",  path = "admin.removeRoom", httpMethod = "post")
-	public WrappedBoolean removeRoom(final User user, @Named("roomId") final int roomId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+	@ApiMethod(name = "removeRoom",  path = "removeRoom", httpMethod = "post")
+	public WrappedBoolean removeRoom(final User user, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
+		/*
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
+		*/
 		
 	    Key<Room> key = Key.create(Room.class, roomId);
 		
@@ -1060,16 +1067,17 @@ public class SchedulerAPI {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "admin.getAllRooms", path = "admin.getAllRooms", httpMethod = "get")
- 	public List<Room> getAllRoom(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+  	@ApiMethod(name = "getAllRooms", path = "getAllRooms", httpMethod = "get")
+ 	public List<Room> getAllRoom(final User user) throws UnauthorizedException {
 
+  		/*
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }       
         if (!checkAuthorizationForPage(user, pageNumber)) {
             throw new UnauthorizedException("Authorization level too low.");
         }
-  		
+  		*/
         Query<Room> query =  ofy().load().type(Room.class);
   
         return query.list();
@@ -1194,16 +1202,18 @@ public class SchedulerAPI {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "admin.getRoom", path = "admin.getRoom", httpMethod = "get")
-	public Room getRoom(final User user, @Named("roomId") final long roomId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+	@ApiMethod(name = "getRoom", path = "getRoom", httpMethod = "get")
+	public Room getRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
 	
+		/*
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }       
 	    if (!checkAuthorizationForPage(user, pageNumber)) {
 	        throw new UnauthorizedException("Authorization level too low.");
 	    }
-
+		 */
+		
 	    Key<Room> key = Key.create(Room.class, roomId);
 	    		
 	    Room room = (Room) ofy().load().key(key).now();
