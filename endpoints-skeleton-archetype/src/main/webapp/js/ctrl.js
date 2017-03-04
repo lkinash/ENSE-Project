@@ -5,60 +5,49 @@
 //schedulerApplication.controllers = angular.module('schedulerControllers', ['ui.bootstrap']);
 /*
 'use strict';
-
 var schedulerApplication = schedulerApplication || {};
-
 schedulerApplication.controllers = angular.module('schedulerControllers', ['ui.bootstrap']);
-
 	          
 schedulerApplication.controllers.controller('MainController', function($scope, $route, $routeParams, $location) {
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
 });
-
 schedulerApplication.controllers.controller('ViewEmployeeController', function($scope, $route, $routeParams, $location) {
 	 $scope.$route = $route;
 	 $scope.$location = $location;
 	 $scope.$routeParams = $routeParams;
 });
-
 schedulerApplication.controllers.controller('AddEmployeeController', function($scope, $route, $routeParams, $location) {
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
 });
-
 schedulerApplication.controllers.controller('ViewServiceController', function($scope, $route, $routeParams, $location) {
 	 $scope.$route = $route;
 	 $scope.$location = $location;
 	 $scope.$routeParams = $routeParams;
 });
-
 schedulerApplication.controllers.controller('AddServiceController', function($scope, $route, $routeParams, $location) {
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
 });
-
 schedulerApplication.controllers.controller('ViewRoomController', function($scope, $route, $routeParams, $location) {
 	 $scope.$route = $route;
 	 $scope.$location = $location;
 	 $scope.$routeParams = $routeParams;
 });
-
 schedulerApplication.controllers.controller('AddRoomController', function($scope, $route, $routeParams, $location) {
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
 });
-
 schedulerApplication.controllers.controller('AddAdminController', function($scope, $route, $routeParams, $location) {
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
 });
-
 schedulerApplication.controllers.controller('ForgotPasswordController', function($scope, $route, $routeParams, $location) {
      $scope.$route = $route;
      $scope.$location = $location;
@@ -154,7 +143,6 @@ schedulerApplication.controllers.controller('ForgotPasswordController', function
  *//*
 schedulerApplication.controllers.controller('addRoomCtrl',
     function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
         /**
          * The Room object being edited in the page.
          * @type {{}|*}
@@ -183,7 +171,6 @@ schedulerApplication.controllers.controller('addRoomCtrl',
                             $scope.messages = 'Failed to add room : ' + errorMessage;
                             $scope.alertStatus = 'warning';
                             $log.error($scope.messages + ' room : ' + JSON.stringify($scope.Room));
-
                             if (resp.code && resp.code == HTTP_ERRORS.UNAUTHORIZED) {
                                 oauth2Provider.showLoginModal();
                                 return;
@@ -201,4 +188,3 @@ schedulerApplication.controllers.controller('addRoomCtrl',
         };
     });
 */
-	        
