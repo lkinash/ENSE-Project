@@ -140,14 +140,16 @@ app.factory('oauth2Provider', function ($modal) {
 });
  
 app.controller('AddRoomController', function($scope, $route, $routeParams, $location) {
-
-	
+	console.log("reached controller");
     $scope.addRoom = function() {
-	    roomForm = {
-	      "number" : $scope.number
+	    $scope.roomForm = {
+	      "number" : parseInt($scope.number)
 	    };
- 
-	 gapi.client.admin.addRoom(roomForm).execute();
+	    console.log("room form object created");
+	 gapi.client.scheduler.admin.addRoom(roomForm).execute();
+	 
+	 $scope.room.number="meow";
+	
   };
  
 });
@@ -161,15 +163,7 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
  app.controller('AddEmployeeController', function($scope, $route, $routeParams, $location) {
 
      
-     
-     $scope.addRoom = function() {
-    	    $scope.roomForm = {
-    	      "roomNumber" : $scope.roomNumber
-    	    };
-     
-    	 gapi.client.admin.addRoom($scope.roomForm).execute();
-     };
- });
+  });
  
  app.controller('ViewServiceController', function($scope, $route, $routeParams, $location) {
 

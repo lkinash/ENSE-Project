@@ -133,7 +133,16 @@
 	</md-sidenav>
 	
 	<div class="rightContent">
+	
+	<form ng-submit="addRoom()">
+	<p>Room name:</p>
+	<input type="text" placeholder="number" ng-model="number" />
+	<input type="submit" value="post" />
+	</form>
+	
+	<p>room number:{{number}}</p>
 		<h2>Add Room</h2>
+		<!--  
 		<div id="messages" class="alert alert-{{alertStatus}}"
 			ng-show="messages">
 			<span ng-bind="messages"></span> <i
@@ -192,5 +201,6 @@
 				</div>
 			</form>
 		</div>
+		-->
 	</div>
 </body>
