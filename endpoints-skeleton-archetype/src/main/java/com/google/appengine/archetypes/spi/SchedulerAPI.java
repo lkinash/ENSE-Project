@@ -582,11 +582,6 @@ public class SchedulerAPI {
 	    if(!(adminForm.getClearance() == null)){
 	    	admin.setAdminClearance(adminForm.getClearance());
 	    }
-
-	    
-	    // TODO
-	    // Create a secure password send method
-	    
 	    
   		ofy().save().entities(admin).now();
 	   
@@ -620,9 +615,6 @@ public class SchedulerAPI {
 	    	type.setTypeName(typeForm.getTypeName());
 	    }
 	 
-	    // TODO
-	    // Create a secure password send method
-	    
   		ofy().save().entities(type).now();
 	    
 		return type;
@@ -664,9 +656,6 @@ public class SchedulerAPI {
 	    
   		ofy().save().entities(client).now();
 	    
-	    // TODO 
-	    // Ensure in the form elements that are not set are set to null
-		
 		return client;
 	}
 	
@@ -932,11 +921,7 @@ public class SchedulerAPI {
 		
 		ofy().delete().key(key).now();
 	   
-		
-		// TODO 
-	    // Test and Set Return Value
-  		
-		return null;
+		return new WrappedBoolean(true);
   	}
   	
   	/**
@@ -1086,7 +1071,30 @@ public class SchedulerAPI {
         return query.list();
   	}
   	
- 	/**
+  	
+  	/**
+  	 * Returns types.
+  	 * @return types 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "getAllTypes", path = "getAllTypes", httpMethod = "get")
+ 	public List<Type> getAllType(final User user , @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }       
+        if (!checkAuthorizationForPage(user, pageNumber)) {
+            throw new UnauthorizedException("Authorization level too low.");
+        }
+  		
+        Query<Type> query =  ofy().load().type(Type.class);
+  
+        return query.list();
+  	}
+  	
+  	
+  	/**
   	 * Returns changess.
   	 * @return changess 
   	 * @throws UnauthorizedException 
@@ -1249,7 +1257,7 @@ public class SchedulerAPI {
   	
   	
   	@ApiMethod(name = "admin.getIsAType", path = "admin.getIsAType", httpMethod = "get")
- 	public WrappedBoolean getIsAType(final User user, Type testType, @Named("typeId") final long typeId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+ 	public WrappedBoolean getIsAType(final User user, Type testType, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
 
        if (user == null) {
            throw new UnauthorizedException("Authorization required");
@@ -1258,15 +1266,18 @@ public class SchedulerAPI {
            throw new UnauthorizedException("Authorization level too low.");
        }
 
-       //TODO
-       // Test if a type is a type already
+       List<Type> types = getAllType(user, pageNumber);
        
-       //if(){
-    	   return new WrappedBoolean(true);
-       //}
-       //else
-    	 //  return new WrappedBoolean(false, "Type is not in the Type List.");
-        
+       String typeName = testType.getTypeName();
+       
+       for (Type temp : types) {
+    	   if(temp.getTypeName().equals(typeName)){
+    		   return new WrappedBoolean(true);
+    	   }
+       }
+       
+       return new WrappedBoolean(false, "Type is not in the Type List.");
+           
   	}
   	
 	/**
@@ -1385,7 +1396,7 @@ public class SchedulerAPI {
   	 */
   	
   	@ApiMethod(name = "client.getClientProducts",  path = "client.getClientProducts",  httpMethod = "post")
- 	public List<Product> getClientProducts(final User user, @Named("adminId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
+ 	public List<Product> getClientProducts(final User user, @Named("clientId") final long clientId, @Named("pageNumber") final int pageNumber) throws UnauthorizedException {
   	
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1395,15 +1406,13 @@ public class SchedulerAPI {
         }
   		
         
-        //TODO
-        //Get the products purchased by this user
-        
-        
-        return null;
+        Query<Product> query =  ofy().load().type(Product.class);
+    	query = query.order("name");
+    	query = query.filter("clientId =", clientId);
+    	
+        return query.list();
+
   	}
-
-	
-
 
 	
 
@@ -1548,6 +1557,8 @@ public class SchedulerAPI {
         // Get the user clearances
 		// Check the user clearances against the page ID
   		
+		
+		
 	 
         
   		
