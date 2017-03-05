@@ -14,18 +14,6 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
-
-    <servlet>
-		<servlet-name>GoogleSendgridJava</servlet-name>
-		<servlet-class>com.google.appengine.archetypes.servlets.GoogleSendgridJavaServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GoogleSendgridJava</servlet-name>
-		<url-pattern>/googlesendgridjava</url-pattern>
-	</servlet-mapping>
-
- 
-    
     
  <security-constraint>
         <web-resource-collection>
