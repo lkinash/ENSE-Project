@@ -23,7 +23,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
 
     	  //gapi.client.load('admin', 'v1', null, ROOT);
 
-          gapi.client.load('admin', 'v1', null, '//' + window.location.host + '/_ah/api');
+          gapi.client.load('scheduler', 'v1', null, '//' + window.location.host + '/_ah/api');
     	
      }
      
@@ -78,8 +78,8 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
 	  var ROOT = '//' + window.location.host + '/_ah/api';
 
 
-      gapi.client.load('admin', 'v1', null, '//' + window.location.host + '/_ah/api');
-	
+      //gapi.client.load('admin', 'v1', null, '//' + window.location.host + '/_ah/api');
+	  gapi.client.load('scheduler', 'v1', null, '//' + window.location.host + '/_ah/api');
          
      };
  });
@@ -141,12 +141,15 @@ app.factory('oauth2Provider', function ($modal) {
  
 app.controller('AddRoomController', function($scope, $route, $routeParams, $location) {
 	console.log("reached controller");
-    $scope.addRoom = function() {
-	    $scope.roomForm = {
-	      "number" : parseInt($scope.number)
-	    };
+	var roomForm={
+			"number" : 11	
+	};
+    $scope.addRoom1 = function() {
+	    //$scope.roomForm = {
+	     // "number" : parseInt($scope.number)
+	    //};
 	    console.log("room form object created");
-	 gapi.client.scheduler.admin.addRoom(roomForm).execute();
+	 gapi.client.scheduler.addRoom(roomForm).execute();
 	 
 	 $scope.room.number="meow";
 	
