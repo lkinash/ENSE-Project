@@ -107,7 +107,7 @@ public class SchedulerAPI {
   	 * @throws IOException 
   	 */
      
-   	@ApiMethod(name = "addRoom", httpMethod = "post")
+   	@ApiMethod(name = "addRoom", path = "addRoom", httpMethod = "post")
   	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException, IOException {
    		
    		/*
