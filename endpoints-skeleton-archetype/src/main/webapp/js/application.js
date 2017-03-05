@@ -23,8 +23,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
 
     	  //gapi.client.load('admin', 'v1', null, ROOT);
 
-          //gapi.client.load('admin', 'v1', null, '//' + window.location.host + '/_ah/api');
-    	  gapi.client.load('scheduler', 'v1', null, '//' + window.location.host + '/_ah/api');
+          gapi.client.load('admin', 'v1', null, '//' + window.location.host + '/_ah/api');
     	
      }
      
@@ -79,8 +78,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
 	  var ROOT = '//' + window.location.host + '/_ah/api';
 
 
-      //gapi.client.load('admin', 'v1', null, '//' + window.location.host + '/_ah/api');
-	  gapi.client.load('scheduler', 'v1', null, '//' + window.location.host + '/_ah/api');
+      gapi.client.load('admin', 'v1', null, '//' + window.location.host + '/_ah/api');
 	
          
      };
@@ -121,7 +119,7 @@ app.factory('oauth2Provider', function ($modal) {
     oauth2Provider.signOut = function () {
         gapi.auth.signOut();
         // Explicitly set the invalid access token in order to make the API calls fail.
-        gapi.auth.setToken({access_token: ''});
+        gapi.auth.setToken({access_token: ''})
         oauth2Provider.signedIn = false;
     };
 
@@ -143,22 +141,14 @@ app.factory('oauth2Provider', function ($modal) {
  
 app.controller('AddRoomController', function($scope, $route, $routeParams, $location) {
 	console.log("reached controller");
-	var roomForm={
-			"number" : 11,	
-	};
-   $scope.addRoom = function() {
-	    roomForm = {
-	     "number" : parseInt($scope.number)
-	   };
-	    
+    $scope.addRoom = function() {
+	    $scope.roomForm = {
+	      "number" : parseInt($scope.number)
+	    };
 	    console.log("room form object created");
-	    console.log(roomForm.number);
-	    
-	 //gapi.client.scheduler.addRoom(roomForm).execute();
-	 //$window.location.href = '/index.html';
+	 gapi.client.scheduler.admin.addRoom(roomForm).execute();
 	 
-	 $scope.number=9999;
-	 $window.location.href = '/';
+	 $scope.room.number="meow";
 	
   };
  
