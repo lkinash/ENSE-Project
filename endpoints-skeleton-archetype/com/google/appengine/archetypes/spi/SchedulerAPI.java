@@ -55,7 +55,7 @@ import com.googlecode.objectify.cmd.Query;
 	    version = "v1",
 	    scopes = {Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE},
 	    clientIds = {Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID},
-	    description = "Scheduler Application API."
+	    description = "Scheduler Application API"
 
 	)
 public class SchedulerAPI {
@@ -107,7 +107,7 @@ public class SchedulerAPI {
   	 * @throws IOException 
   	 */
      
-   	@ApiMethod(name = "addRoom", path = "addRoom", httpMethod = "post")
+   	@ApiMethod(name = "addRoom")
   	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException, IOException {
    		
    		/*
