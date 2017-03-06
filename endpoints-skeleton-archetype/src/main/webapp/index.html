@@ -18,12 +18,27 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <script src="/js/application.js"></script>
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
-
+<!-- <script src="https://apis.google.com/js/client.js?onload=init"></script>-->
 <script>
 	document.write('<base href="' + document.location + '" />');
 </script>
+<script>
+function loadGapi(){
+gapi.client.setApiKey('AIzaSyDcbMDpVIcHFeX7EFubXvkZltga72NFxds');
+gapi.client.load('scheduler', 'v1.0', function() {
+    gapi.client.scheduler.list().execute(function(resp) {
+        console.log(resp);
+    });
+  }, window.location.host + '/_ah/api');
+}
+</script>
 
+<script src="https://apis.google.com/js/client.js?onload=loadGapi"> </script>
+<!--  
+<script>
+	document.write('<base href="' + document.location + '" />');
+</script>
+-->
 </head>
 
 <body ng-app="schedulerApplication" layout="column">

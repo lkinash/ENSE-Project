@@ -140,6 +140,10 @@
 			</div>
 		</div>
 		<div class="roomContainer">
+		<ul>
+  		<li ng-repeat="room in rooms">
+  			<p>Room number: {{room.number}}</p>
+		</ul>
 			<div class="room" ng-repeat="room in rooms">
 				<div class="panel-group">
 					<div class="panel panel-default">

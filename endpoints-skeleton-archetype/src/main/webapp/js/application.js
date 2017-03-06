@@ -20,9 +20,9 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      $scope.init = function () {
     	  window.init();
     	  gapi.client.setApiKey('AIzaSyDcbMDpVIcHFeX7EFubXvkZltga72NFxds');
-          gapi.client.load('scheduler', 'v1', null, '//' + window.location.host + '/_ah/api');
+          gapi.client.load('scheduler', 'v1.0', null, '//' + window.location.host + '/_ah/api');
     	
-     }
+     };
      
      /**
       * Returns the OAuth2 signedIn state.
@@ -73,7 +73,7 @@ app.controller('MainController', function($scope, $route, $routeParams, $locatio
      
    	  window.init();
 	  gapi.client.setApiKey('AIzaSyDcbMDpVIcHFeX7EFubXvkZltga72NFxds');
-      gapi.client.load('scheduler', 'v1', null, '//' + window.location.host + '/_ah/api');
+      gapi.client.load('scheduler', 'v1.0', null, '//' + window.location.host + '/_ah/api');
 	
          
      };
@@ -114,7 +114,7 @@ app.factory('oauth2Provider', function ($modal) {
     oauth2Provider.signOut = function () {
         gapi.auth.signOut();
         // Explicitly set the invalid access token in order to make the API calls fail.
-        gapi.auth.setToken({access_token: ''})
+        gapi.auth.setToken({access_token: ''});
         oauth2Provider.signedIn = false;
     };
 
@@ -136,15 +136,19 @@ app.factory('oauth2Provider', function ($modal) {
  
 app.controller('AddRoomController', function($scope, $route, $routeParams, $location) {
 	console.log("reached controller");
+	var roomForm={
+			"number":11
+	};
     $scope.addRoom = function() {
-	    $scope.roomForm = {
+	     roomForm = {
 	      "number" : parseInt($scope.number)
 	    };
 	    console.log("room form object created");
-	 gapi.client.scheduler.addRoom(roomForm).execute();
+	    console.log("The room number saved in the roomForm Object is:" +roomForm.number);
+	 //gapi.client.scheduler.addRoom(roomForm).execute();
 	 
-	 $scope.room.number="meow";
-	
+	 $scope.number=9999999;
+	 gapi.client.scheduler.addRoom(roomForm).execute();
   };
  
 });
@@ -173,7 +177,7 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
  });
  
  app.controller('ViewRoomController', function($scope, $route, $routeParams, $location) {
-	 	var rooms=[
+	 /*	var rooms=[
 		 	           {
 		 	        	   name: "room1",
 		 	        	   services: [
@@ -201,12 +205,22 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
 	 	           ];
 
 	 	$scope.rooms=rooms;
+	 	*/
+	 
  });
 
  app.controller('AddAdminController', function($scope, $route, $routeParams, $location) {
 
 
-	 
+	 $scope.list = function(){
+		 gapi.client.scheduler.getAllRooms().execute(function(resp){
+			 $scope.rooms=resp.items;
+			 $scope.$apply();
+		 });
+		 
+		 
+		 
+	 };
  });
 
  app.controller('ForgotPasswordController', function($scope, $route, $routeParams, $location) {
@@ -463,7 +477,7 @@ app.controller('AddRoomController', function($scope, $route, $routeParams, $loca
       */
      var filter = function (data, start) {
          return data.slice(start);
-     }
+     };
      return filter;
  });
  

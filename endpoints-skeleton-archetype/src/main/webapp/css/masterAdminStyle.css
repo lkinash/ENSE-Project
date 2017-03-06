@@ -20,9 +20,14 @@ body {
 	background-color: lightgrey;
 	border: none;
 }
+.g-signin2{
+	margin:0;
+}
 .hright{
-	display:inline;
+	display:flex-inline;
 	float:right;
+	background-color: blue;
+	width:30%;
 }
 
 .head{
