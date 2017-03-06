@@ -16,7 +16,17 @@ public class OfyService {
         factory().register(Conference.class);
         factory().register(Profile.class);
 
+        factory().register(Admin.class);
+        factory().register(Appointment.class);
+        factory().register(Clearances.class);
+        factory().register(Changes.class);
+        factory().register(Client.class);
+        factory().register(Employee.class);
+        factory().register(Product.class);
         factory().register(Room.class);
+        factory().register(Service.class);
+        factory().register(SaleItem.class);
+        factory().register(Type.class);
     }
 
     /**
