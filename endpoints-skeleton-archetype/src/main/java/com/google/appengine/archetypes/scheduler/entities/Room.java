@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2016, All rights reserved.
  *******************************************************************************/
-package com.google.devrel.training.conference.domain;
+package com.google.appengine.archetypes.scheduler.entities;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;

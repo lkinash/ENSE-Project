@@ -1,10 +1,10 @@
-package com.google.devrel.training.conference.domain;
+package com.google.appengine.archetypes.scheduler.entities;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.appengine.repackaged.com.google.common.collect.ImmutableList;
-import com.google.devrel.training.conference.form.ProfileForm.TeeShirtSize;
+import com.google.appengine.archetypes.scheduler.forms.ProfileForm.TeeShirtSize;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 

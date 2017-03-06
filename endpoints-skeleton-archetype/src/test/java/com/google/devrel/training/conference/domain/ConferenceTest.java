@@ -1,11 +1,14 @@
 package com.google.devrel.training.conference.domain;
 
-import static com.google.devrel.training.conference.service.OfyService.ofy;
+import static com.google.appengine.archetypes.scheduler.service.OfyService.ofy;
 import static org.junit.Assert.*;
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-import com.google.devrel.training.conference.form.ConferenceForm;
+import com.google.appengine.archetypes.scheduler.entities.Conference;
+import com.google.appengine.archetypes.scheduler.entities.Profile;
+import com.google.appengine.archetypes.scheduler.forms.ConferenceForm;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

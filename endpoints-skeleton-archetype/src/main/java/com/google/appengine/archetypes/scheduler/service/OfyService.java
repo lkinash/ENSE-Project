@@ -1,8 +1,6 @@
-package com.google.devrel.training.conference.service;
+package com.google.appengine.archetypes.scheduler.service;
 
-import com.google.devrel.training.conference.domain.Conference;
-import com.google.devrel.training.conference.domain.Profile;
-import com.google.devrel.training.conference.domain.Room;
+import com.google.appengine.archetypes.scheduler.entities.*;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;

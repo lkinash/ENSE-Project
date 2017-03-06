@@ -1,7 +1,7 @@
-package com.google.devrel.training.conference.spi;
+package com.google.appengine.archetypes.scheduler.spi;
 
-import static com.google.devrel.training.conference.service.OfyService.ofy;
-import static com.google.devrel.training.conference.service.OfyService.factory;
+import static com.google.appengine.archetypes.scheduler.service.OfyService.ofy;
+import static com.google.appengine.archetypes.scheduler.service.OfyService.factory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,15 +16,10 @@ import com.google.api.server.spi.response.ForbiddenException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.api.users.User;
-import com.google.devrel.training.conference.Constants;
-import com.google.devrel.training.conference.domain.Conference;
-import com.google.devrel.training.conference.domain.Profile;
-import com.google.devrel.training.conference.domain.Room;
-import com.google.devrel.training.conference.form.ConferenceForm;
-import com.google.devrel.training.conference.form.ConferenceQueryForm;
-import com.google.devrel.training.conference.form.ProfileForm;
-import com.google.devrel.training.conference.form.ProfileForm.TeeShirtSize;
-import com.google.devrel.training.conference.form.RoomForm;
+import com.google.appengine.archetypes.scheduler.Constants;
+import com.google.appengine.archetypes.scheduler.entities.*;
+import com.google.appengine.archetypes.scheduler.forms.*;
+import com.google.appengine.archetypes.scheduler.forms.ProfileForm.TeeShirtSize;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Work;
 import com.googlecode.objectify.cmd.Query;

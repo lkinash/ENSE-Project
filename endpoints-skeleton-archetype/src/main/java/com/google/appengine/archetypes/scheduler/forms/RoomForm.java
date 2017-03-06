@@ -1,7 +1,7 @@
 /*******************************************************************************
  * 2016, All rights reserved.
  *******************************************************************************/
-package com.google.devrel.training.conference.form;
+package com.google.appengine.archetypes.scheduler.forms;
 
 import java.util.List;
 

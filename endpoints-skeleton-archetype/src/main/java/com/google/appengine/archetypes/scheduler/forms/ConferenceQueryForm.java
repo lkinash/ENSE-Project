@@ -1,11 +1,11 @@
-package com.google.devrel.training.conference.form;
+package com.google.appengine.archetypes.scheduler.forms;
 
-import static com.google.devrel.training.conference.service.OfyService.ofy;
+import static com.google.appengine.archetypes.scheduler.service.OfyService.ofy;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.common.collect.ImmutableList;
-import com.google.devrel.training.conference.domain.Conference;
+import com.google.appengine.archetypes.scheduler.entities.Conference;
 
 import com.googlecode.objectify.cmd.Query;
 

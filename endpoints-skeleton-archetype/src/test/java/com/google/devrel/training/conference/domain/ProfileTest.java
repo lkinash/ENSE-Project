@@ -4,7 +4,8 @@ import static org.junit.Assert.*;
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-import com.google.devrel.training.conference.form.ProfileForm.TeeShirtSize;
+import com.google.appengine.archetypes.scheduler.entities.Profile;
+import com.google.appengine.archetypes.scheduler.forms.ProfileForm.TeeShirtSize;
 import com.googlecode.objectify.Key;
 
 import org.junit.After;
