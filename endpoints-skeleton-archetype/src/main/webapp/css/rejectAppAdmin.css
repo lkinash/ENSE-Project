@@ -1,0 +1,55 @@
+@charset "utf-8";
+/* CSS Document */
+.rightContent h3{
+	color:#0A25BF;
+	text-align: center;
+}
+table{
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+table tr td{
+	width: 50%;
+}
+table tr td label{
+	color: black;
+}
+ textarea{
+	height: 100px;
+	width: 80%;
+
+}
+h4{
+	color:#0A25BF;
+}
+.rightC{
+	margin-top: 5%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	text-align: center;
+	width:50%;
+	background-color: lightgrey;
+	border-radius:25px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.rightC .info{
+	text-align: left;
+}
+
+.reject{
+	margin-top: 3%;
+	text-align: left;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.reject .btn{
+	width: 100px;
+	margin-left: auto;
+	margin-right: auto;
+
+}

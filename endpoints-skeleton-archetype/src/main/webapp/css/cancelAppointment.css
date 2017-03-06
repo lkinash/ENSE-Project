@@ -1,0 +1,88 @@
+@charset "utf-8";
+/* CSS Document */
+
+body h3{
+	color:#0A25BF;
+}
+.container{
+	
+	width: 90%;
+	height: inherit;
+	margin-top: 10%;
+	margin-left: auto;
+	margin-right:auto;
+	border-radius:25px;
+	background-color: lightgrey;
+	
+}
+.container h3{
+	text-align: center;
+}
+.cancelPolicy{
+	color:red;
+	margin-bottom: 5%;
+}
+.appointment table{
+	margin-top:10%;
+	margin-bottom: 10%;
+	white-space: nowrap;
+}
+ textarea{
+	height: 100px;
+	width: 90%;
+
+}
+
+.container button{
+	float:right;
+	margin-right:40%;
+}
+.inner2{
+	margin-top:5%;
+	margin-left: 10%;
+	margin-bottom:3%;
+}
+
+@media(min-width: 768px){
+	.container{
+	
+	width: 600px;
+	height: 400px;
+	margin-top: 10%;
+	margin-left: auto;
+	margin-right:auto;
+	border-radius:25px;
+	background-color: lightgray;
+	
+	}
+	.cancelPolicy{
+	color:red;
+	margin-bottom: 5%;
+	}
+	.container h3{
+		text-align: center;
+	}
+	.appointment table{
+		
+		margin-top:5%;
+		margin-bottom: 5%;
+		white-space: nowrap;
+	}
+
+	 textarea{
+		height: 100px;
+		width: 80%;
+
+	}
+
+	.container button{
+		float:right;
+		margin-right: 5%
+
+	}
+	.inner2{
+		margin-top:5%;
+		margin-bottom:0%;
+	}
+
+}

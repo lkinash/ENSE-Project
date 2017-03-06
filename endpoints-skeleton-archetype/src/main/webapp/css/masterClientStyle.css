@@ -1,0 +1,49 @@
+@charset "utf-8";
+/* CSS Document */
+html,
+body {
+  height: 100%;
+  margin: 0;
+	
+}
+
+.head h3{
+	margin-top: 0px;
+
+	display: inline;
+}
+
+.right .dropdown{
+	display: inline;
+	
+}
+.hright .dropdown{
+	display: inline;
+}
+
+
+.dropdown button{
+
+	border: none;
+}
+.right{
+	display:inline;
+
+	float:right;
+}
+.hright{
+	display:inline;
+
+	float:right;
+}
+
+.head{
+	color:#0A25BF;
+	padding:15px;
+    background-color: lightgrey;
+}
+.caret {
+	margin-left: 1%;
+    border-width: 8px;
+	background-color: transparent;
+}

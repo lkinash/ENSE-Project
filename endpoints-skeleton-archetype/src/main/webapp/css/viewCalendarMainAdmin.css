@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+
+.filter{
+	width: 100%;
+	display: inline-flex;
+}
+.filterTitle{
+	margin-left: 2%;
+}
+.dropDownCal{
+	width: 200px;
+	background-color: darkorchid;
+	margin-left: 1%;
+	
+}
+.filter .form-group{
+	margin-left: 1%;
+	margin-top: 1%
+}
+.filterBtn{
+	margin-left: 1%;
+	margin-top: 1%;
+}
+<!--.masterCalendar{
+	
+	background-color: orange;
+	width: 90%;
+	margin:5%;
+	margin-top: 2%;
+	height: 80%;
+}-->
