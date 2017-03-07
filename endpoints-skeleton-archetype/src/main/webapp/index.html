@@ -6,18 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Conference Central</title>
-
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-cosmo.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/offcanvas.css">
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <meta property="og:title" content="Conference Central">
-    <meta property="og:type" content="website">
-    <meta property="og:description" content="Conference Central web app that lets you manage conferences.">
-    <meta property="og:image" content="/img/CloudPlatform_logo.png">
-    <meta property="og:site_name" content="An web app powered by Google App Engine">
+    <title>Scheduler App</title>
+	
+	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/masterAdminStyle.css" rel="stylesheet">
+	<link href="/css/index.css" rel="stylesheet">
+	<link href="/css/viewRoomAdmin.css" rel="stylesheet">
+	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
+	<link href="/css/pendingAppAdmin.css" rel="stylesheet">
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
@@ -39,31 +35,23 @@
 <!-- Restore the credential from cookie if stored by calling initSignInButton() -->
 <body ng-controller="RootCtrl" ng-init="initSignInButton()">
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Conference Central</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li ng-class="{ active: isActive('/conference')}" ng-click="collapseNavbar()"><a href="#/conference">Show Conferences</a></li>
-                <li ng-class="{ active: isActive('/conference/create')}" ng-click="collapseNavbar()"><a href="#/conference/create" >Create Conferences</a></li>
-                <li ng-class="{ active: isActive('/profile')}" ng-click="collapseNavbar()"><a href="#/profile">My Profile</a></li>
-                <li class="nav-divider"></li>
-            </ul>
+<md-toolbar>
+	<div class="head" layout="column">
+		<a href="/"><h3>Scheduler App</h3></a>
+
+		<div class="hright">
+			
+				<div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li id="signInLink" ng-hide="getSignedInState()"><a ng-click="signIn(); collapseNavbar()">Google+ SignIn</a></li>
                 <li id="signOutLink" ng-show="getSignedInState()"><a ng-click="signOut(); collapseNavbar()">Log out</a></li>
             </ul>
         </div>
-    </div>
-</div>
+			</div>
+		</div>
+
+	</md-toolbar>
+  
 
 <div class="container">
     <div class="row">
@@ -75,7 +63,12 @@
             </div>
         </div>
     </div>
+    
+    <div class="container" layout="row" flex>
+    
     <ng-view></ng-view>
+    
+    </div>
 </div>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>

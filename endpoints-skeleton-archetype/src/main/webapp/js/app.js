@@ -27,13 +27,11 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute', '
                     templateUrl: '/partials/conference_detail.html',
                     controller: 'ConferenceDetailCtrl'
                 })
-                .when('/profile', {
+                .when('/', {
                     templateUrl: '/partials/profile.html',
                     controller: 'MyProfileCtrl'
                 })
-                .when('/', {
-                    templateUrl: '/partials/home.html'
-                })
+                
                 
                 
                 .when('/admin/addAdmin', {
