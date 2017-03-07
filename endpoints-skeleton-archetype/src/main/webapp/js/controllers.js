@@ -828,3 +828,196 @@ conferenceApp.controllers.controller('DatepickerCtrl', function ($scope) {
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
     $scope.format = $scope.formats[0];
 });
+
+
+
+
+
+conferenceApp.controllers.controller('AddRoomController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+	console.log("reached controller");
+	var roomForm={
+			"number":11
+	};
+    $scope.addRoom = function() {
+	     roomForm = {
+	      "number" : parseInt($scope.number)
+	    };
+	    console.log("room form object created");
+	    console.log("The room number saved in the roomForm Object is:" +roomForm.number);
+	 //gapi.client.scheduler.addRoom(roomForm).execute();
+	 
+	 $scope.number=9999999;
+	 gapi.client.scheduler.addRoom(roomForm).execute();
+  };
+ 
+});
+
+ conferenceApp.controllers.controller('ViewEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+	 
+	 
+ });
+
+ conferenceApp.controllers.controller('AddEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+     
+  });
+ 
+ conferenceApp.controllers.controller('ViewServiceController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	 
+ });
+
+ conferenceApp.controllers.controller('AddServiceController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	 
+ });
+ 
+ conferenceApp.controllers.controller('ViewRoomController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+	 /*	var rooms=[
+		 	           {
+		 	        	   name: "room1",
+		 	        	   services: [
+		 	        	              {name: "service01"},
+		 	        	              {name: "service02"},
+		 	        	              {name: "service03"},
+		 	        	              ]
+		 	           },
+		 	          {
+		 	        	   name: "room5",
+		 	        	   services: [
+		 	        	              {name: "service012"},
+		 	        	              {name: "service022"},
+		 	        	              {name: "service032"},
+		 	        	              ]
+		 	           },
+		 	          {
+		 	        	   name: "room3",
+		 	        	   services: [
+		 	        	              {name: "service0123"},
+		 	        	              {name: "service0223"},
+		 	        	              {name: "service0323"},
+		 	        	              ]
+		 	           }
+	 	           ];
+
+	 	$scope.rooms=rooms;
+	 	*/
+	 
+ });
+
+ conferenceApp.controllers.controller('AddAdminController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	 $scope.list = function(){
+		 gapi.client.scheduler.getAllRooms().execute(function(resp){
+			 $scope.rooms=resp.items;
+			 $scope.$apply();
+		 });
+		 
+		 
+		 
+	 };
+ });
+
+ conferenceApp.controllers.controller('ForgotPasswordController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	 
+  });
+  
+  conferenceApp.controllers.controller('ClientEditProfileController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	  
+  });
+  
+  conferenceApp.controllers.controller('ClientLoginController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	  
+  });
+  
+  conferenceApp.controllers.controller('ClientBookingController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+  
+
+	  
+  });
+  
+  conferenceApp.controllers.controller('ClientCancelAppointmentController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	  
+  });
+  
+  conferenceApp.controllers.controller('ClientBookAppointmentController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	  
+  });
+  
+  conferenceApp.controllers.controller('AdminEditProfileController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	  
+  });
+  
+  conferenceApp.controllers.controller('ViewClientAppointmentController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	  
+  });
+      
+  conferenceApp.controllers.controller('HomeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	  
+  });
+  
+   conferenceApp.controllers.controller('LoginController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	   
+  });
+  
+   conferenceApp.controllers.controller('PendingController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	   
+  }); 
+  
+  conferenceApp.controllers.controller('RejectController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	  
+  });
+  
+   conferenceApp.controllers.controller('SignupController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	   
+  });     
+  
+   conferenceApp.controllers.controller('ViewAccountController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+  });
+
+   
+   conferenceApp.controllers.controller('AddClientController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+   });
+   
+   conferenceApp.controllers.controller('ViewClientController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+   });
+   
+   
+   conferenceApp.controllers.controller('LogController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+   });
