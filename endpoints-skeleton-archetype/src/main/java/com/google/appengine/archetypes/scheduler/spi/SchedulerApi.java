@@ -55,7 +55,7 @@ import com.googlecode.objectify.cmd.Query;
  * Defines conference APIs.
  */
 @Api(name = "conference", version = "v1", scopes = { Constants.EMAIL_SCOPE }, clientIds = {
-        Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID }, description = "API for the Conference Central Backend application.")
+        Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID }, description = "API ")
 public class SchedulerApi {
 
 	/**

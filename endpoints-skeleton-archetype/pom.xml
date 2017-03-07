@@ -6,8 +6,8 @@
     <packaging>war</packaging>
     <version>1.0</version>
 
-    <groupId>com.google.devrel.training.conference</groupId>
-    <artifactId>conference</artifactId>
+    <groupId>com.google.appengine.archetypes.scheduler</groupId>
+    <artifactId>scheduler</artifactId>
 
     <properties>
         <appengine.app.version>1</appengine.app.version>
