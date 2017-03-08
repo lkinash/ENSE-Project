@@ -6,14 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Scheduler App </title>
+    <title>Scheduler App 32423432</title>
 	
 	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/masterAdminStyle.css" rel="stylesheet">
 	<link href="/css/index.css" rel="stylesheet">
 	<link href="/css/viewRoomAdmin.css" rel="stylesheet">
-	<link href="/css/addRoomAdmin.css" rel="stylesheet">
-	
 	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
 	<link href="/css/pendingAppAdmin.css" rel="stylesheet">
 
@@ -55,7 +53,7 @@
 	</md-toolbar>
   
 
-<div class="container2">
+<div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div id="rootMessages" class="alert alert-{{alertStatus}}" ng-show="rootMessages">
@@ -79,8 +77,8 @@
 <script src="/js/app.js"></script>
 <script src="/js/controllers.js"></script>
 
-
-
+<!-- Put the signInButton to invoke the gapi.signin.render to restore the credential if stored in cookie. -->
+<span id="signInButton" style="display: none" disabled="true"></span>
 
 </body>
 </html>
