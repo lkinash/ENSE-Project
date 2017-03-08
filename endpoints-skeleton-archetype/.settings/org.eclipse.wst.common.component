@@ -4,7 +4,7 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <property name="context-root" value="endpoints-skeleton-archetype"/>
         <property name="java-output-path" value="/endpoints-skeleton-archetype/target/endpoints-skeleton-archetype-1.0-SNAPSHOT/WEB-INF/classes"/>
+        <property name="context-root" value="scheduler"/>
     </wb-module>
 </project-modules>
