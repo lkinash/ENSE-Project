@@ -57,7 +57,7 @@ conferenceApp.controllers.controller('MyProfileCtrl',
             var retrieveProfileCallback = function () {
                 $scope.room = {};
                 $scope.loading = true;
-                gapi.client.conference.getRoom().
+                gapi.client.scheduler.getRoom(1).
                     execute(function (resp) {
                         $scope.$apply(function () {
                             $scope.loading = false;
