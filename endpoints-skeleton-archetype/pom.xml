@@ -7,7 +7,7 @@
     <version>1.0</version>
 
     <groupId>com.google.appengine.archetypes.scheduler</groupId>
-    <artifactId>scheduler</artifactId>
+    <artifactId>endpoints-skeleton-archetype</artifactId>
 
     <properties>
         <appengine.app.version>1</appengine.app.version>
