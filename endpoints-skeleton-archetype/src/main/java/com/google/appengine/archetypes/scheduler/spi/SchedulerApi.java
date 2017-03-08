@@ -667,7 +667,7 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "appointment.updateAppointment", path = "appointment.updateAppointment",  httpMethod = "post")
-  	public Appointment updateAppointment(final User user, @Named("clientId") final long clientId, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
+  	public Appointment updateAppointment(final User user, @Named("clientIdLong") final long clientIdLong, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -683,7 +683,7 @@ public class SchedulerApi {
         // Update the variables of the appointment
         //
         
-        updateEvent(user, getClientCalendarId(user, clientId, pageNumber).getId(), appointmentForm.getEventForm());
+        updateEvent(user, getClientCalendarId(user, clientIdLong, pageNumber).getId(), appointmentForm.getEventForm());
         
         ofy().save().entities(appointment).now();
         
