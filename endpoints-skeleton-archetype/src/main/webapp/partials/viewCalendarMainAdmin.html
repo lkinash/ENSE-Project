@@ -1,3 +1,24 @@
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Mini calendar outside the scheduler</title>
+	<script src="dhtmlSample/codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
+	<link href="dhtmlSample/codebase/dhtmlxscheduler.css'>
+	
+	<script src="dhtmlSample/codebase/ext/dhtmlxscheduler_minical.js" type="text/javascript" charset="utf-8"></script>
+		
+<style type="text/css" media="screen">
+	html, body{
+		margin:0px;
+		padding:0px;
+		height:100%;
+		overflow: hidden;
+	}
+	
+	.dhx_calendar_click {
+		background-color: #C2D5FC !important;
+	}
+</style>
+
 <div class="container" layout="column" flex>
 	<div class="leftNav" layout="column" flex>
 			<div class="admin">
@@ -148,6 +169,8 @@
 			  <div class="masterCalendar">
 			</div>-->
 			
+			
+			<body onload="doOnLoad();">
 			<div style='float: left; padding:10px;'>
 			<div id="cal_here" style='width:250px;'></div>
 			</div>
