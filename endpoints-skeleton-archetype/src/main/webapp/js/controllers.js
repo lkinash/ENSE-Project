@@ -847,7 +847,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 //gapi.client.scheduler.addRoom(roomForm).execute();
 	 
 	 $scope.number=9999999;
-	 gapi.client.scheduler.addRoom(roomForm).execute();
+	 gapi.client.conference.addRoom(roomForm).execute();
   };
  
 });
