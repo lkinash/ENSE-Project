@@ -934,6 +934,12 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	  
   });
   
+  conferenceApp.controllers.controller('ViewCalendarAdminController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+
+
+	  
+  });
+  
   conferenceApp.controllers.controller('ClientLoginController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 
 
