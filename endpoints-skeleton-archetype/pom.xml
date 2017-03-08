@@ -55,12 +55,7 @@
 			<version>1.22.0</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>20.0</version>
-			<scope>compile</scope>
-		</dependency>
+		
 		<dependency>
 			<groupId>com.sendgrid</groupId>
 			<artifactId>sendgrid-java</artifactId>
@@ -90,11 +85,7 @@
             <artifactId>javax.inject</artifactId>
             <version>1</version>
         </dependency>
-        <dependency>
-            <groupId>com.googlecode.objectify</groupId>
-            <artifactId>objectify</artifactId>
-            <version>5.0</version>
-        </dependency>
+        
         		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-stubs</artifactId>
@@ -147,37 +138,8 @@
 			<artifactId>google-api-client-xml</artifactId>
 			<version>1.22.0</version>
 		</dependency>
-				<dependency>
-			<groupId>com.google.oauth-client</groupId>
-			<artifactId>google-oauth-client-jetty</artifactId>
-			<version>1.22.0</version>
-			<scope>compile</scope>
-		</dependency>
-
-                <dependency>
-  <groupId>com.sendgrid</groupId>
-  <artifactId>sendgrid-java</artifactId>
-  <version>2.2.2</version>
-</dependency>
-
-        <!-- Test Dependencies -->
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-testing</artifactId>
-            <version>${appengine.target.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-stubs</artifactId>
-            <version>${appengine.target.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-        </dependency>
+				
+        
     </dependencies>
     <build>
         <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
