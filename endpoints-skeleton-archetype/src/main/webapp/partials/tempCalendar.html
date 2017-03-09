@@ -1,7 +1,9 @@
+<!doctype html>
+
 <head>
-	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
+	<title>temp Calendar</title>
 	<link href="/dhtmlxSample/codebase/dhtmlxScheduler.css" rel="stylesheet">
-	<script src="/dhtmlxSample/codebase/dhtmlxscheduler_minical.js"></script>
+	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
 	<script src="/dhtmlxSample/codebase/dhtmlxScheduler.js"></script>
 	
 	<style type="text/css" media="screen">
@@ -17,28 +19,8 @@
 	}
 </style>
 
-<script type="text/javascript" charset="utf-8">
-	var prev = null;
-	var curr = null;
-	var next = null;
-	function doOnLoad() {
-		scheduler.config.multi_day = true;
-		scheduler.config.xml_date="%Y-%m-%d %H:%i";
-		
-		scheduler.init('scheduler_here',new Date(2014,9,11),"week");
-		scheduler.load("./data/events.xml");
-		
-		var calendar = scheduler.renderCalendar({
-			container:"cal_here", 
-			navigation:true,
-			handler:function(date){
-				scheduler.setCurrentView(date, scheduler._mode);
-			}
-		});
-		scheduler.linkCalendar(calendar);
-		scheduler.setCurrentView(scheduler._date, scheduler._mode);
-	}
-</script>
+<script src="/dhtmlxSample/calendarOnload.js"></script>
+
 </head>
 	
 <body onload="doOnLoad();">
@@ -63,7 +45,9 @@
 		  <div class="masterCalendar">
 		</div>-->
 		
-	
+		<div style='float: left; padding:10px;'>
+		<div id="cal_here" style='width:100px;'></div>
+		</div>
 	
 	<div id="scheduler_here" class="dhx_cal_container" style='width:auto; height:100%;'>
 		<div class="dhx_cal_navline">
@@ -81,4 +65,3 @@
 		</div>
 	</div>
 </body>
-
