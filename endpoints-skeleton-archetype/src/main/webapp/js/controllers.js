@@ -876,7 +876,9 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
  });
  
  conferenceApp.controllers.controller('ViewRoomController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-	 /*	var rooms=[
+	 console.log("controller reached for viewRoomAdmin");
+	 /*
+	 var rooms=[
 		 	           {
 		 	        	   name: "room1",
 		 	        	   services: [
@@ -884,42 +886,26 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 	        	              {name: "service02"},
 		 	        	              {name: "service03"},
 		 	        	              ]
-		 	           },
-		 	          {
-		 	        	   name: "room5",
-		 	        	   services: [
-		 	        	              {name: "service012"},
-		 	        	              {name: "service022"},
-		 	        	              {name: "service032"},
-		 	        	              ]
-		 	           },
-		 	          {
-		 	        	   name: "room3",
-		 	        	   services: [
-		 	        	              {name: "service0123"},
-		 	        	              {name: "service0223"},
-		 	        	              {name: "service0323"},
-		 	        	              ]
 		 	           }
 	 	           ];
 
 	 	$scope.rooms=rooms;
+	 	console.log("Rooms array created ");
 	 	*/
+	 $scope.init = function(){
+		 gapi.client.scheduler.getAllRooms().execute(function(resp){
+			 $scope.rooms=resp.result.items;
+			 $scope.$apply();
+		 });
+		  
+	 };
 	 
  });
 
  conferenceApp.controllers.controller('AddAdminController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 
 
-	 $scope.list = function(){
-		 gapi.client.scheduler.getAllRooms().execute(function(resp){
-			 $scope.rooms=resp.items;
-			 $scope.$apply();
-		 });
-		 
-		 
-		 
-	 };
+	
  });
 
  conferenceApp.controllers.controller('ForgotPasswordController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
