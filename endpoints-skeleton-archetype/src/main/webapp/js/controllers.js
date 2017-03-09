@@ -368,7 +368,28 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
   
   conferenceApp.controllers.controller('ViewCalendarAdminController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 
-	
+	  	var prev = null;
+		var curr = null;
+		var next = null;
+		
+		$scope.init=function() {
+			console.log("Completing the ONload function for the calendar");
+			scheduler.config.multi_day = true;
+			scheduler.config.xml_date="%Y-%m-%d %H:%i";
+			
+			scheduler.init('scheduler_here',new Date(2014,9,11),"week");
+			scheduler.load("./data/events.xml");
+			
+			var calendar = scheduler.renderCalendar({
+				container:"cal_here", 
+				navigation:true,
+				handler:function(date){
+					scheduler.setCurrentView(date, scheduler._mode);
+				}
+			});
+			scheduler.linkCalendar(calendar);
+			scheduler.setCurrentView(scheduler._date, scheduler._mode);
+		};
 	  
   });
   
