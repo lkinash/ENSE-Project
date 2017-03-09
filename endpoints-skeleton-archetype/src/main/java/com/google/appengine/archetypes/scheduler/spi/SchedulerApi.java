@@ -102,7 +102,7 @@ public class SchedulerApi {
   	 * @throws IOException 
   	 */
      
-   	@ApiMethod(name = "addRoom",httpMethod = "post")
+   	@ApiMethod(name = "admin.addRoom", path = "admin.addRoom", httpMethod = "post")
   	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException, IOException {
    		
    		
@@ -424,7 +424,7 @@ public class SchedulerApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "updateRoom", path = "updateRoom", httpMethod = "post")
+	@ApiMethod(name = "admin.updateRoom", path = "admin.updateRoom", httpMethod = "post")
 	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
 		
@@ -722,7 +722,7 @@ public class SchedulerApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "removeRoom",  path = "removeRoom", httpMethod = "post")
+	@ApiMethod(name = "admin.removeRoom",  path = "admin.removeRoom", httpMethod = "post")
 	public WrappedBoolean removeRoom(final User user, @Named("roomId") final int roomId) throws UnauthorizedException {
 	
 
@@ -895,7 +895,7 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getAllServices", path = "admin.getAllServices", httpMethod = "get")
- 	public List<Service> getAllService(final User user) throws UnauthorizedException {
+ 	public List<Service> getAllServices(final User user) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -915,8 +915,8 @@ public class SchedulerApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "admin.getAllEmployee", path = "admin.getAllEmployee", httpMethod = "get")
- 	public List<Employee> getAllEmployee(final User user) throws UnauthorizedException {
+  	@ApiMethod(name = "admin.getAllEmployees", path = "admin.getAllEmployees", httpMethod = "get")
+ 	public List<Employee> getAllEmployees(final User user) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -937,7 +937,7 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getAllProducts", path = "admin.getAllProducts", httpMethod = "get")
- 	public List<Product> getAllProduct(final User user) throws UnauthorizedException {
+ 	public List<Product> getAllProducts(final User user) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -957,8 +957,8 @@ public class SchedulerApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "admin.getAllAdmin", path = "admin.getAllAdmin", httpMethod = "get")
- 	public List<Admin> getAllAdmin(final User user) throws UnauthorizedException {
+  	@ApiMethod(name = "admin.getAllAdmins", path = "admin.getAllAdmins", httpMethod = "get")
+ 	public List<Admin> getAllAdmins(final User user) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -978,8 +978,8 @@ public class SchedulerApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAllRooms", path = "getAllRooms", httpMethod = "get")
- 	public List<Room> getAllRoom(final User user) throws UnauthorizedException {
+  	@ApiMethod(name = "admin.getAllRooms", path = "admin.getAllRooms", httpMethod = "get")
+ 	public List<Room> getAllRooms(final User user) throws UnauthorizedException {
 
   		
         if (user == null) {
@@ -999,7 +999,7 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "getAllTypes", path = "getAllTypes", httpMethod = "get")
- 	public List<Type> getAllType(final User user ) throws UnauthorizedException {
+ 	public List<Type> getAllTypes(final User user ) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1121,7 +1121,7 @@ public class SchedulerApi {
 	 * @throws UnauthorizedException 
 	 */
 	
-	@ApiMethod(name = "getRoom", path = "getRoom", httpMethod = "get")
+	@ApiMethod(name = "admin.getRoom", path = "admin.getRoom", httpMethod = "get")
 	public Room getRoom(final User user, @Named("roomId") final int roomId) throws UnauthorizedException {
 
 		
@@ -1167,7 +1167,7 @@ public class SchedulerApi {
        }
 
 
-       List<Type> types = getAllType(user);
+       List<Type> types = getAllTypes(user);
        
        String typeName = testType.getTypeName();
        
