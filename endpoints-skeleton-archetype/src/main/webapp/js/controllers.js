@@ -300,7 +300,15 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 
  conferenceApp.controllers.controller('ViewEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 
-	 
+	 console.log("controller reached for viewEmployeeAdmin");
+
+	 $scope.init = function(){
+		 gapi.client.scheduler.admin.getAllEmployees().execute(function(resp){
+			 $scope.employees=resp.result.items;
+			 $scope.$apply();
+		 });
+		  
+	 };
 	 
  });
 

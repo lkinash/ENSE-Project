@@ -1,4 +1,4 @@
-
+<div ng-controller="ViewRoomController" ng-init="init()">
 <head>
 <link href="/css/viewEmployeeAdmin.css" rel="stylesheet">
 </head>
@@ -143,15 +143,18 @@
 			</div>
 		</div>
 		<div class="employeeContainerMaster">
-			<div class="employee">
+		<ul>
+  		<li ng-repeat="room in rooms">
+  			<p>Employee: {{employee.name}}</p>
+		</ul>
+			<div class="room" ng-repeat="employee in employees">
 				<div class="panel-group">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<label>Employee #1 Name </label> <a data-toggle="collapse"
-								href="#collapse1"><span class="caret"></span></a>
-							<div class="btnApp"></div>
+							<label>{{ employee.name }} </label> <a data-toggle="collapse"
+								href="#collapse{{$index}}"><span class="caret"></span></a>
 						</div>
-						<div id="collapse1" class="panel-collapse collapse">
+						<div id="collapse{{$index}}" class="panel-collapse collapse">
 							<div class="panel-body">
 								<div class="cont">
 									<h4>Employee Name</h4>
@@ -223,20 +226,8 @@
 													</div>
 												</div>
 												<table>
-													<tr>
-														<td>Service 1</td>
-													</tr>
-													<tr>
-														<td>Service 2</td>
-													</tr>
-													<tr>
-														<td>Service 3</td>
-													</tr>
-													<tr>
-														<td>Service 4</td>
-													</tr>
-													<tr>
-														<td>Service 5</td>
+													<tr ng-repeat="service in employee.services">
+												<td>{{service.name}}</td>
 													</tr>
 												</table>
 											</div>
@@ -261,3 +252,4 @@
 		</div>
 	</div>
 </body>
+</div>
