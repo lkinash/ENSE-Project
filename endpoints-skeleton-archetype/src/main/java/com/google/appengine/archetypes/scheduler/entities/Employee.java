@@ -44,20 +44,27 @@ public class Employee {
 	/**
 	 * Description of the property AccountId.
 	 */
+	@Index
+	private String userId;
+	
+	/**
+	 * Description of the property AccountId.
+	 */
 	@Id
-	private long userId;
+	private long employeeId;
 	
 	
 	public Employee(){
 		
 	}
 	
-	public Employee(String newCalendarId, String newName, long newUserId, List<Long> newServiceIds){
+	public Employee(String newCalendarId, String newName, String newUserId, List<Long> newServiceIds, long newEmployeeId){
 		
 		this.userId = newUserId;
 		this.calendarId = newCalendarId;
 		this.name = newName;
 		this.serviceIds = newServiceIds;
+		this.employeeId = newEmployeeId;
 	}
 
 	
@@ -114,7 +121,7 @@ public class Employee {
 	 * Returns AccountId.
 	 * @return AccountId 
 	 */
-	public long getUserId() {
+	public String getUserId() {
 		return this.userId;
 	}
 
@@ -122,9 +129,24 @@ public class Employee {
 	 * Sets a value to attribute AccountId. 
 	 * @param newAccountId 
 	 */
-	public void setUserId(long newAccountId) {
+	public void setUserId(String newAccountId) {
 		this.userId = newAccountId;
 	}
 
+	/**
+	 * Returns AccountId.
+	 * @return AccountId 
+	 */
+	public long getEmployeeId() {
+		return this.employeeId;
+	}
+
+	/**
+	 * Sets a value to attribute AccountId. 
+	 * @param newAccountId 
+	 */
+	public void setUserId(long newEmployeeId) {
+		this.employeeId = newEmployeeId;
+	}
 
 }

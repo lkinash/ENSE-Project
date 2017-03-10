@@ -71,7 +71,13 @@ public class Client{
 	 * Description of the property AccountId.
 	 */
 	@Id
-	private long userId;
+	private long clientId;
+	
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Index
+	private String userId;
 	
 	
 	
@@ -79,7 +85,7 @@ public class Client{
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments, List<Long> newClearanceIds, String newCalendarId, long newUserId  ){
+	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments, List<Long> newClearanceIds, String newCalendarId, String newUserId, long newClientId  ){
 
 		this.userId = newUserId;
 		this.birthday = newBirthday;
@@ -89,15 +95,30 @@ public class Client{
 		this.lastName = newLastName;
 		this.phoneNumber = newPhoneNumber;
 		this.clearanceIds = newClearanceIds;
+		this.clientId = newClientId;
 	}
 	
-	
+	/**
+	 * Returns AccountId.
+	 * @return AccountId 
+	 */
+	public long getClientId() {
+		return this.clientId;
+	}
+
+	/**
+	 * Sets a value to attribute AccountId. 
+	 * @param newAccountId 
+	 */
+	public void setUserId(long newClientId) {
+		this.clientId = newClientId;
+	}
 
 	/**
 	 * Returns AccountId.
 	 * @return AccountId 
 	 */
-	public long getUserId() {
+	public String getUserId() {
 		return this.userId;
 	}
 
@@ -105,7 +126,7 @@ public class Client{
 	 * Sets a value to attribute AccountId. 
 	 * @param newAccountId 
 	 */
-	public void setUserId(long newAccountId) {
+	public void setUserId(String newAccountId) {
 		this.userId = newAccountId;
 	}
 	

@@ -19,10 +19,10 @@ public class Changes {
 	private String timeStamp;
 	
 	/**
-	 * Description of the property adminId.
+	 * Description of the property userId.
 	 */
 	@Index
-	private long adminId;
+	private String userId;
 
 	/**
 	 * Description of the property changeId.
@@ -40,9 +40,9 @@ public class Changes {
 		
 	}
 	
-	public Changes(String newTimeStamp, long newAdminId, long newChangeId, String newChange){
+	public Changes(String newTimeStamp, String newUserId, long newChangeId, String newChange){
 	
-		this.adminId = newAdminId;
+		this.userId = newUserId;
 		this.change = newChange;
 		this.changeId = newChangeId;
 		this.timeStamp = newTimeStamp;
@@ -69,19 +69,19 @@ public class Changes {
 	
 	
 	/**
-	 * Returns adminId.
-	 * @return adminId 
+	 * Returns userId.
+	 * @return userId 
 	 */
-	public long getAdminId() {
-		return this.adminId;
+	public String getUserId() {
+		return this.userId;
 	}
 
 	/**
-	 * Sets a value to attribute adminId. 
-	 * @param newAdminId 
+	 * Sets a value to attribute userId. 
+	 * @param newUserId 
 	 */
-	public void setAdminId(long newAdminId) {
-		this.adminId = newAdminId;
+	public void setUserId(String newUserId) {
+		this.userId = newUserId;
 	}
 	
 	/**

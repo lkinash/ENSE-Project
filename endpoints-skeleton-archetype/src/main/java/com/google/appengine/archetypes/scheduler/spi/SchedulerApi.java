@@ -71,7 +71,11 @@ public class SchedulerApi {
             throw new UnauthorizedException("Authorization required");
         }
         
+        //TODO
+  		//fix user Id problem
   		
+  		String userId = "";
+		
         
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
@@ -86,10 +90,15 @@ public class SchedulerApi {
         
         //employee must have a name, email and a password set
         
-  		Employee employee  = new Employee(calendarId, employeeForm.getName(), employeeId, employeeForm.getServiceIds());
+  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getServiceIds(), employeeId);
   			
 
   		ofy().save().entities(employee).now();
+  		
+  		
+  		String change = "Add Employee. Employee Id: " + employeeId;
+  		addChange(user, user.getUserId(), change);
+  		
   		
 		return employee;
   	}
@@ -124,6 +133,9 @@ public class SchedulerApi {
     		
   		ofy().save().entities(room).now(); 
    		
+  		String change = "Add Room. Room Id: " + roomId;
+  		addChange(user, user.getUserId(), change);
+  		
 		return room;
   	}
 
@@ -152,6 +164,9 @@ public class SchedulerApi {
   		
   	    ofy().save().entities(service).now();
   		
+  		String change = "Add Service. Service Id: " + serviceId;
+  		addChange(user, user.getUserId(), change);
+  	    
 		return service;
   	}
 
@@ -184,6 +199,9 @@ public class SchedulerApi {
   		
   	    ofy().save().entities(product).now();
   			
+  		String change = "Add Product. Product Id: " + productId;
+  		addChange(user, user.getUserId(), change);
+  	    
 		return product;
   	}
 
@@ -200,15 +218,24 @@ public class SchedulerApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        
+      
+        //TODO
+  		//fix user Id problem
+  		
+  		String userId = "";
+		
   		
         final Key<Admin> adminKey = factory().allocateId(Admin.class);
         final long adminId = adminKey.getId();
         
         
-  		Admin admin  = new Admin(adminForm.getClearance(),  adminId);
+  		Admin admin  = new Admin(adminForm.getClearance(), userId, adminId);
   			
   		ofy().save().entities(admin).now();
+  		
+  		String change = "Add Admin. Admin Id: " + adminId;
+  		addChange(user, user.getUserId(), change);
+  		
   		
 		return admin;
 		
@@ -237,6 +264,10 @@ public class SchedulerApi {
         
   		ofy().save().entities(newType).now();
   		
+  		String change = "Add Type. Type Id: " + typeId;
+  		addChange(user, user.getUserId(), change);
+  		
+  		
 		return newType;
 		
   	}
@@ -249,7 +280,7 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.addChange", path = "admin.addChange", httpMethod = "post")
- 	public Changes addChange(final User user, @Named("adminId") final long adminId, @Named("change") final String change ) throws UnauthorizedException {
+ 	public Changes addChange(final User user, @Named("userId") final String userId, @Named("change") final String change ) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -262,7 +293,7 @@ public class SchedulerApi {
         
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         
-        Changes newChange = new Changes(timeStamp, adminId, changeId, change);
+        Changes newChange = new Changes(timeStamp, userId, changeId, change);
         
   		ofy().save().entities(newChange).now();
   		
@@ -284,7 +315,10 @@ public class SchedulerApi {
             throw new UnauthorizedException("Authorization required");
         }
         
+  		//TODO
+  		//fix user Id problem
   		
+  		String userId = "";
 		
         final Key<Client> clientKey = factory().allocateId(Client.class);
         final long clientId = clientKey.getId();
@@ -311,10 +345,13 @@ public class SchedulerApi {
         // Client must enter first name, last name, email and a password
         
 		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
-				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId, clientId);
+				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId, userId, clientId);
 			
   		ofy().save().entities(client).now();
         
+  		String change = "Add Client. Client Id: " + clientId;
+  		addChange(user, user.getUserId(), change);
+  		
 		return client;
 
 	}
@@ -328,7 +365,7 @@ public class SchedulerApi {
 	 */
 	 
 	@ApiMethod(name = "client.addClientClearance", path = "client.addClientClearance", httpMethod = "post")
-  	public WrappedBoolean addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
+  	public Clearances addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
 
 
         if (user == null) {
@@ -344,7 +381,10 @@ public class SchedulerApi {
 		
   		ofy().save().entities(client, clearance).now();
 		
-		return null;
+  		String change = "Add Clearances. Clearance Id: " + clearance.getClearanceId();
+  		addChange(user, user.getUserId(), change);
+  		
+		return clearance;
 	}
 	
 	
@@ -385,6 +425,9 @@ public class SchedulerApi {
     		
   		ofy().save().entities(appointment).now();
   		
+  		String change = "Add Appointment. Appointment Id: " + appointmentId;
+  		addChange(user, user.getUserId(), change);
+  		
 		return appointment;
 
 	}
@@ -414,6 +457,11 @@ public class SchedulerApi {
 	    
   		ofy().save().entities(employee).now();
 	    
+  		
+  		String change = "Update Employee. Employee Id: " + employeeId;
+  		addChange(user, user.getUserId(), change);
+  		
+  		
 		return employee;
 	}
 
@@ -483,6 +531,10 @@ public class SchedulerApi {
 	    
   		ofy().save().entities(service).now();
 		
+  		String change = "Update Service. Service Id: " + serviceId;
+  		addChange(user, user.getUserId(), change);
+  	    
+  		
 		return service;
 	}
 	
@@ -519,6 +571,10 @@ public class SchedulerApi {
 	    
   		ofy().save().entities(product).now();
 	    
+  		String change = "Update Product. Product Id: " + productId;
+  		addChange(user, user.getUserId(), change);
+  	    
+  		
 		return product;
 	}
 
@@ -545,6 +601,10 @@ public class SchedulerApi {
 	    
   		ofy().save().entities(admin).now();
 	   
+  		String change = "Update Admin. Admin Id: " + adminId;
+  		addChange(user, user.getUserId(), change);
+  		
+  		
 		return admin;
   	}
   	
@@ -575,6 +635,10 @@ public class SchedulerApi {
 	 
   		ofy().save().entities(type).now();
 	    
+  		String change = "Update Type. Type Id: " + typeId;
+  		addChange(user, user.getUserId(), change);
+  		
+  		
 		return type;
 		
   	}
@@ -612,6 +676,9 @@ public class SchedulerApi {
 	    
   		ofy().save().entities(client).now();
 	    
+  		String change = "Update Client. Client Id: " + clientId;
+  		addChange(user, user.getUserId(), change);
+  		
 		return client;
 	}
 	
@@ -641,6 +708,10 @@ public class SchedulerApi {
         
         ofy().save().entities(appointment).now();
         
+  		String change = "Update Appointment. Appointment Id: " + appointmentId;
+  		addChange(user, user.getUserId(), change);
+  		
+        
 		return appointment;
 	}
 
@@ -667,6 +738,10 @@ public class SchedulerApi {
         
   		ofy().save().entities(appointment).now();
 
+  		String change = "Update Appointment Status. Appointment Id: " + appointmentId;
+  		addChange(user, user.getUserId(), change);
+  		
+  		
 		return new WrapperStatus(status);
 	}
 
@@ -690,6 +765,10 @@ public class SchedulerApi {
 		
 	    ofy().delete().key(key).now();
 	    
+  		String change = "Remove Service. Service Id: " + serviceId;
+  		addChange(user, user.getUserId(), change);
+  	    
+	    
 		return new WrappedBoolean(true);
 	}
 
@@ -712,6 +791,10 @@ public class SchedulerApi {
 		
 		ofy().delete().key(key).now();
 	   	    
+  		String change = "Remove Product. Product Id: " + productId;
+  		addChange(user, user.getUserId(), change);
+  	    
+		
 		return new WrappedBoolean(true);
 	}
 
@@ -757,6 +840,11 @@ public class SchedulerApi {
 	
 		ofy().delete().key(key).now();
 		
+  		
+  		String change = "Remove Employee. Employee Id: " + employeeId;
+  		addChange(user, user.getUserId(), change);
+  		
+		
 		return new WrappedBoolean(true);
 	}
 
@@ -779,6 +867,10 @@ public class SchedulerApi {
 		
 		ofy().delete().key(key).now();
 	   
+  		String change = "Remove Admin. Admin Id: " + adminId;
+  		addChange(user, user.getUserId(), change);
+  		
+		
 		return new WrappedBoolean(true);
   	}
   	
@@ -802,6 +894,10 @@ public class SchedulerApi {
 		
 		ofy().delete().key(key).now();
 	   
+  		String change = "Remove Type. Type Id: " + typeId;
+  		addChange(user, user.getUserId(), change);
+  		
+		
 		return new WrappedBoolean(true);
 		
   	}
@@ -829,6 +925,9 @@ public class SchedulerApi {
     	
 	    Key<Appointment> key = Key.create(Appointment.class, removeAppointmentForm.getAppointmentId());
 		
+  		String change = "Remove Appointment. Appointment Id: " + key.getId();
+  		addChange(user, user.getUserId(), change);
+	    
 		ofy().delete().key(key).now();
 		
 		return null;
@@ -854,6 +953,9 @@ public class SchedulerApi {
 		
 		ofy().delete().key(key).now();
 	   
+		String change = "Remove Client. Client Id: " + clientId;
+  		addChange(user, user.getUserId(), change);
+		
 		return new WrappedBoolean(true);
   	}
   	
@@ -884,6 +986,9 @@ public class SchedulerApi {
   		
   		ofy().delete().key(clearanceKey).now();
 		
+  		String change = "Remove Client Clearance. Client Id: " + clientId;
+  		addChange(user, user.getUserId(), change);
+  		
 		return null;
 	}
 	
@@ -998,7 +1103,7 @@ public class SchedulerApi {
   	 * @throws UnauthorizedException 
   	 */
   	
-  	@ApiMethod(name = "getAllTypes", path = "getAllTypes", httpMethod = "get")
+  	@ApiMethod(name = "admin.getAllTypes", path = "admin.getAllTypes", httpMethod = "get")
  	public List<Type> getAllTypes(final User user ) throws UnauthorizedException {
 
         if (user == null) {
@@ -1192,8 +1297,6 @@ public class SchedulerApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        
-  		
         
     	Query<Appointment> query =  ofy().load().type(Appointment.class);
     	query = query.filter("clientId =", clientId);

@@ -6,9 +6,9 @@ package com.google.appengine.archetypes.scheduler.entities;
 import java.util.List;
 
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
-
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 // End of user code
 
@@ -28,17 +28,24 @@ public class Admin{
 	 * Description of the property AccountId.
 	 */
 	@Id
-	private long userId;
+	private long adminId;
 
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Index
+	private String userId;
+	
 
 	public Admin(){
 		
 	}
 	
-	public Admin(AdminClearances adminClearance, long newUserId){
+	public Admin(AdminClearances adminClearance, String newUserId, long newAdminId){
 		
 		this.userId = newUserId;
 		this.clearance = adminClearance;
+		this.adminId = newAdminId;
 	}
 	
 	
@@ -46,7 +53,7 @@ public class Admin{
 	 * Returns AccountId.
 	 * @return AccountId 
 	 */
-	public long getUserId() {
+	public String getUserId() {
 		return this.userId;
 	}
 
@@ -54,8 +61,25 @@ public class Admin{
 	 * Sets a value to attribute AccountId. 
 	 * @param newAccountId 
 	 */
-	public void setUserId(long newAccountId) {
+	public void setUserId(String newAccountId) {
 		this.userId = newAccountId;
+	}
+	
+	
+	/**
+	 * Returns AccountId.
+	 * @return AccountId 
+	 */
+	public long getAdminId() {
+		return this.adminId;
+	}
+
+	/**
+	 * Sets a value to attribute AccountId. 
+	 * @param newAccountId 
+	 */
+	public void setAdminId(long newAdminId) {
+		this.adminId = newAdminId;
 	}
 	
 	
