@@ -14,10 +14,11 @@
 	<link href="/css/viewRoomAdmin.css" rel="stylesheet">
 	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
 	<link href="/css/pendingAppAdmin.css" rel="stylesheet">
+	<link href="/dhtmlxSample/codebase/dhtmlxScheduler.css" rel="stylesheet">
+	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
+	<script src="/dhtmlxSample/codebase/dhtmlxScheduler.js"></script>
+	<script src="/dhtmlxSample/calendarOnload.js"></script>
 	
-	<script src="dhtmlSample/codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
-	<link href="dhtmlSample/codebase/dhtmlxscheduler.css">
-	<script src="dhtmlSample/codebase/ext/dhtmlxscheduler_minical.js" type="text/javascript" charset="utf-8"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
     <script>
@@ -36,7 +37,7 @@
 </head>
 
 <!-- Restore the credential from cookie if stored by calling initSignInButton() -->
-<body ng-controller="RootCtrl" ng-init="initSignInButton()">
+<body ng-controller="RootCtrl" ng-init="initSignInButton()" >
 
 <md-toolbar>
 	<div class="head" layout="column">

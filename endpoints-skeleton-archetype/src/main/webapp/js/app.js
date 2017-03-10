@@ -21,7 +21,7 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute', '
                     controller: 'MyProfileCtrl'
                 })
                 .when('/', {
-                    templateUrl: '/partials/viewCalendarMainAdmin.html',
+                    templateUrl: '/partials/tempCalendar.html',
                     controller: 'ViewCalendarAdminController'
                 })
                 
