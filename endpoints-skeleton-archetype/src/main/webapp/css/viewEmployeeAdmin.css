@@ -25,6 +25,15 @@ table{
     font-size: 40px;
 	color:#0A25BF;
 }
+.container{
+	margin:0;
+	padding: 0;
+	display: inline-flex;
+	width: 100%;
+	height:100%;	
+	background-color:pink;
+
+}
 .rightContent .employeeContainerMaster{
 	margin-left: auto;
 	margin-right: auto;
