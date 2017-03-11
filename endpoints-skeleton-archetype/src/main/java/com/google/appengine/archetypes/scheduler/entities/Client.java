@@ -110,7 +110,7 @@ public class Client{
 	 * Sets a value to attribute AccountId. 
 	 * @param newAccountId 
 	 */
-	public void setUserId(long newClientId) {
+	public void setClientId(long newClientId) {
 		this.clientId = newClientId;
 	}
 

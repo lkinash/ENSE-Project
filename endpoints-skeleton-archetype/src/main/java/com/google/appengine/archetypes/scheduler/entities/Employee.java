@@ -145,7 +145,7 @@ public class Employee {
 	 * Sets a value to attribute AccountId. 
 	 * @param newAccountId 
 	 */
-	public void setUserId(long newEmployeeId) {
+	public void setEmployeeId(long newEmployeeId) {
 		this.employeeId = newEmployeeId;
 	}
 
