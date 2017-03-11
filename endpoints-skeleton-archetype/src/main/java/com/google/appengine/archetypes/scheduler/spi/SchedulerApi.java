@@ -54,7 +54,7 @@ import com.googlecode.objectify.cmd.Query;
 /**
  * Defines conference APIs.
  */
-@Api(name = "scheduler", version = "v1", scopes = { Constants.EMAIL_SCOPE }, clientIds = {
+@Api(name = "scheduler", version = "v1", scopes = { Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE }, clientIds = {
         Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID }, description = "API ")
 public class SchedulerApi {
 
@@ -123,9 +123,7 @@ public class SchedulerApi {
         final Key<Room> roomKey = factory().allocateId(Room.class);
         final long roomId = roomKey.getId();
         
-        String calendar = "";
-        		
-        		//createCalendar(user).getId();
+        String calendar = createRoomCalendar(user).getId();
         		
         List <Long> service = null;
         
@@ -473,7 +471,7 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.updateRoom", path = "admin.updateRoom", httpMethod = "post")
-	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final int roomId) throws UnauthorizedException {
+	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final long roomId) throws UnauthorizedException {
 	
 		
 	    if (user == null) {
@@ -806,7 +804,7 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.removeRoom",  path = "admin.removeRoom", httpMethod = "post")
-	public WrappedBoolean removeRoom(final User user, @Named("roomId") final int roomId) throws UnauthorizedException {
+	public WrappedBoolean removeRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
 	
 
 	    if (user == null) {
@@ -1227,7 +1225,7 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.getRoom", path = "admin.getRoom", httpMethod = "get")
-	public Room getRoom(final User user, @Named("roomId") final int roomId) throws UnauthorizedException {
+	public Room getRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
 
 		
 	    if (user == null) {
@@ -1475,6 +1473,36 @@ public class SchedulerApi {
         
         //TODO
         //create a calendar
+        
+		return null;
+  	}
+  	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+  	private static WrappedId createRoomCalendar(final User user) throws UnauthorizedException, IOException {
+
+        
+        //TODO
+        //create a calendar
+        
+		return null;
+  	}
+  	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+  	private static WrappedId removeRoomCalendar(final User user,  @Named("roomCalendarId") final String roomCalendarId) throws UnauthorizedException, IOException {
+
+        
+        //TODO
+        //remove a calendar
         
 		return null;
   	}
