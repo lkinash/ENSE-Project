@@ -1,10 +1,9 @@
 <head>
 <link href="/css/addRoomAdmin.css" rel="stylesheet">
 </head>
-<body>
-
-	<div class="container">
-		<div class="leftNav">
+	<div class="row">
+		<div class="col-sm-2 col-lg-2">
+		  <div class="leftNav">
 			<div class="admin">
 				<div class="panel-group">
  				 	<div class="panel panel-default">
@@ -129,76 +128,70 @@
  					 </div>
 				</div>
 			</div>
+			</div>
 		</div>
 	
-	<div class="rightContent">
-	<!--  
-	<form ng-submit="addRoom()">
-	<p>Room name:</p>
-	<input type="text" placeholder="number" ng-model="number" />
-	<input type="submit" value="post" />
-	</form>
-	
-	<p>room number:{{number}}</p>
-		<h2>Add Room</h2>
-		-->
-	 
-		<div id="messages" class="alert alert-{{alertStatus}}"
-			ng-show="messages">
-			<span ng-bind="messages"></span> <i
-				class="dismiss-messages pull-right glyphicon glyphicon-remove"
-				ng-click="messages = ''" ng-show="messages"></i>
-		</div>
-			<form ng-submit="addRoom()">
-				<div class="mainHolder">
-					<div class="roomInfoHolder">
-						<div class="roomNameHolder">
-							<h4>Room Name</h4>
-							<input type="text" placeholder="number" ng-model="number" />
-						</div>
-						<div class="serviceOffered">
-							<div class="heading">
-								<h5>Services Preformed</h5>
-								<div class="plusMinus">
-									<button type="button" class="btn btn-default">
-										<h5>+ / -</h5>
-									</button>
-								</div>
-							</div>
-							<div class="infoCategory">
-								<div class="type">
-									<h5>Service Type</h5>
-								</div>
-								<div class="name">
-									<h5>Service Name</h5>
-								</div>
-							</div>
-							<div class="serviceType">
-								<div class="form-group">
-									<select class="form-control" id="sel1">
-										<option>Type</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-									</select>
-								</div>
-								<div class="serviceName">
-									<select class="form-control" id="sel2">
-										<option>Service Name</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="submitBtn">
-							<input type="submit" value="submit" />
-						</div>
-					</div>
-				</div>
-			</form>
-
-		</div>
-	</div>
-</body>
+	<div class="col-sm-10 col-lg-10" >
+	  <div class="rightContent">
+  	<!--  
+  	<form ng-submit="addRoom()">
+  	<p>Room name:</p>
+  	<input type="text" placeholder="number" ng-model="number" />
+  	<input type="submit" value="post" />
+  	</form>
+  	
+  	<p>room number:{{number}}</p>
+  		<h2>Add Room</h2>
+  		-->
+            			<form ng-submit="addRoom()">
+            				<div class="mainHolder">
+            					<div class="roomInfoHolder">
+            						<div class="roomNameHolder">
+            							<h4>Room Name</h4>
+            							<input type="text" placeholder="number" ng-model="number" />
+            						</div>
+            						<div class="serviceOffered">
+            							<div class="heading">
+            								<h5>Services Preformed</h5>
+            								<div class="plusMinus">
+            									<button type="button" class="btn btn-default">
+            										<h5>+ / -</h5>
+            									</button>
+            								</div>
+            							</div>
+            							<div class="infoCategory">
+            								<div class="type">
+            									<h5>Service Type</h5>
+            								</div>
+            								<div class="name">
+            									<h5>Service Name</h5>
+            								</div>
+            							</div>
+            							<div class="serviceType">
+            								<div class="form-group">
+            									<select class="form-control" id="sel1">
+            										<option>Type</option>
+            										<option>2</option>
+            										<option>3</option>
+            										<option>4</option>
+            									</select>
+            								</div>
+            								<div class="serviceName">
+            									<select class="form-control" id="sel2">
+            										<option>Service Name</option>
+            										<option>2</option>
+            										<option>3</option>
+            										<option>4</option>
+            									</select>
+            								</div>
+            							</div>
+            						</div>
+            						<div class="submitBtn">
+            							<input type="submit" value="submit" />
+            						</div>
+            					</div>
+            				</div>
+            			</form>
+	  </div>
+  </div>
+</div>

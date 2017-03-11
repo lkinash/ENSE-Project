@@ -13,9 +13,9 @@
 	<link href="/css/index.css" rel="stylesheet">
 	<link href="/css/viewRoomAdmin.css" rel="stylesheet">
 	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
+	<link href="addEmployeeAdmin.css" rel="stylesheet">
 	<link href="/css/pendingAppAdmin.css" rel="stylesheet">
 	<link href="/dhtmlxSample/codebase/dhtmlxScheduler.css" rel="stylesheet">
-	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
 	<script src="/dhtmlxSample/codebase/dhtmlxScheduler.js"></script>
 	<script src="/dhtmlxSample/calendarOnload.js"></script>
 	
@@ -37,10 +37,10 @@
 </head>
 
 <!-- Restore the credential from cookie if stored by calling initSignInButton() -->
-<body ng-controller="RootCtrl" ng-init="initSignInButton()" >
+<body onload="doOnLoad();" ng-controller="RootCtrl" ng-init="initSignInButton()">
 
 <md-toolbar>
-	<div class="head" layout="column">
+	<div class="head" layout="row">
 		<a href="/"><h3>Scheduler App</h3></a>
 
 		<div class="hright">
@@ -56,7 +56,7 @@
 
 	</md-toolbar>
   
-
+<md-content>
 <div class="container2">
     <div class="row">
         <div class="col-lg-12">
@@ -85,5 +85,6 @@
 <!-- Put the signInButton to invoke the gapi.signin.render to restore the credential if stored in cookie. -->
 <span id="signInButton" style="display: none" disabled="true"  style="display: none" ></span>
 </div>
+</md-content>
 </body>
 </html>
