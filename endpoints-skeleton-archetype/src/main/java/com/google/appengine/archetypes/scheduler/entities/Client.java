@@ -6,6 +6,7 @@ package com.google.appengine.archetypes.scheduler.entities;
 import com.google.api.services.calendar.Calendar;
 import com.google.appengine.archetypes.scheduler.entities.Appointment;
 import com.google.appengine.archetypes.scheduler.entities.Clearances;
+import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -18,7 +19,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-
+import com.google.appengine.api.users.User;
 // End of user code
 
 /**
@@ -66,6 +67,11 @@ public class Client{
 	 */
 	private Date birthday;
 
+	/**
+	 * Description of the property adminClearance.
+	 */
+	private AdminClearances clearance;
+
 	
 	/**
 	 * Description of the property AccountId.
@@ -96,6 +102,7 @@ public class Client{
 		this.phoneNumber = newPhoneNumber;
 		this.clearanceIds = newClearanceIds;
 		this.clientId = newClientId;
+		this.clearance = AdminClearances.client;
 	}
 	
 	/**
@@ -261,4 +268,21 @@ public class Client{
 		this.birthday = newBirthday;
 	}
 
+	
+	
+	/**
+	 * Returns adminClearance.
+	 * @return adminClearance 
+	 */
+	public AdminClearances getAdminClearance() {
+		return this.clearance;
+	}
+
+	/**
+	 * Sets a value to attribute adminClearance. 
+	 * @param newAdminClearance 
+	 */
+	public void setAdminClearance(AdminClearances newAdminClearance) {
+		this.clearance = newAdminClearance;
+	}
 }

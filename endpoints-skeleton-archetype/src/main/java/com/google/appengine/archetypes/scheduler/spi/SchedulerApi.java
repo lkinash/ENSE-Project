@@ -26,6 +26,7 @@ import com.google.appengine.archetypes.scheduler.entities.Changes;
 import com.google.appengine.archetypes.scheduler.entities.Clearances;
 import com.google.appengine.archetypes.scheduler.entities.Client;
 import com.google.appengine.archetypes.scheduler.entities.Employee;
+import com.google.appengine.archetypes.scheduler.entities.PageAuth;
 import com.google.appengine.archetypes.scheduler.entities.Product;
 import com.google.appengine.archetypes.scheduler.entities.Room;
 import com.google.appengine.archetypes.scheduler.entities.Service;
@@ -40,6 +41,7 @@ import com.google.appengine.archetypes.scheduler.forms.ProductForm;
 import com.google.appengine.archetypes.scheduler.forms.RoomForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceForm;
 import com.google.appengine.archetypes.scheduler.forms.TypeForm;
+import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.google.appengine.archetypes.scheduler.list.Status;
 import com.google.appengine.archetypes.scheduler.service.EventCreator;
 import com.google.appengine.archetypes.scheduler.service.Quickstart;
@@ -1284,6 +1286,9 @@ public class SchedulerApi {
            
   	}
   	
+
+ 
+  	
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
@@ -1447,20 +1452,116 @@ public class SchedulerApi {
 		return null;
 	}
 	
-	@ApiMethod(name = "checkAuthorizationForPage", path = "checkAuthorizationForPage", httpMethod = "get")
-  	public WrappedBoolean checkAuthorizationForPage(final User user, @Named("pageNumber") final int pageNumber){
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "getIsAuthorizedView", path = "getIsAuthorizedView", httpMethod = "get")
+  	public WrappedBoolean getIsAuthorizedView(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
+	
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        AdminClearances clearance = getAdminClearnces(user);
+	
   		
-		
-		// TODO 
-        // Get the user clearances
-		// Check the user clearances against the page ID
+        Query<PageAuth> query =  ofy().load().type(PageAuth.class);
+    	query = query.filter("clearance =", clearance);
+    	
+        List<PageAuth> pageAuth = query.list();
+	    
+        
+        if(pageAuth.get(0).canView(pageNumber)){
+        	return new WrappedBoolean(true);
+        }
+        else
+        	return new WrappedBoolean(false, "");
+	}
+	
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "getIsAuthorizedViewAndEdit", path = "getIsAuthorizedViewAndEdit", httpMethod = "get")
+  	public WrappedBoolean getIsAuthorizedViewAndEdit(final User user, @Named("pageNumber") final int pageNumber) throws UnauthorizedException, IOException {
+	
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        AdminClearances clearance = getAdminClearnces(user);
+	
   		
-		
-		
-	 
+        Query<PageAuth> query =  ofy().load().type(PageAuth.class);
+    	query = query.filter("clearance =", clearance);
+    	
+        List<PageAuth> pageAuth = query.list();
+	    
+        
+        if(pageAuth.get(0).canViewAndEdit(pageNumber)){
+        	return new WrappedBoolean(true);
+        }
+        else
+        	return new WrappedBoolean(false, "");
+	}
+	
+
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+  	private static AdminClearances getAdminClearnces(final User user) throws UnauthorizedException, IOException {
+  	
   		
-  		return new WrappedBoolean(true);
+        Query<Client> clientQuery =  ofy().load().type(Client.class);
+    	clientQuery = clientQuery.filter("userId =", user.getUserId());
+    	
+        List<Client> client = clientQuery.list();
+	
+        if(!client.isEmpty()){
+        	return client.get(0).getAdminClearance();
+        }
+  		
+        
+        
+        
+        Query<Employee> employeeQuery =  ofy().load().type(Employee.class);
+    	employeeQuery = employeeQuery.filter("userId =", user.getUserId());
+    	
+        List<Employee> employee = employeeQuery.list();
+	
+        if(!employee.isEmpty()){
+        	return employee.get(0).getAdminClearance();
+        }
+        
+        
+        
+        
+        Query<Admin> adminQuery =  ofy().load().type(Admin.class);
+    	adminQuery = adminQuery.filter("userId =", user.getUserId());
+    	
+        List<Admin> admin = adminQuery.list();
+	
+        if(!admin.isEmpty()){
+        	return admin.get(0).getAdminClearance();
+        }
+        
+  		return null;
+  		
   	}
+	
 	
 	/**
 	 * Description of the method queryAppointments.

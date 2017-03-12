@@ -185,7 +185,9 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
             },
             'clientid': oauth2Provider.CLIENT_ID,
             'cookiepolicy': 'single_host_origin',
-            'scope': oauth2Provider.SCOPES
+            'scope': oauth2Provider.SCOPES,
+            'scope': 'https://www.googleapis.com/auth/calendar',
+            'scope': 'https://www.googleapis.com/auth/calendar.readonly'
         });
     };
 

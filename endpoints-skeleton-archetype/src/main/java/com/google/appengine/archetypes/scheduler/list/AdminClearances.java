@@ -28,8 +28,10 @@ public enum AdminClearances {
 								 * Description of employee.
 								 */
 								employee,
+								/**
+								 * Description of client.
+								 */
+								client,
 
-	// Start of user code (user defined enum literals for AdminClearances)
 
-	// End of user code
 }

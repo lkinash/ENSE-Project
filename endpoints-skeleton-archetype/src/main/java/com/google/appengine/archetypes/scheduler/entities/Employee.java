@@ -7,6 +7,7 @@ package com.google.appengine.archetypes.scheduler.entities;
 import java.util.List;
 
 import com.google.api.services.calendar.Calendar;
+import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
@@ -53,6 +54,11 @@ public class Employee {
 	@Id
 	private long employeeId;
 	
+	/**
+	 * Description of the property adminClearance.
+	 */
+	private AdminClearances clearance;
+	
 	
 	public Employee(){
 		
@@ -65,6 +71,7 @@ public class Employee {
 		this.name = newName;
 		this.serviceIds = newServiceIds;
 		this.employeeId = newEmployeeId;
+		this.clearance = AdminClearances.employee;
 	}
 
 	
@@ -148,5 +155,22 @@ public class Employee {
 	public void setEmployeeId(long newEmployeeId) {
 		this.employeeId = newEmployeeId;
 	}
+	
+	/**
+	 * Returns adminClearance.
+	 * @return adminClearance 
+	 */
+	public AdminClearances getAdminClearance() {
+		return this.clearance;
+	}
+
+	/**
+	 * Sets a value to attribute adminClearance. 
+	 * @param newAdminClearance 
+	 */
+	public void setAdminClearance(AdminClearances newAdminClearance) {
+		this.clearance = newAdminClearance;
+	}
+
 
 }
