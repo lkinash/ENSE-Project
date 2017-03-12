@@ -432,7 +432,7 @@ public class SchedulerApi {
 
 	}
 
-	
+
 	
   	/**
 	 * Description of the method updateEmployee.
@@ -1515,6 +1515,20 @@ public class SchedulerApi {
 	}
 	
 
+	/**
+	 * Description of the method createAppointment.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
+  	public WrappedBoolean test(final User user) throws IOException {
+
+
+		Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
+		
+		return null;
+	}
 	
 	/**
 	 * Description of the method queryAppointments.

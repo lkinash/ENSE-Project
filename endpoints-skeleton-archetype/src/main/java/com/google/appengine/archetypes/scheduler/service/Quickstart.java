@@ -130,6 +130,7 @@ public class Quickstart {
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
+        
     }
 
     public static WrappedBoolean addEvent(String calendarId, final User user, Event event) throws IOException {
@@ -137,7 +138,7 @@ public class Quickstart {
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
     	
-        System.out.println(user.getEmail() + "   " +  user.getAuthDomain());
+        //System.out.println(user.getEmail() + "   " +  user.getAuthDomain());
         
     	
         com.google.api.services.calendar.Calendar service =

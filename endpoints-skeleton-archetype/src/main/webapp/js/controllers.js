@@ -360,7 +360,15 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 
  conferenceApp.controllers.controller('AddAdminController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 
-
+	 $scope.init = function(){
+		 gapi.client.scheduler.appointment.test().execute(function(resp){
+		
+			 $scope.$apply();
+		 });
+		  
+	 };
+	 
+	 
 	
  });
 
