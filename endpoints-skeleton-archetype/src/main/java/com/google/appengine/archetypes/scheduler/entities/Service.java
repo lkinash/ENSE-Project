@@ -21,8 +21,10 @@ public class Service extends SaleItem {
 	 */
 	private boolean requiresClearance;
 
+	
 	private int defaultLength;
 
+	
 	public Service(){
 		
 	}

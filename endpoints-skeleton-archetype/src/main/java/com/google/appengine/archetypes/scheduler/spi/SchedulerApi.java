@@ -1287,7 +1287,30 @@ public class SchedulerApi {
   	}
   	
 
- 
+
+	/**
+  	 * Returns types.
+  	 * @return types 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
+ 	public List<Service> getServicesOfType(final User user, @Named("typeId") final long typeId) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        Query<Service> query =  ofy().load().type(Service.class);
+    	query = query.order("name");
+
+     	query = query.filter("typeId =", typeId);
+    	
+        return query.list();
+        
+  	}
+  	
   	
 	/**
 	 * Description of the method queryAppointments.
