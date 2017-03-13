@@ -3,23 +3,15 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.scheduler.entities;
 
-import com.google.api.services.calendar.Calendar;
-import com.google.appengine.archetypes.scheduler.entities.Appointment;
-import com.google.appengine.archetypes.scheduler.entities.Clearances;
-import com.google.appengine.archetypes.scheduler.list.AdminClearances;
-
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 // Start of user code (user defined imports)
-
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.google.appengine.api.users.User;
 // End of user code
 
 /**

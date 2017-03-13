@@ -3,10 +3,7 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.scheduler.forms;
 
-import java.util.List;
-
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
-import com.google.appengine.archetypes.scheduler.entities.Clearances;
 
 /**
  * Description of AdminForm.

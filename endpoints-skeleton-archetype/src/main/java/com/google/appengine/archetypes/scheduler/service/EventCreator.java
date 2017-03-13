@@ -2,9 +2,12 @@ package com.google.appengine.archetypes.scheduler.service;
 
 import java.util.Arrays;
 
-import com.google.api.services.calendar.model.*;
-import com.google.appengine.archetypes.scheduler.forms.EventForm;
 import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.EventReminder;
+import com.google.appengine.archetypes.scheduler.forms.EventForm;
 
 public class EventCreator {
 
