@@ -1548,7 +1548,7 @@ public class SchedulerApi {
   	public WrappedBoolean test(final User user) throws IOException {
 
 
-		//Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
+		////Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
 		
 		return null;
 	}
