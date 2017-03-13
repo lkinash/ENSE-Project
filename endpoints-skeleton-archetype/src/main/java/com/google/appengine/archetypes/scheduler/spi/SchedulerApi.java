@@ -1627,7 +1627,7 @@ public class SchedulerApi {
         //TODO
         //create a calendar
         
-		return null;
+		return new WrappedId("");
   	}
   	
 	/**
