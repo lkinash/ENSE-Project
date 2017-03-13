@@ -198,7 +198,8 @@ app.constant('HTTP_ERRORS', {
 app.factory('oauth2Provider', function ($modal) {
     var oauth2Provider = {
         CLIENT_ID: '573107621545-m9kr231t053m9sprflhffl349vcqrcb6.apps.googleusercontent.com',
-        SCOPES: 'https://www.googleapis.com/auth/userinfo.email profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.readonly',
+        SCOPES: 'https://www.googleapis.com/auth/userinfo.email profile',
+        	//https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.readonly',
         signedIn: false
     };
 
