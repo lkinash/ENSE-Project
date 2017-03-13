@@ -171,12 +171,8 @@
 							 
            <fieldset  ng-repeat="choice in choices">
             	<div class="form-group">
-								  <select class="form-control" id="sel1">
-									<option>Type</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-								  </select>
+								  <select ng-model="servicetypeSelect" ng-options="serviceType.Name for serviceType in serviceTypes track by serviceType.Id">
+       							 </select>
 								  </div>
 							  	<div class="serviceName">
 								  <select class="form-control" id="sel2">

@@ -285,6 +285,15 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			"number":11
 	};
 	
+	$scope.serviceTypes= [{
+		Id: 1,
+        Name: 'Laser'
+    }, {
+        Id: 2,
+        Name: 'Waxing'       	
+			
+	}];
+	
 	 $scope.choices = [];
 	  
 	  $scope.addNewChoice = function() {
