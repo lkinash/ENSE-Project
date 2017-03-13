@@ -284,6 +284,18 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	var roomForm={
 			"number":11
 	};
+	
+	 $scope.choices = [];
+	  
+	  $scope.addNewChoice = function() {
+	    var newItemNo = $scope.choices.length;
+	    $scope.choices.push({'id':newItemNo});
+	  };
+	    
+	  $scope.removeChoice = function(index) {
+	    $scope.choices.splice(index,1);
+	  };
+	  
     $scope.addRoom = function() {
 	     roomForm = {
 	      "number" : parseInt($scope.number)

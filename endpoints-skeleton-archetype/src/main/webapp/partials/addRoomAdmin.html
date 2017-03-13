@@ -150,42 +150,54 @@
             							<h4>Room Name</h4>
             							<input type="text" placeholder="number" ng-model="number" />
             						</div>
-            						<div class="serviceOffered">
-            							<div class="heading">
-            								<h5>Services Preformed</h5>
-            								<div class="plusMinus">
-            									<button type="button" class="btn btn-default">
-            										<h5>+ / -</h5>
-            									</button>
-            								</div>
-            							</div>
-            							<div class="infoCategory">
-            								<div class="type">
-            									<h5>Service Type</h5>
-            								</div>
-            								<div class="name">
-            									<h5>Service Name</h5>
-            								</div>
-            							</div>
-            							<div class="serviceType">
-            								<div class="form-group">
-            									<select class="form-control" id="sel1">
-            										<option>Type</option>
-            										<option>2</option>
-            										<option>3</option>
-            										<option>4</option>
-            									</select>
-            								</div>
-            								<div class="serviceName">
-            									<select class="form-control" id="sel2">
-            										<option>Service Name</option>
-            										<option>2</option>
-            										<option>3</option>
-            										<option>4</option>
-            									</select>
-            								</div>
-            							</div>
-            						</div>
+            											<div class="serviceOffered">
+							<div class="heading">
+								<h5>Services Preformed</h5>
+									<div class="plusMinus">
+										<button type="button" class="btn btn-default" ng-click="addNewChoice()">
+										<h4>+</h4>
+										</button>
+									</div>
+							</div>
+							<div class="infoCategory">
+								<div class="type">
+									<h5>Service Type</h5>
+								</div>
+								<div class="name">
+									<h5>Service Name</h5>
+								</div>
+							</div>
+							<div class="serviceType">
+							 
+           <fieldset  ng-repeat="choice in choices">
+            	<div class="form-group">
+								  <select class="form-control" id="sel1">
+									<option>Type</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								  </select>
+								  </div>
+							  	<div class="serviceName">
+								  <select class="form-control" id="sel2">
+									<option>Service Name</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+								  </select>
+							  	</div>	
+          <input type="text" ng-model="choice.name" name="" placeholder="Enter mobile number">
+          <button id="" ng-click="removeChoice($index)">-</button>
+          <p>{{$index}}</p>
+           </fieldset>
+
+           
+			   <div id="choicesDisplay">
+				  {{ choices }}
+			   </div>
+			</div>
+    						
+		</div>
             						<div class="submitBtn">
             							<input type="submit" value="submit" />
             						</div>
