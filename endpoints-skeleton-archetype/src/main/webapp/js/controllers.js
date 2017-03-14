@@ -288,6 +288,10 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			}]
 	};
 	
+	var typeId={
+			"id":15
+	};
+	
 	/*
 	$scope.serviceTypes= [{
 		Id: 1,
@@ -307,7 +311,13 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
 	 $scope.getListServices = function(value){
 		 console.log("Reacher getlistservics function: populating service dropdown");
-	        var typeId = parseInt(value);
+	      //  var temp = parseInt(value);
+	        //var typeId2=[temp];
+		 
+		 	typeId ={
+		 		"id":parseInt(value)
+		 	};
+	        
 	        console.log("The typeId from the first dropdown in value variable is"+ value);
 	     	gapi.client.scheduler.admin.getAllServices().execute(function(resp){
 	     		console.log("Getting list of services ");
@@ -325,6 +335,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	
 	 $scope.choices = [];
 	 $scope.services=[];
+	 var convertedservice= [];
 	 
 	  $scope.addServiceList=function(value){
 		  console.log("got to addServiceList function value= "+ value);
@@ -340,14 +351,32 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    $scope.choices.splice(index,1);
 	    $scope.services.splice(index,1);
 	  };
-	  
-	  
+	 
+	  /*
+	  $scope.convertService=function(){
+		  
+		 for(var i=0; i<$scope.services.length;i++){
+			 console.log($scope.services[i].id);
+			 convertedservice[i]=$scope.services[i].id;
+		 };
+		  	console.log(convertedservice);
+	  };
+	  */
 	  $scope.addRoom = function() {
+		  
+		  for(var i=0; i<$scope.services.length;i++){
+				 console.log($scope.services[i].id);
+				 convertedservice[i]=parseInt($scope.services[i].id);
+			 };
+			  	console.log(convertedservice);
+			  	
 	     roomForm = {
-	      "number" : parseInt($scope.number)
+	      "number" : parseInt($scope.number),
+	      "serviceIds":convertedservice
 	    };
 	    console.log("room form object created");
 	    console.log("The room number saved in the roomForm Object is:" +roomForm.number);
+	    console.log("The services saved in the roomForm Object is:" +roomForm.serviceIds);
 	 //gapi.client.scheduler.addRoom(roomForm).execute();
 	 
 	 $scope.number=9999999;
