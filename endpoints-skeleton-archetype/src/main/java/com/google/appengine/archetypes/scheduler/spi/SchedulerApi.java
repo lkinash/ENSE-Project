@@ -134,7 +134,7 @@ public class SchedulerApi {
         		
         List <Long> service = null;
         
-        Room room = new Room(roomForm.getNumber(), service, calendar, roomId);
+        Room room = new Room(roomForm.getNumber(), roomForm.getServiceIds(), calendar, roomId);
     		
   		ofy().save().entities(room).now(); 
    		
