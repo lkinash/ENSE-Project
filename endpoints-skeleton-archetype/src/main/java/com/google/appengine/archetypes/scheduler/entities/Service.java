@@ -3,10 +3,7 @@
  *******************************************************************************/
 package com.google.appengine.archetypes.scheduler.entities;
 
-import com.google.appengine.archetypes.scheduler.entities.SaleItem;
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Index;
 
 
 /**

@@ -1,15 +1,16 @@
 package com.google.appengine.archetypes.scheduler.wrappers;
 
-public class WrappedId {
+public class WrappedLongId {
 
-	private String id;
+	private long id;
 	
-	public WrappedId(String newId){
+	public WrappedLongId(long newId){
 		this.id = newId;
 	}
 
-	public String getId(){
+	public long getId(){
 		return this.id;
 	}
+	
 	
 }

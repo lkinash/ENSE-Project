@@ -47,7 +47,8 @@ import com.google.appengine.archetypes.scheduler.service.EventCreator;
 import com.google.appengine.archetypes.scheduler.service.Quickstart;
 import com.google.appengine.archetypes.scheduler.servlets.Sendgrid;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedBoolean;
-import com.google.appengine.archetypes.scheduler.wrappers.WrappedId;
+import com.google.appengine.archetypes.scheduler.wrappers.WrappedStringId;
+import com.google.appengine.archetypes.scheduler.wrappers.WrappedLongId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrapperStatus;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
@@ -56,8 +57,12 @@ import com.googlecode.objectify.cmd.Query;
 /**
  * Defines conference APIs.
  */
-@Api(name = "scheduler", version = "v1", scopes = { Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE }, clientIds = {
-        Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID }, description = "API ")
+@Api(	name = "scheduler", 
+		version = "v1", 
+		scopes = { Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE, Constants.USER_INFO_SCOPE }, 
+		clientIds = { Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID }, 
+		description = "API ")
+
 public class SchedulerApi {
 
 	/**
@@ -413,7 +418,7 @@ public class SchedulerApi {
         final String calendarId = employee.getCalendarId();
         
         
-        WrappedId wrappedId = createEvent(user, calendarId, eventForm);
+        WrappedStringId wrappedId = createEvent(user, calendarId, eventForm);
         
         final String eventId = wrappedId.getId();
         
@@ -1295,7 +1300,7 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
- 	public List<Service> getServicesOfType(final User user, @Named("typeId") final long typeId) throws UnauthorizedException {
+ 	public List<Service> getServicesOfType(final User user, WrappedLongId typeId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1305,7 +1310,7 @@ public class SchedulerApi {
         Query<Service> query =  ofy().load().type(Service.class);
     	query = query.order("name");
 
-     	query = query.filter("typeId =", typeId);
+     	query = query.filter("typeId =", typeId.getId());
     	
         return query.list();
         
@@ -1357,7 +1362,7 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "appointment.getClientCalendarId", path = "appointment.getClientCalendarId", httpMethod = "post")
-  	public WrappedId getClientCalendarId(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
+  	public WrappedStringId getClientCalendarId(final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1367,7 +1372,7 @@ public class SchedulerApi {
 
         Client client = (Client) ofy().load().key(key).now();
        	
-        return new WrappedId(client.getCalendarId());
+        return new WrappedStringId(client.getCalendarId());
         
 	}
   	
@@ -1548,9 +1553,10 @@ public class SchedulerApi {
   	public WrappedBoolean test(final User user) throws IOException {
 
 
-		////Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
+		//return Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
 		
 		return null;
+
 	}
 	
 	/**
@@ -1606,7 +1612,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 */
 	
-  	private static WrappedId createCalendar(final User user) throws UnauthorizedException, IOException {
+  	private static WrappedStringId createCalendar(final User user) throws UnauthorizedException, IOException {
 
         
         //TODO
@@ -1621,13 +1627,13 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 */
 	
-  	private static WrappedId createRoomCalendar(final User user) throws UnauthorizedException, IOException {
+  	private static WrappedStringId createRoomCalendar(final User user) throws UnauthorizedException, IOException {
 
         
         //TODO
         //create a calendar
         
-		return new WrappedId("");
+		return new WrappedStringId("");
   	}
   	
 	/**
@@ -1636,7 +1642,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 */
 	
-  	private static WrappedId removeRoomCalendar(final User user,  @Named("roomCalendarId") final String roomCalendarId) throws UnauthorizedException, IOException {
+  	private static WrappedStringId removeRoomCalendar(final User user,  @Named("roomCalendarId") final String roomCalendarId) throws UnauthorizedException, IOException {
 
         
         //TODO
@@ -1651,7 +1657,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 */
 	
-  	private static WrappedId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+  	private static WrappedStringId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
         
   		Event event = EventCreator.createEvent(eventForm);
 
@@ -1666,7 +1672,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 */
 	
-	private static WrappedId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException {
+	private static WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException {
 
 		Calendar service = getCalendarService(user);
         service.events().delete(calendarId, eventId).execute();
