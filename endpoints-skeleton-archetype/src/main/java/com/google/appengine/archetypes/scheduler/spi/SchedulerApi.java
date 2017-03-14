@@ -1300,17 +1300,19 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
- 	public List<Service> getServicesOfType(final User user, WrappedLongId typeId) throws UnauthorizedException {
+ 	public List<Service> getServicesOfType(final User user,	@Named("typeId") final String typeId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
         
+        Long longTypeId = Long.valueOf(typeId);
+        
         Query<Service> query =  ofy().load().type(Service.class);
     	query = query.order("name");
 
-     	query = query.filter("typeId =", typeId.getId());
+     	query = query.filter("typeId =", longTypeId);
     	
         return query.list();
         
