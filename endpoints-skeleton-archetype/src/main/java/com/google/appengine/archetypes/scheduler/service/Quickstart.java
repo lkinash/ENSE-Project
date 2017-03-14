@@ -150,8 +150,8 @@ public class Quickstart {
             getCalendarService(user);
 
     
-    event = service.events().insert(calendarId, event).execute();
-    System.out.printf("Event created: %s\n", event.getHtmlLink());
+        event = service.events().insert(calendarId, event).execute();
+
     
         return null;
     }

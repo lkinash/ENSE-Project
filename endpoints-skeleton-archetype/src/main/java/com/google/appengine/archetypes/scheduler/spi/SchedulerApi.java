@@ -134,7 +134,7 @@ public class SchedulerApi {
         		
         List <Long> service = null;
         
-        Room room = new Room(roomForm.getNumber(), roomForm.getServiceIds(), calendar, roomId);
+        Room room = new Room(roomForm.getNumber(), service, calendar, roomId);
     		
   		ofy().save().entities(room).now(); 
    		
@@ -1550,9 +1550,13 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public WrappedBoolean test(final User user) throws IOException {
+  	public WrappedBoolean test(final User user) throws IOException, UnauthorizedException {
 
-
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+		
 		//return Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
 		
 		return null;
@@ -1656,12 +1660,12 @@ public class SchedulerApi {
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
 	 */
-	
-  	private static WrappedStringId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+	@ApiMethod(name = "appointment.create", path = "appointment.create", httpMethod = "post")
+  	public WrappedStringId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
         
-  		Event event = EventCreator.createEvent(eventForm);
+  		//Event event = EventCreator.createEvent(eventForm);
 
-        Quickstart.addEvent(calendarId, user, event);
+        //Quickstart.addEvent(calendarId, user, event);
         
         return null;
 	}
