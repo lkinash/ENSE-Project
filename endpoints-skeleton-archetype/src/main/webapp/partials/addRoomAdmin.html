@@ -171,9 +171,9 @@
 							<div class="serviceType">
 							 
            <fieldset  ng-repeat="choice in choices">
-            <select data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
+            <select id="{{$index}}" data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
     		</select>
-  			  <select data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices">
+  			  <select id="{{$index}}" data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices" data-ng-change="addServiceList(listservicesselect.productId)">
    			 </select>
           <button id="" ng-click="removeChoice($index)">-</button>
           <p>{{$index}}</p>
@@ -192,6 +192,7 @@
             						<div class="submitBtn">
             							<input type="submit" value="submit" />
             						</div>
+            						<p>{{services}}</p>
             					</div>
             				</div>
             			</form>

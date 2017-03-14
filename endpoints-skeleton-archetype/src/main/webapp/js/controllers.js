@@ -308,7 +308,6 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 $scope.getListServices = function(value){
 		 console.log("Reacher getlistservics function: populating service dropdown");
 	        var typeId = parseInt(value);
-	        typeId=Long.valueOf(typeId);
 	        console.log("The typeId from the first dropdown in value variable is"+ value);
 	     	gapi.client.scheduler.admin.getAllServices().execute(function(resp){
 	     		console.log("Getting list of services ");
@@ -325,14 +324,21 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    };
 	
 	 $scope.choices = [];
-	  
+	 $scope.services=[];
+	 
+	  $scope.addServiceList=function(value){
+		  console.log("got to addServiceList function value= "+ value);
+		  $scope.services.push({'id':value});
+		  console.log("add the service to services");
+	  };
 	  $scope.addNewChoice = function() {
 	    var newItemNo = $scope.choices.length;
-	    $scope.choices.push({'id':newItemNo});
+	   $scope.choices.push({'itemNo':newItemNo});
 	  };
 	    
 	  $scope.removeChoice = function(index) {
 	    $scope.choices.splice(index,1);
+	    $scope.services.splice(index,1);
 	  };
 	  
 	  
