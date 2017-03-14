@@ -133,6 +133,7 @@
 	
 	<div class="col-sm-10 col-lg-10" >
 	  <div class="rightContent">
+	  <div ng-controller="AddRoomController" ng-init="init()">
   	<!--  
   	<form ng-submit="addRoom()">
   	<p>Room name:</p>
@@ -170,27 +171,21 @@
 							<div class="serviceType">
 							 
            <fieldset  ng-repeat="choice in choices">
-            	<div class="form-group">
-								  <select ng-model="servicetypeSelect" ng-options="serviceType.Name for serviceType in serviceTypes track by serviceType.Id">
-       							 </select>
-								  </div>
-							  	<div class="serviceName">
-								  <select class="form-control" id="sel2">
-									<option>Service Name</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-								  </select>
-							  	</div>	
-          <input type="text" ng-model="choice.name" name="" placeholder="Enter mobile number">
+            <select data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
+    		</select>
+  			  <select data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices">
+   			 </select>
           <button id="" ng-click="removeChoice($index)">-</button>
           <p>{{$index}}</p>
            </fieldset>
+          
 
            
 			   <div id="choicesDisplay">
 				  {{ choices }}
 			   </div>
+			   
+			  
 			</div>
     						
 		</div>
@@ -200,6 +195,7 @@
             					</div>
             				</div>
             			</form>
+	  </div>
 	  </div>
   </div>
 </div>
