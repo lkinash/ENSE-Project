@@ -132,6 +132,7 @@ public class EventCreator {
 	        .setTimeZone("America/Los_Angeles");
 	    event.setEnd(end);
 
+	    /*
 	    String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
 	    event.setRecurrence(Arrays.asList(recurrence));
 
@@ -149,6 +150,7 @@ public class EventCreator {
 	        .setUseDefault(false)
 	        .setOverrides(Arrays.asList(reminderOverrides));
 	    event.setReminders(reminders);
+	    */
 	    
 	    return event;
 		
