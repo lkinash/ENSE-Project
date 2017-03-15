@@ -18,7 +18,12 @@ public enum AdminClearances {
 								 * Description of master.
 								 */
 								master,
-
+								
+								/**
+								 * Description of admin.
+								 */
+								superAdmin,
+								
 								/**
 								 * Description of admin.
 								 */

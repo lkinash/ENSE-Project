@@ -10,6 +10,7 @@ import com.google.appengine.archetypes.scheduler.entities.Clearances;
 // Start of user code (user defined imports)
 import com.google.appengine.archetypes.scheduler.entities.Service;
 // End of user code
+import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 
 /**
  * Description of EmployeeForm.
@@ -41,6 +42,12 @@ public class EmployeeForm {
 	 * Description of the property email.
 	 */
 	private String email;
+	
+	/**
+	 * Description of the property clearance.
+	 */
+	private AdminClearances clearance;
+
 
 	
 	public EmployeeForm(){
@@ -52,6 +59,7 @@ public class EmployeeForm {
 		this.calendar = newCalendar;
 		this.name = newName;
 		this.serviceIds = newServiceIds;
+		this.clearance = AdminClearances.employee;
 	}
 	
 	/**
@@ -132,6 +140,23 @@ public class EmployeeForm {
 	 */
 	public void setPassword(String newPassword) {
 		this.password = newPassword;
+	}
+
+	
+	/**
+	 * Returns clearance.
+	 * @return clearance 
+	 */
+	public AdminClearances getClearance() {
+		return this.clearance;
+	}
+
+	/**
+	 * Sets a value to attribute clearance. 
+	 * @param newClearance 
+	 */
+	public void setClearance(AdminClearances newClearance) {
+		this.clearance = newClearance;
 	}
 
 
