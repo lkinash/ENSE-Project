@@ -1200,7 +1200,7 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getPageAuth", path = "admin.getPageAuth", httpMethod = "get")
- 	public List<PageAuth> getPageAuth(final User user,  AdminClearances clearance) throws UnauthorizedException {
+ 	public List<PageAuth> getPageAuth(final User user, @Named("clearence") AdminClearances clearance) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1373,17 +1373,17 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
- 	public List<Service> getServicesOfType(final User user,	@Named("typeId") final String typeId) throws UnauthorizedException {
+ 	public List<Service> getServicesOfType(final User user,	 EmployeeForm employeeForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-
+        
         Query<Service> query =  ofy().load().type(Service.class);
     	query = query.order("name");
 
-     	query = query.filter("typeId =", Long.valueOf(typeId));
+     	query = query.filter("typeId =",employeeForm.getName());
     	
         return query.list();
         
