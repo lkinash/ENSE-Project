@@ -403,7 +403,7 @@ public class SchedulerApi {
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
 	 */
-	 
+	 /*
 	@ApiMethod(name = "admin.addClearances", path = "admin.addClearances", httpMethod = "post")
   	public WrappedBoolean addClearances(final User user) throws UnauthorizedException, IOException {
 	
@@ -425,7 +425,7 @@ public class SchedulerApi {
 	        	return new WrappedBoolean(true);
 	       
 	}
-	
+	*/
 	/**
 	 * Description of the method addClientClearances.
 	 * @param clientId 
@@ -1226,9 +1226,13 @@ public class SchedulerApi {
   	 * @return services 
   	 * @throws UnauthorizedException 
   	 */
-  	
+ /* 	
   	@ApiMethod(name = "admin.getPageAuth", path = "admin.getPageAuth", httpMethod = "get")
+<<<<<<< HEAD
+ 	public List<PageAuth> getPageAuth(final User user, @Named("clearence") AdminClearances clearance) throws UnauthorizedException {
+=======
  	public PageAuth getPageAuth(final User user, @Named("pageAuthId") final long pageAuthId) throws UnauthorizedException {
+>>>>>>> origin/master
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1241,6 +1245,7 @@ public class SchedulerApi {
     	return pageAuth;
         
   	}
+  	*/
   	
   	/**
   	 * Returns services.
@@ -1401,22 +1406,33 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
+<<<<<<< HEAD
  	public List<Service> getServicesOfType(final User user,	EmployeeForm employeeForm) throws UnauthorizedException {
+=======
+ 	public List<Service> getServicesOfType(final User user,	 EmployeeForm employeeForm) throws UnauthorizedException {
+>>>>>>> f9acc72103d505971d202cf09d229f46200b0d82
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
+<<<<<<< HEAD
         System.out.println(employeeForm.getName());
         
         long typeId = Long.parseLong(employeeForm.getName());
 
         //System.out.println(typeId);
+=======
+>>>>>>> f9acc72103d505971d202cf09d229f46200b0d82
         
         Query<Service> query =  ofy().load().type(Service.class);
     	query = query.order("name");
 
+<<<<<<< HEAD
      	query = query.filter("typeId =", typeId);
+=======
+     	query = query.filter("typeId =",employeeForm.getName());
+>>>>>>> f9acc72103d505971d202cf09d229f46200b0d82
     	
         return query.list();
         

@@ -1,9 +1,10 @@
 <head>
-<link href="/css/viewRoomAdmin.css" rel="stylesheet">
+<link href="/css/addAdminUser.css" rel="stylesheet">
 </head>
+
 <div class="row">
-	<div ng-controller="ViewRoomController" ng-init="init()">
-		<div class="col-sm-2 col-lg-2">
+	<div ng-controller="AddAdminController" ng-init="init()">
+	<div class="col-sm-2 col-lg-2">
 		<div class="leftNav">
 			<div class="admin">
 				<div class="panel-group">
@@ -132,79 +133,78 @@
 		</div>
 	</div>
 	
-
 	<div class="col-sm-10 col-lg-10">
-	<div class="rightContent" >
-		<div class="mainTitle">
-			<h2>View Rooms</h2>
-			<div class="addSign">
-				<a href="#/admin/addRoom"> <span class="glyphicon glyphicon-plus"></span>
-				</a>
-			</div>
-		</div>
-		<div class="roomContainer">
-			<div class="room" ng-repeat="room in rooms">
-				<div class="panel-group">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<label>Room number: {{room.number}} </label> <a data-toggle="collapse"
-								href="#collapse{{$index}}"><span class="caret"></span></a>
-						</div>
-						<div id="collapse{{$index}}" class="panel-collapse collapse">
-							<div class="panel-body">
-								<div class="wrapPanelBody">
-									<div class="servicePreformed">
-										<div class="heading">
-											<h5>Services Preformed</h5>
-											<div class="plusMinus">
-												<button type="button" class="btn btn-default">
-													<h5>+ / -</h5>
-												</button>
-											</div>
-										</div>
-										<table>
-										
-											<tr ng-repeat="service in room.services">
-												<td>{{service.name}}</td>
-											</tr>
-											<!--
-											<tr>
-												 <td>Service 1</td>
-											</tr>
-											<tr>
-												<td>Service 2</td>
-											</tr>
-											<tr>
-												<td>Service 3</td>
-											</tr>
-											<tr>
-												<td>Service 4</td>
-											</tr>
-											<tr>
-												<td>Service 5</td>
-											</tr>
-											 -->	
-										</table>
-									</div>
-									<div class="opt">
-										<div class="rmvEmp">
-											<button type="button" class="btn btn-danger">Remove
-												Room</button>
-										</div>
-									</div>
+	<div class="rightContent">
+		<h2>Master Admin Page View Clearences</h2>
+		<div class="mainContainer">
+			
+			<div class="adminPriv">
+				<div class="listAdmin">
+					<table>
+						<tr>
+							<th>User Privileges</th>
+							<th>View only</th>
+							<th>View + Edit</th>
+						</tr>
+						<tr>
+							<td>Service of Type 1</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value=""></label>
 								</div>
-
-							</div>
-						</div>
-					</div>
+							</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value=""></label>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Service of Type 2</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value=""></label>
+								</div>
+							</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value=""></label>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Service of Type 3</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value=""></label>
+								</div>
+							</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value=""></label>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Service of Type 4</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value=""></label>
+								</div>
+							</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value=""></label>
+								</div>
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
-			<div class="test" ng-repeat="service in servicesList">
-			{{service.name}}
+			<div class="btnSubmit">
+				<button type="button" class="btn btn-default">Submit</button>
+			</div>
 			</div>
 		</div>
- 	</div>
- 	</div>
-</div>
-
+	</div>
 </div>

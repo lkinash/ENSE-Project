@@ -287,12 +287,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				
 			}]
 	};
-	
-	var typeId={
-			"id":15
-	};
-	
-	/*
+		/*
 	$scope.serviceTypes= [{
 		Id: 1,
         Name: 'Laser'
@@ -311,12 +306,10 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
 	 $scope.getListServices = function(value){
 		 console.log("Reacher getlistservics function: populating service dropdown");
-	      //  var temp = parseInt(value);
-	        //var typeId2=[temp];
-		 
-		 	typeId ={
-		 		"id":parseInt(value)
-		 	};
+	      var typeId= value;
+		  roomForm={
+				  "number":parseInt(value)
+		  };
 	        
 	        console.log("The typeId from the first dropdown in value variable is"+ value);
 	     	gapi.client.scheduler.admin.getAllServices().execute(function(resp){
@@ -324,11 +317,11 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				 $scope.listservices=resp.result.items;
 				 $scope.$apply();
 			 });
-	     	console.log("The typeId is"+ typeId);
-	     	gapi.client.scheduler.admin.getServiceOfType(typeId).execute(function(resp){
+	     	console.log("The typeId is"+ roomForm.number);
+	     	gapi.client.scheduler.admin.getServiceOfType(roomForm).execute(function(resp){
 	     		console.log("getting specific type function");
 	     		var testList=resp.items;
-	     		console.log(testList);
+	     		//console.log(testList);
 	     		
 	     	});
 	    };
@@ -400,7 +393,21 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
  });
 
  conferenceApp.controllers.controller('AddEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
+	 console.log("Reached AddEmployeeController");
+	 $scope.addEmployee = function() {
+		  
+		var employeeForm={
+				"name":$scope.name,
+		};
+	    console.log("Employee form object created");
+	    console.log("The employee name saved in the emloyeeForm Object is:" +employeeForm.name);
+	   // console.log("The services saved in the roomForm Object is:" +roomForm.serviceIds);
+	 //gapi.client.scheduler.addRoom(roomForm).execute();
+	 
+	 $scope.name="ADD IT";
+	 gapi.client.scheduler.admin.addEmployee(employeeForm).execute();
+	 console.log("Added the employee form now");
+ };
      
   });
  
@@ -433,12 +440,45 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 	$scope.rooms=rooms;
 	 	console.log("Rooms array created ");
 	 	*/
+	 var room={
+				"number":11,
+				"serviceIds":[19]
+		};
+	 $scope.rooms=[];
+	 $scope.roomsList=[];
 	 $scope.init = function(){
 		 gapi.client.scheduler.admin.getAllRooms().execute(function(resp){
 			 $scope.rooms=resp.result.items;
+			 $scope.roomsList=resp.result;
+			 console.log("printing rooms"+$scope.roomsList.items);
+			 console.log("number of Rooms in datastore=" + $scope.roomsList.items.length);
+			 console.log("printing all the names of the items returned");
+			 for(var i=0; i< $scope.roomsList.items.length; i++){
+				 console.log("room number" + $scope.roomsList.items[i].number);
+				 console.log("Services IDs" + $scope.roomsList.items[i].services);
+				 var serviceId= String($scope.roomsList.items.services);
+				 console.log("serviceId string");
+				// gapi.client.scheduler.admin.getServices(serviceId).execute(function(resp){
+					// $scope.servicesList.push({'name':resp.result.name}); 
+				// });
+				 
+			 }
+			
 			 $scope.$apply();
 		 });
 		  
+		 $scope.servicesList=[];
+		 
+		 /*
+		 for(var i=0; i<$scope.rooms[i].serviceIds.length; i++){
+			 var serviceId=$scope.rooms[i].serviceIds[i];
+			 console.log("ServiceID="+i+"is =" +serviceId);
+			 gapi.client.scheduler.admin.getServices(serviceId).execute(function(resp){
+				 $scope.servicesList.push({'name':resp.result.name}); 
+			 });
+			 
+		 }
+		 */
 	 };
 	 
  });
