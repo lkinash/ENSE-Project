@@ -393,7 +393,21 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
  });
 
  conferenceApp.controllers.controller('AddEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
+	 console.log("Reached AddEmployeeController");
+	 $scope.addEmployee = function() {
+		  
+		var employeeForm={
+				"name":$scope.name,
+		};
+	    console.log("Employee form object created");
+	    console.log("The employee name saved in the emloyeeForm Object is:" +employeeForm.name);
+	   // console.log("The services saved in the roomForm Object is:" +roomForm.serviceIds);
+	 //gapi.client.scheduler.addRoom(roomForm).execute();
+	 
+	 $scope.name="ADD IT";
+	 gapi.client.scheduler.admin.addEmployee(employeeForm).execute();
+	 console.log("Added the employee form now");
+ };
      
   });
  

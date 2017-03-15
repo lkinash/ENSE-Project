@@ -402,7 +402,7 @@ public class SchedulerApi {
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
 	 */
-	 
+	 /*
 	@ApiMethod(name = "admin.addClearances", path = "admin.addClearances", httpMethod = "post")
   	public WrappedBoolean addClearances(final User user) throws UnauthorizedException, IOException {
 	
@@ -424,7 +424,7 @@ public class SchedulerApi {
 	        	return new WrappedBoolean(true);
 	       
 	}
-	
+	*/
 	/**
 	 * Description of the method addClientClearances.
 	 * @param clientId 
