@@ -393,6 +393,36 @@ public class SchedulerApi {
 	}
 	
 	
+	/**
+	 * Description of the method addClientClearances.
+	 * @param clientId 
+	 * @param clearance 
+	 * @param date 
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	 
+	@ApiMethod(name = "admin.addClearances", path = "admin.addClearances", httpMethod = "post")
+  	public WrappedBoolean addClearances(final User user) throws UnauthorizedException, IOException {
+	
+	       if (user == null) {
+	            throw new UnauthorizedException("Authorization required");
+	        }		
+		
+	        Query<PageAuth> query =  ofy().load().type(PageAuth.class);
+	    	
+	        if(query.list().equals(null)){
+	        	
+	        	for (AdminClearances temp : AdminClearances.values()) {
+	        			addPageAuth(user, temp);
+	        	}
+	        	
+	        	return new WrappedBoolean(false, "Created");
+	        }
+	        else 
+	        	return new WrappedBoolean(true);
+	       
+	}
 
 	/**
 	 * Description of the method createAppointment.
@@ -470,6 +500,8 @@ public class SchedulerApi {
 		return employee;
 	}
 
+
+	
 	/**
 	 * Description of the method updateRoom.
 	 * @param admin 
@@ -997,7 +1029,27 @@ public class SchedulerApi {
 		return null;
 	}
 	
+  	/**
+  	 * Returns services.
+  	 * @return services 
+  	 * @throws UnauthorizedException 
+  	 */
   	
+  	@ApiMethod(name = "admin.getAllPageAuth", path = "admin.getAllPageAuth", httpMethod = "get")
+ 	public List<PageAuth> getAllPageAuth(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+  		
+        Query<PageAuth> query =  ofy().load().type(PageAuth.class);
+    	
+        return query.list();
+        
+  	}
+
+	
   	/**
   	 * Returns services.
   	 * @return services 
@@ -1141,6 +1193,27 @@ public class SchedulerApi {
         return query.list();
   	}
 
+  	/**
+  	 * Returns services.
+  	 * @return services 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getPageAuth", path = "admin.getPageAuth", httpMethod = "get")
+ 	public List<PageAuth> getPageAuth(final User user,  AdminClearances clearance) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+    	Query<PageAuth> query =  ofy().load().type(PageAuth.class);
+    	query = query.filter("clearance =", clearance);
+    	
+        return query.list();
+        
+  		
+  	}
+  	
   	/**
   	 * Returns services.
   	 * @return services 
@@ -1300,17 +1373,17 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
- 	public List<Service> getServicesOfType(final User user,	@Named("typeId") final long typeId) throws UnauthorizedException {
+ 	public List<Service> getServicesOfType(final User user,	@Named("typeId") final String typeId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-        
+
         Query<Service> query =  ofy().load().type(Service.class);
     	query = query.order("name");
 
-     	query = query.filter("typeId =", typeId);
+     	query = query.filter("typeId =", Long.valueOf(typeId));
     	
         return query.list();
         
@@ -1609,7 +1682,27 @@ public class SchedulerApi {
   		
   	}
 	
+
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
 	
+  	private static WrappedLongId addPageAuth(final User user, AdminClearances clearance) throws UnauthorizedException, IOException {
+
+
+        final Key<PageAuth> key = factory().allocateId(PageAuth.class);
+        final long id = key.getId();
+        
+
+        PageAuth pageAuth = new PageAuth(id, clearance);
+    		
+  		ofy().save().entities(pageAuth).now(); 
+
+		return new WrappedLongId(id);
+  	}
+  	
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 

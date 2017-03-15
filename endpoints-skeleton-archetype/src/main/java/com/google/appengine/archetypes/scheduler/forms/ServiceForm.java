@@ -32,7 +32,9 @@ public class ServiceForm {
 	 */
 	private long typeId;
 
+	
 	private int defaultLength;
+	
 	
 	public ServiceForm(){
 		

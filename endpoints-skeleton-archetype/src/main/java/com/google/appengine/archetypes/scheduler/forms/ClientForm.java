@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.google.appengine.archetypes.scheduler.entities.Appointment;
 import com.google.appengine.archetypes.scheduler.entities.Clearances;
+import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 
 // Start of user code (user defined imports)
 
@@ -48,6 +49,12 @@ public class ClientForm {
 	 * Description of the property lastName.
 	 */
 	private String lastName;
+	
+	/**
+	 * Description of the property clearance.
+	 */
+	private AdminClearances clearance;
+
 
 	// Start of user code (user defined methods for ClientForm)
 
@@ -67,6 +74,7 @@ public class ClientForm {
 		this.phoneNumber = newPhoneNumber;
 		this.email = newEmail;
 		this.password = newPassword;
+		this.clearance = AdminClearances.client;
 
 	}
 	
@@ -167,5 +175,22 @@ public class ClientForm {
 	public void setLastName(String newLastName) {
 		this.lastName = newLastName;
 	}
+	
+	/**
+	 * Returns clearance.
+	 * @return clearance 
+	 */
+	public AdminClearances getClearance() {
+		return this.clearance;
+	}
+
+	/**
+	 * Sets a value to attribute clearance. 
+	 * @param newClearance 
+	 */
+	public void setClearance(AdminClearances newClearance) {
+		this.clearance = newClearance;
+	}
+
 
 }
