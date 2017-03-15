@@ -1423,12 +1423,8 @@ public class SchedulerApi {
         Query<Service> query =  ofy().load().type(Service.class);
     	query = query.order("name");
 
-<<<<<<< HEAD
      	query = query.filter("typeId =", typeId);
-=======
-     	query = query.filter("typeId =",employeeForm.getName());
->>>>>>> f9acc72103d505971d202cf09d229f46200b0d82
-    	
+	
         return query.list();
         
   	}
