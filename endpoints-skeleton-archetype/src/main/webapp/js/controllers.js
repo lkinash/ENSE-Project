@@ -288,6 +288,9 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			}]
 	};
 	
+	var typeId={
+			"id":15
+	};
 	
 	/*
 	$scope.serviceTypes= [{
@@ -304,20 +307,23 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 gapi.client.scheduler.admin.getAllTypes().execute(function(resp){
 			 $scope.listtypes=resp.result.items;
 		 });
-		 //console.log("The typeId from the first dropdown in value variable is"+ value);
-	     	gapi.client.scheduler.admin.getAllServices().execute(function(resp){
-	     		console.log("Getting list of services ");
-				 $scope.listservices=resp.result.items;
-			 });
 	 };
 	 
 	 $scope.getListServices = function(value){
 		 console.log("Reacher getlistservics function: populating service dropdown");
-	        var temp = parseInt(value);
-	        var typeId= temp;
+	      //  var temp = parseInt(value);
+	        //var typeId2=[temp];
 		 
-		 	
-
+		 	typeId ={
+		 		"id":parseInt(value)
+		 	};
+	        
+	        console.log("The typeId from the first dropdown in value variable is"+ value);
+	     	gapi.client.scheduler.admin.getAllServices().execute(function(resp){
+	     		console.log("Getting list of services ");
+				 $scope.listservices=resp.result.items;
+				 $scope.$apply();
+			 });
 	     	console.log("The typeId is"+ typeId);
 	     	gapi.client.scheduler.admin.getServiceOfType(typeId).execute(function(resp){
 	     		console.log("getting specific type function");

@@ -1300,7 +1300,7 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
- 	public List<Service> getServicesOfType(final User user,@Named("typeId") final long typeId) throws UnauthorizedException {
+ 	public List<Service> getServicesOfType(final User user,	@Named("typeId") final long typeId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
