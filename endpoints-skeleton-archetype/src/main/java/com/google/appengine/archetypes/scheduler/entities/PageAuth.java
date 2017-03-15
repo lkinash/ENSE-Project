@@ -103,4 +103,23 @@ public class PageAuth {
 		return this.viewAndEdit.contains(page);
 	}
 	
+	
+	public void setView(Set<Integer> newPages){
+		this.viewOnly = newPages;
+	}
+	
+	public Set<Integer> getView(){
+		return this.viewOnly;
+	}
+	
+
+	public void setViewAndEdit(Set<Integer> newPages){
+		this.viewAndEdit = newPages;
+	}
+	
+	public Set<Integer> getViewAndEdit(){
+		return this.viewAndEdit;
+	}
+	
+	
 }

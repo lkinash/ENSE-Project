@@ -37,6 +37,7 @@ import com.google.appengine.archetypes.scheduler.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.ClientForm;
 import com.google.appengine.archetypes.scheduler.forms.EmployeeForm;
 import com.google.appengine.archetypes.scheduler.forms.EventForm;
+import com.google.appengine.archetypes.scheduler.forms.PageAuthForm;
 import com.google.appengine.archetypes.scheduler.forms.ProductForm;
 import com.google.appengine.archetypes.scheduler.forms.RoomForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceForm;
@@ -423,6 +424,33 @@ public class SchedulerApi {
 	        	return new WrappedBoolean(true);
 	       
 	}
+	
+	/**
+	 * Description of the method addClientClearances.
+	 * @param clientId 
+	 * @param clearance 
+	 * @param date 
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	 
+	@ApiMethod(name = "admin.addClearances", path = "admin.addClearances", httpMethod = "post")
+  	public PageAuth addClearancesValues(final User user, PageAuthForm pageAuthForm) throws UnauthorizedException, IOException {
+	
+	       if (user == null) {
+	            throw new UnauthorizedException("Authorization required");
+	        }		
+		
+
+	        //TODO
+	        //Fix
+	        
+	        
+	      	//getPageAuth(user, pageAuthForm.getClearance());
+	       
+	      	return null;
+	       
+	}
 
 	/**
 	 * Description of the method createAppointment.
@@ -438,7 +466,6 @@ public class SchedulerApi {
         }
         
   
-        
         EventForm eventForm = appointmentForm.getEventForm();
         
         Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
@@ -1200,18 +1227,18 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getPageAuth", path = "admin.getPageAuth", httpMethod = "get")
- 	public List<PageAuth> getPageAuth(final User user,  AdminClearances clearance) throws UnauthorizedException {
+ 	public PageAuth getPageAuth(final User user, @Named("pageAuthId") final long pageAuthId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-    	Query<PageAuth> query =  ofy().load().type(PageAuth.class);
-    	query = query.filter("clearance =", clearance);
-    	
-        return query.list();
-        
   		
+        Key<PageAuth> key = Key.create(PageAuth.class, pageAuthId);
+
+    	PageAuth pageAuth = (PageAuth) ofy().load().key(key).now();
+    	return pageAuth;
+        
   	}
   	
   	/**
