@@ -20,6 +20,7 @@ public class OfyService {
         factory().register(Changes.class);
         factory().register(Client.class);
         factory().register(Employee.class);
+        factory().register(PageAuth.class);
         factory().register(Product.class);
         factory().register(Room.class);
         factory().register(Service.class);
