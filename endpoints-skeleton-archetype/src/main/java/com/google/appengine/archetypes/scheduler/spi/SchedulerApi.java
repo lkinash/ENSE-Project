@@ -37,6 +37,7 @@ import com.google.appengine.archetypes.scheduler.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.ClientForm;
 import com.google.appengine.archetypes.scheduler.forms.EmployeeForm;
 import com.google.appengine.archetypes.scheduler.forms.EventForm;
+import com.google.appengine.archetypes.scheduler.forms.GeneralForm;
 import com.google.appengine.archetypes.scheduler.forms.PageAuthForm;
 import com.google.appengine.archetypes.scheduler.forms.ProductForm;
 import com.google.appengine.archetypes.scheduler.forms.RoomForm;
@@ -434,7 +435,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 */
 	 
-	@ApiMethod(name = "admin.addClearances", path = "admin.addClearances", httpMethod = "post")
+	@ApiMethod(name = "admin.addClearancesValue", path = "admin.addClearancesValue", httpMethod = "post")
   	public PageAuth addClearancesValues(final User user, PageAuthForm pageAuthForm) throws UnauthorizedException, IOException {
 	
 	       if (user == null) {
@@ -1400,17 +1401,22 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
- 	public List<Service> getServicesOfType(final User user,	@Named("typeId") final String typeId) throws UnauthorizedException {
+ 	public List<Service> getServicesOfType(final User user,	GeneralForm generalForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
+        System.out.println(generalForm.getLongValue());
+        
+        long typeId =	Long.parseLong(generalForm.getStringValue());
 
+        System.out.println(typeId);
+        
         Query<Service> query =  ofy().load().type(Service.class);
     	query = query.order("name");
 
-     	query = query.filter("typeId =", Long.valueOf(typeId));
+     	query = query.filter("typeId =", typeId);
     	
         return query.list();
         
