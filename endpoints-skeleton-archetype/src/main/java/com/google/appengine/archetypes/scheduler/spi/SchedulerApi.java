@@ -1401,17 +1401,17 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
- 	public List<Service> getServicesOfType(final User user,	GeneralForm generalForm) throws UnauthorizedException {
+ 	public List<Service> getServicesOfType(final User user,	EmployeeForm employeeForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-        System.out.println(generalForm.getLongValue());
+        System.out.println(employeeForm.getName());
         
-        long typeId =	Long.parseLong(generalForm.getStringValue());
+        long typeId = Long.parseLong(employeeForm.getName());
 
-        System.out.println(typeId);
+        //System.out.println(typeId);
         
         Query<Service> query =  ofy().load().type(Service.class);
     	query = query.order("name");

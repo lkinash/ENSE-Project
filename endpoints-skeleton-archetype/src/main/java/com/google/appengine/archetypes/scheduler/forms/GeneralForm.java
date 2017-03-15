@@ -10,19 +10,19 @@ public class GeneralForm {
 	/**
 	 * Description of the property price.
 	 */
-	private int intValue;
+	private Integer intValue;
 
 	/**
 	 * Description of the property type.
 	 */
-	private long longValue;
+	private Long longValue;
 
 	
 	public GeneralForm(){
 		
 	}
 	
-	public GeneralForm(int newIntValue, String newStringValue, long newLongValue){
+	public GeneralForm(Integer newIntValue, String newStringValue, Long newLongValue){
 		
 		this.intValue = newIntValue;
 		this.stringValue = newStringValue;
@@ -51,7 +51,7 @@ public class GeneralForm {
 	 * Returns type.
 	 * @return type 
 	 */
-	public long getLongValue() {
+	public Long getLongValue() {
 		return this.longValue;
 	}
 
@@ -59,7 +59,7 @@ public class GeneralForm {
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setLongValue(long newLongValue) {
+	public void setLongValue(Long newLongValue) {
 		this.longValue = newLongValue;
 	}
 
@@ -67,7 +67,7 @@ public class GeneralForm {
 	 * Returns type.
 	 * @return type 
 	 */
-	public int getIntValue(){
+	public Integer getIntValue(){
 		return this.intValue;
 	}
 
@@ -75,7 +75,7 @@ public class GeneralForm {
 	 * Sets a value to attribute type. 
 	 * @param newType 
 	 */
-	public void setIntValue(int newIntValue) {
+	public void setIntValue(Integer newIntValue) {
 		this.intValue = newIntValue;
 	}
 	
