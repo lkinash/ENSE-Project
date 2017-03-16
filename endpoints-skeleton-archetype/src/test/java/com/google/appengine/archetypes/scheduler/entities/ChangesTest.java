@@ -38,6 +38,7 @@ public class ChangesTest {
         testHelper.tearDown();
     }
 	
+    @Test
 	public void getGetters() throws Exception{
 		assertEquals(TIMESTAMP,changes.getTimeStamp());
 		assertEquals(USERID,changes.getUserId());
