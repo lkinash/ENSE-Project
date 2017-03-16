@@ -17,7 +17,7 @@ import java.util.List;
  * Tests for Client
  */
 public class ClientTest {
-	
+	/*
 	//Data for Client class fields
 	private String FIRSTNAME = "Jennifer";
 	private String LASTNAME = "Anniston";
@@ -41,5 +41,5 @@ public class ClientTest {
 		assertEquals(CLIENTID,client.getClientId());
 		assertEquals(USERID,client.getUserId());
 		assertEquals(BIRTHDAY,client.getBirthday());
-	}
+	}*/
 }
