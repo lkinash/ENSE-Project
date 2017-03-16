@@ -5,6 +5,7 @@ import static com.google.appengine.archetypes.scheduler.service.OfyService.ofy;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -1175,10 +1176,33 @@ public class SchedulerApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }       
-  		
+ 
+        
         Query<Room> query =  ofy().load().type(Room.class);
-  
-        return query.list();
+        List<Room> roomList = query.list();
+        List<String> nameList;
+        List<Long> idList;
+        Key<Service> key;
+        Service service;
+        
+        for(Room tempRoom: roomList){
+        	
+        	nameList = new ArrayList<String>();
+        	idList = tempRoom.getServices();
+        	
+        	for(Long tempLong: idList){
+                key = Key.create(Service.class, tempLong);
+            	service = (Service) ofy().load().key(key).now();
+        		nameList.add(service.getName());
+        	}
+        	
+        	tempRoom.setServiceNames(nameList);
+        	
+        }
+        
+        return roomList;
+        
+
   	}
   	
   	
