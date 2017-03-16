@@ -9,8 +9,6 @@ import org.junit.Test;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
-import java.util.List;
-
 /*
  * @author Archana
  * Tests for SaleItem

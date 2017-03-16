@@ -11,7 +11,7 @@
 
     <properties>
         <appengine.app.version>1</appengine.app.version>
-        <appengine.target.version>1.9.50</appengine.target.version>
+        <appengine.target.version>1.9.21</appengine.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -32,6 +32,13 @@
             <artifactId>appengine-api-labs</artifactId>
             <version>${appengine.target.version}</version>
         </dependency>
+             
+       	<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-stubs</artifactId>
+			<version>1.9.21</version>
+			<scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -86,12 +93,6 @@
             <version>1</version>
         </dependency>
         
-        		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-stubs</artifactId>
-			<version>1.9.21</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>com.google.apis</groupId>
 			<artifactId>google-api-services-calendar</artifactId>
@@ -138,9 +139,16 @@
 			<artifactId>google-api-client-xml</artifactId>
 			<version>1.22.0</version>
 		</dependency>
-				
+	
         
     </dependencies>
+    
+      <repositories>
+    <repository>
+      <id>forplay-legacy</id>
+      <url>http://forplay.googlecode.com/svn/mavenrepo</url>
+    </repository>
+  </repositories>
     <build>
         <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
 	        <plugins>
