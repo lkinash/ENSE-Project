@@ -15,12 +15,12 @@ public class AppointmentForm {
 	/**
 	 * Description of the property appointmentType.
 	 */
-	private Type appointmentType;
+	private long typeId;
 
 	/**
 	 * Description of the property service.
 	 */
-	private Service service;
+	private long serviceId;
 
 	/**
 	 * Description of the property clientId.
@@ -42,32 +42,16 @@ public class AppointmentForm {
 		
 	}
 	
-	public AppointmentForm(Type newType, Service newService, long newClientId, long newEmployeeId, EventForm newEventForm){
+	public AppointmentForm(long newType, long newService, long newClientId, long newEmployeeId, EventForm newEventForm){
 
-		this.service = newService;
-		this.appointmentType = newType;
+		this.serviceId = newService;
+		this.typeId = newType;
 		this.clientId = newClientId;
 		this.employeeId = newEmployeeId;
 		this.eventForm = newEventForm;
 		
 	}
 	
-	
-	/**
-	 * Returns appointmentType.
-	 * @return appointmentType 
-	 */
-	public Type getAppointmentType() {
-		return this.appointmentType;
-	}
-
-	/**
-	 * Sets a value to attribute appointmentType. 
-	 * @param newappointmentType 
-	 */
-	public void setAppointmentType(Type newAppointmentType) {
-		this.appointmentType = newAppointmentType;
-	}
 	
 	/**
 	 * Returns EventForm.
@@ -86,21 +70,36 @@ public class AppointmentForm {
 	}
 
 	/**
-	 * Returns service.
-	 * @return service 
+	 * Returns appointmentlong.
+	 * @return appointmentlong 
 	 */
-	public Service getService() {
-		return this.service;
+	public long getTypeId() {
+		return this.typeId;
 	}
 
 	/**
-	 * Sets a value to attribute service. 
-	 * @param newService 
+	 * Sets a value to attribute appointmentlong. 
+	 * @param newappointmentlong 
 	 */
-	public void setService(Service newService) {
-		this.service = newService;
+	public void setTypeId(long newTypeId) {
+		this.typeId = newTypeId;
 	}
 
+	/**
+	 * Returns serviceId.
+	 * @return serviceId 
+	 */
+	public long getServiceId() {
+		return this.serviceId;
+	}
+
+	/**
+	 * Sets a value to attribute serviceId. 
+	 * @param newlong 
+	 */
+	public void setServiceId(long newServiceId) {
+		this.serviceId = newServiceId;
+	}
 	/**
 	 * Returns clientId.
 	 * @return clientId 

@@ -30,18 +30,18 @@ public class AdminTest {
 	 private final LocalServiceTestHelper testHelper =  new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig().setDefaultHighRepJobPolicyUnappliedJobPercentage(100));
 
 	    
-	    //Before the test is run set up the test data store helper and create a new instance of the SaleItem Object
-	    @Before
-	    public void setUp() throws Exception {
-	        testHelper.setUp();
-	        admin = new Admin(CLEARANCE, USERID,ADMINID);
-	    }
+	 //Before the test is run set up the test data store helper and create a new instance of the SaleItem Object
+	 @Before
+	 public void setUp() throws Exception {
+		 testHelper.setUp();
+		 admin = new Admin(CLEARANCE, USERID,ADMINID);
+	 }
 
-	    //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
-	    @After
-	    public void tearDown() throws Exception {
-	        testHelper.tearDown();
-	    }
+	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
+	 @After
+	 public void tearDown() throws Exception {
+		 testHelper.tearDown();
+	 }
 			
 	
 	

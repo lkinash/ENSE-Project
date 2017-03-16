@@ -45,19 +45,19 @@ public class Appointment{
 	private long appointmentId;
 	
 	/**
-	 * Description of the property appointmentType.
+	 * Description of the property appointmentlong.
 	 */
 	@Index
-	private Type appointmentType;
+	private long typeId;
 
 	/**
-	 * Description of the property service.
+	 * Description of the property serviceId.
 	 */
 	@Index
-	private Service service;
+	private long serviceId;
 
 	/**
-	 * Description of the property service.
+	 * Description of the property serviceId.
 	 */
 	@Index
 	private long clientId;
@@ -68,15 +68,15 @@ public class Appointment{
 		
 	}
 	
-	public Appointment(Status status, String eventId, long newAppointmentId, Key<Employee> newEmployeeKey, Type newType, Service newService) {
+	public Appointment(Status status, String eventId, long newAppointmentId, Key<Employee> newEmployeeKey, long newServiceId, long newTypeId, long newClientId) {
 		
 		this.status = status;
 		this.eventId = eventId;
 		this.employeeKey = newEmployeeKey;
 		this.appointmentId = newAppointmentId;
-		this.service = newService;
-		this.appointmentType = newType;
-		
+		this.serviceId = newServiceId;
+		this.typeId = newTypeId;
+		this.clientId = newClientId;
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class Appointment{
 	 * Returns eventId.
 	 * @return eventId 
 	 */
-	public long getclientId() {
+	public long getClientId() {
 		return this.clientId;
 	}
 
@@ -139,7 +139,7 @@ public class Appointment{
 	 * Sets a value to attribute eventId. 
 	 * @param newEventId 
 	 */
-	public void setclientId(long newclientId) {
+	public void setClientId(long newclientId) {
 		this.clientId = newclientId;
 	}
 	
@@ -160,35 +160,35 @@ public class Appointment{
 	}
 
 	/**
-	 * Returns appointmentType.
-	 * @return appointmentType 
+	 * Returns appointmentlong.
+	 * @return appointmentlong 
 	 */
-	public Type getappointmentType() {
-		return this.appointmentType;
+	public long getTypeId() {
+		return this.typeId;
 	}
 
 	/**
-	 * Sets a value to attribute appointmentType. 
-	 * @param newappointmentType 
+	 * Sets a value to attribute appointmentlong. 
+	 * @param newappointmentlong 
 	 */
-	public void setappointmentType(Type newappointmentType) {
-		this.appointmentType = newappointmentType;
+	public void setTypeId(long newTypeId) {
+		this.typeId = newTypeId;
 	}
 
 	/**
-	 * Returns service.
-	 * @return service 
+	 * Returns serviceId.
+	 * @return serviceId 
 	 */
-	public Service getService() {
-		return this.service;
+	public long getServiceId() {
+		return this.serviceId;
 	}
 
 	/**
-	 * Sets a value to attribute service. 
-	 * @param newService 
+	 * Sets a value to attribute serviceId. 
+	 * @param newlong 
 	 */
-	public void setService(Service newService) {
-		this.service = newService;
+	public void setServiceId(long newServiceId) {
+		this.serviceId = newServiceId;
 	}
 
 }

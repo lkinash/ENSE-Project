@@ -485,7 +485,7 @@ public class SchedulerApi {
         final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
         final long appointmentId = appointmentKey.getId();
         
-        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getAppointmentType(), appointmentForm.getService());
+        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getTypeId(), appointmentForm.getServiceId(), appointmentForm.getClientId());
     		
   		ofy().save().entities(appointment).now();
   		
