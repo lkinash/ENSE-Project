@@ -34,6 +34,13 @@ public class Room {
 	@Index
 	private List<Long> serviceIds;
 
+	
+	/**
+	 * Description of the property service.
+	 */
+	private List<String> serviceNames;
+
+	
 	/**
 	 * Description of the property calendar.
 	 */
@@ -54,6 +61,7 @@ public class Room {
 		this.calendarId = newCalendar;
 		this.serviceIds = newService;
 		this.roomId = newRoomId;
+		this.serviceNames = null;
 	}
 	
 
@@ -71,6 +79,23 @@ public class Room {
 	 */
 	public List<Long> getServices() {
 		return this.serviceIds;
+	}
+	
+	
+	/**
+	 * Description of the method setServices.
+	 * @param serviceIds 
+	 */
+	public void setServiceNames(List<String> newServices) {
+		this.serviceNames = newServices;
+	}
+
+	/**
+	 * Description of the method getServices.
+	 * @return 
+	 */
+	public List<String> getServiceNames() {
+		return this.serviceNames;
 	}
 
 	/**
