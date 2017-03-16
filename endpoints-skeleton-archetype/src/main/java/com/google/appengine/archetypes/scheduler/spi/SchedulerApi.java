@@ -1190,13 +1190,15 @@ public class SchedulerApi {
         	nameList = new ArrayList<String>();
         	idList = tempRoom.getServices();
         	
-        	for(Long tempLong: idList){
-                key = Key.create(Service.class, tempLong);
-            	service = (Service) ofy().load().key(key).now();
-        		nameList.add(service.getName());
-        	}
+        	if(idList != null){
+        		for(Long tempLong: idList){
+        			key = Key.create(Service.class, tempLong);
+        			service = (Service) ofy().load().key(key).now();
+        			nameList.add(service.getName());
+        		}
         	
-        	tempRoom.setServiceNames(nameList);
+        		tempRoom.setServiceNames(nameList);
+        	}
         	
         }
         
