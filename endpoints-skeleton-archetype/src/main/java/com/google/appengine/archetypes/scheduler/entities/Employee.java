@@ -20,8 +20,8 @@ import com.googlecode.objectify.annotation.Index;
  * 
  * @author Lindsey
  */
-@Entity
-public class Employee {
+	@Entity
+	public class Employee {
 
 	/**
 	 * Description of the property calendar.
