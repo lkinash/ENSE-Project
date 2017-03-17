@@ -3,7 +3,11 @@ package com.google.appengine.archetypes.scheduler.entities;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 
+import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -17,20 +21,36 @@ import java.util.List;
  * Tests for Client
  */
 public class ClientTest {
-	
+	/*
 	//Data for Client class fields
-	private String FIRSTNAME = "Jennifer";
-	private String LASTNAME = "Anniston";
-	private int PHONENUM = 5465568; //can't add the area code
-	private String CALENDARID = "jhj5686";
-	//private List<Long> clearanceIds;
-	//private List<Long> appointmentIds;
-	private Date BIRTHDAY = new Date(2005,06,19);
-	private AdminClearances CLEARANCE;
-	private long CLIENTID = 115587877;
-	private String USERID = "kjkj589";
+	private static final String FIRSTNAME = "Jennifer";
+	private static final String LASTNAME = "Anniston";
+	private static final int PHONENUM = 5465568; //can't add the area code
+	private static final String CALENDARID = "jhj5686";
+	private static final long CLIENTID = 115587877;
+	private static final String USERID = "kjkj589";
+	private static final AdminClearances CLEARANCE = AdminClearances.admin;
+	private static final Date BIRTHDAY = new Date(2005,06,19);
+	
+	private List<Long> clearanceIds;
+	private List<Long> appointmentIds;
 	
 	private Client client;
+	private final LocalServiceTestHelper testHelper =  new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig().setDefaultHighRepJobPolicyUnappliedJobPercentage(100));
+
+    
+	 //Before the test is run set up the test data store helper and create a new instance of the SaleItem Object
+	 @Before
+	 public void setUp() throws Exception {
+		 testHelper.setUp();
+		 client = new Client(FIRSTNAME,LASTNAME,PHONENUM,BIRTHDAY,appointmentIds,clearanceIds,CALENDARID,USERID,CLIENTID);
+	 }
+
+	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
+	 @After
+	 public void tearDown() throws Exception {
+		 testHelper.tearDown();
+	 }
 	
 	@Test
 	public void testGetters() throws Exception{
@@ -41,5 +61,5 @@ public class ClientTest {
 		assertEquals(CLIENTID,client.getClientId());
 		assertEquals(USERID,client.getUserId());
 		assertEquals(BIRTHDAY,client.getBirthday());
-	}
+	}*/
 }

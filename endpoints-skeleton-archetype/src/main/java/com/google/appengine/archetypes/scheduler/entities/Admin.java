@@ -17,8 +17,8 @@ import com.googlecode.objectify.annotation.Index;
  * 
  * @author Lindsey
  */
-@Entity
-public class Admin{
+	@Entity
+	public class Admin{
 	/**
 	 * Description of the property adminClearance.
 	 */
