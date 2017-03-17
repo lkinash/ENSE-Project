@@ -199,8 +199,8 @@
 										</div>
 										<table>
 										
-											<tr ng-repeat="service in room.services">
-												<td>{{service.name}}</td>
+											<tr ng-repeat="serviceName in room.serviceNames">
+												<td>{{serviceName}}</td>
 											</tr>
 											<!--
 											<tr>
@@ -223,7 +223,7 @@
 									</div>
 									<div class="opt">
 										<div class="rmvEmp">
-											<button type="button" class="btn btn-danger">Remove
+											<button type="button" class="btn btn-danger" ng-click="removeRoom($index)">Remove
 												Room</button>
 										</div>
 									</div>
@@ -233,9 +233,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="test" ng-repeat="service in servicesList">
-			{{service.name}}
 			</div>
 		</div>
  	</div>
