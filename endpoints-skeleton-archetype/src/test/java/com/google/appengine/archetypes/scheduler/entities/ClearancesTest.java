@@ -48,8 +48,6 @@ public class ClearancesTest {
     public void testGetters() throws Exception{
     	assertEquals(CLEARANCEID,clearance.getClearanceId());
     	assertEquals(RENEWALDATE,clearance.getRenewalDate());
-    	//assertEquals(SERVICE.getRequiresClearance(),clearance.getService());
-    	//assertEquals(RENEWALDATE,clearance.getRenewalDate());
     }
 */
 }
