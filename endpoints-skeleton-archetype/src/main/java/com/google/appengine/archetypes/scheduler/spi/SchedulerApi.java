@@ -1691,9 +1691,9 @@ public class SchedulerApi {
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
   	public WrappedBoolean test(final User user) throws IOException, UnauthorizedException {
 
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
+      //  if (user == null) {
+        //    throw new UnauthorizedException("Authorization required");
+       // }
         
 		
 		//return Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
