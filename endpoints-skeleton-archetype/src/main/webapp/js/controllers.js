@@ -314,26 +314,9 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	        console.log("The typeId from the first dropdown in value variable is"+ value);
 	     	gapi.client.scheduler.admin.getAllServices().execute(function(resp){
 	     		console.log("Getting list of services ");
-				 $scope.listservices=resp.result;
-				 $scope.templist=[];
-			     	
-			     	for(var i=0; i<$scope.listservices.items.length;i++){
-			     		console.log("inside for loop getting the type number "+i+$scope.listservices.items[i].typeId);
-			     		console.log("the value is "+typeId);
-			     		if(($scope.listservices.items[i].typeId)== typeId){
-			     			console.log("There is a match!");
-			     			$scope.templist.push({'name':$scope.listservices.items[i].name,
-			     				'productId':$scope.listservices.items[i].productId
-			     				});
-			     			console.log($scope.templist);
-			     		}
-			     	}
-			     	//$scope.listservices=$scope.templist;
-			     	//$scope.$apply();
+				 $scope.listservices=resp.result.items;
+				 $scope.$apply();
 			 });
-	     	
-	     	
-	     	/*
 	     	console.log("The typeId is"+ roomForm.number);
 	     	gapi.client.scheduler.admin.getServiceOfType(roomForm).execute(function(resp){
 	     		console.log("getting specific type function");
@@ -341,7 +324,6 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	     		//console.log(testList);
 	     		
 	     	});
-	     	*/
 	    };
 	
 	 $scope.choices = [];
@@ -349,19 +331,8 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 var convertedservice= [];
 	 
 	  $scope.addServiceList=function(value){
-		  var flag=0;
 		  console.log("got to addServiceList function value= "+ value);
-		  for(var i=0; i< $scope.services.length;i++){
-			  if(value==$scope.services[i].id){
-				  flag=1;
-			  }
-		  }
-		  if(flag==0){
-				  $scope.services.push({'id':value});  
-		  }else{
-			  console.log("Service was not added as you are unable to add duplicate services IDs");
-		  }
-	
+		  $scope.services.push({'id':value});
 		  console.log("add the service to services");
 	  };
 	  $scope.addNewChoice = function() {
@@ -465,10 +436,10 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				 console.log(tempNumber);
 				 //console.log($scope.services.items[i].number);
 				 console.log($scope.services.items[i].serviceNames);
-				 //console.log(" number of services in array = "+$scope.services.items[i].serviceNames.length);
-				 //for(var j=0; j<$scope.services.items[i].serviceNames.length; j++){
-					// console.log("The service name = "+j+" "+$scope.services.items[i].serviceNames[j]);
-				 //}
+				 console.log(" number of services in array = "+$scope.services.items[i].serviceNames.length);
+				 for(var j=0; j<$scope.services.items[i].serviceNames.length; j++){
+					 console.log("The service name = "+j+" "+$scope.services.items[i].serviceNames[j]);
+				 }
 			 }
 			
 			 /*
