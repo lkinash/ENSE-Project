@@ -4,6 +4,9 @@ h2{
 	color:#0A25BF;
 	text-align: center;
 }
+.rightContent h4{
+  border-bottom:solid;
+}
 
 .addServiceArea{
 	margin-top: 2%;
@@ -13,6 +16,7 @@ h2{
 	height:30%;
 	margin-left: auto;
 	margin-right: auto;
+	padding-bottom:2%;
 }
 .serviceInfo{
 	padding-top: 4%;
@@ -22,10 +26,23 @@ h2{
 	text-align: center;
 
 }
+.addService2{
+  padding-top: 4%;
+	width: 40%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
 .serviceInfo table{
 	width: 100%;
 }
 .serviceInfo table tr td{
+	padding: 1%;
+}
+.addService2 table{
+	width: 100%;
+}
+.addService2 table tr td{
 	padding: 1%;
 }
 .checkbox{

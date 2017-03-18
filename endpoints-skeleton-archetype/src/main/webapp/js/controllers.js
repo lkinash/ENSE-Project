@@ -331,8 +331,19 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 var convertedservice= [];
 	 
 	  $scope.addServiceList=function(value){
+		  var flag=0;
 		  console.log("got to addServiceList function value= "+ value);
-		  $scope.services.push({'id':value});
+		  for(var i=0; i< $scope.services.length;i++){
+			  if(value==$scope.services[i].id){
+				  flag=1;
+			  }
+		  }
+		  if(flag==0){
+				  $scope.services.push({'id':value});  
+		  }else{
+			  console.log("Service was not added as you are unable to add duplicate services IDs");
+		  }
+	
 		  console.log("add the service to services");
 	  };
 	  $scope.addNewChoice = function() {
@@ -418,7 +429,18 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
  });
 
  conferenceApp.controllers.controller('AddServiceController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
+	 console.log("Reached the AddServiceController");
+	 $scope.init = function(){
+		 console.log("Reached Init function: populating list types drop down");
+		 gapi.client.scheduler.admin.getAllTypes().execute(function(resp){
+			 $scope.listtypes=resp.result.items;
+			 $scope.$apply();
+		 });
+	 };
+	 
+	 $scope.addService1=function(){
+		 var serviceForm=[];
+	 };
 
 	 
  });
@@ -436,10 +458,10 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				 console.log(tempNumber);
 				 //console.log($scope.services.items[i].number);
 				 console.log($scope.services.items[i].serviceNames);
-				 console.log(" number of services in array = "+$scope.services.items[i].serviceNames.length);
-				 for(var j=0; j<$scope.services.items[i].serviceNames.length; j++){
-					 console.log("The service name = "+j+" "+$scope.services.items[i].serviceNames[j]);
-				 }
+				 //console.log(" number of services in array = "+$scope.services.items[i].serviceNames.length);
+				 //for(var j=0; j<$scope.services.items[i].serviceNames.length; j++){
+					// console.log("The service name = "+j+" "+$scope.services.items[i].serviceNames[j]);
+				// }
 			 }
 			
 			 /*

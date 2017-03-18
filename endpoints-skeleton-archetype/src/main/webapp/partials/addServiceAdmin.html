@@ -2,7 +2,7 @@
 <link href="/css/addServiceAdmin.css" rel="stylesheet">
 </head>
 
-	<div class="row">
+<div class="row">
 		<div class="col-sm-2 col-lg-2">
 		<div class="leftNav">
 			<div class="admin">
@@ -168,34 +168,62 @@
 	</div>
 	
 	<div class="col-sm-10 col-lg-10">
+	<div ng-controller="AddServiceController" ng-init="init()">
 		<div class="rightContent">
 			<h2>Add Service</h2>
 			<div class="addServiceArea">
-				<div class="serviceInfo">
-					<table>
+			  <div class="addService2">
+			    <h4>Service of Existing Type:</h4>
+			    <table>
 						<tr>
 							<td>Service Name:</td>
-							<td><input class="form-control" type="text"></td>
+							<td><input class="form-control" type="text" ng-model="serviceName1"></td>
 						</tr>
 						<tr>
 							<td>Service Type:</td>
-							<td><input class="form-control" type="text"></td>
+							<td> <select class="form-control" id="{{$index}}" data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" >
+    							</select>
+ 							  </td>
 						</tr>
 						<tr>
 							<td>Clearance:</td>
 							<td>
 								<div class="checkbox">
-									<label><input type="checkbox" value=""></label>
+									<label><input type="checkbox" value="" ng-model="clearance1"></label>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<div class="btnSubmit">
+					<button type="button" class="btn btn-default" ng-click="addService1()">Submit</button>
+				</div>
+			  </div>
+				<div class="serviceInfo">
+				  <h4>Service of New Type</h4>
+					<table>
+						<tr>
+							<td>Service Name:</td>
+							<td><input class="form-control" type="text" ng-model="serviceName2"></td>
+						</tr>
+						<tr>
+							<td>Service Type:</td>
+							<td><input class="form-control" type="text" ng-model="newtype"></td>
+						</tr>
+						<tr>
+							<td>Clearance:</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value="" ng-model="clearance2"></label>
 								</div>
 							</td>
 						</tr>
 					</table>
 				</div>
 				<div class="btnSubmit">
-					<button type="button" class="btn btn-default">Submit</button>
+					<button type="button" class="btn btn-default" ng-click="addService2()">Submit</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	</div>
 </div>
-

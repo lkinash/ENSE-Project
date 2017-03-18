@@ -1871,7 +1871,7 @@ public class SchedulerApi {
 		
 		Calendar service = null;
 
-		service = Quickstart.getCalendarService(user);
+//		service = Quickstart.getCalendarService(user);
 		
 		return service;
 		
