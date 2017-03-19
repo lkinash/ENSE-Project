@@ -43,6 +43,7 @@ import com.google.appengine.archetypes.scheduler.forms.PageAuthForm;
 import com.google.appengine.archetypes.scheduler.forms.ProductForm;
 import com.google.appengine.archetypes.scheduler.forms.RoomForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceForm;
+import com.google.appengine.archetypes.scheduler.forms.ServiceTypeForm;
 import com.google.appengine.archetypes.scheduler.forms.TypeForm;
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.google.appengine.archetypes.scheduler.list.Status;
@@ -172,6 +173,50 @@ public class SchedulerApi {
   		
   	    ofy().save().entities(service).now();
   		
+  		String change = "Add Service. Service Id: " + serviceId;
+  		addChange(user, user.getUserId(), change);
+  	    
+		return service;
+  	}
+  	
+	/**
+  	 * Description of the method addService.
+  	 * @param admin 
+  	 * @param serviceForm 
+  	 * @throws UnauthorizedException 
+  	 */
+      
+  	@ApiMethod(name = "admin.addServiceType",  path = "admin.addServiceType", httpMethod = "post")
+ 	public Service addServiceType(final User user, ServiceTypeForm serviceTypeForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        Type type;
+        
+  		if(serviceTypeForm.getTypeId() == 0){
+  			
+  			TypeForm typeForm = new TypeForm(serviceTypeForm.getIsService(), serviceTypeForm.getTypeName());
+  			type = addType(user, typeForm);
+  			
+  		}
+  		else{
+  			type = getType(user, serviceTypeForm.getTypeId());
+  		}
+        
+        
+        final Key<Service> serviceKey = factory().allocateId(Service.class);
+        final long serviceId = serviceKey.getId();
+        
+        
+        boolean requiresClearance = serviceTypeForm.getClearanceRequired();
+        
+  		Service service  = new Service(serviceTypeForm.getDefaultLength(), requiresClearance , serviceId, serviceTypeForm.getName(), type.getTypeId(), serviceTypeForm.getPrice());
+  		
+  	    ofy().save().entities(service).now();
+  		
+  	    
   		String change = "Add Service. Service Id: " + serviceId;
   		addChange(user, user.getUserId(), change);
   	    

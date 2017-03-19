@@ -6,8 +6,7 @@ public class TypeForm {
 
     private boolean isService;	
 
-    
-    
+
 	public TypeForm(){
 		
 	}
