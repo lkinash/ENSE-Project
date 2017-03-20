@@ -32,6 +32,7 @@ import com.google.appengine.archetypes.scheduler.entities.Product;
 import com.google.appengine.archetypes.scheduler.entities.Room;
 import com.google.appengine.archetypes.scheduler.entities.Service;
 import com.google.appengine.archetypes.scheduler.entities.Type;
+import com.google.appengine.archetypes.scheduler.entities.TypeWithService;
 import com.google.appengine.archetypes.scheduler.forms.AdminForm;
 import com.google.appengine.archetypes.scheduler.forms.AppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.CancelAppointmentForm;
@@ -1284,6 +1285,40 @@ public class SchedulerApi {
         return query.list();
   	}
   	
+  	/**
+  	 * Returns types.
+  	 * @return types 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAllTypesWithService", path = "admin.getAllTypesWithService", httpMethod = "get")
+ 	public List<TypeWithService> getAllTypesWithService(final User user ) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }       
+        
+  		List<TypeWithService> list = new ArrayList<TypeWithService>();
+        
+  		Query<Type> query =  ofy().load().type(Type.class);
+  
+  		List<Type> typeList = query.list();
+  		
+  		List<Service> serviceList;
+  		
+  		for(Type temp: typeList){
+  			
+  			serviceList = getServicesOfType(user, temp.getTypeId());
+  			
+  			list.add(new TypeWithService(temp.getIsService(), temp.getTypeName(), temp.getTypeId(), serviceList));
+  			
+  		}
+  		
+  		return list;
+  		
+  	}
+  	
+  	
   	
   	/**
   	 * Returns changess.
@@ -1490,18 +1525,12 @@ public class SchedulerApi {
   	
   	@ApiMethod(name = "admin.getServiceOfType", path = "admin.getServiceOfType", httpMethod = "get")
 
- 	public List<Service> getServicesOfType(final User user,	EmployeeForm employeeForm) throws UnauthorizedException {
+ 	public List<Service> getServicesOfType(final User user,	@Named("typeId") final long typeId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-
-        System.out.println(employeeForm.getName());
-        
-        long typeId = Long.parseLong(employeeForm.getName());
-
-        //System.out.println(typeId);
         
         Query<Service> query =  ofy().load().type(Service.class);
     	query = query.order("name");
