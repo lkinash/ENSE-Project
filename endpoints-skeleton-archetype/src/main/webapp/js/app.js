@@ -241,3 +241,5 @@ app.factory('oauth2Provider', function ($modal) {
 
     return oauth2Provider;
 });
+
+

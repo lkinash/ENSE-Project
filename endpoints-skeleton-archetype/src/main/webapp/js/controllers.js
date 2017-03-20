@@ -17,6 +17,8 @@ var conferenceApp = conferenceApp || {};
  */
 conferenceApp.controllers = angular.module('conferenceControllers', ['ui.bootstrap']);
 
+
+
 /**
  * @ngdoc controller
  * @name MyProfileCtrl
@@ -430,16 +432,45 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 
  conferenceApp.controllers.controller('AddServiceController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 	 console.log("Reached the AddServiceController");
+	 $scope.typenames=[];
 	 $scope.init = function(){
 		 console.log("Reached Init function: populating list types drop down");
 		 gapi.client.scheduler.admin.getAllTypes().execute(function(resp){
 			 $scope.listtypes=resp.result.items;
+			 console.log("The length is "+$scope.listtypes.length);
+			 for(var i=0;i<$scope.listtypes.length;i++){
+				 $scope.typenames[i]=$scope.listtypes[i].typeName;
+				 console.log("name"+i+" "+$scope.typenames[i]);
+			 }
 			 $scope.$apply();
 		 });
 	 };
-	 
-	 $scope.addService1=function(){
-		 var serviceForm=[];
+	 var serviceTypeForm={};
+	 $scope.addService=function(){
+		 console.log("Reached the add service function");
+		 if($scope.newtype==true){
+		 serviceTypeForm = {
+			      "name" : $scope.serviceName,
+			      "price": parseFloat($scope.servicePrice),
+			      "clearanceRequired": $scope.clearanceCheck,
+			      "typeId": 0,
+			      "typeName": $scope.newTypeName,
+			      "defaultLength":parseInt($scope.serviceDuration),
+			    };
+		 }else{
+			 serviceTypeForm = {
+				      "name" : $scope.serviceName,
+				      "price": parseFloat($scope.servicePrice),
+				      "clearanceRequired": $scope.clearanceCheck,
+				      "typeId": $scope.listtypeselect.typeId,
+				      "typeName": $scope.listtypeselect.typeName,
+				      "defaultLength":parseInt($scope.serviceDuration)
+				    };
+		 }
+		//console.log(serviceTypeForm);
+		 gapi.client.scheduler.admin.addServiceType(serviceTypeForm).execute();
+		 console.log("Added the ServiceType form now");
+		 
 	 };
 
 	 

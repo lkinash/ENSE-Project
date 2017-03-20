@@ -172,56 +172,70 @@
 		<div class="rightContent">
 			<h2>Add Service</h2>
 			<div class="addServiceArea">
-			  <div class="addService2">
-			    <h4>Service of Existing Type:</h4>
-			    <table>
-						<tr>
-							<td>Service Name:</td>
-							<td><input class="form-control" type="text" ng-model="serviceName1"></td>
-						</tr>
-						<tr>
-							<td>Service Type:</td>
-							<td> <select class="form-control" id="{{$index}}" data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" >
-    							</select>
- 							  </td>
-						</tr>
-						<tr>
-							<td>Clearance:</td>
-							<td>
-								<div class="checkbox">
-									<label><input type="checkbox" value="" ng-model="clearance1"></label>
-								</div>
-							</td>
-						</tr>
-					</table>
-					<div class="btnSubmit">
-					<button type="button" class="btn btn-default" ng-click="addService1()">Submit</button>
-				</div>
-			  </div>
+			<form name ="serviceForm" ng-submit="addService()" >
 				<div class="serviceInfo">
-				  <h4>Service of New Type</h4>
 					<table>
 						<tr>
 							<td>Service Name:</td>
-							<td><input class="form-control" type="text" ng-model="serviceName2"></td>
+							<td><input class="form-control" type="text"  name="sName" ng-model="serviceName" required></td>
+							<td><span ng-show="(serviceForm.sName.$dirty || submitted) && serviceForm.sName.$error.required">
+						      Name is required
+						    </span></td>
 						</tr>
 						<tr>
-							<td>Service Type:</td>
-							<td><input class="form-control" type="text" ng-model="newtype"></td>
-						</tr>
-						<tr>
-							<td>Clearance:</td>
+							<td>Clearance Required:</td>
 							<td>
 								<div class="checkbox">
-									<label><input type="checkbox" value="" ng-model="clearance2"></label>
+									<label><input type="checkbox" value="" ng-model="clearanceCheck"></label>
 								</div>
 							</td>
 						</tr>
-					</table>
+						<tr>
+							<td>Service Duration:</td>
+							<td><input class="form-control" name="sDuration" type="text" ng-model="serviceDuration" required></td>
+							<td><span ng-show="(serviceForm.sDuration.$dirty || submitted) && serviceForm.sDuration.$error.required">
+						      Duration is required
+						    </span></td>
+						</tr>
+						<tr>
+							<td>Service Price:</td>
+							<td><input class="form-control" name="sPrice" type="text" ng-model="servicePrice" required></td>
+							<td><span ng-show="(serviceForm.sPrice.$dirty || submitted) && serviceForm.sPrice.$error.required">
+						      Price is required
+						    </span></td>
+						</tr>
+						<tr>
+							<td>New Service type:</td>
+							<td>
+								<div class="checkbox">
+									<label><input type="checkbox" value="" ng-model="newtype"></label>
+								</div>
+							</td>
+						</tr>
+						</table>
+						<div ng-show="newtype">
+						<table>
+						<tr>
+							<td>Service Type:</td>
+							<td><input class="form-control" name="sType" type="text" ng-model="newTypeName" ></td>						
+						</tr>
+						</table>
+						</div>
+						<div ng-hide="newtype">
+						<table>
+						<tr>
+							<td>Service Type:</td>
+							<td> <select class="form-control" id="{{$index}}" data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes track by listtype.typeId" >
+    							</select>
+ 							  </td>
+						</tr>
+						</table>
+						</div>
 				</div>
 				<div class="btnSubmit">
-					<button type="button" class="btn btn-default" ng-click="addService2()">Submit</button>
+					<button type="submit" class="btn btn-default">Submit</button>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
