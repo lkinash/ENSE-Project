@@ -41,6 +41,7 @@ import com.google.appengine.archetypes.scheduler.forms.EventForm;
 import com.google.appengine.archetypes.scheduler.forms.GeneralForm;
 import com.google.appengine.archetypes.scheduler.forms.PageAuthForm;
 import com.google.appengine.archetypes.scheduler.forms.ProductForm;
+import com.google.appengine.archetypes.scheduler.forms.RemoveRoomForm;
 import com.google.appengine.archetypes.scheduler.forms.RoomForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceTypeForm;
@@ -917,14 +918,14 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.removeRoom",  path = "admin.removeRoom", httpMethod = "post")
-	public WrappedBoolean removeRoom(final User user, @Named("roomId") final long roomId) throws UnauthorizedException {
+	public WrappedBoolean removeRoom(final User user, RemoveRoomForm removeRoomForm) throws UnauthorizedException {
 	
 
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 		
-	    Key<Room> key = Key.create(Room.class, roomId);
+	    Key<Room> key = Key.create(Room.class, removeRoomForm.getRoomId());
 		
 		ofy().delete().key(key).now();
 	    
