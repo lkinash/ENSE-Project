@@ -289,16 +289,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				
 			}]
 	};
-		/*
-	$scope.serviceTypes= [{
-		Id: 1,
-        Name: 'Laser'
-    }, {
-        Id: 2,
-        Name: 'Waxing'       	
-			
-	}];
-	*/
+	
 	 $scope.init = function(){
 		 console.log("Reached Init function: populating list types drop down");
 		 gapi.client.scheduler.admin.getAllTypes().execute(function(resp){
@@ -358,16 +349,6 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    $scope.services.splice(index,1);
 	  };
 	 
-	  /*
-	  $scope.convertService=function(){
-		  
-		 for(var i=0; i<$scope.services.length;i++){
-			 console.log($scope.services[i].id);
-			 convertedservice[i]=$scope.services[i].id;
-		 };
-		  	console.log(convertedservice);
-	  };
-	  */
 	  $scope.addRoom = function() {
 		  
 		  for(var i=0; i<$scope.services.length;i++){
@@ -383,7 +364,6 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    console.log("room form object created");
 	    console.log("The room number saved in the roomForm Object is:" +roomForm.number);
 	    console.log("The services saved in the roomForm Object is:" +roomForm.serviceIds);
-	 //gapi.client.scheduler.addRoom(roomForm).execute();
 	 
 	 $scope.number=9999999;
 	 gapi.client.scheduler.admin.addRoom(roomForm).execute();
@@ -438,10 +418,10 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 gapi.client.scheduler.admin.getAllTypes().execute(function(resp){
 			 $scope.listtypes=resp.result.items;
 			 console.log("The length is "+$scope.listtypes.length);
-			 for(var i=0;i<$scope.listtypes.length;i++){
-				 $scope.typenames[i]=$scope.listtypes[i].typeName;
-				 console.log("name"+i+" "+$scope.typenames[i]);
-			 }
+			// for(var i=0;i<$scope.listtypes.length;i++){
+				// $scope.typenames[i]=$scope.listtypes[i].typeName;
+				// console.log("name"+i+" "+$scope.typenames[i]);
+			// }
 			 $scope.$apply();
 		 });
 	 };
@@ -476,7 +456,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
  });
  
- conferenceApp.controllers.controller('ViewRoomController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+ conferenceApp.controllers.controller('ViewRoomController', function ($scope, $log, $location, oauth2Provider, HTTP_ERRORS) {
 	 console.log("controller reached for viewRoomAdmin");
 	 $scope.init = function(){
 		 gapi.client.scheduler.admin.getAllRooms().execute(function(resp){
@@ -518,9 +498,14 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
 	 
 	 $scope.removeRoom = function(index) {
-		    //$scope.room.splice(index,1);
-		   // $scope.$apply();
 		 	console.log("Removing room number ="+index);
+		 	var roomId= $scope.rooms[index].roomId;
+		 	console.log("roomId that is being deleted= "+ roomId);
+		 	var removeRoomForm={
+		 			"roomId":roomId
+		 	};
+		 	gapi.client.scheduler.admin.removeRoom(removeRoomForm).execute();
+		 	$location.path('/');
 		  };
 	 
  });
@@ -538,8 +523,6 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		  
 	 };
 	 
-	 
-	
  });
 
  conferenceApp.controllers.controller('ForgotPasswordController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {

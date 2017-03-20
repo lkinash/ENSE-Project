@@ -179,14 +179,17 @@
   	<p>room number:{{number}}</p>
   		<h2>Add Room</h2>
   		-->
-            			<form ng-submit="addRoom()">
+            			<form name="roomform" ng-submit="addRoom()" >
             				<div class="mainHolder">
             					<div class="roomInfoHolder">
             						<div class="roomNameHolder">
             							<h4>Room Name</h4>
-            							<input type="text" placeholder="number" ng-model="number" />
+            							<input type="text" placeholder="number" name=rNumber ng-model="number" required />
+            							<span ng-show="(roomform.rNumber.$dirty || submitted) && roomform.rNumber.$error.required">
+										      Number is required
+										    </span>
             						</div>
-            											<div class="serviceOffered">
+            				<div class="serviceOffered">
 							<div class="heading">
 								<h5>Services Preformed</h5>
 									<div class="plusMinus">
@@ -228,7 +231,7 @@
             							<input type="submit" value="submit" />
             						</div>
             						<p>{{services}}</p>
-            						<button ng-click="convertService()">convert Service</button>
+            						
             					</div>
             				</div>
             			</form>
