@@ -41,7 +41,12 @@ import com.google.appengine.archetypes.scheduler.forms.EventForm;
 import com.google.appengine.archetypes.scheduler.forms.GeneralForm;
 import com.google.appengine.archetypes.scheduler.forms.PageAuthForm;
 import com.google.appengine.archetypes.scheduler.forms.ProductForm;
+import com.google.appengine.archetypes.scheduler.forms.RemoveAdminForm;
+import com.google.appengine.archetypes.scheduler.forms.RemoveClientForm;
+import com.google.appengine.archetypes.scheduler.forms.RemoveEmployeeForm;
 import com.google.appengine.archetypes.scheduler.forms.RemoveRoomForm;
+import com.google.appengine.archetypes.scheduler.forms.RemoveServiceForm;
+import com.google.appengine.archetypes.scheduler.forms.RemoveTypeForm;
 import com.google.appengine.archetypes.scheduler.forms.RoomForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceTypeForm;
@@ -867,12 +872,15 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.removeService", path = "admin.removeService", httpMethod = "post")
-	public WrappedBoolean removeService(final User user, @Named("serviceId") final long serviceId) throws UnauthorizedException {
+	public WrappedBoolean removeService(final User user, RemoveServiceForm removeServiceForm) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 
+	    
+	    long serviceId = removeServiceForm.getServiceId();
+	    
 	    Key<Service> key = Key.create(Service.class, serviceId);
 		
 	    ofy().delete().key(key).now();
@@ -940,13 +948,13 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.removeEmployee", path = "admin.removeEmployee", httpMethod = "post")
-	public WrappedBoolean removeEmployee(final User user, @Named("employeeId") long employeeId) throws UnauthorizedException {
+	public WrappedBoolean removeEmployee(final User user, RemoveEmployeeForm removeEmployeeForm) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 
-		
+		long employeeId = removeEmployeeForm.getEmployeeId();
 	    
 	    Key<Employee> key = Key.create(Employee.class, employeeId);
 	
@@ -968,12 +976,13 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.removeAdmin",  path = "admin.removeAdmin", httpMethod = "post")
- 	public WrappedBoolean removeAdmin(final User user, @Named("adminId") final long adminId) throws UnauthorizedException {
+ 	public WrappedBoolean removeAdmin(final User user, RemoveAdminForm removeAdminForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
+        long adminId = removeAdminForm.getAdminId();
   		
 	    Key<Admin> key = Key.create(Admin.class, adminId);
 		
@@ -994,13 +1003,13 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.removeType", path = "admin.removeType", httpMethod = "post")
- 	public WrappedBoolean removeType(final User user, @Named("typeId") final long typeId ) throws UnauthorizedException {
+ 	public WrappedBoolean removeType(final User user, RemoveTypeForm removeTypeForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-
+        long typeId = removeTypeForm.getTypeId();
 		
 	    Key<Type> key = Key.create(Type.class, typeId);
 		
@@ -1054,12 +1063,14 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "client.removeClient", path = "client.removeClient", httpMethod = "post")
- 	public WrappedBoolean removeClient(final User user, @Named("adminId") final long clientId) throws UnauthorizedException {
+ 	public WrappedBoolean removeClient(final User user, RemoveClientForm removeClientForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
+        
+        long clientId = removeClientForm.getClientId();
   		
 	    Key<Client> key = Key.create(Client.class, clientId);
 		

@@ -1,17 +1,9 @@
-/*******************************************************************************
- * 2016, All rights reserved.
- *******************************************************************************/
 package com.google.appengine.archetypes.scheduler.forms;
 
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 
-/**
- * Description of AdminForm.
- * 
- * @author Lindsey
- */
-public class AdminForm {
-	
+public class RemoveAdminForm {
+
 	/**
 	 * Description of the property password.
 	 */
@@ -27,12 +19,14 @@ public class AdminForm {
 	 */
 	private String email;
 
+	private long adminId;
+
 	
-	public AdminForm(){
+	public RemoveAdminForm(){
 		
 	}
 	
-	public AdminForm(String newPassword, AdminClearances newClearances, String newEmail){
+	public RemoveAdminForm(String newPassword, AdminClearances newClearances, String newEmail){
 		
 		this.password = newPassword;
 		this.email = newEmail;
@@ -90,5 +84,22 @@ public class AdminForm {
 		this.email = newEmail;
 	}
 
+	
+	/**
+	 * Returns adminId.
+	 * @return adminId 
+	 */
+	public long getAdminId() {
+		return this.adminId;
+	}
 
+	/**
+	 * Sets a value to attribute adminId. 
+	 * @param newadminId 
+	 */
+	public void setAdminId(long newAdminId) {
+		this.adminId = newAdminId;
+	}
+
+	
 }
