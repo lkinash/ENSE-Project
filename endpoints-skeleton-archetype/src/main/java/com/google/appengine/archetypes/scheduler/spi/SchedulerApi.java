@@ -6,18 +6,35 @@ import static com.google.appengine.archetypes.scheduler.service.OfyService.ofy;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.JSONException;
 
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.appengine.datastore.AppEngineDataStoreFactory;
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets.Details;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.scheduler.Constants;
 import com.google.appengine.archetypes.scheduler.ConstantsSecret;
 import com.google.appengine.archetypes.scheduler.Defaults;
@@ -133,9 +150,9 @@ public class SchedulerApi {
   	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException, IOException {
    		
    		
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
+       // if (user == null) {
+         //   throw new UnauthorizedException("Authorization required");
+        //}
         
 
         final Key<Room> roomKey = factory().allocateId(Room.class);
@@ -529,7 +546,8 @@ public class SchedulerApi {
         final String calendarId = employee.getCalendarId();
         
         
-        WrappedStringId wrappedId = createEvent(user, calendarId, eventForm);
+        WrappedStringId wrappedId = null;
+        		//createEvent(user, calendarId, eventForm);
         
         final String eventId = wrappedId.getId();
         
@@ -1775,7 +1793,7 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public WrappedBoolean test(final User user) throws IOException, UnauthorizedException {
+  	public com.google.api.services.calendar.model.Calendar test(final User user) throws IOException, UnauthorizedException {
 
       //  if (user == null) {
         //    throw new UnauthorizedException("Authorization required");
@@ -1784,9 +1802,85 @@ public class SchedulerApi {
 		
 		//return Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
 		
-		return null;
+		
+        //com.google.api.services.calendar.Calendar service = loadCalendarClient();
+        
+		//String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
+	    Credential credential = newFlow().loadCredential(ConstantsSecret.masterUserId);
+		
+        Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+        .setApplicationName("applicationName").build();
+
+    // Retrieve the calendar
+        com.google.api.services.calendar.model.Calendar calendar =
+        		service.calendars().get(ConstantsSecret.calendarId).execute();
+        
+        Event event = createEvent(user);
+        
+        event = service.events().insert(ConstantsSecret.calendarId, event).execute();
+		
+		
+		return calendar;
 
 	}
+	
+	private static final AppEngineDataStoreFactory DATA_STORE_FACTORY =
+		      AppEngineDataStoreFactory.getDefaultInstance();
+		  
+		  /** Global instance of the HTTP transport. */
+		  static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
+
+		  /** Global instance of the JSON factory. */
+		  static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
+		  private static GoogleClientSecrets clientSecrets = null;
+
+		  static GoogleClientSecrets getClientCredential() throws IOException {
+			  
+			  
+			  Details details = new Details();
+		        details.setClientId(ConstantsSecret.client_id);
+		        details.setClientSecret(ConstantsSecret.client_secret);
+
+		        clientSecrets = new GoogleClientSecrets();
+		        clientSecrets.setInstalled(details);
+		
+		    return clientSecrets;
+		  }
+
+		  
+		  static String getRedirectUri(HttpServletRequest req) {
+		    GenericUrl url = new GenericUrl(req.getRequestURL().toString());
+		    url.setRawPath("/oauth2callback");
+		    return url.build();
+		  }
+
+		  
+		  static GoogleAuthorizationCodeFlow newFlow() throws IOException {
+		    return new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
+		        getClientCredential(), Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(
+		        DATA_STORE_FACTORY).setAccessType("offline").build();
+		  }
+
+		  
+		  static Calendar loadCalendarClient() throws IOException {
+		    String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
+		    Credential credential = newFlow().loadCredential(userId);
+		    return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).build();
+		  }
+
+		  
+		  /**
+		   * Returns an {@link IOException} (but not a subclass) in order to work around restrictive GWT
+		   * serialization policy.
+		   */
+		  static IOException wrappedIOException(IOException e) {
+		    if (e.getClass() == IOException.class) {
+		      return e;
+		    }
+		    return new IOException(e.getMessage());
+		  }	
+	
 	
 	/**
 	 * Description of the method queryAppointments.
@@ -1905,14 +1999,32 @@ public class SchedulerApi {
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
 	 */
-	@ApiMethod(name = "appointment.create", path = "appointment.create", httpMethod = "post")
-  	public WrappedStringId createEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+	@ApiMethod(name = "appointment.createEvent", path = "appointment.createEvent", httpMethod = "post")
+  	public Event createEvent(final User user) throws UnauthorizedException, IOException {
         
   		//Event event = EventCreator.createEvent(eventForm);
 
         //Quickstart.addEvent(calendarId, user, event);
         
-        return null;
+		 Event event = new Event()
+	        .setSummary("Google I/O 2015")
+	        .setLocation("800 Howard St., San Francisco, CA 94103")
+	        .setDescription("A chance to hear more about Google's developer products.");
+
+	    DateTime startDateTime = new DateTime("2017-04-28T09:00:00-07:00");
+	    EventDateTime start = new EventDateTime()
+	        .setDateTime(startDateTime)
+	        .setTimeZone("America/Los_Angeles");
+	    event.setStart(start);
+
+	    DateTime endDateTime = new DateTime("2017-04-28T17:00:00-07:00");
+	    EventDateTime end = new EventDateTime()
+	        .setDateTime(endDateTime)
+	        .setTimeZone("America/Los_Angeles");
+	    event.setEnd(end);
+		
+		
+        return event;
 	}
 	
 	/**
