@@ -898,13 +898,13 @@ public class SchedulerApi {
 	    }
 
 	    
-	    //long serviceId = removeServiceForm.getServiceId();
+	    long serviceId = removeServiceForm.getServiceId();
 	    
-	    Key<Service> key = Key.create(Service.class, removeServiceForm.getServiceId());
+	    Key<Service> key = Key.create(Service.class, serviceId);
 		
 	    ofy().delete().key(key).now();
 	    
-  		String change = "Remove Service. Service Id: " + removeServiceForm.getServiceId();
+  		String change = "Remove Service. Service Id: " + serviceId;
   		addChange(user, user.getUserId(), change);
   	    
 	    
