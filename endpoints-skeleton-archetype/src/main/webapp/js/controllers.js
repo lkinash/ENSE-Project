@@ -292,64 +292,59 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	
 	 $scope.init = function(){
 		 console.log("Reached Init function: populating list types drop down");
-		 gapi.client.scheduler.admin.getAllTypes().execute(function(resp){
+		 $scope.choices = [
+		                   {
+		                	   'itemNo':0,
+		                   }];
+		 gapi.client.scheduler.admin.getAllTypesWithService().execute(function(resp){
 			 $scope.listtypes=resp.result.items;
+			 $scope.$apply();
 		 });
 	 };
+	 
 	 
 	 $scope.getListServices = function(value){
 		 console.log("Reacher getlistservics function: populating service dropdown");
 	      var typeId= value;
-		  roomForm={
-				  "number":parseInt(value)
-		  };
-	        
-	        console.log("The typeId from the first dropdown in value variable is"+ value);
-	     	gapi.client.scheduler.admin.getAllServices().execute(function(resp){
-	     		console.log("Getting list of services ");
-				 $scope.listservices=resp.result.items;
-				 $scope.$apply();
-			 });
-	     	console.log("The typeId is"+ roomForm.number);
-	     	gapi.client.scheduler.admin.getServiceOfType(roomForm).execute(function(resp){
-	     		console.log("getting specific type function");
-	     		var testList=resp.items;
-	     		//console.log(testList);
-	     		
-	     	});
+	      console.log("The typeId from the first dropdown in value variable is"+ value);
+	      $scope.listservices=[];
+	      for(var i=0; i<$scope.listtypes.length;i++){
+	    	  if($scope.listtypes[i].typeId==value){
+	    		  console.log(" the typeId found is "+ $scope.listtypes[i].typeId);
+	    		   console.log("There are this many services for this"+ $scope.listtypes[i].service.length);
+	    		   $scope.listservices=$scope.listtypes[i].service;
+	    		   console.log("these are the services"+ $scope.listservices);
+	    		  
+	    	  }
+	      }
 	    };
 	
-	 $scope.choices = [];
+
 	 $scope.services=[];
 	 var convertedservice= [];
 	 
-	  $scope.addServiceList=function(value){
+	 $scope.addServiceList=function(value,name,typeName){
 		  var flag=0;
-		  console.log("got to addServiceList function value= "+ value);
+		  console.log("got to addServiceList function v $scope.servicesalue= "+ value);
 		  for(var i=0; i< $scope.services.length;i++){
 			  if(value==$scope.services[i].id){
 				  flag=1;
 			  }
 		  }
 		  if(flag==0){
-				  $scope.services.push({'id':value});  
+			  $scope.services.push({'id':value,'name':name,'typeName':typeName});  
 		  }else{
 			  console.log("Service was not added as you are unable to add duplicate services IDs");
 		  }
-	
+		  
 		  console.log("add the service to services");
-	  };
-	  $scope.addNewChoice = function() {
-	    var newItemNo = $scope.choices.length;
-	   $scope.choices.push({'itemNo':newItemNo});
-	  };
+	 };
 	    
-	  $scope.removeChoice = function(index) {
-	    $scope.choices.splice(index,1);
+	 $scope.removeChoice = function(index) {
 	    $scope.services.splice(index,1);
-	  };
+	 };
 	 
-	  $scope.addRoom = function() {
+	 $scope.addRoomFinal = function() {
 		  
 		  for(var i=0; i<$scope.services.length;i++){
 				 console.log($scope.services[i].id);
