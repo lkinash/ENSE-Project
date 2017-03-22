@@ -2,9 +2,9 @@
     <wb-module deploy-name="endpoints-skeleton-archetype">
         <wb-resource deploy-path="/WEB-INF/web.xml" source-path="/target/generated-sources/appengine-endpoints/WEB-INF/web.xml"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
         <property name="context-root" value="endpoints-skeleton-archetype"/>
         <property name="java-output-path" value="/endpoints-skeleton-archetype/target/endpoints-skeleton-archetype-1.0-SNAPSHOT/WEB-INF/classes"/>
     </wb-module>

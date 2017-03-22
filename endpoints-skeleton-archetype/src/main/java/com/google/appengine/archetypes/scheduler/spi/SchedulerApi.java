@@ -891,14 +891,14 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.removeService", path = "admin.removeService", httpMethod = "post")
-	public WrappedBoolean removeService(final User user, RemoveTypeForm removeTypeForm) throws UnauthorizedException {
+	public WrappedBoolean removeService(final User user, RemoveServiceForm removeServiceForm) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 
 	    
-	    long serviceId = removeTypeForm.getTypeId();
+	    long serviceId = removeServiceForm.getServiceId();
 	    
 	    Key<Service> key = Key.create(Service.class, serviceId);
 		
