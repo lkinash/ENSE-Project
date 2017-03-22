@@ -281,7 +281,7 @@ conferenceApp.controllers.controller('DatepickerCtrl', function ($scope) {
 
 
 
-conferenceApp.controllers.controller('AddRoomController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+conferenceApp.controllers.controller('AddRoomController', function ($scope, $log,$location, oauth2Provider, HTTP_ERRORS) {
 	console.log("reached AddRoom controller");
 	var roomForm={
 			"number":11,
@@ -360,8 +360,9 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    console.log("The room number saved in the roomForm Object is:" +roomForm.number);
 	    console.log("The services saved in the roomForm Object is:" +roomForm.serviceIds);
 	 
-	 $scope.number=9999999;
+	 //$scope.number=9999999;
 	 gapi.client.scheduler.admin.addRoom(roomForm).execute();
+	 $location.path('/admin/viewRoom');
   };
  
 });
@@ -400,12 +401,39 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
   });
  
  conferenceApp.controllers.controller('ViewServiceController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
-
+	 console.log("Reached the ViewServiceController");
 	 
+	 $scope.init = function(){
+		 console.log("Reached Init function: Retrieving AllTypesWithService");
+		 gapi.client.scheduler.admin.getAllTypesWithService().execute(function(resp){
+			 $scope.listtypes=resp.result.items;
+			 $scope.$apply();
+		 });
+	 };
+	 
+	 $scope.removeType = function(index) {
+		 	console.log("Removing type number ="+index);
+		 	var typeId= $scope.listtypes[index].typeId;
+		 	console.log("typeId that is being deleted= "+ typeId);
+		 	var removeTypeForm={
+		 			"typeId":typeId
+		 	};
+		 	gapi.client.scheduler.admin.removeType(removeTypeForm).execute();
+		 	$location.path('/');
+		  };
+
+	 $scope.removeSpecificService= function(value){
+		 	console.log("Removing Specific Service with an ID of=" + value);
+		 	var removeServiceForm={
+		 			"ServiceId":value
+		 	};
+		 	gapi.client.scheduler.admin.removeService(removeServiceForm).execute();
+		 	$location.path('/');
+		 
+	 };
  });
 
- conferenceApp.controllers.controller('AddServiceController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+ conferenceApp.controllers.controller('AddServiceController', function ($scope, $log,$location,oauth2Provider, HTTP_ERRORS) {
 	 console.log("Reached the AddServiceController");
 	 $scope.typenames=[];
 	 $scope.init = function(){
@@ -445,6 +473,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		//console.log(serviceTypeForm);
 		 gapi.client.scheduler.admin.addServiceType(serviceTypeForm).execute();
 		 console.log("Added the ServiceType form now");
+		 $location.path('/admin/viewService');
 		 
 	 };
 
