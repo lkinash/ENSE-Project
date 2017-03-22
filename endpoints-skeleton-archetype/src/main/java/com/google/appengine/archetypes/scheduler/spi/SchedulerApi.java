@@ -1806,33 +1806,35 @@ public class SchedulerApi {
         //com.google.api.services.calendar.Calendar service = loadCalendarClient();
         
 		//String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
-	    Credential credential = newFlow().loadCredential(ConstantsSecret.masterUserId);
+	    //Credential credential = newFlow().loadCredential(ConstantsSecret.masterUserId);
 		
-        Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-        .setApplicationName("applicationName").build();
+        //Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+        //.setApplicationName("applicationName").build();
 
     // Retrieve the calendar
-        com.google.api.services.calendar.model.Calendar calendar =
-        		service.calendars().get(ConstantsSecret.calendarId).execute();
+        //com.google.api.services.calendar.model.Calendar calendar =
+        //		service.calendars().get(ConstantsSecret.calendarId).execute();
         
-        Event event = createEvent(user);
+       // Event event = createEvent(user);
         
-        event = service.events().insert(ConstantsSecret.calendarId, event).execute();
+       // event = service.events().insert(ConstantsSecret.calendarId, event).execute();
 		
 		
-		return calendar;
+		//return calendar;
 
+        		return null;
 	}
 	
+	/*
 	private static final AppEngineDataStoreFactory DATA_STORE_FACTORY =
 		      AppEngineDataStoreFactory.getDefaultInstance();
 		  
 		  /** Global instance of the HTTP transport. */
-		  static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
+		  //static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
 
 		  /** Global instance of the JSON factory. */
-		  static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-
+		  //static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+/*
 		  private static GoogleClientSecrets clientSecrets = null;
 
 		  static GoogleClientSecrets getClientCredential() throws IOException {
@@ -1873,7 +1875,7 @@ public class SchedulerApi {
 		  /**
 		   * Returns an {@link IOException} (but not a subclass) in order to work around restrictive GWT
 		   * serialization policy.
-		   */
+		   *//*
 		  static IOException wrappedIOException(IOException e) {
 		    if (e.getClass() == IOException.class) {
 		      return e;
@@ -1881,7 +1883,7 @@ public class SchedulerApi {
 		    return new IOException(e.getMessage());
 		  }	
 	
-	
+	*/
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
@@ -2006,6 +2008,7 @@ public class SchedulerApi {
 
         //Quickstart.addEvent(calendarId, user, event);
         
+		/*
 		 Event event = new Event()
 	        .setSummary("Google I/O 2015")
 	        .setLocation("800 Howard St., San Francisco, CA 94103")
@@ -2025,6 +2028,9 @@ public class SchedulerApi {
 		
 		
         return event;
+        */
+		
+		return null;
 	}
 	
 	/**
@@ -2035,8 +2041,8 @@ public class SchedulerApi {
 	
 	private static WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException {
 
-		Calendar service = getCalendarService(user);
-        service.events().delete(calendarId, eventId).execute();
+		//Calendar service = getCalendarService(user);
+        //service.events().delete(calendarId, eventId).execute();
         
         return null;
 	}

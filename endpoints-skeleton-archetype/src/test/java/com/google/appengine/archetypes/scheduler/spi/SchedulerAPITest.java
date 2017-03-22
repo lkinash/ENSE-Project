@@ -63,8 +63,8 @@ public class SchedulerAPITest {
 	}
     
     @Test(expected = UnauthorizedException.class)
-    public void testGetAllRoomWithoutUser() throws Exception {
-    	schedulerApi.getAllRooms(null);
+    public void testGetAllAdminWithoutUser() throws Exception {
+    	schedulerApi.getAllAdmins(null);
     }
 		
     @Test
