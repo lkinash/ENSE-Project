@@ -179,7 +179,7 @@
   	<p>room number:{{number}}</p>
   		<h2>Add Room</h2>
   		-->
-            			<form name="roomform" ng-submit="addRoom()" >
+     <form name="roomform" ng-submit="addRoomFinal()" >
             				<div class="mainHolder">
             					<div class="roomInfoHolder">
             						<div class="roomNameHolder">
@@ -193,48 +193,62 @@
 							<div class="heading">
 								<h5>Services Preformed</h5>
 									<div class="plusMinus">
-										<button type="button" class="btn btn-default" ng-click="addNewChoice()">
-										<h4>+</h4>
+										<button type="button" class="btn btn-default" ">
+										<h4> -</h4>
 										</button>
 									</div>
 							</div>
 							<div class="infoCategory">
-								<div class="type">
+							<table>
+							<tr>
+							<td>
+								
 									<h5>Service Type</h5>
-								</div>
-								<div class="name">
+							
+							</td>
+							<td>
+							
 									<h5>Service Name</h5>
-								</div>
+								
+							</td>
+							</tr>
+							</table>
 							</div>
-							<div class="serviceType">
+			<table>
 							 
            <fieldset  ng-repeat="choice in choices">
-            <select id="{{$index}}" data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
+            <tr><td><select data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
     		</select>
-  			  <select id="{{$index}}" ng-disable="listservicesselect" data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices" data-ng-change="addServiceList(listservicesselect.productId)">
+    		</td>
+    		<td>
+  			  <select id="{{$index}}" data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices" >
+   			  <p>{{listservicesselect.name}}</p>
    			 </select>
-          <button id="" ng-click="removeChoice($index)">-</button>
-          <p>{{$index}}</p>
-           </fieldset>
-          
-
-           
-			   <div id="choicesDisplay">
-				  {{ choices }}
-			   </div>
-			   
-			  
-			</div>
-    						
+   			 <td>
+   			 <td>
+         	 <button type="button" ng-click="addServiceList(listservicesselect.productId,listservicesselect.name,listtypeselect.typeName)">+</button>
+           	</td>
+           	</tr>
+           </fieldset>		  
+			</table>
+    		<table>
+			
+			<tr ng-repeat="service in services">
+			<td>{{service.typeName}}</td>
+			<td>{{service.name}}</td>
+			<td><button id="" ng-click="removeChoice($index)">-</button></td>
+			
+			</tr>
+			</table>					
 		</div>
-            						<div class="submitBtn">
-            							<input type="submit" value="submit" />
-            						</div>
-            						<p>{{services}}</p>
+         <div class="submitBtn">
+        	<input type="submit" class="btn btn-default" value="submit" />
+        </div>
+       
             						
-            					</div>
-            				</div>
-            			</form>
+       </div>
+      </div>
+     </form>
 	  </div>
 	  </div>
   </div>
