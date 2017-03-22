@@ -1825,65 +1825,7 @@ public class SchedulerApi {
         		return null;
 	}
 	
-	/*
-	private static final AppEngineDataStoreFactory DATA_STORE_FACTORY =
-		      AppEngineDataStoreFactory.getDefaultInstance();
-		  
-		  /** Global instance of the HTTP transport. */
-		  //static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
-
-		  /** Global instance of the JSON factory. */
-		  //static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-/*
-		  private static GoogleClientSecrets clientSecrets = null;
-
-		  static GoogleClientSecrets getClientCredential() throws IOException {
-			  
-			  
-			  Details details = new Details();
-		        details.setClientId(ConstantsSecret.client_id);
-		        details.setClientSecret(ConstantsSecret.client_secret);
-
-		        clientSecrets = new GoogleClientSecrets();
-		        clientSecrets.setInstalled(details);
-		
-		    return clientSecrets;
-		  }
-
-		  
-		  static String getRedirectUri(HttpServletRequest req) {
-		    GenericUrl url = new GenericUrl(req.getRequestURL().toString());
-		    url.setRawPath("/oauth2callback");
-		    return url.build();
-		  }
-
-		  
-		  static GoogleAuthorizationCodeFlow newFlow() throws IOException {
-		    return new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
-		        getClientCredential(), Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(
-		        DATA_STORE_FACTORY).setAccessType("offline").build();
-		  }
-
-		  
-		  static Calendar loadCalendarClient() throws IOException {
-		    String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
-		    Credential credential = newFlow().loadCredential(userId);
-		    return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).build();
-		  }
-
-		  
-		  /**
-		   * Returns an {@link IOException} (but not a subclass) in order to work around restrictive GWT
-		   * serialization policy.
-		   *//*
-		  static IOException wrappedIOException(IOException e) {
-		    if (e.getClass() == IOException.class) {
-		      return e;
-		    }
-		    return new IOException(e.getMessage());
-		  }	
 	
-	*/
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
@@ -2008,27 +1950,7 @@ public class SchedulerApi {
 
         //Quickstart.addEvent(calendarId, user, event);
         
-		/*
-		 Event event = new Event()
-	        .setSummary("Google I/O 2015")
-	        .setLocation("800 Howard St., San Francisco, CA 94103")
-	        .setDescription("A chance to hear more about Google's developer products.");
-
-	    DateTime startDateTime = new DateTime("2017-04-28T09:00:00-07:00");
-	    EventDateTime start = new EventDateTime()
-	        .setDateTime(startDateTime)
-	        .setTimeZone("America/Los_Angeles");
-	    event.setStart(start);
-
-	    DateTime endDateTime = new DateTime("2017-04-28T17:00:00-07:00");
-	    EventDateTime end = new EventDateTime()
-	        .setDateTime(endDateTime)
-	        .setTimeZone("America/Los_Angeles");
-	    event.setEnd(end);
 		
-		
-        return event;
-        */
 		
 		return null;
 	}
