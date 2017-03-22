@@ -381,7 +381,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
  });
 
- conferenceApp.controllers.controller('AddEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+ conferenceApp.controllers.controller('AddEmployeeController', function ($scope, $log,$location, oauth2Provider, HTTP_ERRORS) {
 	 console.log("Reached AddEmployeeController");
 	 $scope.addEmployee = function() {
 		  
@@ -419,16 +419,18 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 			"typeId":typeId
 		 	};
 		 	gapi.client.scheduler.admin.removeType(removeTypeForm).execute();
-		 	$location.path('/');
+		 	//$location.path('/');
 		  };
 
 	 $scope.removeSpecificService= function(value){
 		 	console.log("Removing Specific Service with an ID of=" + value);
-		 	var removeServiceForm={
-		 			"ServiceId":value
+		 	var serviceId= value;
+		 	var removeTypeForm={
+		 			"TypeId":serviceId
 		 	};
-		 	gapi.client.scheduler.admin.removeService(removeServiceForm).execute();
-		 	$location.path('/');
+		 	console.log(removeTypeForm);
+		 	gapi.client.scheduler.admin.removeService(removeTypeForm).execute();
+		 	//$location.path('/');
 		 
 	 };
  });
