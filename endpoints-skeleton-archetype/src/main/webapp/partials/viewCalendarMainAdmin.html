@@ -1,25 +1,9 @@
 <head>
 	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
-	<link href="/css/MasterAdminStyle.css" rel="stylesheet">
-	<link href="/dhtmlxSample/codebase/dhtmlxScheduler.css" rel="stylesheet">
-	<script src="/dhtmlxSample/codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
-	<link href="/dhtmlxSample/codebase/dhtmlxscheduler.css">
-	<style type="text/css" media="screen">
-		html, body{
-			margin:0px;
-			padding:0px;
-			height:100%;
-			overflow: hidden;
-		}
-		
-		.dhx_calendar_click {
-			background-color: #C2D5FC !important;
-		}
-	</style>
-	<script src="/dhtmlxSample/calendarOnload.js"></script>
+
 	
 </head>
-<body onload="doOnLoad();">
+<body >
 
 <div class="row" >
 	<div class="col-lg-2">
@@ -197,7 +181,21 @@
 						<option>Room</option>
 					</select>
 				</div>
-				<div class="dropDownCal"></div>
+				<div class="dropDownCal"> 
+				<div class="form-group" ng-controller="DatepickerCtrl">
+                    <p class="input-group">
+                        <input id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
+                               ng-model="conference.startDate" is-open="opened"
+                               datepicker-options="dateOptions"
+                               close-text="Close"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-xs" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    </p>
+                </div>
+				</div>
 				<div class="filterBtn">
 					<button type="submit" class="btn btn-default">Search</button>
 				</div>
