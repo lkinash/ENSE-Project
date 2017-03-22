@@ -38,6 +38,7 @@ public class RemoveServiceForm {
 		this.name = newName;
 		this.price = newPrice;
 		this.typeId = newTypeId;
+		this.serviceId = newServiceId;
 	}
 	
 	/**
