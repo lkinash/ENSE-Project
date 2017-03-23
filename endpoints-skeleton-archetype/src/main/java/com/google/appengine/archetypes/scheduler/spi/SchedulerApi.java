@@ -1793,14 +1793,14 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public com.google.api.services.calendar.model.Calendar test(final User user) throws IOException, UnauthorizedException {
+  	public WrappedBoolean test(final User user) throws IOException, UnauthorizedException {
 
       //  if (user == null) {
         //    throw new UnauthorizedException("Authorization required");
        // }
         
 		
-		//return Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
+		return Quickstart.addEvent(user, ConstantsSecret.calendarId, EventCreator.createEvent());
 		
 		
         //com.google.api.services.calendar.Calendar service = loadCalendarClient();
@@ -1822,7 +1822,7 @@ public class SchedulerApi {
 		
 		//return calendar;
 
-        		return null;
+        //return null;
 	}
 	
 	

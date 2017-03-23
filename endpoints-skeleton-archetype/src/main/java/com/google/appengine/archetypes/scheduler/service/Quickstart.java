@@ -1,6 +1,7 @@
 package com.google.appengine.archetypes.scheduler.service;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -179,15 +180,16 @@ public class Quickstart {
 
 		        clientSecrets = new GoogleClientSecrets();
 		        clientSecrets.setInstalled(details);
-			/*  
+			/* 
 		    if (clientSecrets == null) {
 		      clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-		          new InputStreamReader(Quickstart.class.getResourceAsStream("/client_secrets.json")));
+		          new InputStreamReader(Quickstart.class.getResourceAsStream("/client_secret.json")));
 		      Preconditions.checkArgument(!clientSecrets.getDetails().getClientId().startsWith("Enter ")
 		          && !clientSecrets.getDetails().getClientSecret().startsWith("Enter "),
 		          "Download client_secrets.json file from https://code.google.com/apis/console/"
-		          + "?api=calendar into calendar-appengine-sample/src/main/resources/client_secrets.json");
-		    }*/
+		          + "?api=calendar into calendar-appengine-sample/src/main/resources/client_secret.json");
+		    }
+		    */
 		    return clientSecrets;
 		  }
 
@@ -197,14 +199,23 @@ public class Quickstart {
 		    return url.build();
 		  }
 
+		  /*
 		  static GoogleAuthorizationCodeFlow newFlow() throws IOException {
 		    return new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
 		        getClientCredential(), Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(
 		        DATA_STORE_FACTORY).setAccessType("offline").build();
 		  }
+		  */
+		  
+		  static GoogleAuthorizationCodeFlow newFlow() throws IOException {
+			  return new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
+			      getClientCredential(), Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(
+			      DATA_STORE_FACTORY).setAccessType("offline").setApprovalPrompt("force").build();
+			}
 
 		  static Calendar loadCalendarClient() throws IOException {
-		    String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
+		    String userId = "110528491283071203527";
+		    		//UserServiceFactory.getUserService().getCurrentUser().getUserId();
 		    Credential credential = newFlow().loadCredential(userId);
 		    return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).build();
 		  }
@@ -220,7 +231,7 @@ public class Quickstart {
 		    return new IOException(e.getMessage());
 		  }
 
-    public static WrappedBoolean addEvent(String calendarId, final User user, Event event) throws IOException {
+    public static WrappedBoolean addEvent(final User user, String calendarId, Event event) throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -229,9 +240,25 @@ public class Quickstart {
         
     	// j6pq7ifpumics69e9948q2bhdc@group.calendar.google.com
     	
+    	   java.io.File licenseFile = new java.io.File("39790cb51b361f51cab6940d165c6cda4dc60177-privatekey.p12");
+
+    	   GoogleCredential credential = new GoogleCredential.Builder()
+
+    	  .setTransport(HTTP_TRANSPORT)
+    	  .setJsonFactory(JSON_FACTORY)
+    	  .setServiceAccountId("master-552@hello-world-147504.iam.gserviceaccount.com")   
+
+    	  .setServiceAccountUser("kinash.lindsey@gmail.com")
+    	  //.setServiceAccountScopes(Constants.CALENDAR_SCOPE)
+    	  .setServiceAccountPrivateKeyFromP12File(licenseFile)
+    	  .build();
+
+    	   com.google.api.services.calendar.Calendar service = new com.google.api.services.calendar.Calendar.Builder(
+    	                        HTTP_TRANSPORT, JSON_FACTORY, credential)
+    	                        .setApplicationName( "Google Calendar Sync").build();
     	
-    	
-        com.google.api.services.calendar.Calendar service = loadCalendarClient();
+        //com.google.api.services.calendar.Calendar service 
+        //= loadCalendarClient();
             //getCalendarService(user);
 
     
