@@ -198,7 +198,7 @@
 											</tr>
 											<tr ng-repeat="service in listtype.service">
 												<td>{{service.name}}</td>
-												<td>{{service.requiredClearance}}</td>
+												<td>{{true == service.requiresClearance ? 'Yes' : 'No'}}</td>
 												<td>{{service.defaultLength}}</td>
 												<td>{{service.price}}</td>
 												<td><button type="button" class="btn btn-danger" ng-click="removeSpecificService(service.productId)"> - </button></td>
