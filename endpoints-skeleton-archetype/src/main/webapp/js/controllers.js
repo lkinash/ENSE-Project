@@ -277,10 +277,6 @@ conferenceApp.controllers.controller('DatepickerCtrl', function ($scope) {
     $scope.format = $scope.formats[0];
 });
 
-
-
-
-
 conferenceApp.controllers.controller('AddRoomController', function ($scope, $log,$location, oauth2Provider, HTTP_ERRORS) {
 	console.log("reached AddRoom controller");
 	var roomForm={
@@ -445,6 +441,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				// $scope.typenames[i]=$scope.listtypes[i].typeName;
 				// console.log("name"+i+" "+$scope.typenames[i]);
 			// }
+			 $scope.listtypeselect=$scope.listtypes[0].typeName;
 			 $scope.$apply();
 		 });
 	 };
@@ -638,11 +635,54 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
   });
 
    
-   conferenceApp.controllers.controller('AddClientController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+   conferenceApp.controllers.controller('AddClientController', function ($scope, $log, $location, oauth2Provider, HTTP_ERRORS) {
+	 console.log("reached the AddClientController");
+	   var endYear = 2017;
+	   var startYear = 1920;
+	   $scope.selects = {
 
+			   days: function(){
 
+			     // Get number of days based on month + year 
+			     // (January = 31, February = 28, April = 30, February 2000 = 29) or 31 if no month selected yet
+			     var nbDays = new Date($scope.dateYear, $scope.dateMonth, 0).getDate() || 31;
+
+			     var daysList = [];
+			     for( var i = 1; i <= nbDays ; i++){
+			       var iS = i.toString();
+			       daysList.push( (iS.length < 2) ? '0' + iS : iS ); // Adds a leading 0 if single digit
+			     }
+			     return daysList;
+			   },
+			   months: function(){
+			     var monthList = [];
+			     for( var i = 1; i <= 12 ; i++){
+			       var iS = i.toString();
+			       monthList.push( (iS.length < 2) ? '0' + iS : iS ); // Adds a leading 0 if single digit
+			     }
+			     return monthList;
+			   },
+			   years: function(){
+			     var yearsList = [];
+			     for( var i = endYear; i >= startYear ; i--){
+			       yearsList.push( i.toString() );
+			     }
+			     return yearsList;
+			   }
+			 };
+	   var clientForm={};
+		 $scope.addClient=function(){
+			 clientForm = {
+				      "firstName" : $scope.Fname,
+				      "lastName": $scope.lname,
+				      "phoneNumber": $scope.phoneNumber,
+				      "email": $scope.email,
+				      
+				    };
+			// gapi.client.scheduler.admin.addClient(clientForm).execute();
+			 //$location.path('/');
+		 };
    });
-   
    conferenceApp.controllers.controller('ViewClientController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 
 
