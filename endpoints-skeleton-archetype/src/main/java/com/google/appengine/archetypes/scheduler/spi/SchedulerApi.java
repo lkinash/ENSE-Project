@@ -4,6 +4,7 @@ import static com.google.appengine.archetypes.scheduler.service.OfyService.facto
 import static com.google.appengine.archetypes.scheduler.service.OfyService.ofy;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1790,17 +1791,18 @@ public class SchedulerApi {
 	 * Description of the method createAppointment.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
 	
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public com.google.api.services.calendar.model.Calendar test(final User user) throws IOException, UnauthorizedException {
+  	public com.google.api.services.calendar.model.Calendar test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
 
       //  if (user == null) {
         //    throw new UnauthorizedException("Authorization required");
        // }
         
 		
-		//return Quickstart.addEvent(ConstantsSecret.calendarId, user, EventCreator.createEvent());
+		return Quickstart.addEvent(user, ConstantsSecret.calendarId, EventCreator.createEvent());
 		
 		
         //com.google.api.services.calendar.Calendar service = loadCalendarClient();
@@ -1822,7 +1824,7 @@ public class SchedulerApi {
 		
 		//return calendar;
 
-        		return null;
+        //return null;
 	}
 	
 	
