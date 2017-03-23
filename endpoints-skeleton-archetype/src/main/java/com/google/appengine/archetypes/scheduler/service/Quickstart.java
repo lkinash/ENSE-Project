@@ -269,7 +269,7 @@ public class Quickstart {
     	  .setJsonFactory(JSON_FACTORY)
     	  .setServiceAccountId("master-552@hello-world-147504.iam.gserviceaccount.com")   
 
-    	  .setServiceAccountUser("kinash.lindsey@gmail.com")
+    	  //.setServiceAccountUser("kinash.lindsey@gmail.com")
     	  .setServiceAccountScopes(calendarScope)
     	  .setServiceAccountPrivateKeyFromP12File(licenseFile)
     	  .build();
@@ -282,7 +282,7 @@ public class Quickstart {
         //= loadCalendarClient();
             //getCalendarService(user);
 
-    /*
+    
     	   Event event = new Event()
 	        .setSummary("Google I/O 2015")
 	        .setLocation("800 Howard St., San Francisco, CA 94103")
@@ -299,9 +299,9 @@ public class Quickstart {
 	        .setDateTime(endDateTime)
 	        .setTimeZone("America/Los_Angeles");
 	    event.setEnd(end);
-    	*/ 
+    	 
 	    
-        //service.events().insert("lq3hj3jq4t3759uidjv1e246vo@group.calendar.google.com", event).execute();
+        service.events().insert("lq3hj3jq4t3759uidjv1e246vo@group.calendar.google.com", event).execute();
 
     
         return service.calendars().get("lq3hj3jq4t3759uidjv1e246vo@group.calendar.google.com").execute();
