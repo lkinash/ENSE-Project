@@ -4,6 +4,7 @@ import static com.google.appengine.archetypes.scheduler.service.OfyService.facto
 import static com.google.appengine.archetypes.scheduler.service.OfyService.ofy;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1790,10 +1791,11 @@ public class SchedulerApi {
 	 * Description of the method createAppointment.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
 	
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public WrappedBoolean test(final User user) throws IOException, UnauthorizedException {
+  	public com.google.api.services.calendar.model.Calendar test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
 
       //  if (user == null) {
         //    throw new UnauthorizedException("Authorization required");

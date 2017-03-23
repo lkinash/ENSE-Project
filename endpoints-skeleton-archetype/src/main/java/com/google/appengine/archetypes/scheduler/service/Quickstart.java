@@ -2,7 +2,10 @@ package com.google.appengine.archetypes.scheduler.service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.appengine.datastore.AppEngineDataStoreFactory;
@@ -17,7 +20,9 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.server.spi.Constant;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.appengine.api.users.User;
 import com.google.appengine.archetypes.scheduler.Constants;
 import com.google.appengine.archetypes.scheduler.ConstantsSecret;
@@ -32,6 +37,7 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.Preconditions;
 import com.google.api.client.util.store.DataStoreFactory;
 import com.google.api.services.calendar.Calendar;
@@ -164,11 +170,18 @@ public class Quickstart {
 		      AppEngineDataStoreFactory.getDefaultInstance();
 		  
 		  /** Global instance of the HTTP transport. */
-		  static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
+		  //static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
 
 		  /** Global instance of the JSON factory. */
-		  static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+		  //static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
+	  /** Global instance of the HTTP transport. */
+	  private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+
+	  /** Global instance of the JSON factory. */
+	  private static final JsonFactory JSON_FACTORY = new JacksonFactory();
+
+	
 		  private static GoogleClientSecrets clientSecrets = null;
 
 		  static GoogleClientSecrets getClientCredential() throws IOException {
@@ -231,7 +244,7 @@ public class Quickstart {
 		    return new IOException(e.getMessage());
 		  }
 
-    public static WrappedBoolean addEvent(final User user, String calendarId, Event event) throws IOException, GeneralSecurityException {
+    public static com.google.api.services.calendar.model.Calendar addEvent(final User user, String calendarId, Event event2) throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -240,16 +253,24 @@ public class Quickstart {
         
     	// j6pq7ifpumics69e9948q2bhdc@group.calendar.google.com
     	
-    	   java.io.File licenseFile = new java.io.File("39790cb51b361f51cab6940d165c6cda4dc60177-privatekey.p12");
+    	   java.io.File licenseFile = new java.io.File("WEB-INF/Hello World-788a6517b932.p12");
 
+    	    Set<String> calendarScope = new HashSet<String>();
+        	calendarScope.add("https://www.googleapis.com/auth/calendar");
+        	calendarScope.add("https://www.googleapis.com/auth/calendar.readonly");
+        	calendarScope.add(Constant.API_EMAIL_SCOPE);
+        
+    	   
     	   GoogleCredential credential = new GoogleCredential.Builder()
 
+    	   //CalendarScopes.CALENDAR
+    	   
     	  .setTransport(HTTP_TRANSPORT)
     	  .setJsonFactory(JSON_FACTORY)
     	  .setServiceAccountId("master-552@hello-world-147504.iam.gserviceaccount.com")   
 
     	  .setServiceAccountUser("kinash.lindsey@gmail.com")
-    	  //.setServiceAccountScopes(Constants.CALENDAR_SCOPE)
+    	  .setServiceAccountScopes(calendarScope)
     	  .setServiceAccountPrivateKeyFromP12File(licenseFile)
     	  .build();
 
@@ -261,11 +282,29 @@ public class Quickstart {
         //= loadCalendarClient();
             //getCalendarService(user);
 
-    
-        event = service.events().insert(calendarId, event).execute();
+    /*
+    	   Event event = new Event()
+	        .setSummary("Google I/O 2015")
+	        .setLocation("800 Howard St., San Francisco, CA 94103")
+	        .setDescription("A chance to hear more about Google's developer products.");
+
+	    DateTime startDateTime = new DateTime("2017-04-28T09:00:00-07:00");
+	    EventDateTime start = new EventDateTime()
+	        .setDateTime(startDateTime)
+	        .setTimeZone("America/Los_Angeles");
+	    event.setStart(start);
+
+	    DateTime endDateTime = new DateTime("2017-04-28T17:00:00-07:00");
+	    EventDateTime end = new EventDateTime()
+	        .setDateTime(endDateTime)
+	        .setTimeZone("America/Los_Angeles");
+	    event.setEnd(end);
+    	*/ 
+	    
+        //service.events().insert("lq3hj3jq4t3759uidjv1e246vo@group.calendar.google.com", event).execute();
 
     
-        return null;
+        return service.calendars().get("lq3hj3jq4t3759uidjv1e246vo@group.calendar.google.com").execute();
     }
     
 }
