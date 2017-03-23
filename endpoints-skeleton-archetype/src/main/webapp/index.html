@@ -42,12 +42,10 @@
 
 		<div class="hright">
 			
-		<div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li id="signInLink" ng-hide="getSignedInState()"><a ng-click="signIn(); collapseNavbar()">Google+ SignIn</a></li>
-                <li id="signOutLink" ng-show="getSignedInState()"><a ng-click="signOut(); collapseNavbar()">Log-out</a></li>
-            </ul>
-        </div>
+		
+                <button type="button" class="btn btn-default" id="signInLink" ng-hide="getSignedInState()"ng-click="signIn(); ">Google+ SignIn</button>
+                <button type="button" class="btn btn-default" id="signOutLink" ng-show="getSignedInState()" ng-click="signOut(); ">Log-out</button>
+         
 			</div>
 		</div>
 
