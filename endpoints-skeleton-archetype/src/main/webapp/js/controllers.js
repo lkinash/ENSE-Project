@@ -679,13 +679,33 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				      "email": $scope.email,
 				      
 				    };
-			// gapi.client.scheduler.admin.addClient(clientForm).execute();
-			 //$location.path('/');
+			gapi.client.scheduler.client.addClient(clientForm).execute();
+			console.log("Client successfully added");
+			$location.path('/');
 		 };
    });
    conferenceApp.controllers.controller('ViewClientController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
-
+	   console.log("Reached the View client controller");
+	  /*
+	   $scope.init = function(){
+			 console.log("Reached Init function: Retrieving AllClients");
+			 	 gapi.client.scheduler.admin.getAllTypesWithService().execute(function(resp){
+				 $scope.clients=resp.result.items;
+				 $scope.$apply();
+			 });
+		 };
+		 
+	   $scope.removeClietn = function(index) {
+			 	console.log("Removing client number ="+index);
+			 	var clientId= $scope.clients[index].clientId;
+			 	console.log("Client that is being deleted= "+ clientId);
+			 	var removeClientForm={
+			 			"ClientId":clientId
+			 	};
+			 	gapi.client.scheduler.admin.removeClient(removeClientForm).execute();
+			 	$location.path('/');
+			  };
+		*/
    });
    
    
