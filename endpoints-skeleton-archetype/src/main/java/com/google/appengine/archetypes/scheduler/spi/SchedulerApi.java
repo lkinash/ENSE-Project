@@ -33,7 +33,9 @@ import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.EventReminder;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.scheduler.Constants;
@@ -57,6 +59,7 @@ import com.google.appengine.archetypes.scheduler.forms.AppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.ClientForm;
 import com.google.appengine.archetypes.scheduler.forms.EmployeeForm;
+import com.google.appengine.archetypes.scheduler.forms.EventCreatorForm;
 import com.google.appengine.archetypes.scheduler.forms.EventForm;
 import com.google.appengine.archetypes.scheduler.forms.GeneralForm;
 import com.google.appengine.archetypes.scheduler.forms.PageAuthForm;
@@ -74,6 +77,7 @@ import com.google.appengine.archetypes.scheduler.forms.TimeBlockForm;
 import com.google.appengine.archetypes.scheduler.forms.TypeForm;
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.google.appengine.archetypes.scheduler.list.Status;
+import com.google.appengine.archetypes.scheduler.service.DateTimeConverter;
 import com.google.appengine.archetypes.scheduler.service.EventCreator;
 import com.google.appengine.archetypes.scheduler.service.Quickstart;
 import com.google.appengine.archetypes.scheduler.servlets.Sendgrid;
@@ -565,10 +569,11 @@ public class SchedulerApi {
 	 * Description of the method createAppointment.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
 	
 	@ApiMethod(name = "appointment.addAppointment", path = "appointment.addAppointment", httpMethod = "post")
-  	public Appointment addAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
+  	public Appointment addAppointment(final User user, AppointmentForm appointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -576,6 +581,8 @@ public class SchedulerApi {
         
   
         EventForm eventForm = appointmentForm.getEventForm();
+        
+        Event event = createEvent(user, eventForm, "");
         
         Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
 
@@ -2014,7 +2021,12 @@ public class SchedulerApi {
         
 		Calendar service = Quickstart.getService(user);
 		
-  		Event event = EventCreator.createEvent(eventForm);
+		EventCreatorForm eventCreatorForm = new EventCreatorForm(eventForm.getSummary(), eventForm.getLocation(), eventForm.getDescription(), 
+				DateTimeConverter.convertStartDate(eventForm), DateTimeConverter.convertEndDate(eventForm), 
+				eventForm.getRecurrence(), eventForm.getAttendees(), eventForm.getReminderOverrides() );
+	    	
+		
+  		Event event = EventCreator.createEvent(eventCreatorForm);
 
         event = service.events().insert(calendarId, event).execute();
 		
