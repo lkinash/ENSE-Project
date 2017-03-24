@@ -1793,7 +1793,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-	
+/*	
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
   	public com.google.api.services.calendar.model.Calendar test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
 
@@ -1802,7 +1802,7 @@ public class SchedulerApi {
        // }
         
 		
-		return Quickstart.addEvent(user, ConstantsSecret.calendarId, EventCreator.createEvent());
+		//return Quickstart.addEvent(user, ConstantsSecret.calendarId, EventCreator.createEvent());
 		
 		
         //com.google.api.services.calendar.Calendar service = loadCalendarClient();
@@ -1827,7 +1827,7 @@ public class SchedulerApi {
         //return null;
 	}
 	
-	
+*/
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
