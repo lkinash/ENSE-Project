@@ -1240,6 +1240,27 @@ public class SchedulerApi {
         
   	}
   	
+  	/**
+  	 * Returns clients.
+  	 * @return clients 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAllClients", path = "admin.getAllClients", httpMethod = "get")
+ 	public List<Client> getAllClients(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        Query<Client> query =  ofy().load().type(Client.class);
+    	query = query.order("lastName");
+    	
+        return query.list();
+        
+  	}
+  	
  	/**
   	 * Returns rooms.
   	 * @return rooms 
