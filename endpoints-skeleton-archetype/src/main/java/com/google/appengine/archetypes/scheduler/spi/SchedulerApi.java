@@ -1830,7 +1830,6 @@ public class SchedulerApi {
         
 		//return calendar;
 
-        return null;
 	}
 	
 
