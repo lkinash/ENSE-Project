@@ -19,7 +19,7 @@ public class ChangesTest {
 	private String TIMESTAMP = "2005-10-30 T 10:45 UTC";
 	private String USERID = "478956opo";
 	private long CHANGEID = 111447;
-	private String CHANGE = "laser machine type has been changed";
+	private String CHANGE = "laser machine is changed";
 	
 	private Changes changes;
 	
