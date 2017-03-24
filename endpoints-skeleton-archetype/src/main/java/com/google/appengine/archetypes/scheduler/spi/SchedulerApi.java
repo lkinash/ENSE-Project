@@ -49,6 +49,7 @@ import com.google.appengine.archetypes.scheduler.entities.PageAuth;
 import com.google.appengine.archetypes.scheduler.entities.Product;
 import com.google.appengine.archetypes.scheduler.entities.Room;
 import com.google.appengine.archetypes.scheduler.entities.Service;
+import com.google.appengine.archetypes.scheduler.entities.TimeBlock;
 import com.google.appengine.archetypes.scheduler.entities.Type;
 import com.google.appengine.archetypes.scheduler.entities.TypeWithService;
 import com.google.appengine.archetypes.scheduler.forms.AdminForm;
@@ -69,6 +70,7 @@ import com.google.appengine.archetypes.scheduler.forms.RemoveTypeForm;
 import com.google.appengine.archetypes.scheduler.forms.RoomForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceTypeForm;
+import com.google.appengine.archetypes.scheduler.forms.TimeBlockForm;
 import com.google.appengine.archetypes.scheduler.forms.TypeForm;
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.google.appengine.archetypes.scheduler.list.Status;
@@ -98,10 +100,11 @@ public class SchedulerApi {
   	 * Description of the method addEmployee.
   	 * @param admin 
   	 * @param employeeForm 
+	 * @throws IOException 
   	 */
 	
 	@ApiMethod(name = "admin.addEmployee", path = "admin.addEmployee", httpMethod = "post")
-  	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException{
+  	public Employee addEmployee(final User user, EmployeeForm employeeForm, List<TimeBlockForm> timeBlockForms) throws UnauthorizedException, IOException{
 		
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -116,6 +119,8 @@ public class SchedulerApi {
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
    
+   
+        List<Long> timeBlocks = addTimeBlocks(user, timeBlockForms);
         
         // TODO 
         // Properly declare variables based on google calendar
@@ -126,7 +131,7 @@ public class SchedulerApi {
         
         //employee must have a name, email and a password set
         
-  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getServiceIds(), employeeId);
+  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getServiceIds(), employeeId, timeBlocks);
   			
 
   		ofy().save().entities(employee).now();
@@ -139,6 +144,38 @@ public class SchedulerApi {
 		return employee;
   	}
 
+	/**
+  	 * Description of the method addRoom.
+  	 * @param admin 
+  	 * @param roomForm 
+  	 * @throws UnauthorizedException 
+  	 * @throws IOException 
+  	 */
+     
+   	@ApiMethod(name = "admin.addTimeBlocks", path = "admin.addTimeBlocks", httpMethod = "post")
+  	public List<Long> addTimeBlocks(final User user, List<TimeBlockForm> timeBlockForms) throws UnauthorizedException, IOException {
+   		
+   		
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        List<Long> list = new ArrayList<Long>();
+        
+        for(TimeBlockForm tempForm: timeBlockForms){
+
+        	final Key<TimeBlock> timeBlockKey = factory().allocateId(TimeBlock.class);
+        	final long Id = timeBlockKey.getId();
+        
+        	TimeBlock timeBlock = new TimeBlock(Id, tempForm.getStartTime(), tempForm.getEndTime());
+        
+        	ofy().save().entities(timeBlock).now(); 
+   		
+        }
+		
+        return list;
+  	}
+	
   	/**
   	 * Description of the method addRoom.
   	 * @param admin 
@@ -151,9 +188,9 @@ public class SchedulerApi {
   	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException, IOException {
    		
    		
-       // if (user == null) {
-         //   throw new UnauthorizedException("Authorization required");
-        //}
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
         
 
         final Key<Room> roomKey = factory().allocateId(Room.class);

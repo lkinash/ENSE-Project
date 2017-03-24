@@ -18,7 +18,7 @@ public class TimeBlockForm {
 		
 	}
 	
-	public TimeBlockForm( DateTime newStartTime, DateTime newEndTime){
+	public TimeBlockForm(DateTime newStartTime, DateTime newEndTime){
 		
 		this.endTime = newEndTime;
 		this.startTime = newStartTime;
