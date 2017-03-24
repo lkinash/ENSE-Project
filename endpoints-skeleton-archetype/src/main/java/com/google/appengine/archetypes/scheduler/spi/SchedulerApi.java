@@ -1062,7 +1062,7 @@ public class SchedulerApi {
         
         Appointment appointment = getAppointment(user, removeAppointmentForm.getAppointmentId());
         
-        deleteEvent(user, calendarId, appointment.getEventId());
+        //deleteEvent(user, calendarId, appointment.getEventId());
     	
 	    Key<Appointment> key = Key.create(Appointment.class, removeAppointmentForm.getAppointmentId());
 		
@@ -1795,15 +1795,20 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public com.google.api.services.calendar.model.Calendar test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
+  	public Event test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
 
       //  if (user == null) {
         //    throw new UnauthorizedException("Authorization required");
        // }
         
 		
-		return Quickstart.addEvent(user, ConstantsSecret.calendarId, EventCreator.createEvent());
+		//return Quickstart.addEvent(user, ConstantsSecret.calendarId, EventCreator.createEvent());
 		
+		Calendar service = Quickstart.getService(user);
+		
+	    String id = "projectense@gmail.com";
+		return null;
+		   
 		
         //com.google.api.services.calendar.Calendar service = loadCalendarClient();
         
@@ -1817,11 +1822,12 @@ public class SchedulerApi {
         //com.google.api.services.calendar.model.Calendar calendar =
         //		service.calendars().get(ConstantsSecret.calendarId).execute();
         
-       // Event event = createEvent(user);
+        //Event event = createEvent(user);
         
-       // event = service.events().insert(ConstantsSecret.calendarId, event).execute();
+       // event = service.events().insert(id, event).execute();
 		
-		
+		//return event;
+        
 		//return calendar;
 
         //return null;
@@ -1944,31 +1950,34 @@ public class SchedulerApi {
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
 	@ApiMethod(name = "appointment.createEvent", path = "appointment.createEvent", httpMethod = "post")
-  	public Event createEvent(final User user) throws UnauthorizedException, IOException {
+  	public Event createEvent(final User user, EventForm eventForm, @Named("calendarId") final String calendarId) throws UnauthorizedException, IOException, GeneralSecurityException {
         
-  		//Event event = EventCreator.createEvent(eventForm);
+		Calendar service = Quickstart.getService(user);
+		
+  		Event event = EventCreator.createEvent(eventForm);
 
-        //Quickstart.addEvent(calendarId, user, event);
-        
+        event = service.events().insert(calendarId, event).execute();
 		
-		
-		return null;
+		return event;
 	}
 	
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
-	
-	private static WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException {
+	@ApiMethod(name = "appointment.delete", path = "appointment.delete", httpMethod = "post")
+	public WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException, GeneralSecurityException {
 
-		//Calendar service = getCalendarService(user);
-        //service.events().delete(calendarId, eventId).execute();
-        
-        return null;
+		Calendar service = Quickstart.getService(user);
+		
+		service.events().delete(calendarId, eventId).execute();
+		
+        return new WrappedStringId(eventId);
 	}
 	
 	
