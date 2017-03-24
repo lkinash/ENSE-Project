@@ -28,12 +28,12 @@ public class EmployeeTest {
 	
 	 private final LocalServiceTestHelper testHelper =  new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig().setDefaultHighRepJobPolicyUnappliedJobPercentage(100));
 
-	    
+	   
 	 //Before the test is run set up the test data store helper and create a new instance of the SaleItem Object
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-	     employee = new Employee(CALENDARID, NAME, USERID, null, EMPLOYEEID);
+	     employee = new Employee(CALENDARID, NAME, USERID, null, EMPLOYEEID, null);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -50,4 +50,5 @@ public class EmployeeTest {
 		assertEquals(USERID, employee.getUserId());
 		assertEquals(EMPLOYEEID, employee.getEmployeeId());
 	}
+	
 }

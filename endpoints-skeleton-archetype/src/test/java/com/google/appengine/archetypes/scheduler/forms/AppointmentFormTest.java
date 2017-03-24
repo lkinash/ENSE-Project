@@ -15,6 +15,7 @@ public class AppointmentFormTest {
 	private long SERVICEID = 777785;
 	private long CLIENTID = 222236;
 	private long EMPLOYEEID = 111454;
+	private long ROOMID = 498535;
 
 	private EventForm EVENTFORM;
 	
@@ -27,7 +28,7 @@ public class AppointmentFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 appointment = new AppointmentForm(TYPEID,SERVICEID,CLIENTID,EMPLOYEEID,EVENTFORM);
+		 appointment = new AppointmentForm(TYPEID,SERVICEID,CLIENTID,EMPLOYEEID,EVENTFORM, ROOMID);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -41,6 +42,7 @@ public class AppointmentFormTest {
 		assertEquals(TYPEID,appointment.getTypeId());
 		assertEquals(SERVICEID,appointment.getServiceId());
 		assertEquals(CLIENTID,appointment.getClientId());
+		assertEquals(ROOMID,appointment.getRoomId());
 		assertEquals(EMPLOYEEID,appointment.getEmployeeId());
 	}
 
