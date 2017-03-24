@@ -1,6 +1,7 @@
 package com.google.appengine.archetypes.scheduler.service;
 
 import com.google.api.client.util.DateTime;
+import com.google.appengine.archetypes.scheduler.forms.EventForm;
 
 public class DateTimeConverter {
 
@@ -16,12 +17,20 @@ public class DateTimeConverter {
 	 * @return
 	 */
 	
-	public DateTime convert(int year, int month, int day, int hour, int minute){
+	public static DateTime convertStartDate(EventForm eventForm){
+		return convert(eventForm.getStartYear(), eventForm.getStartMonth(), eventForm.getStartDay(), eventForm.getStartHour(), eventForm.getStartMinute());
+	}
+	
+	public static DateTime convertEndDate(EventForm eventForm){
+		return convert(eventForm.getEndYear(), eventForm.getEndMonth(), eventForm.getEndDay(), eventForm.getEndHour(), eventForm.getEndMinute());
+	}
+	
+	public static DateTime convert(int year, int month, int day, int hour, int minute){
 		
 		return convert(year, month, day, hour, minute, 0);
 	}
 	
-	public DateTime convert(int year, int month, int day, int hour, int minute, int second){
+	public static DateTime convert(int year, int month, int day, int hour, int minute, int second){
 		
 		//TODO
 		// Add converter to date time object
