@@ -108,7 +108,7 @@ public class SchedulerApi {
   	 */
 	
 	@ApiMethod(name = "admin.addEmployee", path = "admin.addEmployee", httpMethod = "post")
-  	public Employee addEmployee(final User user, EmployeeForm employeeForm, List<TimeBlockForm> timeBlockForms) throws UnauthorizedException, IOException{
+  	public Employee addEmployee(final User user, EmployeeForm employeeForm /*, List<TimeBlockForm> timeBlockForms */) throws UnauthorizedException, IOException{
 		
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -124,7 +124,8 @@ public class SchedulerApi {
         final long employeeId = employeeKey.getId();
    
    
-        List<Long> timeBlocks = addTimeBlocks(user, timeBlockForms);
+        List<Long> timeBlocks = null;
+        		//addTimeBlocks(user, null /*timeBlockForms*/);
         
         // TODO 
         // Properly declare variables based on google calendar
@@ -155,7 +156,7 @@ public class SchedulerApi {
   	 * @throws UnauthorizedException 
   	 * @throws IOException 
   	 */
-     
+     /*
    	@ApiMethod(name = "admin.addTimeBlocks", path = "admin.addTimeBlocks", httpMethod = "post")
   	public List<Long> addTimeBlocks(final User user, List<TimeBlockForm> timeBlockForms) throws UnauthorizedException, IOException {
    		
@@ -179,6 +180,8 @@ public class SchedulerApi {
 		
         return list;
   	}
+	
+	*/
 	
   	/**
   	 * Description of the method addRoom.
@@ -580,10 +583,7 @@ public class SchedulerApi {
         }
         
   
-        EventForm eventForm = appointmentForm.getEventForm();
-        
-        Event event = createEvent(user, eventForm, "");
-        
+
         Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
 
     	Employee employee = (Employee) ofy().load().key(employeeKey).now();
@@ -591,16 +591,17 @@ public class SchedulerApi {
         final String calendarId = employee.getCalendarId();
         
         
-        WrappedStringId wrappedId = null;
-        		//createEvent(user, calendarId, eventForm);
+        EventForm eventForm = appointmentForm.getEventForm();
         
-        final String eventId = wrappedId.getId();
+        Event event = createEvent(user, eventForm, calendarId);
+        
+        final String eventId = event.getId();
         
         
         final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
         final long appointmentId = appointmentKey.getId();
         
-        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getTypeId(), appointmentForm.getServiceId(), appointmentForm.getClientId());
+        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getTypeId(), appointmentForm.getServiceId(), appointmentForm.getClientId(), appointmentForm.getRoomId());
     		
   		ofy().save().entities(appointment).now();
   		
@@ -2022,10 +2023,8 @@ public class SchedulerApi {
 		Calendar service = Quickstart.getService(user);
 		
 		EventCreatorForm eventCreatorForm = new EventCreatorForm(eventForm.getSummary(), eventForm.getLocation(), eventForm.getDescription(), 
-				DateTimeConverter.convertStartDate(eventForm), DateTimeConverter.convertEndDate(eventForm), 
-				eventForm.getRecurrence(), eventForm.getAttendees(), eventForm.getReminderOverrides() );
+				DateTimeConverter.convertStartDate(eventForm), DateTimeConverter.convertEndDate(eventForm) );
 	    	
-		
   		Event event = EventCreator.createEvent(eventCreatorForm);
 
         event = service.events().insert(calendarId, event).execute();

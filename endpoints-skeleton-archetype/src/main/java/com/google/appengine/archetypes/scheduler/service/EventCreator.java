@@ -32,19 +32,6 @@ public class EventCreator {
         	.setTimeZone("America/Los_Angeles");
         event.setEnd(end);
 
-        String[] recurrence = eventCreatorForm.getRecurrence();
-        event.setRecurrence(Arrays.asList(recurrence));
-
-        EventAttendee[] attendees = eventCreatorForm.getAttendees();
-        event.setAttendees(Arrays.asList(attendees));
-
-        EventReminder[] reminderOverrides = eventCreatorForm.getReminderOverrides();
-   
-        Event.Reminders reminders = new Event.Reminders()
-        	.setUseDefault(false)
-        	.setOverrides(Arrays.asList(reminderOverrides));
-        event.setReminders(reminders);
-        
 		return event;
 		
 	}

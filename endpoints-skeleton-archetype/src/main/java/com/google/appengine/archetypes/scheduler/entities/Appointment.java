@@ -62,13 +62,21 @@ public class Appointment{
 	@Index
 	private long clientId;
 
+
+	/**
+	 * Description of the property serviceId.
+	 */
+	@Index
+	private long roomId;
+
 		
 
 	public Appointment(){
 		
 	}
 	
-	public Appointment(Status status, String eventId, long newAppointmentId, Key<Employee> newEmployeeKey, long newServiceId, long newTypeId, long newClientId) {
+	public Appointment(Status status, String eventId, long newAppointmentId, Key<Employee> newEmployeeKey,
+				long newServiceId, long newTypeId, long newClientId, long newRoomId) {
 		
 		this.status = status;
 		this.eventId = eventId;
@@ -77,6 +85,7 @@ public class Appointment{
 		this.serviceId = newServiceId;
 		this.typeId = newTypeId;
 		this.clientId = newClientId;
+		this.roomId = newRoomId;
 	}
 
 	/**
@@ -189,6 +198,22 @@ public class Appointment{
 	 */
 	public void setServiceId(long newServiceId) {
 		this.serviceId = newServiceId;
+	}
+	
+	/**
+	 * Returns roomId.
+	 * @return roomId 
+	 */
+	public long getRoomId() {
+		return this.roomId;
+	}
+
+	/**
+	 * Sets a value to attribute roomId. 
+	 * @param newlong 
+	 */
+	public void setRoomId(long newRoomId) {
+		this.roomId = newRoomId;
 	}
 
 }

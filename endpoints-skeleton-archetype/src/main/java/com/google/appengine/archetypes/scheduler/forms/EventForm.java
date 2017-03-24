@@ -26,21 +26,14 @@ public class EventForm {
 	private int endHour;
 	private int endMinute;
 		
-    
-    private String[] recurrence;
-    private EventAttendee[] attendees;
-
-    private EventReminder[] reminderOverrides;
-	
-	
+   
     public EventForm(){
     	
     }
     
     public EventForm(String newSummary,String newLocation, String newDescription, 
     		 int newStartYear, int newStartMonth, int newStartDay, int newStartHour, int newStartMinute,
-    		 int newEndYear, int newEndMonth, int newEndDay, int newEndHour, int newEndMinute,
-    		 String[] newRecurrence, EventAttendee[] newAttendees, EventReminder[] newReminderOverrides ){
+    		 int newEndYear, int newEndMonth, int newEndDay, int newEndHour, int newEndMinute ){
     	
     	
     	this.summary = newSummary; 
@@ -59,11 +52,6 @@ public class EventForm {
     	this.endHour = newEndHour;
     	this.endMinute = newEndMinute;
     	
-    	
-    	this.recurrence = newRecurrence;
-   	    this.attendees = newAttendees;
-
-        this.reminderOverrides = newReminderOverrides;
     	
     }
     
@@ -91,30 +79,7 @@ public class EventForm {
     	this.description = newDescription;
     }
         
-    public String[] getRecurrence(){
-    	return this.recurrence;
-    }
-	
-    public void setRecurrence(String[] newRecurrence){
-    	this.recurrence = newRecurrence;
-    }
-    
-    public EventAttendee[] getAttendees(){
-    	return this.attendees;
-    }
-	
-    public void setAttendees(EventAttendee[] newAttendees){
-    	this.attendees = newAttendees;
-    }
-    
-    public EventReminder[] getReminderOverrides(){
-    	return this.reminderOverrides;
-    }
-	
-    public void setReminderOverrides(EventReminder[] newReminderOverrides){
-    	this.reminderOverrides = newReminderOverrides;
-    }
-    
+   
 	/**
 	 * Returns startYear.
 	 * @return startYear 

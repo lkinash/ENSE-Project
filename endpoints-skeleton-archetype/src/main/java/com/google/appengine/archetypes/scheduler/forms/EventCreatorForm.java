@@ -17,18 +17,13 @@ public class EventCreatorForm {
     private DateTime startDateTime;
     private DateTime endDateTime;
     
-    private String[] recurrence;
-    private EventAttendee[] attendees;
-
-    private EventReminder[] reminderOverrides;
-	
 	
     public EventCreatorForm(){
     	
     }
     
-    public EventCreatorForm(String newSummary,String newLocation, String newDescription, DateTime newStartDateTime,
-    		DateTime newEndDateTime, String[] newRecurrence, EventAttendee[] newAttendees, EventReminder[] newReminderOverrides ){
+    public EventCreatorForm(String newSummary,String newLocation, String newDescription, 
+    		DateTime newStartDateTime, DateTime newEndDateTime ){
     	
     	
     	this.summary = newSummary; 
@@ -38,10 +33,6 @@ public class EventCreatorForm {
     	this.startDateTime = newStartDateTime;
     	this.endDateTime = newEndDateTime;
     		    
-    	this.recurrence = newRecurrence;
-   	    this.attendees = newAttendees;
-
-        this.reminderOverrides = newReminderOverrides;
     	
     }
     
@@ -86,28 +77,5 @@ public class EventCreatorForm {
     	this.endDateTime = newEndDateTime;
     }
     
-    
-    public String[] getRecurrence(){
-    	return this.recurrence;
-    }
-	
-    public void setRecurrence(String[] newRecurrence){
-    	this.recurrence = newRecurrence;
-    }
-    
-    public EventAttendee[] getAttendees(){
-    	return this.attendees;
-    }
-	
-    public void setAttendees(EventAttendee[] newAttendees){
-    	this.attendees = newAttendees;
-    }
-    
-    public EventReminder[] getReminderOverrides(){
-    	return this.reminderOverrides;
-    }
-	
-    public void setReminderOverrides(EventReminder[] newReminderOverrides){
-    	this.reminderOverrides = newReminderOverrides;
-    }
+
 }
