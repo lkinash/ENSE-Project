@@ -5,7 +5,7 @@ import com.google.appengine.archetypes.scheduler.forms.EventForm;
 
 public class DateTimeConverter {
 
-	private String timeZone = null;  	/// must be in format "00:00"
+	private static String timeZone = "06:00";  	/// must be in format "00:00"
 	
 	/**
 	 * 
@@ -69,14 +69,6 @@ public class DateTimeConverter {
 		
 		
 		return new DateTime(date);
-	}
-	
-	public String getTimeZone(){
-		return this.timeZone;
-	}
-	
-	public void setTimeZone(String newTimeZone){
-		this.timeZone = newTimeZone;
 	}
 	
 }
