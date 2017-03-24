@@ -9,6 +9,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.appengine.archetypes.scheduler.entities.Clearances;
 // Start of user code (user defined imports)
 import com.google.appengine.archetypes.scheduler.entities.Service;
+import com.google.appengine.archetypes.scheduler.entities.TimeBlock;
 // End of user code
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 
@@ -49,17 +50,20 @@ public class EmployeeForm {
 	private AdminClearances clearance;
 
 
+	private List<Long> timeBlockIds;
+	
 	
 	public EmployeeForm(){
 		
 	}
 	
-	public EmployeeForm(String newName, Calendar newCalendar, List<Long> newServiceIds){
+	public EmployeeForm(String newName, Calendar newCalendar, List<Long> newServiceIds, List<Long> newTimeBlockIds){
 		
 		this.calendar = newCalendar;
 		this.name = newName;
 		this.serviceIds = newServiceIds;
 		this.clearance = AdminClearances.employee;
+		this.timeBlockIds = newTimeBlockIds;
 	}
 	
 	/**
@@ -159,5 +163,12 @@ public class EmployeeForm {
 		this.clearance = newClearance;
 	}
 
+	public void setTimeBlockIds(List<Long> newTimeBlockId){
+		this.timeBlockIds = newTimeBlockId;
+	}
+	
+	public List<Long> getTimeBlockIds(){
+		return this.timeBlockIds;
+	}
 
 }

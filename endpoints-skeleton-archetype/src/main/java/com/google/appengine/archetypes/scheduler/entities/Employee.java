@@ -60,11 +60,19 @@ import com.googlecode.objectify.annotation.Index;
 	private AdminClearances clearance;
 	
 	
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Index
+	private List<Long> timeBlockIds;
+	
+	
+	
 	public Employee(){
 		
 	}
 	
-	public Employee(String newCalendarId, String newName, String newUserId, List<Long> newServiceIds, long newEmployeeId){
+	public Employee(String newCalendarId, String newName, String newUserId, List<Long> newServiceIds, long newEmployeeId, List<Long> newTimeBlockIds){
 		
 		this.userId = newUserId;
 		this.calendarId = newCalendarId;
@@ -72,6 +80,7 @@ import com.googlecode.objectify.annotation.Index;
 		this.serviceIds = newServiceIds;
 		this.employeeId = newEmployeeId;
 		this.clearance = AdminClearances.employee;
+		this.timeBlockIds = newTimeBlockIds;
 	}
 
 	
@@ -173,4 +182,19 @@ import com.googlecode.objectify.annotation.Index;
 	}
 
 
+	public void setTimeBlockIds(List<Long> newTimeBlockId){
+		this.timeBlockIds = newTimeBlockId;
+	}
+	
+	public List<Long> getTimeBlockIds(){
+		return this.timeBlockIds;
+	}
+	
+	public void addTimeBlock(long newTimeBlockId){
+		this.timeBlockIds.add(newTimeBlockId);
+	}
+	
+	public void removeTimeBlock(long newTimeBlockId){
+		this.timeBlockIds.remove(newTimeBlockId);
+	}
 }
