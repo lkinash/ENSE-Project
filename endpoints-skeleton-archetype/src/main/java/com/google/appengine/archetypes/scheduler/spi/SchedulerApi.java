@@ -1793,7 +1793,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-	
+
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
   	public Event test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
 
@@ -1830,10 +1830,10 @@ public class SchedulerApi {
         
 		//return calendar;
 
-        //return null;
+        return null;
 	}
 	
-	
+
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 

@@ -226,6 +226,7 @@
 						<tr>
 							<td>Service Type:</td>
 							<td> <select class="form-control" id="{{$index}}" data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes track by listtype.typeId" >
+								<option value="" disabled>-------</option>    							
     							</select>
  							  </td>
 						</tr>

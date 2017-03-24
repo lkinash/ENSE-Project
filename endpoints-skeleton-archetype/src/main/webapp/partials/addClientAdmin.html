@@ -1,10 +1,10 @@
 <head>
-<link href="/css/addClientAdmin.css" rel="stylesheet">
+   	<link href="/css/addClientAdmin.css" rel="stylesheet">
 </head>
 
 <div class="row">
 		<div class="col-sm-2 col-lg-2">
-		<div class="leftNav">
+			<div class="leftNav">
 			<div class="admin">
 				<div class="panel-group">
  				 	<div class="panel panel-default">
@@ -129,7 +129,7 @@
  					 </div>
 				</div>
 			</div>
-			     <div class="client Side View">
+		<div class="client Side View">
         <div class="panel-group">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -164,71 +164,90 @@
           </div>
         </div>
       </div>
-		</div>
 	</div>
-	
-	<div class="col-sm-10 col-lg-10">
-	<div class="rightContent">
-		<h2>Add Client</h2>
-		<div class="container2">
-			<form action="">
-				<div class="inner">
-					<div class="inner2">
-						<div class="information">
-							<table>
-								<tr>
-									<th>
-										<p>First Name</p>
-									</th>
-									<th class="innerTh"><input type="text"
-										class="form-control" id="fname"></th>
-								</tr>
-								<tr>
-									<th>
-										<p>Last Name</p>
-									</th>
-									<th class="innerTh"><input type="text"
-										class="form-control" id="lname"></th>
-								</tr>
-								<tr>
-									<th>
-										<p>Email</p>
-									</th>
-									<th class="innerTh"><input type="email"
-										class="form-control" id="email"></th>
-								</tr>
-								<tr>
-									<th>
-										<p>Password</p>
-									</th>
-									<th class="innerTh"><input type="password"
-										class="form-control" id="pwd1"></th>
-								</tr>
-								<tr>
-									<th>
-										<p>Re-Enter Password</p>
-									</th>
-									<th class="innerTh"><input type="password"
-										class="form-control" id="pwd2"></th>
-								</tr>
-								<tr>
-									<th>
-										<p>Birthday</p>
-									</th>
-
-									<th class="innerTh"><input type="text"
-										class="form-control" id="month" placeholder="MM-DD-YYYY"
-										maxlength="10"></th>
-
-								</tr>
-							</table>
-						</div>
-
-					</div>
+	</div>
+	<div class="col-sm-10 col-lg-10">	
+		<div class="rightContent">
+					<h2>Add Client</h2>
+			<div class="container3">
+		<form name="clientForm" ng-submit="addClient()">
+		<div class="inner">
+		<div class="inner2">
+		<div class="information">
+			<table>
+			<tr>
+				<td>
+					<p>First Name</p>
+				</td>	
+				<td class="innerTh">
+					<input type="text" ng-model="Fname" name="Fname" class="form-control" required>
+				</td>
+				<td><span ng-show="(clientForm.Fname.$dirty || submitted) && clientForm.Fname.$error.required">
+					First Name is required
+				</span></td>
+			</tr>
+			<tr>
+				<td >
+					<p>Last Name</p>
+				</td>
+				<td class="innerTh">
+					<input type="text" ng-model="lname" name="lname" class="form-control" requried>
+				</td>
+				<td><span ng-show="(clientForm.lname.$dirty || submitted) && clientForm.lname.$error.required">
+					Last Name is required
+				</span></td>
+			</tr>
+			<tr>
+				<td>
+					<p>Email</p>
+				</td>
+				<td class="innerTh">
+					<input type="email" ng-model="email" name="email" class="form-control" required>
+				</td>
+				<td><span ng-show="(clientForm.email.$dirty || submitted) && clientForm.email.$error.required">
+					Email is required
+				</span></td>
+			</tr>
+			<tr>
+				<td>
+					<p>Phone Number</p>
+				</td>
+				<td class="innerTh">
+					<input type="text" ng-model="phoneNumber" name="phoneN" class="form-control" required>
+				</td>
+				<td><span ng-show="(clientForm.phoneN.$dirty || submitted) && clientForm.phoneN.$error.required">
+					Phone number is required
+				</span></td>
+			</tr>
+			<tr>
+				<td>
+					<p>Birthday(MM-DD-YYYY)</p>
+				</td>
+				<td class="innerTh">
+					<div class="form-inline">
+			  <select ng-model="dateMonth" ng-options="month for month in selects.months()" class="form-control">
+			    <option value="" disabled>--</option>
+			  </select>
+			
+			  <select ng-model="dateDay" ng-options="day for day in selects.days()" class="form-control">
+			    <option value="" disabled>--</option>
+			  </select>
+			
+			  <select ng-model="dateYear" ng-options="year for year in selects.years() | orderBy: year:yearOrder" class="form-control">
+			    <option value="" disabled>----</option>
+			  </select>
 				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
-			</form>
+				</td>
+		
+			</tr>							
+			</table>			
+		</div>
+	
+	</div>
+	</div>
+	<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+	</div>	
+		</div>
 		</div>
 	</div>
-	</div>
-</div>
