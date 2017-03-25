@@ -18,6 +18,24 @@
 	<dependencies>
 		<!-- Compile/runtime dependencies -->
 		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>fullcalendar</artifactId>
+		    <version>3.0.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>jquery</artifactId>
+		    <version>3.1.1-1</version>
+		</dependency>
+		<dependency>
+	    <groupId>org.webjars</groupId>
+	    <artifactId>momentjs</artifactId>
+	    <version>2.16.0</version>
+	</dependency>
+		
+		
+		
+		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
 			<version>${appengine.target.version}</version>

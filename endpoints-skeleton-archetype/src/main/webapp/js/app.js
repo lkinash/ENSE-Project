@@ -11,7 +11,7 @@
  * Root app, which routes and specifies the partial html and controller depending on the url requested.
  *
  */
-var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute', 'ui.bootstrap']).
+var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','ui.calendar', 'ui.bootstrap']).
     config(['$routeProvider',
         function ($routeProvider) {
             $routeProvider
@@ -22,7 +22,7 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute', '
                 })
                 .when('/', {
                     templateUrl: '/partials/viewCalendarMainAdmin.html',
-                    controller: 'ViewCalendarAdminController'
+                    controller: 'ViewCalendarController'
                 })
                 
                 
@@ -145,7 +145,9 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute', '
                     templateUrl: 'partials/viewServiceAdmin.html',
                     controller: 'ViewServiceController'
                 })
-                
+                .when('/admin/test', {
+                    templateUrl: 'partials/tempCalendar2.html',
+                })
                 .otherwise({
                     redirectTo: '/'
                 });
@@ -241,5 +243,6 @@ app.factory('oauth2Provider', function ($modal) {
 
     return oauth2Provider;
 });
+
 
 
