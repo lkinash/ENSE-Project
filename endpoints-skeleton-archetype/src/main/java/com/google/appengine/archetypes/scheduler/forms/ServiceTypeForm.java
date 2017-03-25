@@ -38,6 +38,7 @@ public class ServiceTypeForm {
 
 	public ServiceTypeForm(int newDefaultLength, String newName, long newTypeId, double newPrice, boolean newClearanceRequired, String newType){
 		
+		this.defaultLength = newDefaultLength;
 		this.clearanceRequired = newClearanceRequired;
 		this.name = newName;
 		this.price = newPrice;

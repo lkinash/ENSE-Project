@@ -34,6 +34,7 @@ public class RemoveServiceForm {
 
 	public RemoveServiceForm(int newDefaultLength, String newName, long newTypeId, double newPrice, boolean newClearanceRequired, long newServiceId){
 		
+		this.defaultLength = newDefaultLength;
 		this.clearanceRequired = newClearanceRequired;
 		this.name = newName;
 		this.price = newPrice;
