@@ -32,6 +32,7 @@ public class AppointmentTest{
 	private long TYPEID = 93485;
 	private long SERVICEID = 239842;
 	private long CLIENTID = 55522;
+	private long ROOMID = 52932;
     private Key<Employee> EMPLOYEEKEY = null;
 	
 	private Appointment appointment;
@@ -44,7 +45,7 @@ public class AppointmentTest{
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 appointment = new Appointment(STATUS, EVENTID, APPOINTMENTID, EMPLOYEEKEY, SERVICEID,  TYPEID, CLIENTID);
+		 appointment = new Appointment(STATUS, EVENTID, APPOINTMENTID, EMPLOYEEKEY, SERVICEID,  TYPEID, CLIENTID, ROOMID);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -60,6 +61,7 @@ public class AppointmentTest{
 		assertEquals(CLIENTID,appointment.getClientId());
 		assertEquals(STATUS, appointment.getStatus());
 		assertEquals(TYPEID,appointment.getTypeId());
+		assertEquals(ROOMID,appointment.getRoomId());
 		assertEquals(SERVICEID,appointment.getServiceId());
 		assertEquals(EMPLOYEEKEY, appointment.getEmployeeKey());
 	}

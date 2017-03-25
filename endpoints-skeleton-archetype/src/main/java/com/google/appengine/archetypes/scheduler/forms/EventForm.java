@@ -13,35 +13,45 @@ public class EventForm {
     private String summary;
     private String location;
     private String description;
-
-    private DateTime startDateTime;
-    private DateTime endDateTime;
     
-    private String[] recurrence;
-    private EventAttendee[] attendees;
-
-    private EventReminder[] reminderOverrides;
+	private int startYear;
+	private int startMonth;
+	private int startDay;
+	private int startHour;
+	private int startMinute;
 	
-	
+	private int endYear;
+	private int endMonth;
+	private int endDay;
+	private int endHour;
+	private int endMinute;
+		
+   
     public EventForm(){
     	
     }
     
-    public EventForm(String newSummary,String newLocation, String newDescription, DateTime newStartDateTime,
-    		DateTime newEndDateTime, String[] newRecurrence, EventAttendee[] newAttendees, EventReminder[] newReminderOverrides ){
+    public EventForm(String newSummary,String newLocation, String newDescription, 
+    		 int newStartYear, int newStartMonth, int newStartDay, int newStartHour, int newStartMinute,
+    		 int newEndYear, int newEndMonth, int newEndDay, int newEndHour, int newEndMinute ){
     	
     	
     	this.summary = newSummary; 
     	this.location = newLocation; 
     	this.description = newDescription;
-
-    	this.startDateTime = newStartDateTime;
-    	this.endDateTime = newEndDateTime;
-    		    
-    	this.recurrence = newRecurrence;
-   	    this.attendees = newAttendees;
-
-        this.reminderOverrides = newReminderOverrides;
+    	
+    	this.startYear = newStartYear;
+    	this.startMonth = newStartMonth;
+    	this.startDay = newStartDay;
+    	this.startHour = newStartHour;
+    	this.startMinute = newStartMinute;
+    	
+    	this.endYear = newEndYear;
+    	this.endMonth = newEndMonth;
+    	this.endDay = newEndDay;
+    	this.endHour = newEndHour;
+    	this.endMinute = newEndMinute;
+    	
     	
     }
     
@@ -68,47 +78,177 @@ public class EventForm {
     public void setDescription(String newDescription){
     	this.description = newDescription;
     }
-    
-    
-    public DateTime getStartDateTime(){
-    	return this.startDateTime;
-    }
+        
+   
+	/**
+	 * Returns startYear.
+	 * @return startYear 
+	 */
+	public int getStartYear() {
+		return this.startYear;
+	}
+
+	/**
+	 * Sets a value to attribute startYear. 
+	 * @param newstartYear 
+	 */
+	public void setStartYear(int newStartYear) {
+		this.startYear = newStartYear;
+	}
 	
-    public void setStartDateTime(DateTime newStartDateTime){
-    	this.startDateTime = newStartDateTime;
-    }
- 
-    public DateTime getEndDateTime(){
-    	return this.endDateTime;
-    }
+    	
+	/**
+	 * Returns startMonth.
+	 * @return startMonth 
+	 */
+	public int getStartMonth() {
+		return this.startMonth;
+	}
+
+	/**
+	 * Sets a value to attribute startMonth. 
+	 * @param newstartMonth 
+	 */
+	public void setStartMonth(int newStartMonth) {
+		this.startMonth = newStartMonth;
+	}
 	
-    public void setEndDateTime(DateTime newEndDateTime){
-    	this.endDateTime = newEndDateTime;
-    }
     
-    
-    public String[] getRecurrence(){
-    	return this.recurrence;
-    }
+	/**
+	 * Returns startDay.
+	 * @return startDay 
+	 */
+	public int getStartDay() {
+		return this.startDay;
+	}
+
+	/**
+	 * Sets a value to attribute startDay. 
+	 * @param newstartDay 
+	 */
+	public void setStartDay(int newStartDay) {
+		this.startDay = newStartDay;
+	}
 	
-    public void setRecurrence(String[] newRecurrence){
-    	this.recurrence = newRecurrence;
-    }
     
-    public EventAttendee[] getAttendees(){
-    	return this.attendees;
-    }
+	/**
+	 * Returns startHour.
+	 * @return startHour 
+	 */
+	public int getStartHour() {
+		return this.startHour;
+	}
+
+	/**
+	 * Sets a value to attribute startHour. 
+	 * @param newstartHour 
+	 */
+	public void setStartHour(int newStartHour) {
+		this.startHour = newStartHour;
+	}
 	
-    public void setAttendees(EventAttendee[] newAttendees){
-    	this.attendees = newAttendees;
-    }
     
-    public EventReminder[] getReminderOverrides(){
-    	return this.reminderOverrides;
-    }
+	/**
+	 * Returns startMinute.
+	 * @return startMinute 
+	 */
+	public int getStartMinute() {
+		return this.startMinute;
+	}
+
+	/**
+	 * Sets a value to attribute startMinute. 
+	 * @param newstartMinute 
+	 */
+	public void setStartMinute(int newStartMinute) {
+		this.startMinute = newStartMinute;
+	}
 	
-    public void setReminderOverrides(EventReminder[] newReminderOverrides){
-    	this.reminderOverrides = newReminderOverrides;
-    }
+    
+	/**
+	 * Returns EndYear.
+	 * @return EndYear 
+	 */
+	public int getEndYear() {
+		return this.endYear;
+	}
+
+	/**
+	 * Sets a value to attribute EndYear. 
+	 * @param newEndYear 
+	 */
+	public void setEndYear(int newEndYear) {
+		this.endYear = newEndYear;
+	}
+	
+    	
+	/**
+	 * Returns EndMonth.
+	 * @return EndMonth 
+	 */
+	public int getEndMonth() {
+		return this.endMonth;
+	}
+
+	/**
+	 * Sets a value to attribute EndMonth. 
+	 * @param newEndMonth 
+	 */
+	public void setEndMonth(int newEndMonth) {
+		this.endMonth = newEndMonth;
+	}
+	
+    
+	/**
+	 * Returns EndDay.
+	 * @return EndDay 
+	 */
+	public int getEndDay() {
+		return this.endDay;
+	}
+
+	/**
+	 * Sets a value to attribute EndDay. 
+	 * @param newEndDay 
+	 */
+	public void setEndDay(int newEndDay) {
+		this.endDay = newEndDay;
+	}
+	
+    
+	/**
+	 * Returns EndHour.
+	 * @return EndHour 
+	 */
+	public int getEndHour() {
+		return this.endHour;
+	}
+
+	/**
+	 * Sets a value to attribute EndHour. 
+	 * @param newEndHour 
+	 */
+	public void setEndHour(int newEndHour) {
+		this.endHour = newEndHour;
+	}
+	
+    
+	/**
+	 * Returns EndMinute.
+	 * @return EndMinute 
+	 */
+	public int getEndMinute() {
+		return this.endMinute;
+	}
+
+	/**
+	 * Sets a value to attribute EndMinute. 
+	 * @param newEndMinute 
+	 */
+	public void setEndMinute(int newEndMinute) {
+		this.endMinute = newEndMinute;
+	}
+	
+    
     
 }

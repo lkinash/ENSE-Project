@@ -6,20 +6,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
-public class AppointmentFormTest {
-	//Data for Appointment Form class fields
-	private long TYPEID = 5569325;
-	private long SERVICEID = 777785;
-	private long CLIENTID = 222236;
-	private long EMPLOYEEID = 111454;
-	private long ROOMID = 498535;
-
-	private EventForm EVENTFORM;
+public class ServiceTypeFormTest {
 	
-	private AppointmentForm appointment;
+	//Data for Service Type Form class fields
+	private String NAME = "Leg Wax";
+	private boolean CLEARANCEREQ = false;
+	private double PRICE = 52.35;
+	private long TYPEID = 555656;
+	private int DEFAULTLEN = 5;
+	private String TYPENAME = "Wax";
+	private boolean ISSERVICE = true;	
+	
+	private ServiceTypeForm serviceType;
 	
 	private final LocalServiceTestHelper testHelper =  new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig().setDefaultHighRepJobPolicyUnappliedJobPercentage(100));
 
@@ -28,7 +30,7 @@ public class AppointmentFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 appointment = new AppointmentForm(TYPEID,SERVICEID,CLIENTID,EMPLOYEEID,EVENTFORM, ROOMID);
+		 serviceType = new ServiceTypeForm(DEFAULTLEN,NAME,TYPEID,PRICE,CLEARANCEREQ,TYPENAME);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -39,11 +41,11 @@ public class AppointmentFormTest {
 
 	@Test
 	public void testGetters() throws Exception{
-		assertEquals(TYPEID,appointment.getTypeId());
-		assertEquals(SERVICEID,appointment.getServiceId());
-		assertEquals(CLIENTID,appointment.getClientId());
-		assertEquals(ROOMID,appointment.getRoomId());
-		assertEquals(EMPLOYEEID,appointment.getEmployeeId());
+		assertEquals(DEFAULTLEN,serviceType.getDefaultLength());
+		assertEquals(NAME,serviceType.getName());
+		assertEquals(TYPEID,serviceType.getTypeId());
+		assertEquals(PRICE,serviceType.getPrice(),0.001);
+		assertEquals(CLEARANCEREQ,serviceType.getClearanceRequired());
+		assertEquals(TYPENAME,serviceType.getTypeName());
 	}
-
 }

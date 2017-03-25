@@ -9,17 +9,13 @@ import org.junit.Test;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
-public class AppointmentFormTest {
-	//Data for Appointment Form class fields
-	private long TYPEID = 5569325;
-	private long SERVICEID = 777785;
-	private long CLIENTID = 222236;
-	private long EMPLOYEEID = 111454;
-	private long ROOMID = 498535;
-
-	private EventForm EVENTFORM;
+public class TypeFormTest {
 	
-	private AppointmentForm appointment;
+	//Data for Type Form class fields
+	private String TYPENAME = "Skin care";
+    private boolean ISSERVICE = true;	
+	
+	private TypeForm typeForm;
 	
 	private final LocalServiceTestHelper testHelper =  new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig().setDefaultHighRepJobPolicyUnappliedJobPercentage(100));
 
@@ -28,7 +24,7 @@ public class AppointmentFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 appointment = new AppointmentForm(TYPEID,SERVICEID,CLIENTID,EMPLOYEEID,EVENTFORM, ROOMID);
+		 typeForm = new TypeForm(ISSERVICE,TYPENAME);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -39,11 +35,7 @@ public class AppointmentFormTest {
 
 	@Test
 	public void testGetters() throws Exception{
-		assertEquals(TYPEID,appointment.getTypeId());
-		assertEquals(SERVICEID,appointment.getServiceId());
-		assertEquals(CLIENTID,appointment.getClientId());
-		assertEquals(ROOMID,appointment.getRoomId());
-		assertEquals(EMPLOYEEID,appointment.getEmployeeId());
+		assertEquals(ISSERVICE,typeForm.getIsService());
+		assertEquals(TYPENAME,typeForm.getTypeName());
 	}
-
 }

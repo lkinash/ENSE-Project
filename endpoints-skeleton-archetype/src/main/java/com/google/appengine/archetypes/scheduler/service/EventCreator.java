@@ -7,43 +7,31 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.EventReminder;
+import com.google.appengine.archetypes.scheduler.forms.EventCreatorForm;
 import com.google.appengine.archetypes.scheduler.forms.EventForm;
 
 public class EventCreator {
 
-	public static Event createEvent(EventForm eventForm){
+	public static Event createEvent(EventCreatorForm eventCreatorForm){
         
 		
         Event event = new Event()
-        .setSummary(eventForm.getSummary())
-        .setLocation(eventForm.getLocation())
-        .setDescription(eventForm.getDescription());
+        .setSummary(eventCreatorForm.getSummary())
+        .setLocation(eventCreatorForm.getLocation())
+        .setDescription(eventCreatorForm.getDescription());
 
-        DateTime startDateTime = eventForm.getStartDateTime();
+        DateTime startDateTime = eventCreatorForm.getStartDateTime();
         EventDateTime start = new EventDateTime()
         	.setDateTime(startDateTime)
         	.setTimeZone("America/Los_Angeles");
         event.setStart(start);
 
-        DateTime endDateTime = eventForm.getEndDateTime();
+        DateTime endDateTime = eventCreatorForm.getEndDateTime();
         EventDateTime end = new EventDateTime()
         	.setDateTime(endDateTime)
         	.setTimeZone("America/Los_Angeles");
         event.setEnd(end);
 
-        String[] recurrence = eventForm.getRecurrence();
-        event.setRecurrence(Arrays.asList(recurrence));
-
-        EventAttendee[] attendees = eventForm.getAttendees();
-        event.setAttendees(Arrays.asList(attendees));
-
-        EventReminder[] reminderOverrides = eventForm.getReminderOverrides();
-   
-        Event.Reminders reminders = new Event.Reminders()
-        	.setUseDefault(false)
-        	.setOverrides(Arrays.asList(reminderOverrides));
-        event.setReminders(reminders);
-        
 		return event;
 		
 	}
