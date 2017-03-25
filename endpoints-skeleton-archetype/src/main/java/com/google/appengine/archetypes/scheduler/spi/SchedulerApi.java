@@ -122,9 +122,8 @@ public class SchedulerApi {
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
         final long employeeId = employeeKey.getId();
    
-   
-        List<Long> timeBlocks = null;
-        		//addTimeBlocks(user, null /*timeBlockForms*/);
+	
+        List<Long> timeBlockLong = addTimeBlocks(user, timeBlockListForm);
         
         // TODO 
         // Properly declare variables based on google calendar
@@ -135,7 +134,7 @@ public class SchedulerApi {
         
         //employee must have a name, email and a password set
         
-  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getEmail(),  employeeForm.getServiceIds(), employeeId, timeBlocks);
+  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getEmail(),  employeeForm.getServiceIds(), employeeId, timeBlockLong);
   			
 
   		ofy().save().entities(employee).now();
@@ -155,9 +154,9 @@ public class SchedulerApi {
   	 * @throws UnauthorizedException 
   	 * @throws IOException 
   	 */
-     /*
+     
    	@ApiMethod(name = "admin.addTimeBlocks", path = "admin.addTimeBlocks", httpMethod = "post")
-  	public List<Long> addTimeBlocks(final User user, List<TimeBlockForm> timeBlockForms) throws UnauthorizedException, IOException {
+  	public List<Long> addTimeBlocks(final User user, TimeBlockListForm timeBlockListForm) throws UnauthorizedException, IOException {
    		
    		
         if (user == null) {
@@ -165,6 +164,9 @@ public class SchedulerApi {
         }
         
         List<Long> list = new ArrayList<Long>();
+        
+        
+        List<TimeBlockForm> timeBlockForms = timeBlockListForm.getTimeBlockList(); 
         
         for(TimeBlockForm tempForm: timeBlockForms){
 
@@ -180,7 +182,7 @@ public class SchedulerApi {
         return list;
   	}
 	
-	*/
+	
 	
   	/**
   	 * Description of the method addRoom.
