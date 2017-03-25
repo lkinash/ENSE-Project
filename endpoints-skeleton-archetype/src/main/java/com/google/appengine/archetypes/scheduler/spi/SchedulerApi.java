@@ -74,7 +74,9 @@ import com.google.appengine.archetypes.scheduler.forms.RoomForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceForm;
 import com.google.appengine.archetypes.scheduler.forms.ServiceTypeForm;
 import com.google.appengine.archetypes.scheduler.forms.TimeBlockForm;
+import com.google.appengine.archetypes.scheduler.forms.TimeBlockListForm;
 import com.google.appengine.archetypes.scheduler.forms.TypeForm;
+import com.google.appengine.archetypes.scheduler.forms.UserEmailForm;
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.google.appengine.archetypes.scheduler.list.Status;
 import com.google.appengine.archetypes.scheduler.service.DateTimeConverter;
@@ -108,16 +110,13 @@ public class SchedulerApi {
   	 */
 	
 	@ApiMethod(name = "admin.addEmployee", path = "admin.addEmployee", httpMethod = "post")
-  	public Employee addEmployee(final User user, EmployeeForm employeeForm /*, List<TimeBlockForm> timeBlockForms */) throws UnauthorizedException, IOException{
+  	public Employee addEmployee(final User user, EmployeeForm employeeForm , TimeBlockListForm timeBlockListForm ) throws UnauthorizedException, IOException{
 		
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-        //TODO
-  		//fix user Id problem
-  		
-  		String userId = "";
+  		String userId = null;
 		
         
         final Key<Employee> employeeKey = factory().allocateId(Employee.class);
@@ -340,11 +339,9 @@ public class SchedulerApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-      
-        //TODO
-  		//fix user Id problem
+
   		
-  		String userId = "";
+  		String userId = null;
 		
   		
         final Key<Admin> adminKey = factory().allocateId(Admin.class);
@@ -437,10 +434,8 @@ public class SchedulerApi {
             throw new UnauthorizedException("Authorization required");
         }
         
-  		//TODO
-  		//fix user Id problem
   		
-  		String userId = "";
+  		String userId = null;
 		
         final Key<Client> clientKey = factory().allocateId(Client.class);
         final long clientId = clientKey.getId();
@@ -1095,10 +1090,11 @@ public class SchedulerApi {
 	 * @param removeAppointmentForm 
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+  	 * @throws GeneralSecurityException 
 	 */
 	
 	@ApiMethod(name = "appointment.removeAppointment", path = "appointment.removeAppointment", httpMethod = "post")
-  	public WrappedBoolean removeAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException, IOException {
+  	public WrappedBoolean removeAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1107,7 +1103,7 @@ public class SchedulerApi {
         
         Appointment appointment = getAppointment(user, removeAppointmentForm.getAppointmentId());
         
-        //deleteEvent(user, calendarId, appointment.getEventId());
+        deleteEvent(user, calendarId, appointment.getEventId());
     	
 	    Key<Appointment> key = Key.create(Appointment.class, removeAppointmentForm.getAppointmentId());
 		
@@ -1898,6 +1894,86 @@ public class SchedulerApi {
 
 	}
 	
+	
+	/**
+	 * Description of the method createAppointment.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+
+	@ApiMethod(name = "loginGetUserId", path = "loginGetUserId", httpMethod = "post")
+  	public WrappedStringId loginGetUserId(final User user, UserEmailForm userEmailForm) throws IOException, UnauthorizedException, GeneralSecurityException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+	
+
+        Query<Client> clientQuery =  ofy().load().type(Client.class);
+    	clientQuery = clientQuery.filter("email =", userEmailForm.getUserEmail());
+    	
+        List<Client> client = clientQuery.list();
+	
+        if(!client.isEmpty()){
+        	
+        	Client clientEntity = client.get(0);
+        	
+        	if(clientEntity.getUserId() == null){      
+        		
+        		clientEntity.setUserId(user.getUserId());
+        		
+        		ofy().save().entities(clientEntity).now();
+        		
+        		return new WrappedStringId(user.getUserId());
+        		
+        	}
+        }
+        
+        
+        
+        Query<Employee> employeeQuery =  ofy().load().type(Employee.class);
+    	employeeQuery = employeeQuery.filter("email =", userEmailForm.getUserEmail());
+    	
+        List<Employee> employee = employeeQuery.list();
+	
+        if(!employee.isEmpty()){
+        	
+        	Employee employeeEntity = employee.get(0);
+        	
+        	if(employeeEntity.getUserId() == null){      
+        		
+        		employeeEntity.setUserId(user.getUserId());
+        		
+        		ofy().save().entities(employeeEntity).now();
+        		
+        		return new WrappedStringId(user.getUserId());
+        		
+        	}
+        }
+        
+        Query<Admin> adminQuery =  ofy().load().type(Admin.class);
+    	adminQuery = adminQuery.filter("email =", userEmailForm.getUserEmail());
+    	
+        List<Admin> admin = adminQuery.list();
+	
+        if(!admin.isEmpty()){
+        	
+        	Admin adminEntity = admin.get(0);
+        	
+        	if(adminEntity.getUserId() == null){      
+        		
+        		adminEntity.setUserId(user.getUserId());
+        		
+        		ofy().save().entities(adminEntity).now();
+        		
+        		return new WrappedStringId(user.getUserId());
+        		
+        	}
+        }
+        
+        return null;
+	}
 
 	/**
 	 * Description of the method queryAppointments.
