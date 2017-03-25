@@ -15,7 +15,6 @@ import java.util.List;
  * @author Archana
  * Tests for Employee
  */
-
 public class EmployeeTest {
 	
 	//Data for Employee class fields
@@ -34,7 +33,7 @@ public class EmployeeTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-	    employee = new Employee(CALENDARID, NAME, USERID, null, EMPLOYEEID);
+	     employee = new Employee(CALENDARID, NAME, USERID, null, EMPLOYEEID);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
