@@ -36,16 +36,25 @@ import com.googlecode.objectify.annotation.Index;
 	@Index
 	private String userId;
 	
+	
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Index
+	private String email;
+	
 
 	public Admin(){
 		
 	}
 	
-	public Admin(AdminClearances adminClearance, String newUserId, long newAdminId){
+	public Admin(AdminClearances adminClearance, String newUserId, long newAdminId, String newEmail){
 		
 		this.userId = newUserId;
 		this.clearance = adminClearance;
 		this.adminId = newAdminId;
+		this.email = newEmail;
+		
 	}
 	
 	
@@ -63,6 +72,23 @@ import com.googlecode.objectify.annotation.Index;
 	 */
 	public void setUserId(String newAccountId) {
 		this.userId = newAccountId;
+	}
+	
+	
+	/**
+	 * Returns Email.
+	 * @return Email 
+	 */
+	public String getEmail() {
+		return this.email;
+	}
+
+	/**
+	 * Sets a value to attribute Email. 
+	 * @param newEmail 
+	 */
+	public void setEmail(String newEmail) {
+		this.email = newEmail;
 	}
 	
 	

@@ -66,13 +66,21 @@ import com.googlecode.objectify.annotation.Index;
 	@Index
 	private List<Long> timeBlockIds;
 	
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Index
+	private String email;
+	
+
 	
 	
 	public Employee(){
 		
 	}
 	
-	public Employee(String newCalendarId, String newName, String newUserId, List<Long> newServiceIds, long newEmployeeId, List<Long> newTimeBlockIds){
+	public Employee(String newCalendarId, String newName, String newUserId,  String newEmail,
+			List<Long> newServiceIds, long newEmployeeId, List<Long> newTimeBlockIds){
 		
 		this.userId = newUserId;
 		this.calendarId = newCalendarId;
@@ -81,8 +89,25 @@ import com.googlecode.objectify.annotation.Index;
 		this.employeeId = newEmployeeId;
 		this.clearance = AdminClearances.employee;
 		this.timeBlockIds = newTimeBlockIds;
+		this.email = newEmail;
 	}
 
+	
+	/**
+	 * Returns Email.
+	 * @return Email 
+	 */
+	public String getEmail() {
+		return this.email;
+	}
+
+	/**
+	 * Sets a value to attribute Email. 
+	 * @param newEmail 
+	 */
+	public void setEmail(String newEmail) {
+		this.email = newEmail;
+	}
 	
 	/**
 	 * Description of the method setServices.

@@ -78,12 +78,20 @@ public class Client{
 	private String userId;
 	
 	
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Index
+	private String email;
+	
+
 	
 	public Client(){
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments, List<Long> newClearanceIds, String newCalendarId, String newUserId, long newClientId  ){
+	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments,
+			List<Long> newClearanceIds, String newCalendarId, String newUserId, long newClientId  , String newEmail){
 
 		this.userId = newUserId;
 		this.birthday = newBirthday;
@@ -95,6 +103,23 @@ public class Client{
 		this.clearanceIds = newClearanceIds;
 		this.clientId = newClientId;
 		this.clearance = AdminClearances.client;
+		this.email = newEmail;
+	}
+	
+	/**
+	 * Returns Email.
+	 * @return Email 
+	 */
+	public String getEmail() {
+		return this.email;
+	}
+
+	/**
+	 * Sets a value to attribute Email. 
+	 * @param newEmail 
+	 */
+	public void setEmail(String newEmail) {
+		this.email = newEmail;
 	}
 	
 	/**

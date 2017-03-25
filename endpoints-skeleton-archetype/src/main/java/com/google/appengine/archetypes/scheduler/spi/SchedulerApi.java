@@ -136,7 +136,7 @@ public class SchedulerApi {
         
         //employee must have a name, email and a password set
         
-  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getServiceIds(), employeeId, timeBlocks);
+  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getEmail(),  employeeForm.getServiceIds(), employeeId, timeBlocks);
   			
 
   		ofy().save().entities(employee).now();
@@ -351,7 +351,7 @@ public class SchedulerApi {
         final long adminId = adminKey.getId();
         
         
-  		Admin admin  = new Admin(adminForm.getClearance(), userId, adminId);
+  		Admin admin  = new Admin(adminForm.getClearance(), userId, adminId, adminForm.getEmail());
   			
   		ofy().save().entities(admin).now();
   		
@@ -467,7 +467,7 @@ public class SchedulerApi {
         // Client must enter first name, last name, email and a password
         
 		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
-				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId, userId, clientId);
+				phoneNumber, birthday, newAppointmentIds, newClearanceIds, calendarId, userId, clientId, clientForm.getEmail());
 			
   		ofy().save().entities(client).now();
         
