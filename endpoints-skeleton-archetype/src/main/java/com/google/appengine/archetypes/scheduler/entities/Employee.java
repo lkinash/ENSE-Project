@@ -64,7 +64,7 @@ import com.googlecode.objectify.annotation.Index;
 	 * Description of the property AccountId.
 	 */
 	@Index
-	private List<Long> timeBlockIds;
+	private List<Long> holidayTimeBlockIds;
 	
 	/**
 	 * Description of the property AccountId.
@@ -72,7 +72,12 @@ import com.googlecode.objectify.annotation.Index;
 	@Index
 	private String email;
 	
-
+	/**
+	 * Description of the property AccountId.
+	 */
+	@Index
+	private List<Long> weekdayTimeBlockIds;
+	
 	
 	
 	public Employee(){
@@ -80,7 +85,7 @@ import com.googlecode.objectify.annotation.Index;
 	}
 	
 	public Employee(String newCalendarId, String newName, String newUserId,  String newEmail,
-			List<Long> newServiceIds, long newEmployeeId, List<Long> newTimeBlockIds){
+			List<Long> newServiceIds, long newEmployeeId, List<Long> newHolidayTimeBlockIds,  List<Long> newWeekdayTimeBlockIds){
 		
 		this.userId = newUserId;
 		this.calendarId = newCalendarId;
@@ -88,8 +93,9 @@ import com.googlecode.objectify.annotation.Index;
 		this.serviceIds = newServiceIds;
 		this.employeeId = newEmployeeId;
 		this.clearance = AdminClearances.employee;
-		this.timeBlockIds = newTimeBlockIds;
+		this.holidayTimeBlockIds = newHolidayTimeBlockIds;
 		this.email = newEmail;
+		this.weekdayTimeBlockIds = newWeekdayTimeBlockIds;
 	}
 
 	
@@ -207,19 +213,29 @@ import com.googlecode.objectify.annotation.Index;
 	}
 
 
-	public void setTimeBlockIds(List<Long> newTimeBlockId){
-		this.timeBlockIds = newTimeBlockId;
+	public void setHolidayTimeBlockIds(List<Long> newTimeBlockId){
+		this.holidayTimeBlockIds = newTimeBlockId;
 	}
 	
-	public List<Long> getTimeBlockIds(){
-		return this.timeBlockIds;
+	public List<Long> getHolidayTimeBlockIds(){
+		return this.holidayTimeBlockIds;
 	}
 	
 	public void addTimeBlock(long newTimeBlockId){
-		this.timeBlockIds.add(newTimeBlockId);
+		this.holidayTimeBlockIds.add(newTimeBlockId);
 	}
 	
 	public void removeTimeBlock(long newTimeBlockId){
-		this.timeBlockIds.remove(newTimeBlockId);
+		this.holidayTimeBlockIds.remove(newTimeBlockId);
 	}
+	
+	
+	public void setWeekdayTimeBlockIds(List<Long> newTimeBlockId){
+		this.weekdayTimeBlockIds = newTimeBlockId;
+	}
+	
+	public List<Long> getWeekdayTimeBlockIds(){
+		return this.weekdayTimeBlockIds;
+	}
+
 }
