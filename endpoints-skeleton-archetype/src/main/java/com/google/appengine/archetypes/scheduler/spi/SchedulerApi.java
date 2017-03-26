@@ -62,6 +62,7 @@ import com.google.appengine.archetypes.scheduler.forms.EmployeeForm;
 import com.google.appengine.archetypes.scheduler.forms.EventCreatorForm;
 import com.google.appengine.archetypes.scheduler.forms.EventForm;
 import com.google.appengine.archetypes.scheduler.forms.GeneralForm;
+import com.google.appengine.archetypes.scheduler.forms.HolidayTimeBlockListForm;
 import com.google.appengine.archetypes.scheduler.forms.PageAuthForm;
 import com.google.appengine.archetypes.scheduler.forms.ProductForm;
 import com.google.appengine.archetypes.scheduler.forms.RemoveAdminForm;
@@ -111,7 +112,7 @@ public class SchedulerApi {
   	 */
 	
 	@ApiMethod(name = "admin.addEmployee", path = "admin.addEmployee", httpMethod = "post")
-  	public Employee addEmployee(final User user, EmployeeForm employeeForm , TimeBlockListForm timeBlockListForm ) throws UnauthorizedException, IOException{
+  	public Employee addEmployee(final User user, EmployeeForm employeeForm , HolidayTimeBlockListForm holidayTimeBlockListForm, TimeBlockListForm timeBlockListForm ) throws UnauthorizedException, IOException{
 		
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -124,10 +125,9 @@ public class SchedulerApi {
         final long employeeId = employeeKey.getId();
    
 	
-        List<Long> timeHolidayBlockLong = addTimeBlocks(user, timeBlockListForm);
+        List<Long> timeHolidayBlockLong = addHolidayTimeBlocks(user, holidayTimeBlockListForm);
         
-        List<Long> timeBlockLong = null;
-        		//addTimeBlocks(user, timeBlockListForm);
+        List<Long> timeBlockLong = addTimeBlocks(user, timeBlockListForm);
         
         //TODO
         //write method more non-holidays
@@ -163,8 +163,8 @@ public class SchedulerApi {
   	 * @throws IOException 
   	 */
      
-   	@ApiMethod(name = "admin.addTimeBlocks", path = "admin.addTimeBlocks", httpMethod = "post")
-  	public List<Long> addTimeBlocks(final User user, TimeBlockListForm timeBlockListForm) throws UnauthorizedException, IOException {
+   	@ApiMethod(name = "admin.addHolidayTimeBlocks", path = "admin.addHolidayTimeBlocks", httpMethod = "post")
+  	public List<Long> addHolidayTimeBlocks(final User user, HolidayTimeBlockListForm timeBlockListForm) throws UnauthorizedException, IOException {
    		
    		
         if (user == null) {
@@ -188,6 +188,49 @@ public class SchedulerApi {
         }
 		
         return list;
+  	}
+   	
+   	/**
+  	 * Description of the method addRoom.
+  	 * @param admin 
+  	 * @param roomForm 
+  	 * @throws UnauthorizedException 
+  	 * @throws IOException 
+  	 */
+     
+   	@ApiMethod(name = "admin.addTimeBlocks", path = "admin.addTimeBlocks", httpMethod = "post")
+  	public List<Long> addTimeBlocks(final User user, TimeBlockListForm timeBlockListForm) throws UnauthorizedException, IOException {
+   		
+   		
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        //TODO
+        
+        /*
+        List<Long> list = new ArrayList<Long>();
+        
+        
+        List<TimeBlockForm> timeBlockForms = timeBlockListForm.getTimeBlockList(); 
+        
+        for(TimeBlockForm tempForm: timeBlockForms){
+
+        	final Key<TimeBlock> timeBlockKey = factory().allocateId(TimeBlock.class);
+        	final long Id = timeBlockKey.getId();
+        
+        	TimeBlock timeBlock = new TimeBlock(Id, tempForm.getStartTime(), tempForm.getEndTime());
+        
+        	ofy().save().entities(timeBlock).now(); 
+   		
+        }
+		
+        return list;
+        
+        
+        */
+        
+        return null;
   	}
 	
 	
