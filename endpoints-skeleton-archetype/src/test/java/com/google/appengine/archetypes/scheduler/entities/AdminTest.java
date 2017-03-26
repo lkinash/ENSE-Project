@@ -22,6 +22,7 @@ public class AdminTest {
 	private static final long ADMINID = 5599666;
 	private static final String USERID = "sdds659565";
 	private static final AdminClearances CLEARANCE = AdminClearances.admin;
+	private static final String EMAIL = "example@example.com";
 	
 	private Admin admin;
 	
@@ -33,7 +34,7 @@ public class AdminTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 admin = new Admin(CLEARANCE, USERID,ADMINID);
+		 admin = new Admin(CLEARANCE, USERID,ADMINID, EMAIL);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -46,6 +47,7 @@ public class AdminTest {
 	public void testGetters() throws Exception{
 		assertEquals(ADMINID,admin.getAdminId());
 		assertEquals(USERID,admin.getUserId());
+		assertEquals(EMAIL,admin.getEmail());
 		assertEquals(CLEARANCE,admin.getAdminClearance());
 	}
 }

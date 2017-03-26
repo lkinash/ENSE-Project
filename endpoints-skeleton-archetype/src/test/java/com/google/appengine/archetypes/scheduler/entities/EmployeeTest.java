@@ -21,6 +21,7 @@ public class EmployeeTest {
 	private static final String CALENDARID = "12345678999";
 	private static final String NAME = "Test User";
 	private static final String USERID = "123458956";
+	private static final String EMAIL = "example@example.com";
 	private static final long EMPLOYEEID = 6665559;
 	
 	private Employee employee;
@@ -33,7 +34,8 @@ public class EmployeeTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-	     employee = new Employee(CALENDARID, NAME, USERID, null, EMPLOYEEID, null);
+	     employee = new Employee(CALENDARID, NAME, USERID, EMAIL, null,  EMPLOYEEID, null );
+			
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -47,6 +49,7 @@ public class EmployeeTest {
 	public void testGetters() throws Exception{
 		assertEquals(CALENDARID, employee.getCalendarId());
 		assertEquals(NAME, employee.getName());
+		assertEquals(EMAIL,employee.getEmail());
 		assertEquals(USERID, employee.getUserId());
 		assertEquals(EMPLOYEEID, employee.getEmployeeId());
 	}
