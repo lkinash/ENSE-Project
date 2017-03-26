@@ -129,6 +129,8 @@ public class SchedulerApi {
         List<Long> timeBlockLong = null;
         		//addTimeBlocks(user, timeBlockListForm);
         
+        //TODO
+        //write method more non-holidays
         
         // TODO 
         // Properly declare variables based on google calendar

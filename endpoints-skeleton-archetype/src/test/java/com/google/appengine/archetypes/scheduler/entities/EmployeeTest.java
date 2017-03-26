@@ -34,7 +34,7 @@ public class EmployeeTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-	     employee = new Employee(CALENDARID, NAME, USERID, EMAIL, null,  EMPLOYEEID, null );
+	     employee = new Employee(CALENDARID, NAME, USERID, EMAIL, null,  EMPLOYEEID, null, null );
 			
 	 }
 
