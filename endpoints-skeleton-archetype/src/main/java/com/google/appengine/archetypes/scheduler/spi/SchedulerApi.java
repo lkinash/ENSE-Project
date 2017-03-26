@@ -7,37 +7,18 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.json.JSONException;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.appengine.datastore.AppEngineDataStoreFactory;
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets.Details;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.calendar.Calendar;
-import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventAttendee;
-import com.google.api.services.calendar.model.EventDateTime;
-import com.google.api.services.calendar.model.EventReminder;
 import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.archetypes.scheduler.Constants;
 import com.google.appengine.archetypes.scheduler.ConstantsSecret;
 import com.google.appengine.archetypes.scheduler.Defaults;
@@ -61,7 +42,6 @@ import com.google.appengine.archetypes.scheduler.forms.ClientForm;
 import com.google.appengine.archetypes.scheduler.forms.EmployeeForm;
 import com.google.appengine.archetypes.scheduler.forms.EventCreatorForm;
 import com.google.appengine.archetypes.scheduler.forms.EventForm;
-import com.google.appengine.archetypes.scheduler.forms.GeneralForm;
 import com.google.appengine.archetypes.scheduler.forms.HolidayTimeBlockListForm;
 import com.google.appengine.archetypes.scheduler.forms.PageAuthForm;
 import com.google.appengine.archetypes.scheduler.forms.ProductForm;
@@ -85,12 +65,11 @@ import com.google.appengine.archetypes.scheduler.service.EventCreator;
 import com.google.appengine.archetypes.scheduler.service.Quickstart;
 import com.google.appengine.archetypes.scheduler.servlets.Sendgrid;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedBoolean;
-import com.google.appengine.archetypes.scheduler.wrappers.WrappedStringId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedLongId;
+import com.google.appengine.archetypes.scheduler.wrappers.WrappedStringId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrapperStatus;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
-import com.google.api.services.calendar.Calendar;
 
 
 /**
