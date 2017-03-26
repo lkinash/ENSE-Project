@@ -89,6 +89,7 @@ import com.google.appengine.archetypes.scheduler.wrappers.WrappedLongId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrapperStatus;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
+import com.google.api.services.calendar.Calendar;
 
 
 /**
@@ -123,7 +124,11 @@ public class SchedulerApi {
         final long employeeId = employeeKey.getId();
    
 	
-        List<Long> timeBlockLong = addTimeBlocks(user, timeBlockListForm);
+        List<Long> timeHolidayBlockLong = addTimeBlocks(user, timeBlockListForm);
+        
+        List<Long> timeBlockLong = null;
+        		//addTimeBlocks(user, timeBlockListForm);
+        
         
         // TODO 
         // Properly declare variables based on google calendar
@@ -134,7 +139,8 @@ public class SchedulerApi {
         
         //employee must have a name, email and a password set
         
-  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getEmail(),  employeeForm.getServiceIds(), employeeId, timeBlockLong);
+  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getEmail(),  
+  				employeeForm.getServiceIds(), employeeId, timeHolidayBlockLong, timeBlockLong);
   			
 
   		ofy().save().entities(employee).now();
@@ -1871,28 +1877,18 @@ public class SchedulerApi {
 		Calendar service = Quickstart.getService(user);
 		
 	    String id = "projectense@gmail.com";
-		return null;
+	
 		   
 		
-        //com.google.api.services.calendar.Calendar service = loadCalendarClient();
-        
-		//String userId = UserServiceFactory.getUserService().getCurrentUser().getUserId();
-	    //Credential credential = newFlow().loadCredential(ConstantsSecret.masterUserId);
-		
-        //Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-        //.setApplicationName("applicationName").build();
+		com.google.api.services.calendar.model.Calendar calendar = new com.google.api.services.calendar.model.Calendar();
+		calendar.setSummary("calendarSummary");
+		calendar.setTimeZone("America/Los_Angeles");
 
-    // Retrieve the calendar
-        //com.google.api.services.calendar.model.Calendar calendar =
-        //		service.calendars().get(ConstantsSecret.calendarId).execute();
-        
-        //Event event = createEvent(user);
-        
-       // event = service.events().insert(id, event).execute();
+		// Insert the new calendar
+		com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
+
 		
-		//return event;
-        
-		//return calendar;
+		return null;
 
 	}
 	

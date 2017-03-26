@@ -58,12 +58,6 @@ public class Quickstart {
 	private static final AppEngineDataStoreFactory DATA_STORE_FACTORY =
 		      AppEngineDataStoreFactory.getDefaultInstance();
 		  
-		  /** Global instance of the HTTP transport. */
-		  //static final HttpTransport HTTP_TRANSPORT = new UrlFetchTransport();
-
-		  /** Global instance of the JSON factory. */
-		  //static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-
 	  /** Global instance of the HTTP transport. */
 	  private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 
