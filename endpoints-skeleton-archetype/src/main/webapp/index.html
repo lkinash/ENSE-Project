@@ -14,6 +14,7 @@
 	<link href="/css/viewRoomAdmin.css" rel="stylesheet">
 	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
 	<link href="/css/pendingAppAdmin.css" rel="stylesheet">
+	 
 	
 	<link href="/fullCalendar/lib/fullcalendar.min.css" rel="stylesheet">
 
@@ -27,6 +28,9 @@
 
 	
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular-touch.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
     <script>
         /**
@@ -54,7 +58,18 @@
 			
 		
                 <button type="button" class="btn btn-default" id="signInLink" ng-hide="getSignedInState()"ng-click="signIn(); ">Google+ SignIn</button>
-                <button type="button" class="btn btn-default" id="signOutLink" ng-show="getSignedInState()" ng-click="signOut(); ">Log-out</button>
+                <div class="hright2"  ng-show="getSignedInState()" >
+				<label class="username">{{username}}</label>
+				<div class="dropdown">
+					<button type="button" data-toggle="dropdown">
+					<span class="caret"></span></button>
+					<ul class="dropdown-menu dropdown-menu-right">
+					<li><a href="adminEditProfile.html">Edit Profile</a></li>
+					<li id="signOutLink" ng-show="getSignedInState()"><a ng-click="signOut(); collapseNavbar()">Log-out</a></li>
+					</ul>
+				</div>
+			</div>
+                
          
 			</div>
 		</div>

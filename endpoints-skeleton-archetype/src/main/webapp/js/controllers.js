@@ -160,6 +160,7 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
         oauth2Provider.signIn(function () {
             gapi.client.oauth2.userinfo.get().execute(function (resp) {
                 $scope.$apply(function () {
+                	$scope.username=resp.name;
                     if (resp.email) {
                         oauth2Provider.signedIn = true;
                         $scope.alertStatus = 'success';
@@ -366,18 +367,15 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 
 	 console.log("controller reached for viewEmployeeAdmin");
 
-	 $scope.init = function(){
-		 gapi.client.scheduler.admin.getAllEmployees().execute(function(resp){
-			 $scope.employees=resp.result.items;
-			 $scope.$apply();
-		 });
-		  
-	 };
 	 
  });
 
  conferenceApp.controllers.controller('AddEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 	 console.log("Reached AddEmployeeController");
+	 $scope.hours=["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"
+	               ];
+	 $scope.minutes=["00","05","10","15","20","25","30","35","40","45","50","55"
+	                 ];
 	 $scope.addEmployee = function() {
 		  
 		var employeeForm={
@@ -717,7 +715,8 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    $scope.changeTo = 'Hungarian';
 	    /* event source that pulls from google.com */
 	    $scope.eventSource = {
-	            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
+	            url: "qd24nt57a3b8sut8pso18o6l2s@group.calendar.google.com",
+	            googleCalendarApiKey: 'AIzaSyCk3oNQRiy8vVIM-dyIx4DZfy2qyTT3avU',
 	            className: 'gcal-event',           // an option!
 	            currentTimezone: 'America/Chicago' // an option!
 	    };
@@ -787,14 +786,17 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	      $scope.events.splice(index,1);
 	    };
 	    /* Change View */
-	    $scope.changeView = function(view,calendar) {
-	      uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+	    $scope.changeView = function (view, calendar) {
+	        $scope.currentView = view;
+	        uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
 	    };
 	    /* Change View */
-	    $scope.renderCalender = function(calendar) {
-	      if(uiCalendarConfig.calendars[calendar]){
-	        uiCalendarConfig.calendars[calendar].fullCalendar('render');
-	      }
+	    $scope.renderCalender = function (calendar) {
+	        $timeout(function () {
+	            if (uiCalendarConfig.calendars[calendar]) {
+	                uiCalendarConfig.calendars[calendar].fullCalendar('render');
+	            }
+	        });
 	    };
 	     /* Render Tooltip */
 	    $scope.eventRender = function( event, element, view ) { 
