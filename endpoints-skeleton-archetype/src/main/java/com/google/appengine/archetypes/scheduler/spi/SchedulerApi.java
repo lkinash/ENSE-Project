@@ -120,7 +120,7 @@ public class SchedulerApi {
         
         //employee must have a name, email and a password set
         
-  		Employee employee  = new Employee(calendarId, employeeForm.getName(), userId, employeeForm.getEmail(),  
+  		Employee employee  = new Employee(calendarId, employeeForm.getFirstName(), employeeForm.getLastName(), userId, employeeForm.getEmail(),  
   				employeeForm.getServiceIds(), employeeId, timeHolidayBlockLong, timeBlockLong);
   			
 
@@ -378,7 +378,7 @@ public class SchedulerApi {
         final long adminId = adminKey.getId();
         
         
-  		Admin admin  = new Admin(adminForm.getClearance(), userId, adminId, adminForm.getEmail());
+  		Admin admin  = new Admin(adminForm.getFirstName(), adminForm.getLastName(), adminForm.getClearance(), userId, adminId, adminForm.getEmail());
   			
   		ofy().save().entities(admin).now();
   		
@@ -656,8 +656,12 @@ public class SchedulerApi {
 		 
 	    Employee employee = getEmployee(user, employeeId);
 	    
-	    if(!(employeeForm.getName() == null)){
-	    	employee.setName(employeeForm.getName());
+	    if(!(employeeForm.getFirstName() == null)){
+	    	employee.setFirstName(employeeForm.getFirstName());
+	    }
+
+	    if(!(employeeForm.getLastName() == null)){
+	    	employee.setLastName(employeeForm.getLastName());
 	    }
 	    
   		ofy().save().entities(employee).now();
