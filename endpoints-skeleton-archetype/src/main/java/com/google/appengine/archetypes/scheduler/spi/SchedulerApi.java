@@ -235,9 +235,7 @@ public class SchedulerApi {
         final long roomId = roomKey.getId();
         
         String calendar = createRoomCalendar(user).getId();
-        		
-        List <Long> service = null;
-       
+        		       
         Room room = new Room(roomForm.getNumber(), roomForm.getServiceIds(), calendar, roomId);
     		
   		ofy().save().entities(room).now(); 
@@ -1900,7 +1898,7 @@ public class SchedulerApi {
 		
 		Calendar service = Quickstart.getService(user);
 		
-	    String id = "projectense@gmail.com";
+	    //String id = "projectense@gmail.com";
 	
 		   
 		

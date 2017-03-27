@@ -20,8 +20,8 @@ import com.googlecode.objectify.annotation.Index;
  * 
  * @author Lindsey
  */
-	@Entity
-	public class Employee {
+@Entity
+public class Employee {
 
 	/**
 	 * Description of the property calendar.
@@ -29,11 +29,6 @@ import com.googlecode.objectify.annotation.Index;
 	@Index
 	private String calendarId;
 
-	/**
-	 * Description of the property firstName.
-	 */
-	@Index
-	private String name;
 
 	/**
 	 * Description of the property firstName.
@@ -79,23 +74,38 @@ import com.googlecode.objectify.annotation.Index;
 	private List<Long> weekdayTimeBlockIds;
 	
 	
+	/**
+	 * Description of the property firstName.
+	 */
+	@Index
+    private String firstName;
+
+	/**
+	 * Description of the property lastName.
+	 */
+	@Index
+    private String lastName;
+
+	
 	
 	public Employee(){
 		
 	}
 	
-	public Employee(String newCalendarId, String newName, String newUserId,  String newEmail,
+	public Employee(String newCalendarId, String newFirstName, String newLastName, String newUserId,  String newEmail,
 			List<Long> newServiceIds, long newEmployeeId, List<Long> newHolidayTimeBlockIds,  List<Long> newWeekdayTimeBlockIds){
 		
 		this.userId = newUserId;
 		this.calendarId = newCalendarId;
-		this.name = newName;
 		this.serviceIds = newServiceIds;
 		this.employeeId = newEmployeeId;
 		this.clearance = AdminClearances.employee;
 		this.holidayTimeBlockIds = newHolidayTimeBlockIds;
 		this.email = newEmail;
 		this.weekdayTimeBlockIds = newWeekdayTimeBlockIds;
+		this.firstName = newFirstName;
+		this.lastName = newLastName;
+		
 	}
 
 	
@@ -152,16 +162,32 @@ import com.googlecode.objectify.annotation.Index;
 	 * Returns firstName.
 	 * @return firstName 
 	 */
-	public String getName() {
-		return this.name;
+	public String getFirstName() {
+		return this.firstName;
 	}
 
 	/**
 	 * Sets a value to attribute firstName. 
 	 * @param newFirstName 
 	 */
-	public void setName(String newName) {
-		this.name = newName;
+	public void setFirstName(String newFirstName) {
+		this.firstName = newFirstName;
+	}
+
+	/**
+	 * Returns lastName.
+	 * @return lastName 
+	 */
+	public String getLastName() {
+		return this.lastName;
+	}
+
+	/**
+	 * Sets a value to attribute lastName. 
+	 * @param newLastName 
+	 */
+	public void setLastName(String newLastName) {
+		this.lastName = newLastName;
 	}
 
 	/**

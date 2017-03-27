@@ -21,6 +21,8 @@ import com.googlecode.objectify.annotation.Index;
  */
 @Entity
 public class Client{
+
+	
 	/**
 	 * Description of the property firstName.
 	 */
