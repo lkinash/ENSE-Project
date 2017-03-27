@@ -20,6 +20,8 @@ import com.google.appengine.archetypes.scheduler.list.AdminClearances;
  * @author Lindsey
  */
 public class ClientForm {
+	
+	
 	/**
 	 * Description of the property password.
 	 */
@@ -29,6 +31,16 @@ public class ClientForm {
 	 * Description of the property firstName.
 	 */
 	private String firstName;
+	
+	/**
+	 * Description of the property lastName.
+	 */
+	private String lastName;
+	
+	/**
+	 * Description of the property phoneNumber.
+	 */
+	private int phoneNumber;
 
 	/**
 	 * Description of the property email.
@@ -39,16 +51,6 @@ public class ClientForm {
 	 * Description of the property birthday.
 	 */
 	private Date birthday;
-
-	/**
-	 * Description of the property phoneNumber.
-	 */
-	private int phoneNumber;
-
-	/**
-	 * Description of the property lastName.
-	 */
-	private String lastName;
 	
 	/**
 	 * Description of the property clearance.
@@ -109,6 +111,23 @@ public class ClientForm {
 	public void setFirstName(String newFirstName) {
 		this.firstName = newFirstName;
 	}
+	
+
+	/**
+	 * Returns lastName.
+	 * @return lastName 
+	 */
+	public String getLastName() {
+		return this.lastName;
+	}
+
+	/**
+	 * Sets a value to attribute lastName. 
+	 * @param newLastName 
+	 */
+	public void setLastName(String newLastName) {
+		this.lastName = newLastName;
+	}
 
 	/**
 	 * Returns email.
@@ -160,21 +179,6 @@ public class ClientForm {
 	}
 
 
-	/**
-	 * Returns lastName.
-	 * @return lastName 
-	 */
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	/**
-	 * Sets a value to attribute lastName. 
-	 * @param newLastName 
-	 */
-	public void setLastName(String newLastName) {
-		this.lastName = newLastName;
-	}
 	
 	/**
 	 * Returns clearance.

@@ -19,10 +19,16 @@ import com.google.appengine.archetypes.scheduler.list.AdminClearances;
  * @author Lindsey
  */
 public class EmployeeForm {
+
 	/**
-	 * Description of the property name.
+	 * Description of the property firstName.
 	 */
-	private String name;
+	private String firstName;
+	
+	/**
+	 * Description of the property lastName.
+	 */
+	private String lastName;
 
 	/**
 	 * Description of the property calendar.
@@ -57,10 +63,12 @@ public class EmployeeForm {
 		
 	}
 	
-	public EmployeeForm(String newName, Calendar newCalendar, List<Long> newServiceIds, List<Long> newTimeBlockIds){
+	public EmployeeForm(String newName, Calendar newCalendar, List<Long> newServiceIds, 
+			List<Long> newTimeBlockIds, String newFirstName, String newLastName){
 		
 		this.calendar = newCalendar;
-		this.name = newName;
+		this.firstName = newFirstName;
+		this.lastName = newLastName;
 		this.serviceIds = newServiceIds;
 		this.clearance = AdminClearances.employee;
 		this.timeBlockIds = newTimeBlockIds;
@@ -169,6 +177,40 @@ public class EmployeeForm {
 	
 	public List<Long> getTimeBlockIds(){
 		return this.timeBlockIds;
+	}
+	
+	
+	/**
+	 * Returns firstName.
+	 * @return firstName 
+	 */
+	public String getFirstName() {
+		return this.firstName;
+	}
+
+	/**
+	 * Sets a value to attribute firstName. 
+	 * @param newFirstName 
+	 */
+	public void setFirstName(String newFirstName) {
+		this.firstName = newFirstName;
+	}
+	
+
+	/**
+	 * Returns lastName.
+	 * @return lastName 
+	 */
+	public String getLastName() {
+		return this.lastName;
+	}
+
+	/**
+	 * Sets a value to attribute lastName. 
+	 * @param newLastName 
+	 */
+	public void setLastName(String newLastName) {
+		this.lastName = newLastName;
 	}
 
 }

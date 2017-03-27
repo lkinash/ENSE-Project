@@ -13,6 +13,16 @@ import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 public class AdminForm {
 	
 	/**
+	 * Description of the property firstName.
+	 */
+	private String firstName;
+	
+	/**
+	 * Description of the property lastName.
+	 */
+	private String lastName;
+	
+	/**
 	 * Description of the property password.
 	 */
 	private String password;
@@ -32,16 +42,17 @@ public class AdminForm {
 		
 	}
 	
-	public AdminForm(String newPassword, AdminClearances newClearances, String newEmail){
+	public AdminForm(String newPassword, AdminClearances newClearances, String newEmail, String newFirstName, String newLastName){
 		
 		this.password = newPassword;
 		this.email = newEmail;
 		this.clearance = newClearances;
+		
+		this.firstName = newFirstName;
+		this.lastName = newLastName;
 	}
 
-	// Start of user code (user defined methods for AdminForm)
 
-	// End of user code
 	/**
 	 * Returns password.
 	 * @return password 
@@ -90,5 +101,38 @@ public class AdminForm {
 		this.email = newEmail;
 	}
 
+	
+	/**
+	 * Returns firstName.
+	 * @return firstName 
+	 */
+	public String getFirstName() {
+		return this.firstName;
+	}
+
+	/**
+	 * Sets a value to attribute firstName. 
+	 * @param newFirstName 
+	 */
+	public void setFirstName(String newFirstName) {
+		this.firstName = newFirstName;
+	}
+	
+
+	/**
+	 * Returns lastName.
+	 * @return lastName 
+	 */
+	public String getLastName() {
+		return this.lastName;
+	}
+
+	/**
+	 * Sets a value to attribute lastName. 
+	 * @param newLastName 
+	 */
+	public void setLastName(String newLastName) {
+		this.lastName = newLastName;
+	}
 
 }
