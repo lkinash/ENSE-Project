@@ -1,8 +1,25 @@
 @charset "utf-8";
 /* CSS Document */
 
+.timepicker-picker table td,
+.timepicker-picker table td span,
+.timepicker-picker table td a span
+{height: 30px; line-height: 30px; width: 30px; padding:0px;}
+
+.tableheadings {
+	width:100%
+	text-align:center;
+}
+td {
+    white-space: nowrap;
+}
+
+.timeholder{
+	width:10px;
+	height:10px;
+}
 .employeeHolder{
-	width: 80%;
+	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -47,6 +64,7 @@
 }
 .heading .plusMinus{
 	margin-left: 90%;	
+	width:2px;
 }
 
 .plusMinus button{
