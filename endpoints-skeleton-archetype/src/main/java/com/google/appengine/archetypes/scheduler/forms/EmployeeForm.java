@@ -73,22 +73,6 @@ public class EmployeeForm {
 		this.clearance = AdminClearances.employee;
 		this.timeBlockIds = newTimeBlockIds;
 	}
-	
-	/**
-	 * Returns name.
-	 * @return name 
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-	/**
-	 * Sets a value to attribute name. 
-	 * @param newName 
-	 */
-	public void setName(String newName) {
-		this.name = newName;
-	}
 
 	/**
 	 * Returns calendar.

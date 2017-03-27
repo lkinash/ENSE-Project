@@ -50,8 +50,8 @@ public class AdminTest {
 		assertEquals(ADMINID,admin.getAdminId());
 		assertEquals(USERID,admin.getUserId());
 		assertEquals(EMAIL,admin.getEmail());
-		assertEquals(FIRSTNAME, employee.getFirstName());
-		assertEquals(LASTNAME, employee.getLastName());
+		assertEquals(FIRSTNAME, admin.getFirstName());
+		assertEquals(LASTNAME, admin.getLastName());
 		assertEquals(CLEARANCE,admin.getAdminClearance());
 	}
 }
