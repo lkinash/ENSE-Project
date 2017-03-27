@@ -160,6 +160,7 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
         oauth2Provider.signIn(function () {
             gapi.client.oauth2.userinfo.get().execute(function (resp) {
                 $scope.$apply(function () {
+                	$scope.username=resp.name;
                     if (resp.email) {
                         oauth2Provider.signedIn = true;
                         $scope.alertStatus = 'success';
