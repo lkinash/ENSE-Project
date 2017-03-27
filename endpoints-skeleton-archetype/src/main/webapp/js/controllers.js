@@ -715,7 +715,8 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    $scope.changeTo = 'Hungarian';
 	    /* event source that pulls from google.com */
 	    $scope.eventSource = {
-	            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
+	            url: "qd24nt57a3b8sut8pso18o6l2s@group.calendar.google.com",
+	            googleCalendarApiKey: 'AIzaSyCk3oNQRiy8vVIM-dyIx4DZfy2qyTT3avU',
 	            className: 'gcal-event',           // an option!
 	            currentTimezone: 'America/Chicago' // an option!
 	    };
