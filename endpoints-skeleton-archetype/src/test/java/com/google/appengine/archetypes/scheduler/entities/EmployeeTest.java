@@ -19,7 +19,8 @@ public class EmployeeTest {
 	
 	//Data for Employee class fields
 	private static final String CALENDARID = "12345678999";
-	private static final String NAME = "Test User";
+	private static final String FIRSTNAME = "User";
+	private static final String LASTNAME = "Test";
 	private static final String USERID = "123458956";
 	private static final String EMAIL = "example@example.com";
 	private static final long EMPLOYEEID = 6665559;
@@ -34,7 +35,7 @@ public class EmployeeTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-	     employee = new Employee(CALENDARID, NAME, USERID, EMAIL, null,  EMPLOYEEID, null, null );
+	     employee = new Employee(CALENDARID, FIRSTNAME, LASTNAME, USERID, EMAIL, null,  EMPLOYEEID, null, null );
 			
 	 }
 
@@ -48,7 +49,8 @@ public class EmployeeTest {
 	@Test
 	public void testGetters() throws Exception{
 		assertEquals(CALENDARID, employee.getCalendarId());
-		assertEquals(NAME, employee.getName());
+		assertEquals(FIRSTNAME, employee.getFirstName());
+		assertEquals(LASTNAME, employee.getLastName());
 		assertEquals(EMAIL,employee.getEmail());
 		assertEquals(USERID, employee.getUserId());
 		assertEquals(EMPLOYEEID, employee.getEmployeeId());
