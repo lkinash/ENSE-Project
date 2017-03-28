@@ -26,5 +26,10 @@ public List<TimeBlockForm> timeBlockForms;
 		
 		return this.timeBlockForms;
 	}
+
+	public List<HolidayTimeBlockListForm> getHolidayTimeBlockList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

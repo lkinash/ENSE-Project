@@ -27,6 +27,7 @@ import com.google.appengine.archetypes.scheduler.entities.Appointment;
 import com.google.appengine.archetypes.scheduler.entities.Changes;
 import com.google.appengine.archetypes.scheduler.entities.Clearances;
 import com.google.appengine.archetypes.scheduler.entities.Client;
+import com.google.appengine.archetypes.scheduler.entities.DayTimeBlocks;
 import com.google.appengine.archetypes.scheduler.entities.Employee;
 import com.google.appengine.archetypes.scheduler.entities.PageAuth;
 import com.google.appengine.archetypes.scheduler.entities.Product;
@@ -60,6 +61,7 @@ import com.google.appengine.archetypes.scheduler.forms.TypeForm;
 import com.google.appengine.archetypes.scheduler.forms.UserEmailForm;
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.google.appengine.archetypes.scheduler.list.Status;
+import com.google.appengine.archetypes.scheduler.list.WeekDay;
 import com.google.appengine.archetypes.scheduler.service.DateTimeConverter;
 import com.google.appengine.archetypes.scheduler.service.EventCreator;
 import com.google.appengine.archetypes.scheduler.service.Quickstart;
@@ -112,9 +114,6 @@ public class SchedulerApi {
         
         List<Long> timeBlockLong = addTimeBlocks(user, employeeForm.getTimeBlockListForm());
         
-        //TODO
-        //write method more non-holidays
-       
         
         String calendarId = createCalendar(user, employeeForm.getFirstName()).getId();     
         
@@ -159,6 +158,8 @@ public class SchedulerApi {
 
         	final Key<TimeBlock> timeBlockKey = factory().allocateId(TimeBlock.class);
         	final long Id = timeBlockKey.getId();
+        	
+        	list.add(Id);
         
         	TimeBlock timeBlock = new TimeBlock(Id, tempForm.getStartTime(), tempForm.getEndTime());
         
@@ -187,29 +188,30 @@ public class SchedulerApi {
         
         //TODO
         
-        /*
+        
         List<Long> list = new ArrayList<Long>();
         
         
-        List<TimeBlockForm> timeBlockForms = timeBlockListForm.getTimeBlockList(); 
+        List<DayTimeBlocks> timeBlock = timeBlockListForm.getTimeBlocks(); 
         
-        for(TimeBlockForm tempForm: timeBlockForms){
+        for(DayTimeBlocks tempBlock: timeBlock){
 
-        	final Key<TimeBlock> timeBlockKey = factory().allocateId(TimeBlock.class);
+        	final Key<DayTimeBlocks> timeBlockKey = factory().allocateId(DayTimeBlocks.class);
         	final long Id = timeBlockKey.getId();
         
-        	TimeBlock timeBlock = new TimeBlock(Id, tempForm.getStartTime(), tempForm.getEndTime());
-        
+        	list.add(Id);
+        	
+        	DayTimeBlocks dayTimeBlock = new DayTimeBlocks(Id, tempBlock.getWeekDay(), 
+        			tempBlock.getMorningStartHour(), tempBlock.getMorningStartMinute(), tempBlock.getMorningEndHour(), tempBlock.getMorningEndMinute(),
+        			tempBlock.getAfternoonStartHour(), tempBlock.getAfternoonStartMinute(), tempBlock.getAfternoonEndHour(), tempBlock.getAfternoonEndMinute());
+        			
+        		
         	ofy().save().entities(timeBlock).now(); 
    		
         }
 		
         return list;
         
-        
-        */
-        
-        return null;
   	}
 	
 	
