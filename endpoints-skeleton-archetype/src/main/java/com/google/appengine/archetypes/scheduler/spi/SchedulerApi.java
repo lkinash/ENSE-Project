@@ -2091,7 +2091,7 @@ public class SchedulerApi {
 				   
 		com.google.api.services.calendar.model.Calendar calendar = new com.google.api.services.calendar.model.Calendar();
 		calendar.setSummary(calendarName);
-		calendar.setTimeZone("America/Los_Angeles");
+		calendar.setTimeZone("America/Regina");
 
 		com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
 
