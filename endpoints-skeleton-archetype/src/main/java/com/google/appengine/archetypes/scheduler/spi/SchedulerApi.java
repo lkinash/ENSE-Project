@@ -1290,6 +1290,7 @@ public class SchedulerApi {
   		
   	}
 
+
   	/**
   	 * Returns products.
   	 * @return products 
@@ -1451,6 +1452,39 @@ public class SchedulerApi {
   	}
   	
   	
+
+  	/**
+  	 * Returns saleItems.
+  	 * @return saleItems 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAllEmployeesService", path = "admin.getAllEmployeesService", httpMethod = "get")
+ 	public List<Employee> getAllEmployeesService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+  		
+        List<Employee> employees = getAllEmployees(user);
+    	List<Employee> list = new ArrayList<Employee>();
+    	List<Long> services;
+    	
+    	for(Employee temp: employees){
+    		services = temp.getServiceIds();
+    		
+    		for(Long servicesTemp: services){
+    			if(servicesTemp == serviceForm.getTypeId()){
+    				list.add(temp);
+    			}
+    		}
+    	}
+        
+        
+        return list;
+  		
+  	}
   	
   	/**
   	 * Returns changess.
