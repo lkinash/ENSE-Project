@@ -77,7 +77,7 @@ import com.googlecode.objectify.cmd.Query;
  */
 @Api(	name = "scheduler", 
 		version = "v1", 
-		scopes = { Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE }, 
+		scopes = { Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE}, 
 		clientIds = { Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID }, 
 		description = "API ")
 
@@ -1891,7 +1891,7 @@ public class SchedulerApi {
 	 */
 
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public Event test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
+  	public com.google.api.services.calendar.model.Calendar test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
 
       //  if (user == null) {
         //    throw new UnauthorizedException("Authorization required");
@@ -1913,8 +1913,9 @@ public class SchedulerApi {
 		// Insert the new calendar
 		com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
 
+		//osoqisel4rd08hkiihi1d080cg@group.calendar.google.com
 		
-		return null;
+		return createdCalendar;
 
 	}
 	
@@ -2070,15 +2071,20 @@ public class SchedulerApi {
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
 	
-  	private static WrappedStringId createCalendar(final User user) throws UnauthorizedException, IOException {
+  	private static WrappedStringId createCalendar(final User user) throws UnauthorizedException, IOException, GeneralSecurityException {
 
-        
-        //TODO
-        //create a calendar
-        
-		return null;
+		Calendar service = Quickstart.getService(user);
+				   
+		com.google.api.services.calendar.model.Calendar calendar = new com.google.api.services.calendar.model.Calendar();
+		calendar.setSummary("calendarSummary");
+		calendar.setTimeZone("America/Los_Angeles");
+
+		com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
+
+		return new WrappedStringId(createdCalendar.getId());
   	}
   	
 	/**
@@ -2179,6 +2185,9 @@ public class SchedulerApi {
 
 		//service = Quickstart.getCalendarService(user);
 	
+		
+		
+		
 		return service;
 		
 	}
