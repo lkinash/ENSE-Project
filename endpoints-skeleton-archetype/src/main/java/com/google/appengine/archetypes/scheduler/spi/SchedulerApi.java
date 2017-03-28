@@ -116,7 +116,7 @@ public class SchedulerApi {
         //write method more non-holidays
        
         
-        String calendarId = createCalendar(user).getId();     
+        String calendarId = createCalendar(user, employeeForm.getFirstName()).getId();     
         
         //employee must have a name, email and a password set
         
@@ -235,7 +235,7 @@ public class SchedulerApi {
         final Key<Room> roomKey = factory().allocateId(Room.class);
         final long roomId = roomKey.getId();
         
-        String calendar = createRoomCalendar(user).getId();
+        String calendar = createRoomCalendar(user, roomForm.getNumber()).getId();
         		       
         Room room = new Room(roomForm.getNumber(), roomForm.getServiceIds(), calendar, roomId);
     		
@@ -475,7 +475,7 @@ public class SchedulerApi {
         List<Long> newAppointmentIds = null;
         List<Long> newClearanceIds = null;
         
-        String calendarId = createCalendar(user).getId();
+        String calendarId = createCalendar(user, clientForm.getEmail()).getId();
 		
         int phoneNumber;
         Date birthday;
@@ -1020,16 +1020,20 @@ public class SchedulerApi {
 	 * @param admin 
 	 * @param roomNumber 
 	 * @throws UnauthorizedException 
+	 * @throws GeneralSecurityException 
+	 * @throws IOException 
 	 */
 	
 	@ApiMethod(name = "admin.removeRoom",  path = "admin.removeRoom", httpMethod = "post")
-	public WrappedBoolean removeRoom(final User user, RemoveRoomForm removeRoomForm) throws UnauthorizedException {
+	public WrappedBoolean removeRoom(final User user, RemoveRoomForm removeRoomForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 	
 
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 		
+	    removeRoomCalendar(user, removeRoomForm.getRoomId());
+	    
 	    Key<Room> key = Key.create(Room.class, removeRoomForm.getRoomId());
 		
 		ofy().delete().key(key).now();
@@ -1042,10 +1046,12 @@ public class SchedulerApi {
 	 * @param admin 
 	 * @param employeeId 
 	 * @throws UnauthorizedException 
+	 * @throws GeneralSecurityException 
+	 * @throws IOException 
 	 */
 	
 	@ApiMethod(name = "admin.removeEmployee", path = "admin.removeEmployee", httpMethod = "post")
-	public WrappedBoolean removeEmployee(final User user, RemoveEmployeeForm removeEmployeeForm) throws UnauthorizedException {
+	public WrappedBoolean removeEmployee(final User user, RemoveEmployeeForm removeEmployeeForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
@@ -1053,6 +1059,8 @@ public class SchedulerApi {
 
 		long employeeId = removeEmployeeForm.getEmployeeId();
 	    
+		removeEmployeeCalendar(user, employeeId);
+		
 	    Key<Employee> key = Key.create(Employee.class, employeeId);
 	
 		ofy().delete().key(key).now();
@@ -1158,10 +1166,12 @@ public class SchedulerApi {
   	 * @param admin 
   	 * @param adminForm 
   	 * @throws UnauthorizedException 
+	 * @throws GeneralSecurityException 
+	 * @throws IOException 
   	 */
   	
   	@ApiMethod(name = "client.removeClient", path = "client.removeClient", httpMethod = "post")
- 	public WrappedBoolean removeClient(final User user, RemoveClientForm removeClientForm) throws UnauthorizedException {
+ 	public WrappedBoolean removeClient(final User user, RemoveClientForm removeClientForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1170,8 +1180,12 @@ public class SchedulerApi {
         
         long clientId = removeClientForm.getClientId();
   		
+        removeClientCalendar(user, clientId);
+        
 	    Key<Client> key = Key.create(Client.class, clientId);
 		
+	    
+	    
 		ofy().delete().key(key).now();
 	   
 		String change = "Remove Client. Client Id: " + clientId;
@@ -1886,32 +1900,7 @@ public class SchedulerApi {
 	}
 	
 
-	/**
-	 * Description of the method createAppointment.
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 * @throws GeneralSecurityException 
-	 */
-
-	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public Settings test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
-
-      //  if (user == null) {
-        //    throw new UnauthorizedException("Authorization required");
-       // }
-        
-		
-		//return Quickstart.addEvent(user, ConstantsSecret.calendarId, EventCreator.createEvent());
-		
-		Calendar service = Quickstart.getService(user);
-		
-		Settings settings = service.settings().list().execute();
-
-		//osoqisel4rd08hkiihi1d080cg@group.calendar.google.com
-		
-		return settings;
-
-	}
+	
 	
 	
 	/**
@@ -1993,6 +1982,34 @@ public class SchedulerApi {
         
         return null;
 	}
+	
+	
+	/**
+	 * Description of the method createAppointment.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+
+	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
+  	public Settings test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
+
+      //  if (user == null) {
+        //    throw new UnauthorizedException("Authorization required");
+       // }
+        
+		
+		//return Quickstart.addEvent(user, ConstantsSecret.calendarId, EventCreator.createEvent());
+		
+		Calendar service = Quickstart.getService(user);
+		
+		Settings settings = service.settings().list().execute();
+
+		//osoqisel4rd08hkiihi1d080cg@group.calendar.google.com
+		
+		return settings;
+
+	}
 
 	/**
 	 * Description of the method queryAppointments.
@@ -2068,12 +2085,12 @@ public class SchedulerApi {
 	 * @throws GeneralSecurityException 
 	 */
 	
-  	private static WrappedStringId createCalendar(final User user) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	private static WrappedStringId createCalendar(final User user, @Named("calendarName") final String calendarName) throws UnauthorizedException, IOException, GeneralSecurityException {
 
 		Calendar service = Quickstart.getService(user);
 				   
 		com.google.api.services.calendar.model.Calendar calendar = new com.google.api.services.calendar.model.Calendar();
-		calendar.setSummary("calendarSummary");
+		calendar.setSummary(calendarName);
 		calendar.setTimeZone("America/Los_Angeles");
 
 		com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
@@ -2096,24 +2113,72 @@ public class SchedulerApi {
 	 * @throws GeneralSecurityException 
 	 */
 	
-  	private static WrappedStringId createRoomCalendar(final User user) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	private static WrappedStringId createRoomCalendar(final User user, @Named("number") final int number) throws UnauthorizedException, IOException, GeneralSecurityException {
 
-		return (createCalendar(user));
+		return (createCalendar(user, Integer.toString(number)));
+  	}
+
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+	
+  	private static WrappedStringId removeEmployeeCalendar(final User user,  @Named("employeeId") final long employeeId) throws UnauthorizedException, IOException, GeneralSecurityException {
+
+
+    	Key<Employee> key = Key.create(Employee.class, employeeId);
+    	Employee employee = (Employee) ofy().load().key(key).now();
+  		
+		return removeCalendar(user, employee.getCalendarId());
   	}
   	
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
 	
-  	private static WrappedStringId removeRoomCalendar(final User user,  @Named("roomCalendarId") final String roomCalendarId) throws UnauthorizedException, IOException {
+  	private static WrappedStringId removeRoomCalendar(final User user,  @Named("roomId") final long roomId) throws UnauthorizedException, IOException, GeneralSecurityException {
 
+    	Key<Room> key = Key.create(Room.class, roomId);
+    	Room room = (Room) ofy().load().key(key).now();
+  		
+		return removeCalendar(user, room.getCalendar());
+  	}
+  	
+  	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+	
+  	private static WrappedStringId removeClientCalendar(final User user,  @Named("clientId") final long clientId) throws UnauthorizedException, IOException, GeneralSecurityException {
+
+    	Key<Client> key = Key.create(Client.class, clientId);
+    	Client client = (Client) ofy().load().key(key).now();
+  		
+		return removeCalendar(user, client.getCalendarId());
+  	}
+  	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+	
+  	private static WrappedStringId removeCalendar(final User user,  @Named("roomCalendarId") final String roomCalendarId) throws UnauthorizedException, IOException, GeneralSecurityException {
+
+		Calendar service = Quickstart.getService(user);
+		
+  		service.calendars().delete(roomCalendarId).execute();
         
-        //TODO
-        //remove a calendar
-        
-		return null;
+		return new WrappedStringId(roomCalendarId);
   	}
 	
 	/**
@@ -2122,8 +2187,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-	@ApiMethod(name = "appointment.createEvent", path = "appointment.createEvent", httpMethod = "post")
-  	public Event createEvent(final User user, EventForm eventForm, @Named("calendarId") final String calendarId) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	private static Event createEvent(final User user, EventForm eventForm, @Named("calendarId") final String calendarId) throws UnauthorizedException, IOException, GeneralSecurityException {
         
 		Calendar service = Quickstart.getService(user);
 		
@@ -2143,8 +2207,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-	@ApiMethod(name = "appointment.delete", path = "appointment.delete", httpMethod = "post")
-	public WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException, GeneralSecurityException {
+	private static WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException, GeneralSecurityException {
 
 		Calendar service = Quickstart.getService(user);
 		
@@ -2176,22 +2239,5 @@ public class SchedulerApi {
         return null;
 	}
 	
-	
-	private static Calendar getCalendarService(final User user) throws IOException{
-		
-		Calendar service = null;
-
-
-		//service = Quickstart.getCalendarService(user);
-	
-		
-		
-		
-		return service;
-		
-	}
-	
-
-
      
 }
