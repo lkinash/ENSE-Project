@@ -91,7 +91,7 @@ public class SchedulerApi {
   	 */
 	
 	@ApiMethod(name = "admin.addEmployee", path = "admin.addEmployee", httpMethod = "post")
-  	public Employee addEmployee(final User user, EmployeeForm employeeForm , HolidayTimeBlockListForm holidayTimeBlockListForm, TimeBlockListForm timeBlockListForm ) throws UnauthorizedException, IOException{
+  	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException, IOException{
 		
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -104,9 +104,9 @@ public class SchedulerApi {
         final long employeeId = employeeKey.getId();
    
 	
-        List<Long> timeHolidayBlockLong = addHolidayTimeBlocks(user, holidayTimeBlockListForm);
+        List<Long> timeHolidayBlockLong = addHolidayTimeBlocks(user, employeeForm.getHolidayTimeBlockListForm());
         
-        List<Long> timeBlockLong = addTimeBlocks(user, timeBlockListForm);
+        List<Long> timeBlockLong = addTimeBlocks(user, employeeForm.getTimeBlockListForm());
         
         //TODO
         //write method more non-holidays

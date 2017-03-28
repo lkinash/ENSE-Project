@@ -59,12 +59,19 @@ public class EmployeeForm {
 	private List<Long> timeBlockIds;
 	
 	
+	private HolidayTimeBlockListForm holidayTimeBlockListForm;
+	
+	
+	private TimeBlockListForm timeBlockListForm;
+	
+	
 	public EmployeeForm(){
 		
 	}
 	
 	public EmployeeForm(String newName, Calendar newCalendar, List<Long> newServiceIds, 
-			List<Long> newTimeBlockIds, String newFirstName, String newLastName){
+			List<Long> newTimeBlockIds, String newFirstName, String newLastName,
+			HolidayTimeBlockListForm newHolidayTimeBlockListForm, TimeBlockListForm newTimeBlockListForm ){
 		
 		this.calendar = newCalendar;
 		this.firstName = newFirstName;
@@ -72,6 +79,8 @@ public class EmployeeForm {
 		this.serviceIds = newServiceIds;
 		this.clearance = AdminClearances.employee;
 		this.timeBlockIds = newTimeBlockIds;
+		this.holidayTimeBlockListForm = newHolidayTimeBlockListForm;
+		this.timeBlockListForm = newTimeBlockListForm;
 	}
 
 	/**
@@ -197,4 +206,41 @@ public class EmployeeForm {
 		this.lastName = newLastName;
 	}
 
+
+	/**
+	 * Returns HolidayTimeBlockListForm.
+	 * @return HolidayTimeBlockListForm 
+	 */
+	public HolidayTimeBlockListForm getHolidayTimeBlockListForm() {
+		return this.holidayTimeBlockListForm;
+	}
+
+	/**
+	 * Sets a value to attribute HolidayTimeBlockListForm. 
+	 * @param newHolidayTimeBlockListForm 
+	 */
+	public void setHolidayTimeBlockListForm(HolidayTimeBlockListForm newHolidayTimeBlockListForm) {
+		this.holidayTimeBlockListForm = newHolidayTimeBlockListForm;
+	}
+
+
+	/**
+	 * Returns TimeBlockListForm.
+	 * @return TimeBlockListForm 
+	 */
+	public TimeBlockListForm getTimeBlockListForm() {
+		return this.timeBlockListForm;
+	}
+
+	/**
+	 * Sets a value to attribute TimeBlockListForm. 
+	 * @param newTimeBlockListForm 
+	 */
+	public void setTimeBlockListForm(TimeBlockListForm newTimeBlockListForm) {
+		this.timeBlockListForm = newTimeBlockListForm;
+	}
+
+	
+
+	
 }
