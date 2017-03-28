@@ -70,7 +70,10 @@ import com.google.appengine.archetypes.scheduler.wrappers.WrappedStringId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrapperStatus;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
-
+import com.google.api.services.calendar.model.AclRule.Scope;
+import com.google.api.services.calendar.model.Setting;
+import com.google.api.services.calendar.model.Settings;
+import com.google.api.services.calendar.model.AclRule;
 
 /**
  * Defines conference APIs.
@@ -88,10 +91,11 @@ public class SchedulerApi {
   	 * @param admin 
   	 * @param employeeForm 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
   	 */
 	
 	@ApiMethod(name = "admin.addEmployee", path = "admin.addEmployee", httpMethod = "post")
-  	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException, IOException{
+  	public Employee addEmployee(final User user, EmployeeForm employeeForm) throws UnauthorizedException, IOException, GeneralSecurityException{
 		
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -110,13 +114,9 @@ public class SchedulerApi {
         
         //TODO
         //write method more non-holidays
+       
         
-        // TODO 
-        // Properly declare variables based on google calendar
-        //Get the calendar Id from the calendar
-        
-        
-        String calendarId = "";     
+        String calendarId = createCalendar(user).getId();     
         
         //employee must have a name, email and a password set
         
@@ -220,10 +220,11 @@ public class SchedulerApi {
   	 * @param roomForm 
   	 * @throws UnauthorizedException 
   	 * @throws IOException 
+  	 * @throws GeneralSecurityException 
   	 */
      
    	@ApiMethod(name = "admin.addRoom", path = "admin.addRoom", httpMethod = "post")
-  	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException, IOException {
+  	public Room addRoom(final User user, RoomForm roomForm) throws UnauthorizedException, IOException, GeneralSecurityException {
    		
    		
         if (user == null) {
@@ -455,10 +456,11 @@ public class SchedulerApi {
 	 * @param clientForm 
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+  	 * @throws GeneralSecurityException 
 	 */
 	
 	@ApiMethod(name = "client.addClient", path = "client.addClient", httpMethod = "post")
-  	public Client addClient(final User user, ClientForm clientForm) throws UnauthorizedException, IOException {
+  	public Client addClient(final User user, ClientForm clientForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 
   		if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -629,6 +631,7 @@ public class SchedulerApi {
         Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getTypeId(), appointmentForm.getServiceId(), appointmentForm.getClientId(), appointmentForm.getRoomId());
     		
   		ofy().save().entities(appointment).now();
+  		
   		
   		String change = "Add Appointment. Appointment Id: " + appointmentId;
   		addChange(user, user.getUserId(), change);
@@ -1891,7 +1894,7 @@ public class SchedulerApi {
 	 */
 
 	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public com.google.api.services.calendar.model.Calendar test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
+  	public Settings test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
 
       //  if (user == null) {
         //    throw new UnauthorizedException("Authorization required");
@@ -1902,20 +1905,11 @@ public class SchedulerApi {
 		
 		Calendar service = Quickstart.getService(user);
 		
-	    //String id = "projectense@gmail.com";
-	
-		   
-		
-		com.google.api.services.calendar.model.Calendar calendar = new com.google.api.services.calendar.model.Calendar();
-		calendar.setSummary("calendarSummary");
-		calendar.setTimeZone("America/Los_Angeles");
-
-		// Insert the new calendar
-		com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
+		Settings settings = service.settings().list().execute();
 
 		//osoqisel4rd08hkiihi1d080cg@group.calendar.google.com
 		
-		return createdCalendar;
+		return settings;
 
 	}
 	
@@ -2084,6 +2078,14 @@ public class SchedulerApi {
 
 		com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
 
+		AclRule rule = new AclRule();
+		Scope scope = new Scope();
+		scope.setType("default");
+		rule.setScope(scope).setRole("reader");
+
+		// Insert new access rule
+		AclRule createdRule = service.acl().insert(createdCalendar.getId(), rule).execute();
+		
 		return new WrappedStringId(createdCalendar.getId());
   	}
   	
@@ -2091,15 +2093,12 @@ public class SchedulerApi {
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
 	
-  	private static WrappedStringId createRoomCalendar(final User user) throws UnauthorizedException, IOException {
+  	private static WrappedStringId createRoomCalendar(final User user) throws UnauthorizedException, IOException, GeneralSecurityException {
 
-        
-        //TODO
-        //create a calendar
-        
-		return new WrappedStringId("");
+		return (createCalendar(user));
   	}
   	
 	/**
