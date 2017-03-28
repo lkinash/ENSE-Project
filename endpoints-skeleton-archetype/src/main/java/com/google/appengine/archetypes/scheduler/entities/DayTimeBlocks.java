@@ -20,22 +20,14 @@ public class DayTimeBlocks {
 	
 	private WeekDay weekDay;
 	
-	private int morningStartHour;
 	
-	private int morningEndHour;
+	private int startHour;
 	
-	private int morningStartMinute;
+	private int endHour;
 	
-	private int morningEndMinute;
+	private int startMinute;
 	
-	
-	private int afternoonStartHour;
-	
-	private int afternoonEndHour;
-	
-	private int afternoonStartMinute;
-	
-	private int afternoonEndMinute;
+	private int endMinute;
 	
 	
 	public DayTimeBlocks(){
@@ -44,22 +36,16 @@ public class DayTimeBlocks {
 	
 
 	public DayTimeBlocks(long newId, WeekDay newWeekDay, 
-			int newMorningStartHour, int newMorningStartMinute, int newMorningEndHour, int newMorningEndMinute,
-			int newAfternoonStartHour, int newAfternoonStartMinute, int newAfternoonEndHour, int newAfternoonEndMinute){
+	int newStartHour, int newStartMinute, int newEndHour, int newEndMinute){
 			
 		
 		this.id = newId;
 		this.weekDay = newWeekDay;
 	 
-		this.morningStartHour = newMorningStartHour;
-		this.morningStartMinute = newMorningStartMinute;
-		this.morningEndHour = newMorningEndHour;
-		this.morningEndMinute = newMorningEndMinute;
-	
-		this.afternoonStartHour = newAfternoonStartHour;
-		this.afternoonStartMinute = newAfternoonStartMinute;
-		this.afternoonEndHour = newAfternoonEndHour;
-		this.afternoonEndMinute = newAfternoonEndMinute;
+		this.startHour = newStartHour;
+		this.startMinute = newStartMinute;
+		this.endHour = newEndHour;
+		this.endMinute = newEndMinute;
 	
 	}
 	
@@ -99,137 +85,71 @@ public class DayTimeBlocks {
 
 	
 	
+	
+	
 	/**
-	 * Returns morningStartHour.
-	 * @return morningStartHour 
+	 * Returns StartHour.
+	 * @return StartHour 
 	 */
-	public int getMorningStartHour() {
-		return this.morningStartHour;
+	public int getStartHour() {
+		return this.startHour;
 	}
 
 	/**
-	 * Sets a value to attribute morningStartHour. 
-	 * @param newMorningStartHour 
+	 * Sets a value to attribute startHour. 
+	 * @param newstartHour 
 	 */
-	public void setMorningStartHour(int newMorningStartHour) {
-		this.morningStartHour = newMorningStartHour;
+	public void setStartHour(int newStartHour) {
+		this.startHour = newStartHour;
 	}
 	
 	
 	/**
-	 * Returns morningStartMinute.
-	 * @return morningStartMinute 
+	 * Returns StartMinute.
+	 * @return StartMinute 
 	 */
-	public int getMorningStartMinute() {
-		return this.morningStartMinute;
+	public int getStartMinute() {
+		return this.startMinute;
 	}
 
 	/**
-	 * Sets a value to attribute morningStartMinute. 
-	 * @param newMorningStartMinute 
+	 * Sets a value to attribute StartMinute. 
+	 * @param newStartMinute 
 	 */
-	public void setMorningStartMinute(int newMorningStartMinute) {
-		this.morningStartMinute = newMorningStartMinute;
+	public void setStartMinute(int newStartMinute) {
+		this.startMinute = newStartMinute;
 	}
 	
 	/**
-	 * Returns morningEndHour.
-	 * @return morningEndHour 
+	 * Returns EndHour.
+	 * @return EndHour 
 	 */
-	public int getMorningEndHour() {
-		return this.morningEndHour;
+	public int getEndHour() {
+		return this.endHour;
 	}
 
 	/**
-	 * Sets a value to attribute morningEndHour. 
-	 * @param newMorningEndHour 
+	 * Sets a value to attribute EndHour. 
+	 * @param newEndHour 
 	 */
-	public void setMorningEndHour(int newMorningEndHour) {
-		this.morningEndHour = newMorningEndHour;
+	public void setEndHour(int newEndHour) {
+		this.endHour = newEndHour;
 	}
 	
 	/**
-	 * Returns morningEndMinute.
-	 * @return morningEndMinute 
+	 * Returns EndMinute.
+	 * @return EndMinute 
 	 */
-	public int getMorningEndMinute() {
-		return this.morningEndMinute;
+	public int getEndMinute() {
+		return this.endMinute;
 	}
 
 	/**
-	 * Sets a value to attribute morningEndMinute. 
-	 * @param newMorningEndMinute 
+	 * Sets a value to attribute EndMinute. 
+	 * @param newEndMinute 
 	 */
-	public void setMorningEndMinute(int newMorningEndMinute) {
-		this.morningEndMinute = newMorningEndMinute;
-	}
-	
-	
-	
-	
-	/**
-	 * Returns afternoonStartHour.
-	 * @return afternoonStartHour 
-	 */
-	public int getAfternoonStartHour() {
-		return this.afternoonStartHour;
-	}
-
-	/**
-	 * Sets a value to attribute afternoonStartHour. 
-	 * @param newAfternoonStartHour 
-	 */
-	public void setAfternoonStartHour(int newAfternoonStartHour) {
-		this.afternoonStartHour = newAfternoonStartHour;
-	}
-	
-	
-	/**
-	 * Returns afternoonStartMinute.
-	 * @return afternoonStartMinute 
-	 */
-	public int getAfternoonStartMinute() {
-		return this.afternoonStartMinute;
-	}
-
-	/**
-	 * Sets a value to attribute afternoonStartMinute. 
-	 * @param newAfternoonStartMinute 
-	 */
-	public void setAfternoonStartMinute(int newAfternoonStartMinute) {
-		this.afternoonStartMinute = newAfternoonStartMinute;
-	}
-	
-	/**
-	 * Returns afternoonEndHour.
-	 * @return afternoonEndHour 
-	 */
-	public int getAfternoonEndHour() {
-		return this.afternoonEndHour;
-	}
-
-	/**
-	 * Sets a value to attribute afternoonEndHour. 
-	 * @param newAfternoonEndHour 
-	 */
-	public void setAfternoonEndHour(int newAfternoonEndHour) {
-		this.afternoonEndHour = newAfternoonEndHour;
-	}
-	
-	/**
-	 * Returns afternoonEndMinute.
-	 * @return afternoonEndMinute 
-	 */
-	public int getAfternoonEndMinute() {
-		return this.afternoonEndMinute;
-	}
-
-	/**
-	 * Sets a value to attribute afternoonEndMinute. 
-	 * @param newAfternoonEndMinute 
-	 */
-	public void setAfternoonEndMinute(int newAfternoonEndMinute) {
-		this.afternoonEndMinute = newAfternoonEndMinute;
+	public void setEndMinute(int newEndMinute) {
+		this.endMinute = newEndMinute;
 	}
 	
 	

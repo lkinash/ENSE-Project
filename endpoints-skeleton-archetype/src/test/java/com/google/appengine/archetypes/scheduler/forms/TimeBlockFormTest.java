@@ -14,8 +14,10 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 public class TimeBlockFormTest {
 	
 	//Data for Time Block Form class fields
-	private DateTime STARTTIME =  new DateTime(23);
-	private DateTime ENDTIME = new DateTime(8);
+	private int YEAR =  2012;
+	private int MONTH = 11;
+	private int DAY= 11;
+	
 
 	private TimeBlockForm timeBlock;
 	
@@ -26,7 +28,7 @@ public class TimeBlockFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 timeBlock = new TimeBlockForm(STARTTIME,ENDTIME);
+		 timeBlock = new TimeBlockForm(YEAR, MONTH, DAY);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -37,7 +39,8 @@ public class TimeBlockFormTest {
 
 	@Test
 	public void testGetters() throws Exception{
-		assertEquals(STARTTIME,timeBlock.getStartTime());
-		assertEquals(ENDTIME,timeBlock.getEndTime());	
+		assertEquals(YEAR,timeBlock.getYear());
+		assertEquals(MONTH,timeBlock.getMonth());		
+		assertEquals(DAY,timeBlock.getDay());
 	}
 }

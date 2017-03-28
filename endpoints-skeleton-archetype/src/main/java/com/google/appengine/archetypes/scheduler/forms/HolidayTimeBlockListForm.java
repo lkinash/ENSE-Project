@@ -1,14 +1,16 @@
 package com.google.appengine.archetypes.scheduler.forms;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HolidayTimeBlockListForm {
 
-public List<TimeBlockForm> timeBlockForms;
+	
+	private List<TimeBlockForm> timeBlockForms;
 	
 	
 	public HolidayTimeBlockListForm(){
-		
+	
 	}
 	
 	public HolidayTimeBlockListForm(List<TimeBlockForm> newTimeBlockFormList){
@@ -27,9 +29,5 @@ public List<TimeBlockForm> timeBlockForms;
 		return this.timeBlockForms;
 	}
 
-	public List<HolidayTimeBlockListForm> getHolidayTimeBlockList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

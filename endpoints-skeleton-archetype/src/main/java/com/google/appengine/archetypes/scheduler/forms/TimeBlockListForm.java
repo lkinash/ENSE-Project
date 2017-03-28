@@ -8,27 +8,27 @@ import com.google.appengine.archetypes.scheduler.entities.DayTimeBlocks;
 public class TimeBlockListForm {
 
 	
-	private List<DayTimeBlocks> timeBlocks;
+	private List<DayTimeBlocksForm> timeBlocks;
 	
 	
 	public TimeBlockListForm(){
 		
 	}
 	
-	public TimeBlockListForm(List<DayTimeBlocks> newTimeBlocks){
+	public TimeBlockListForm(List<DayTimeBlocksForm> newTimeBlocks){
 		
 		this.timeBlocks = newTimeBlocks;
 		
 	}
 	
 	
-	public void setTimeBlocks(List<DayTimeBlocks> newTimeBlocks){
+	public void setTimeBlocks(List<DayTimeBlocksForm> newTimeBlocks){
 		
 		this.timeBlocks = newTimeBlocks;
 		
 	}
 	
-	public List<DayTimeBlocks> getTimeBlocks(){
+	public List<DayTimeBlocksForm> getTimeBlocks(){
 		return this.timeBlocks;
 	}
 	

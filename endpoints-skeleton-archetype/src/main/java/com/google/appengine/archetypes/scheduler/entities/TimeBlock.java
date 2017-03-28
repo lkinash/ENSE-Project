@@ -20,13 +20,14 @@ public class TimeBlock {
 	@Id
 	private long timeBlockId;
 	
+	@Index
+	private int year;
 	
 	@Index
-	private DateTime startTime;
+	private int month;
 	
-
 	@Index
-	private DateTime endTime;
+	private int day;
 	
 	
 	
@@ -34,31 +35,42 @@ public class TimeBlock {
 		
 	}
 	
-	public TimeBlock(long newTimeBlockId, DateTime newStartTime, DateTime newEndTime){
+	public TimeBlock(long newTimeBlockId, int newYear, int newMonth, int newDay){
 		
-		this.endTime = newEndTime;
-		this.startTime = newStartTime;
+		this.day = newDay;
+		this.month = newMonth;
+		this.year = newYear;
 		this.timeBlockId = newTimeBlockId;
 		
 	}
 	
-	public void setEndTime(DateTime newEndTime){
-		this.endTime = newEndTime;
+	public void setYear(int newYear){
+		this.year = newYear;
 	}
 	
-	public DateTime getEndTime(){
-		return this.endTime;
+	public int getYear(){
+		return this.year;
 	}
 	
 	
-	public void setStartTime(DateTime newStartTime){
-		this.startTime = newStartTime;
+	public void setMonth(int newMonth){
+		this.month = newMonth;
 	}
 	
-	public DateTime getStartTime(){
-		return this.startTime;
+	public int getMonth(){
+		return this.month;
 	}
 	
+	
+	public void setDay(int newDay){
+		this.day = newDay;
+	}
+	
+	public int getDay(){
+		return this.day;
+	}
+	
+
 	
 	public void setTimeBlockId(long newTimeBlockId){
 		this.timeBlockId = newTimeBlockId;

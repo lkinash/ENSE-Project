@@ -30,10 +30,6 @@ public class EmployeeForm {
 	 */
 	private String lastName;
 
-	/**
-	 * Description of the property calendar.
-	 */
-	private Calendar calendar;
 
 	/**
 	 * Description of the property serivces.
@@ -69,11 +65,10 @@ public class EmployeeForm {
 		
 	}
 	
-	public EmployeeForm(String newName, Calendar newCalendar, List<Long> newServiceIds, 
+	public EmployeeForm(String newName, List<Long> newServiceIds, 
 			List<Long> newTimeBlockIds, String newFirstName, String newLastName,
 			HolidayTimeBlockListForm newHolidayTimeBlockListForm, TimeBlockListForm newTimeBlockListForm ){
 		
-		this.calendar = newCalendar;
 		this.firstName = newFirstName;
 		this.lastName = newLastName;
 		this.serviceIds = newServiceIds;
@@ -83,21 +78,7 @@ public class EmployeeForm {
 		this.timeBlockListForm = newTimeBlockListForm;
 	}
 
-	/**
-	 * Returns calendar.
-	 * @return calendar 
-	 */
-	public Calendar getCalendar() {
-		return this.calendar;
-	}
 
-	/**
-	 * Sets a value to attribute calendar. 
-	 * @param newCalendar 
-	 */
-	public void setCalendar(Calendar newCalendar) {
-		this.calendar = newCalendar;
-	}
 
 	/**
 	 * Returns services.

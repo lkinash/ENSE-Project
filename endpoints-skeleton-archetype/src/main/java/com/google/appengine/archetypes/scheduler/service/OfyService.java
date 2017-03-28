@@ -19,12 +19,14 @@ public class OfyService {
         factory().register(Clearances.class);
         factory().register(Changes.class);
         factory().register(Client.class);
+        factory().register(DayTimeBlocks.class);
         factory().register(Employee.class);
         factory().register(PageAuth.class);
         factory().register(Product.class);
         factory().register(Room.class);
         factory().register(Service.class);
         factory().register(SaleItem.class);
+        factory().register(TimeBlock.class);
         factory().register(Type.class);
     }
 

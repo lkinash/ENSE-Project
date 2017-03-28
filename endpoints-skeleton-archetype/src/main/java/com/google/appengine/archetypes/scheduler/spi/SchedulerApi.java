@@ -40,6 +40,7 @@ import com.google.appengine.archetypes.scheduler.forms.AdminForm;
 import com.google.appengine.archetypes.scheduler.forms.AppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.ClientForm;
+import com.google.appengine.archetypes.scheduler.forms.DayTimeBlocksForm;
 import com.google.appengine.archetypes.scheduler.forms.EmployeeForm;
 import com.google.appengine.archetypes.scheduler.forms.EventCreatorForm;
 import com.google.appengine.archetypes.scheduler.forms.EventForm;
@@ -142,7 +143,7 @@ public class SchedulerApi {
   	 */
      
    	@ApiMethod(name = "admin.addHolidayTimeBlocks", path = "admin.addHolidayTimeBlocks", httpMethod = "post")
-  	public List<Long> addHolidayTimeBlocks(final User user, HolidayTimeBlockListForm timeBlockListForm) throws UnauthorizedException, IOException {
+  	public List<Long> addHolidayTimeBlocks(final User user, HolidayTimeBlockListForm holidayTimeBlockListForm) throws UnauthorizedException, IOException {
    		
    		
         if (user == null) {
@@ -152,7 +153,7 @@ public class SchedulerApi {
         List<Long> list = new ArrayList<Long>();
         
         
-        List<TimeBlockForm> timeBlockForms = timeBlockListForm.getTimeBlockList(); 
+        List<TimeBlockForm> timeBlockForms = holidayTimeBlockListForm.getTimeBlockList(); 
         
         for(TimeBlockForm tempForm: timeBlockForms){
 
@@ -161,7 +162,7 @@ public class SchedulerApi {
         	
         	list.add(Id);
         
-        	TimeBlock timeBlock = new TimeBlock(Id, tempForm.getStartTime(), tempForm.getEndTime());
+        	TimeBlock timeBlock = new TimeBlock(Id, tempForm.getYear(), tempForm.getMonth(), tempForm.getDay());
         
         	ofy().save().entities(timeBlock).now(); 
    		
@@ -192,18 +193,16 @@ public class SchedulerApi {
         List<Long> list = new ArrayList<Long>();
         
         
-        List<DayTimeBlocks> timeBlock = timeBlockListForm.getTimeBlocks(); 
+        List<DayTimeBlocksForm> timeBlock = timeBlockListForm.getTimeBlocks(); 
         
-        for(DayTimeBlocks tempBlock: timeBlock){
+        for(DayTimeBlocksForm tempBlock: timeBlock){
 
         	final Key<DayTimeBlocks> timeBlockKey = factory().allocateId(DayTimeBlocks.class);
         	final long Id = timeBlockKey.getId();
         
         	list.add(Id);
         	
-        	DayTimeBlocks dayTimeBlock = new DayTimeBlocks(Id, tempBlock.getWeekDay(), 
-        			tempBlock.getMorningStartHour(), tempBlock.getMorningStartMinute(), tempBlock.getMorningEndHour(), tempBlock.getMorningEndMinute(),
-        			tempBlock.getAfternoonStartHour(), tempBlock.getAfternoonStartMinute(), tempBlock.getAfternoonEndHour(), tempBlock.getAfternoonEndMinute());
+        	DayTimeBlocks dayTimeBlock = new DayTimeBlocks(Id, tempBlock.getWeekDay(), tempBlock.getStartHour(), tempBlock.getStartMinute(), tempBlock.getEndHour(), tempBlock.getEndMinute());
         			
         		
         	ofy().save().entities(timeBlock).now(); 
