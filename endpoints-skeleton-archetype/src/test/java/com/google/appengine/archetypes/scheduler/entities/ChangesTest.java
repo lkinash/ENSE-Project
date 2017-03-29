@@ -20,6 +20,7 @@ public class ChangesTest {
 	private String USERID = "478956opo";
 	private long CHANGEID = 111447;
 	private String CHANGE = "laser machine is changed";
+	private String NAME = "name";
 	
 	private Changes changes;
 	
@@ -29,7 +30,7 @@ public class ChangesTest {
     @Before
     public void setUp() throws Exception {
         testHelper.setUp();
-        changes = new Changes(TIMESTAMP,USERID,CHANGEID,CHANGE);
+        changes = new Changes(TIMESTAMP,USERID,CHANGEID,CHANGE, NAME);
     }
 
     //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -44,6 +45,7 @@ public class ChangesTest {
 		assertEquals(USERID,changes.getUserId());
 		assertEquals(CHANGEID,changes.getChangeId());
 		assertEquals(CHANGE,changes.getChange());
+		assertEquals(NAME,changes.getAdminName());
 	}
 
 }

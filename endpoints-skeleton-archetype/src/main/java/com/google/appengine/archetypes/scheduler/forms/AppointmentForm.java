@@ -38,43 +38,45 @@ public class AppointmentForm {
 	private long roomId;
 	
 	/**
-	 * Description of the property clientId.
+	 * Description of the property serviceId.
 	 */
-	private EventForm eventForm;	
+	private int length;
 	
+	/**
+	 * Description of the property end
+	 */
+	private TimeBlockForm date;
+	
+	/**
+	 * Description of the property end
+	 */
+	private int hour;
+	
+	/**
+	 * Description of the property end
+	 */
+	private int minute;
 	
 	public AppointmentForm(){
 		
 	}
 	
 	public AppointmentForm(long newType, long newService, long newClientId, long newEmployeeId,
-			EventForm newEventForm, long newRoomId){
+			long newRoomId, int newHour, int newMinute, TimeBlockForm newDate, int newLength){
 
 		this.serviceId = newService;
 		this.typeId = newType;
 		this.clientId = newClientId;
 		this.employeeId = newEmployeeId;
-		this.eventForm = newEventForm;
+		this.date = newDate;
+		this.hour = newHour;
+		this.minute = newMinute;
+		this.length = newLength;
 		this.roomId = newRoomId;
 		
 	}
 	
 	
-	/**
-	 * Returns EventForm.
-	 * @return EventForm 
-	 */
-	public EventForm getEventForm() {
-		return this.eventForm;
-	}
-
-	/**
-	 * Sets a value to attribute EventForm. 
-	 * @param newEventForm 
-	 */
-	public void setEventForm(EventForm newEventForm) {
-		this.eventForm = newEventForm;
-	}
 
 	/**
 	 * Returns appointmentlong.
@@ -155,4 +157,42 @@ public class AppointmentForm {
 	public void setRoomId(long newRoomId) {
 		this.roomId = newRoomId;
 	}
+	
+	
+	
+	public int getHour(){
+		return this.hour;
+	}
+	
+	public void setHour(int newHour){
+		this.hour = newHour;
+	}
+	
+	
+	public int getMinute(){
+		return this.minute;
+	}
+	
+	public void setMinute(int newMinute){
+		this.minute = newMinute;
+	}
+	
+	public int getLength(){
+		return this.length;
+	}
+	
+	public void setLength(int newLength){
+		this.length = newLength;
+	}
+	
+	
+	
+	public TimeBlockForm getDate(){
+		return this.date;
+	}
+	
+	public void setDate(TimeBlockForm newDate){
+		this.date = newDate;
+	}
+	
 }

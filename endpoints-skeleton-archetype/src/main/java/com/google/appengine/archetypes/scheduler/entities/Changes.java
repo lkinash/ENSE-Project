@@ -24,6 +24,8 @@ public class Changes {
 	@Index
 	private String userId;
 
+	private String adminName;
+	
 	/**
 	 * Description of the property changeId.
 	 */
@@ -40,12 +42,13 @@ public class Changes {
 		
 	}
 	
-	public Changes(String newTimeStamp, String newUserId, long newChangeId, String newChange){
+	public Changes(String newTimeStamp, String newUserId, long newChangeId, String newChange, String newAdminName){
 	
 		this.userId = newUserId;
 		this.change = newChange;
 		this.changeId = newChangeId;
 		this.timeStamp = newTimeStamp;
+		this.adminName = newAdminName;
 	
 	}
 	
@@ -114,6 +117,23 @@ public class Changes {
 	 */
 	public void setChange(String newChange) {
 		this.change = newChange;
+	}
+
+
+	/**
+	 * Returns change.
+	 * @return change 
+	 */
+	public String getAdminName() {
+		return this.adminName;
+	}
+
+	/**
+	 * Sets a value to attribute change. 
+	 * @param newChange 
+	 */
+	public void setAdminName(String newAdminName) {
+		this.adminName = newAdminName;
 	}
 	
 }

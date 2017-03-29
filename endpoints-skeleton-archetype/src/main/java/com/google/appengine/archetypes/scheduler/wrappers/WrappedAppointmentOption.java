@@ -59,15 +59,15 @@ public class WrappedAppointmentOption {
 			long newServiceId, String newServiceName, long newClientId, int newHour, int newMinute){
 		
 		this.clientId = newClientId;
-		this.date = newDate;
 		this.employeeId = newEmployeeId;
 		this.employeeName = newEmployeeName;
+		this.date = newDate;
 		this.hour = newHour;
 		this.minute = newMinute;
+		this.length = newLength;
 		this.serviceId = newServiceId;
 		this.serviceName = newServiceName;
-		this.length = newLength;
-		
+
 	}
 
 	
