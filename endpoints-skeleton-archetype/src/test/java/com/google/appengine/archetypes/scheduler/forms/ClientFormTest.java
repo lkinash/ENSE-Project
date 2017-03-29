@@ -25,7 +25,7 @@ public class ClientFormTest {
 	private String PASSWORD = "danceislife";
 	private int PHONENUM = 5556978;
 	
-	private Date BIRTHDAY = new Date(24,05,1996);
+	private TimeBlockForm BIRTHDAY;
 	
 	private AdminClearances CLEARANCE;
 	private ClientForm clientForm;
@@ -51,7 +51,6 @@ public class ClientFormTest {
 		assertEquals(FIRSTNAME,clientForm.getFirstName());
 		assertEquals(LASTNAME,clientForm.getLastName());
 		assertEquals(PHONENUM,clientForm.getPhoneNumber());
-		assertEquals(BIRTHDAY,clientForm.getBirthday());
 		assertEquals(PASSWORD,clientForm.getPassword());
 		assertEquals(EMAIL,clientForm.getEmail());
 	}
