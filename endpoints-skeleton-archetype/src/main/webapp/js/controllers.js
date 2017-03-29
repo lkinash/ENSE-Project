@@ -580,7 +580,30 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
   });
   
   conferenceApp.controllers.controller('ClientBookAppointmentController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
+	  console.log("Reached the ClientBookAppointmentController");
+	  $scope.init = function(){
+			 console.log("Reached Init function: populating list types drop down");
+			 gapi.client.scheduler.admin.getAllTypesWithService().execute(function(resp){
+				 $scope.listtypes=resp.result.items;
+				 $scope.$apply();
+			 });
+		 };
+		 
+		 
+		 $scope.getListServices = function(value){
+			 console.log("Reacher getlistservics function: populating service dropdown");
+		      console.log("The typeId from the first dropdown in value variable is"+ value);
+		      $scope.listservices=[];
+		      for(var i=0; i<$scope.listtypes.length;i++){
+		    	  if($scope.listtypes[i].typeId==value){
+		    		  console.log(" the typeId found is "+ $scope.listtypes[i].typeId);
+		    		   console.log("There are this many services for this"+ $scope.listtypes[i].service.length);
+		    		   $scope.listservices=$scope.listtypes[i].service;
+		    		   console.log("these are the services"+ $scope.listservices);
+		    		  
+		    	  }
+		      }
+		    };
 
 	  
   });
@@ -715,7 +738,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    $scope.changeTo = 'Hungarian';
 	    /* event source that pulls from google.com */
 	    $scope.eventSource = {
-	            url: "qd24nt57a3b8sut8pso18o6l2s@group.calendar.google.com",
+	            url: "ronbrfav0rnhnjo3bjfi0m186c@group.calendar.google.com",
 	            googleCalendarApiKey: 'AIzaSyCk3oNQRiy8vVIM-dyIx4DZfy2qyTT3avU',
 	            className: 'gcal-event',           // an option!
 	            currentTimezone: 'America/Chicago' // an option!

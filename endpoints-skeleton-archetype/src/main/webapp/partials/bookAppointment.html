@@ -4,44 +4,61 @@
 </head>
 
 <body>
-
-	<div class="bookAppointment">
-		<h2>Schedule Appointment</h2>
-		<table>
-			<tr>
-				<th>
-					<p>Select a Service Type</p>
-				</th>
-				<th class="drop"><select>
-						<option value="default">Service</option>
-						<option value="Service1">Service 1</option>
-						<option value="Service2">Service 2</option>
-						<option value="Service3">Service 3</option>
-				</select></th>
-			</tr>
-			<tr>
-				<th>
-					<p>Select a Treament Area</p>
-				</th>
-				<th class="drop"><select>
-						<option value="default">Area</option>
-						<option value="Service1">Area 1</option>
-						<option value="Service2">Area 2</option>
-						<option value="Service3">Area 3</option>
-				</select></th>
-			</tr>
-			<tr>
-				<th>
-					<p>Preffered Staff Member</p>
-				</th>
-				<th class="drop"><select>
-						<option value="default">Member</option>
-						<option value="Service1">Member 1</option>
-						<option value="Service2">Member 2</option>
-						<option value="Service3">Member 3</option>
-				</select></th>
-			</tr>
-		</table>
-		<button type="submit" class="btn btn-default">Select Time</button>
-	</div>
+<div ng-controller="ClientBookAppointmentController" ng-init="init()">
+	<div class="filter" >
+					<div class="filterTitle">
+						<h3>Book Now:</h3>
+					</div>
+					<div class="inputgroup">
+				<div class="form-group">
+				
+					<select class="form-control" id="sel1"  data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
+					<option value="" disabled selected>Service Type</option>
+					</select>
+					<select class="form-control" id="sel1"data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices" >
+					<option value="" disabled selected>Service Name </option>
+					</select>
+					<select class="form-control" id="sel1">
+					<option value="" disabled selected>Employee</option>
+						<option>Employee</option>
+						<option>Room</option>
+					</select>
+				</div>
+				</div>
+				<div class="dropDownCal"> 
+				<div class="form-group" ng-controller="DatepickerCtrl">
+                    <p class="input-group">
+                        <input placeholder="Start Date" id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
+                               ng-model="startDate" is-open="opened"
+                               datepicker-options="dateOptions"
+                               close-text="Close"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-xs" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    </p>
+                </div>
+				</div>
+				
+				<div class="dropDownCal"> 
+				<div class="form-group" ng-controller="DatepickerCtrl">
+                    <p class="input-group">
+                        <input placeholder="End Date" id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
+                               ng-model="endDate" is-open="opened"
+                               datepicker-options="dateOptions"
+                               close-text="Close"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-xs" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    </p>
+                </div>
+				</div>
+				<div class="filterBtn">
+					<button type="submit" class="btn btn-default">Search</button>
+				</div>
+		</div>
+</div>
 </body>

@@ -19,7 +19,26 @@ body h2{
 	background-color: lightgray;
 	
 }
-
+.filter .form-group{
+	display:inline-flex;
+	
+}
+.inputgroup .form-group .form-control{
+	width:auto;
+	padding-left:2%;
+	margin-left:2%;
+}
+.inputgroup .form-group .form-control select{
+    width: auto;
+    position: relative;
+}
+.inputgroup{
+	padding-top:1%;
+	width:32%;
+}
+.dropDownCal{
+	padding-top:0.5%;
+}
 .bookAppointment table{
 	margin-top: 7%;
 	margin-left: auto;
