@@ -178,11 +178,11 @@
 			</div>
 		</div>
 		<div class="employeeContainerMaster">
-			<div class="employee">
+			<div class="employee" ng-repeat="client in clients">
 				<div class="panel-group">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<label>Client #1 Name </label> <a data-toggle="collapse"
+							<label>{{client.firstName}} {{client.lastName}} </label> <a data-toggle="collapse"
 								href="#collapse1"><span class="caret"></span></a>
 							<div class="btnApp"></div>
 						</div>
@@ -192,32 +192,29 @@
 									<table>
 										<tr>
 											<td>First Name</td>
-											<td>Client Name</td>
+											<td>{{client.firstName}}</td>
 										</tr>
 										<tr>
 											<td>Last Name</td>
-											<td>Client Last</td>
+											<td>{{client.lastName}}</td>
 										</tr>
 										<tr>
 											<td>Email</td>
-											<td>email address</td>
+											<td>{{client.email}}</td>
 										</tr>
 										<tr>
 											<td>Phone Number</td>
-											<td>client phone number</td>
+											<td>{{client.phoneNumber}}</td>
 										</tr>
 										<tr>
 											<td>Birth date</td>
-											<td>Client Birthday</td>
+											<td>{{client.birthday}}</td>
 										</tr>
 									</table>
 									<div class="opt">
 										<div class="rmvEmp">
-											<button type="button" class="btn btn-danger">Remove
+											<button type="button" class="btn btn-danger" ng-click="removeClient($index)">Remove
 												Client</button>
-										</div>
-										<div class="saveBtn">
-											<button type="button" class="btn btn-default">Edit</button>
 										</div>
 									</div>
 								</div>

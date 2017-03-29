@@ -596,10 +596,10 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		      $scope.listservices=[];
 		      for(var i=0; i<$scope.listtypes.length;i++){
 		    	  if($scope.listtypes[i].typeId==value){
-		    		  console.log(" the typeId found is "+ $scope.listtypes[i].typeId);
-		    		   console.log("There are this many services for this"+ $scope.listtypes[i].service.length);
+		    		//  console.log(" the typeId found is "+ $scope.listtypes[i].typeId);
+		    		 //  console.log("There are this many services for this"+ $scope.listtypes[i].service.length);
 		    		   $scope.listservices=$scope.listtypes[i].service;
-		    		   console.log("these are the services"+ $scope.listservices);
+		    		   //console.log("these are the services"+ $scope.listservices);
 		    		  
 		    	  }
 		      }
@@ -693,21 +693,29 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 };
 	   var clientForm={};
 		 $scope.addClient=function(){
+			 var newBirthday={
+					 "month":parseInt($scope.dateMonth),
+					 "year":parseInt($scope.dateYear),
+					 "day":parseInt($scope.dateDay)
+			 };
+			 var password="sdkjfs";
 			 clientForm = {
 				      "firstName" : $scope.Fname,
 				      "lastName": $scope.lname,
 				      "phoneNumber": $scope.phoneNumber,
 				      "email": $scope.email,
-				      
+				      "birthday": newBirthday,
+				      "password":password
+		
 				    };
 			gapi.client.scheduler.client.addClient(clientForm).execute();
 			console.log("Client successfully added");
 			$location.path('/');
 		 };
    });
-   conferenceApp.controllers.controller('ViewClientController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+   conferenceApp.controllers.controller('ViewClientController', function ($scope, $log,$route, oauth2Provider, HTTP_ERRORS) {
 	   console.log("Reached the View client controller");
-	  /*
+	  
 	   $scope.init = function(){
 			 console.log("Reached Init function: Retrieving AllClients");
 			 	 gapi.client.scheduler.admin.getAllClients().execute(function(resp){
@@ -721,12 +729,12 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 	var clientId= $scope.clients[index].clientId;
 			 	console.log("Client that is being deleted= "+ clientId);
 			 	var removeClientForm={
-			 			"ClientId":clientId
+			 			"clientId":clientId
 			 	};
-			 	gapi.client.scheduler.admin.removeClient(removeClientForm).execute();
+			 	gapi.client.scheduler.client.removeClient(removeClientForm).execute();
 			 	$route.reload();
 			  };
-		*/
+		
    });
    
    conferenceApp.controllers.controller('ViewCalendarController',function ($scope,$compile, uiCalendarConfig){
