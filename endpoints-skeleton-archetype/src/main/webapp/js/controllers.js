@@ -868,6 +868,13 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 	});
    conferenceApp.controllers.controller('LogController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
+	 console.log("reached the log controller");
+	   $scope.init = function(){
+			 console.log("Reached Init function: Retrieving AllClients");
+			 	 gapi.client.scheduler.admin.getAllChanges().execute(function(resp){
+				 $scope.changes=resp.result.items;
+				 $scope.$apply();
+			 });
+		 };
 
    });

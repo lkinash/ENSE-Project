@@ -3,6 +3,7 @@
 </head>
 
 <div class="row">
+<div ng-controller="LogController" ng-init="init()">
 		<div class="col-sm-2 col-lg-2">
 		<div class="leftNav">
 			<div class="admin">
@@ -169,9 +170,23 @@
 	<div class="col-sm-10 col-lg-10">
 		<div class="rightContent">
 			<h2>System History</h2>
-			<div class="logArea"></div>
+			<div class="logArea">
+			<table>
+			<tr>
+			<th> Change Description</th>
+			<th> Time</th>
+			<th> User ID</th>
+			</tr>
+			<tr ng-repeat="change in changes">
+			<td>{{change.change}}</td>
+			<td>{{change.timeStamp}}</td>
+			<td>{{change.userId}}</td>
+			</tr>
+			</table>
+			</div>
 	
 		</div>
+	</div>
 	</div>
 </div>
 

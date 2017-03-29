@@ -6,9 +6,14 @@ h2{
 	color:#0A25BF;
 }
 .logArea{
-	background-color: aqua;
 	width: 80%;
 	height:80%;
 	margin-left: auto;
 	margin-right: auto;
+}
+.logArea table{
+	white-space: nowrap;
+}
+.logArea table tr{
+	padding-left:5%;
 }
