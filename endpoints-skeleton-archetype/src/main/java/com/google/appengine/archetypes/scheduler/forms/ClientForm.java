@@ -50,7 +50,7 @@ public class ClientForm {
 	/**
 	 * Description of the property birthday.
 	 */
-	private Date birthday;
+	private TimeBlockForm birthday;
 	
 	/**
 	 * Description of the property clearance.
@@ -66,7 +66,7 @@ public class ClientForm {
 		
 	}
 	
-	public ClientForm(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, String newPassword, String newEmail  ){
+	public ClientForm(String newFirstName, String newLastName, int newPhoneNumber, TimeBlockForm newBirthday, String newPassword, String newEmail  ){
 		
 		super();
 		
@@ -149,7 +149,7 @@ public class ClientForm {
 	 * Returns birthday.
 	 * @return birthday 
 	 */
-	public Date getBirthday() {
+	public TimeBlockForm getBirthday() {
 		return this.birthday;
 	}
 
@@ -157,7 +157,7 @@ public class ClientForm {
 	 * Sets a value to attribute birthday. 
 	 * @param newBirthday 
 	 */
-	public void setBirthday(Date newBirthday) {
+	public void setBirthday(TimeBlockForm newBirthday) {
 		this.birthday = newBirthday;
 	}
 

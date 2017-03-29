@@ -59,7 +59,7 @@ public class Client{
 	/**
 	 * Description of the property birthday.
 	 */
-	private Date birthday;
+	private long birthdayId;
 
 	/**
 	 * Description of the property adminClearance.
@@ -92,11 +92,11 @@ public class Client{
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, List<Long> newAppointments,
+	public Client(String newFirstName, String newLastName, int newPhoneNumber, long newBirthday, List<Long> newAppointments,
 			List<Long> newClearanceIds, String newCalendarId, String newUserId, long newClientId  , String newEmail){
 
 		this.userId = newUserId;
-		this.birthday = newBirthday;
+		this.birthdayId = newBirthday;
 		this.appointmentIds = newAppointments;
 		this.calendarId = newCalendarId;
 		this.firstName = newFirstName;
@@ -275,16 +275,16 @@ public class Client{
 	 * Returns birthday.
 	 * @return birthday 
 	 */
-	public Date getBirthday() {
-		return this.birthday;
+	public long getBirthday() {
+		return this.birthdayId;
 	}
 
 	/**
 	 * Sets a value to attribute birthday. 
 	 * @param newBirthday 
 	 */
-	public void setBirthday(Date newBirthday) {
-		this.birthday = newBirthday;
+	public void setBirthday(long newBirthday) {
+		this.birthdayId = newBirthday;
 	}
 
 	
