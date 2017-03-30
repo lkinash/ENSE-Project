@@ -530,14 +530,17 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
  });
 
  conferenceApp.controllers.controller('AddAdminController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-	 console.log("reached the AddAdminController");
-	 var admin="admin";
-	 var superadmin="superAdmin";
-	 $scope.adminClearances={
-				"clearance": admin,
-				"clearance":superadmin
-			 };
 
+	 $scope.init = function(){
+		 gapi.client.scheduler.appointment.test().execute(function (resp) {
+             $scope.$root.$apply(function () {
+
+                 $scope.$root.rootMessages = 'Function Call';
+             });
+
+		 });
+		  
+	 };
 	 
  });
 
@@ -695,14 +698,14 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 					 "year":parseInt($scope.dateYear),
 					 "day":parseInt($scope.dateDay)
 			 };
-			// var password="sdkjfs";
+			 var password="sdkjfs";
 			 clientForm = {
 				      "firstName" : $scope.Fname,
 				      "lastName": $scope.lname,
 				      "phoneNumber": $scope.phoneNumber,
 				      "email": $scope.email,
-				      "birthday": newBirthday
-				    //  "password":password
+				      "birthday": newBirthday,
+				      "password":password
 		
 				    };
 			gapi.client.scheduler.client.addClient(clientForm).execute();
