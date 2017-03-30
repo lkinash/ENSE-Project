@@ -529,19 +529,25 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
  });
 
- conferenceApp.controllers.controller('AddAdminController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+ conferenceApp.controllers.controller('AddAdminController', function ($scope, $log,$location, oauth2Provider, HTTP_ERRORS) {
+	 console.log("reached the AddAdminController");
 
-	 $scope.init = function(){
-		 gapi.client.scheduler.appointment.test().execute(function (resp) {
-             $scope.$root.$apply(function () {
-
-                 $scope.$root.rootMessages = 'Function Call';
-             });
-
-		 });
-		  
+	 var adminForm={
+			 
 	 };
-	 
+	 $scope.addAdmin=function(){
+		 adminForm={
+				 "firstName":$scope.fname,
+				 "lastName":$scope.lname,
+				 "email":$scope.email,
+				 "clearance":$scope.adminClearanceSubmit
+		 };
+		 console.log(adminForm);
+		 gapi.client.scheduler.admin.addAdmin(adminForm).execute();
+		 console.log("Added the Admin form now");
+		 $location.path('/admin/viewAccount');
+		 
+	 };
  });
 
  conferenceApp.controllers.controller('ForgotPasswordController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
