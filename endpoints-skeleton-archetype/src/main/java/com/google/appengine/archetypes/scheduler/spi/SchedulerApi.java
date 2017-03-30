@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import com.google.api.client.util.DateTime;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
@@ -188,8 +189,6 @@ public class SchedulerApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        
-        //TODO
         
         
         List<Long> list = new ArrayList<Long>();
@@ -690,18 +689,68 @@ public class SchedulerApi {
         
         List<Room> rooms = getAllRoomsService(user, findAppointmentForm.getServiceId());
         List<Employee> employees;
+        List<DayTimeBlocks> dayTimeBlocks;
+        List<DayTimeBlocks> weekDayTimeBlocks;
+        List<TimeBlock> holidayTimeBlocks;
+        Employee employee;
+        DateTime startTime;
+        int length = getService(user, findAppointmentForm.getServiceId()).getDefaultLength();
         
+    	@SuppressWarnings("deprecation")
+		Date startDate = new Date(findAppointmentForm.getStartDateRange().getYear(), findAppointmentForm.getStartDateRange().getMonth(), findAppointmentForm.getStartDateRange().getDay());
+  		@SuppressWarnings("deprecation")
+		Date endDate = new Date(findAppointmentForm.getEndDateRange().getYear(), findAppointmentForm.getEndDateRange().getMonth(), findAppointmentForm.getEndDateRange().getDay());
+  		
+  		Date currentDate = startDate;
         
-        
+  		String calendarId;
+  		
         if(findAppointmentForm.getEmployeeId() == 0){
         	
         	employees = getAllEmployeesService(user, findAppointmentForm.getServiceId());
-        	
+        
+        	System.out.println(findAppointmentForm.getEmployeeId());
         }
         else{
         	
+        	employee = getEmployee(user, findAppointmentForm.getEmployeeId());
+        	dayTimeBlocks = getEmployeeTimeBlocks(user, findAppointmentForm);
+        	holidayTimeBlocks = getEmployeeHolidaysInRange(user, findAppointmentForm);
         	
         	
+        	while(true){
+        		
+        		if(!(currentDate.before(endDate))){
+        			break;
+        		}
+        		
+        		weekDayTimeBlocks = getDayTimeBlocksForWeekDay(currentDate.getDay(), dayTimeBlocks);
+        		
+        		if(!(dateInHolidayBlock(currentDate, holidayTimeBlocks).getResult())){
+        			
+        			for(Room tempRoom: rooms){
+        				
+        				calendarId = tempRoom.getCalendar();
+        				
+        				for(DayTimeBlocks thisDayTimeBlock: weekDayTimeBlocks){
+        				
+        					//TODO
+        					//Fix to test more than one in a block
+        					
+        					if(!((testCalendarBusy(calendarId, length, currentDate.getYear(), currentDate.getMonth(), currentDate.getDate(), thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute())).getResult())){
+        						
+        						list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonth(), currentDate.getDate()), length,
+        								findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(),thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute()));	
+        						
+        					}
+        		
+        				} 
+        			}       			
+        		}
+        		
+        		currentDate = new Date(currentDate.getYear(), currentDate.getMonth(), (currentDate.getDate() + 1));
+        		
+        	}
         }
         	
         
@@ -719,17 +768,177 @@ public class SchedulerApi {
 	 * @throws GeneralSecurityException 
 	 */
 	
-  	private List<Long> getEmployeeHolidaysInRange(final User user,  FindAppointmentForm findAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	private List<TimeBlock> getEmployeeHolidaysInRange(final User user,  FindAppointmentForm findAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
   	
-  		List<Long> holidays = new ArrayList<Long>();
+  		List<TimeBlock> holidays = new ArrayList<TimeBlock>();
   		Employee employee = getEmployee(user, findAppointmentForm.getEmployeeId());
-  		//List	
-
   		
+  		List<Long> ids = employee.getHolidayTimeBlockIds();
+  		 
+  		for(Long temp: ids){
+  			
+  			Key<TimeBlock> key = Key.create(TimeBlock.class, temp);
+	    		
+  			TimeBlock block = (TimeBlock) ofy().load().key(key).now();
+		
+  			if((inRange(findAppointmentForm.getStartDateRange(), findAppointmentForm.getEndDateRange(), block)).getResult()){
+  				holidays.add(block);
+  			}
+  		}
+  		  		
   		
   		return holidays;
   	}
 	
+
+  	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+	
+  	private List<DayTimeBlocks> getEmployeeTimeBlocks(final User user,  FindAppointmentForm findAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	
+  		Employee employee = getEmployee(user, findAppointmentForm.getEmployeeId());
+  		List<DayTimeBlocks> timeBlocks = new ArrayList<DayTimeBlocks>();
+  		List<Long> ids = employee.getWeekdayTimeBlockIds();
+ 
+  		for(Long temp: ids){
+  			
+  			Key<DayTimeBlocks> key = Key.create(DayTimeBlocks.class, temp);
+	    		
+  			DayTimeBlocks block = (DayTimeBlocks) ofy().load().key(key).now();
+		
+			timeBlocks.add(block);
+  		}
+  		
+  		return timeBlocks;
+  	}
+  	
+  	
+ 
+  	  	
+  	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 * 
+	 * 
+	 */
+	
+  	private static WrappedBoolean inRange(TimeBlockForm start, TimeBlockForm end, TimeBlock block) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	
+  		@SuppressWarnings("deprecation")
+		Date startDate = new Date(start.getYear(), start.getMonth(), start.getDay());
+  		@SuppressWarnings("deprecation")
+		Date endDate = new Date(end.getYear(), end.getMonth(), end.getDay());
+  		@SuppressWarnings("deprecation")
+		Date blockDate = new Date(block.getYear(), block.getMonth(), block.getDay());
+  		
+  		return new WrappedBoolean(!(blockDate.before(startDate) || blockDate.after(endDate)));
+  		
+  	}
+  	
+  	
+  	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 * 
+	 * 
+	 */
+	
+  	private static List<DayTimeBlocks> getDayTimeBlocksForWeekDay(@Named("weekDay") final int weekDay, List<DayTimeBlocks> timeBlocks)  {
+  	
+  		
+  		WeekDay day;
+  		
+  		if(weekDay == 0){
+  			day = WeekDay.SUNDAY;
+  		}
+  		else if(weekDay == 1){
+  			day = WeekDay.MONDAY;
+  		}
+  		else if(weekDay == 2){
+  			day = WeekDay.TUESDAY;
+  		}
+  		else if(weekDay == 3){
+  			day = WeekDay.WEDNESDAY;
+  		}
+  		else if(weekDay == 4){
+  			day = WeekDay.THURSDAY;
+  		}
+  		else if(weekDay == 5){
+  			day = WeekDay.FRIDAY;
+  		}
+  		else{
+  			day = WeekDay.SATURDAY;
+  		}
+  		
+  		List<DayTimeBlocks> list = new ArrayList<DayTimeBlocks>();
+  		
+  		for(DayTimeBlocks temp: timeBlocks){
+  			
+  			if(temp.getWeekDay().equals(day)){
+  				list.add(temp);
+  			}
+  			
+  		}
+  		
+  		
+  		return list;
+  	}
+  	
+  	
+  	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 * 
+	 * 
+	 */
+	
+  	private static WrappedBoolean dateInHolidayBlock(Date currentDate, List<TimeBlock> holidayTimeBlocks){
+  		
+  		Date testDate;
+  		
+  		for(TimeBlock tempBlock: holidayTimeBlocks){
+  			
+  			testDate = new Date(tempBlock.getYear(), tempBlock.getMonth(), tempBlock.getDay());
+  			
+  			if(testDate.equals(currentDate))
+  				return new WrappedBoolean(true);
+  		}
+  		
+  		return new WrappedBoolean(false);
+  		
+  	}
+  	
+  	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 * 
+	 * 
+	 */
+	
+  	private static WrappedBoolean testCalendarBusy(@Named("calendarId") final String calendarId, @Named("length") final int length,
+  			@Named("year") final int year, @Named("month") final int month, @Named("day") final int day,
+  			@Named("hour") final int hour, @Named("minute") final int minute){
+  		
+  		
+  		//TODO
+  		
+  		//Write Method
+  		
+  		return new WrappedBoolean(false);
+  	}
+  	
   	/**
 	 * Description of the method updateEmployee.
 	 * @param admin 
@@ -1004,7 +1213,7 @@ public class SchedulerApi {
         // Update the variables of the appointment
         //
         
-String serviceName = getService(user, appointmentForm.getServiceId()).getName();
+        String serviceName = getService(user, appointmentForm.getServiceId()).getName();
         
         serviceName += " Appointment";
         
@@ -1477,7 +1686,7 @@ String serviceName = getService(user, appointmentForm.getServiceId()).getName();
             throw new UnauthorizedException("Authorization required");
         }       
  
-        
+        /*
         Query<Room> query =  ofy().load().type(Room.class);
         List<Room> roomList = query.list();
         List<String> nameList;
@@ -1503,7 +1712,12 @@ String serviceName = getService(user, appointmentForm.getServiceId()).getName();
         }
         
         return roomList;
+        */
         
+        Query<Room> query =  ofy().load().type(Room.class);
+    	query = query.order("number");
+    	
+        return query.list();
 
   	}
   	
@@ -1584,9 +1798,7 @@ String serviceName = getService(user, appointmentForm.getServiceId()).getName();
     	
     	for(Employee temp: employees){
     		services = temp.getServiceIds();
-    	
-    		System.out.println(Id);
-    		
+
     		if(services.contains(Id)){
     			list.add(temp);
     		}
@@ -1612,10 +1824,6 @@ String serviceName = getService(user, appointmentForm.getServiceId()).getName();
         }
         
   		
-        //TODO
-        //
-        //FIX
-        
         List<Employee> employees = getAllEmployees(user);
     	List<Employee> list = new ArrayList<Employee>();
     	List<Long> services;
@@ -1647,11 +1855,7 @@ String serviceName = getService(user, appointmentForm.getServiceId()).getName();
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        
-  		
-        //TODO
-        //
-        //FIX
+
         
         List<Room> Rooms = getAllRooms(user);
     	List<Room> list = new ArrayList<Room>();
@@ -2005,27 +2209,6 @@ String serviceName = getService(user, appointmentForm.getServiceId()).getName();
 
 	
 
-
-	/**
-	 * Description of the method findAvailableAppointmentTimes.
-	 * @param appointmentForm 
-	 * @throws UnauthorizedException 
-	 */
-	
-	@ApiMethod(name = "appointment.findAvailableAppointmentTimes", path = "appointment.findAvailableAppointmentTimes", httpMethod = "get")
-  	public Object findAvailableAppointmentTimes(AppointmentForm appointmentForm, final User user) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        
-        // TODO 
-        // write function
-        
-		
-		return null;
-	} 
-	
 	@ApiMethod(name = "client.sendEmail", path = "client.sendEmail", httpMethod = "post")
   	public WrappedBoolean sendEmail(final User user,@Named("email") final String email, @Named("subject") final String subject, @Named("content") final String content) throws UnauthorizedException {
 	
