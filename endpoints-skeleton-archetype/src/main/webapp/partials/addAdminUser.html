@@ -172,85 +172,49 @@
 	<div class="rightContent">
 		<h2>Add Admin</h2>
 		<div class="mainContainer">
+		<form name="adminForm" ng-submit="addAdmin()">
 			<div class="adminInfo">
 				<table>
 					<tr>
-						<td>Name:</td>
-						<td><input class="form-control" type="text"></td>
+						<td>First Name:</td>
+						<td><input class="form-control" name="fname" ng-model="fname" type="text" required>
+						<span ng-show="(adminForm.fname.$dirty || submitted) && adminForm.fname.$error.required">
+							First name is required
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Last Name:</td>
+						<td><input class="form-control" name="lname" ng-model="lname" type="text" required>
+						<span ng-show="(adminForm.lname.$dirty || submitted) && adminFormlname.$error.required">
+							Last name is required
+						</span>
+						</td>
 					</tr>
 					<tr>
 						<td>Email:</td>
-						<td><input class="form-control" type="email"></td>
+						<td><input class="form-control" name="email" ng-model="email" type="email" required>
+						<span ng-show="(adminForm.email.$dirty || submitted) && adminForm.email.$error.required">
+							Email is required
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Admin Clearance:</td>
+						<td>
+						<select class="form-control" id="sel1"  data-ng-model="adminClearance" data-ng-options="adminClearance.clearance for adminClearance in adminClearances">
+						<option value="" disabled selected>------------</option>
+						</select>
+						</td>
 					</tr>
 				</table>
 			</div>
-			<div class="adminPriv">
-				<div class="listAdmin">
-					<table>
-						<tr>
-							<th>User Privileges</th>
-							<th>View only</th>
-							<th>View + Edit</th>
-						</tr>
-						<tr>
-							<td>Service of Type 1</td>
-							<td>
-								<div class="checkbox">
-									<label><input type="checkbox" value=""></label>
-								</div>
-							</td>
-							<td>
-								<div class="checkbox">
-									<label><input type="checkbox" value=""></label>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>Service of Type 2</td>
-							<td>
-								<div class="checkbox">
-									<label><input type="checkbox" value=""></label>
-								</div>
-							</td>
-							<td>
-								<div class="checkbox">
-									<label><input type="checkbox" value=""></label>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>Service of Type 3</td>
-							<td>
-								<div class="checkbox">
-									<label><input type="checkbox" value=""></label>
-								</div>
-							</td>
-							<td>
-								<div class="checkbox">
-									<label><input type="checkbox" value=""></label>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>Service of Type 4</td>
-							<td>
-								<div class="checkbox">
-									<label><input type="checkbox" value=""></label>
-								</div>
-							</td>
-							<td>
-								<div class="checkbox">
-									<label><input type="checkbox" value=""></label>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
+
 			<div class="btnSubmit">
-				<button type="button" class="btn btn-default">Submit</button>
+				<button type="submit" class="btn btn-default">Submit</button>
 			</div>
-			</div>
+		</form>
+		</div>
 		</div>
 	</div>
 </div>
