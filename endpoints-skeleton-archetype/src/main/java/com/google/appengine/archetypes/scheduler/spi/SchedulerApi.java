@@ -689,8 +689,13 @@ public class SchedulerApi {
         List<WrappedAppointmentOption> list = new ArrayList<WrappedAppointmentOption>();
         
         List<Room> rooms = getAllRoomsService(user, findAppointmentForm.getServiceId());
+        List<Employee> employees;
+        
+        
         
         if(findAppointmentForm.getEmployeeId() == 0){
+        	
+        	employees = getAllEmployeesService(user, findAppointmentForm.getServiceId());
         	
         }
         else{
@@ -704,6 +709,26 @@ public class SchedulerApi {
         
         return list;
 	}
+	
+	
+ 	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+	
+  	private List<Long> getEmployeeHolidaysInRange(final User user,  FindAppointmentForm findAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	
+  		List<Long> holidays = new ArrayList<Long>();
+  		Employee employee = getEmployee(user, findAppointmentForm.getEmployeeId());
+  		//List	
+
+  		
+  		
+  		return holidays;
+  	}
 	
   	/**
 	 * Description of the method updateEmployee.
@@ -1535,7 +1560,43 @@ String serviceName = getService(user, appointmentForm.getServiceId()).getName();
   		
   	}
   	
+
+
+  	/**
+  	 * Returns saleItems.
+  	 * @return saleItems 
+  	 * @throws UnauthorizedException 
+  	 */
   	
+  	@ApiMethod(name = "admin.getServiceEmployees", path = "admin.getServiceEmployees", httpMethod = "post")
+ 	public List<Employee> getServiceEmployees(final User user, RemoveServiceForm removeServiceForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        List<Employee> employees = getAllEmployees(user);
+    	List<Employee> list = new ArrayList<Employee>();
+    	List<Long> services;
+   
+    	long Id = removeServiceForm.getServiceId();
+    	
+    	for(Employee temp: employees){
+    		services = temp.getServiceIds();
+    	
+    		System.out.println(Id);
+    		
+    		if(services.contains(Id)){
+    			list.add(temp);
+    		}
+    	}
+        
+        
+        return list;
+  		
+  	
+  	}
 
   	/**
   	 * Returns saleItems.
@@ -1544,7 +1605,7 @@ String serviceName = getService(user, appointmentForm.getServiceId()).getName();
   	 */
   	
   	@ApiMethod(name = "admin.getAllEmployeesService", path = "admin.getAllEmployeesService", httpMethod = "get")
- 	public List<Employee> getAllEmployeesService(final User user, RemoveTypeForm removeTypeForm) throws UnauthorizedException {
+ 	public List<Employee> getAllEmployeesService(final User user, @Named("serviceId") final long serviceId) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1558,18 +1619,12 @@ String serviceName = getService(user, appointmentForm.getServiceId()).getName();
         List<Employee> employees = getAllEmployees(user);
     	List<Employee> list = new ArrayList<Employee>();
     	List<Long> services;
-    	
-
-    	long id = 3;
+   
     	
     	for(Employee temp: employees){
     		services = temp.getServiceIds();
-    		
-    		for(Long tempLong: services){
-    			System.out.println(removeTypeForm.getTypeId());
-    		}
-    		
-    		if(services.contains(id)){
+    	
+    		if(services.contains(serviceId)){
     			list.add(temp);
     		}
     	}
