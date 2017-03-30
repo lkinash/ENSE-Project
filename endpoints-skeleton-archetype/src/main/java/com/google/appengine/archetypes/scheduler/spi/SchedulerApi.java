@@ -702,14 +702,13 @@ public class SchedulerApi {
 		Date endDate = new Date(findAppointmentForm.getEndDateRange().getYear(), findAppointmentForm.getEndDateRange().getMonth(), findAppointmentForm.getEndDateRange().getDay());
   		
   		Date currentDate = startDate;
-        
+       
   		String calendarId;
   		
         if(findAppointmentForm.getEmployeeId() == 0){
         	
         	employees = getAllEmployeesService(user, findAppointmentForm.getServiceId());
         
-        	System.out.println(findAppointmentForm.getEmployeeId());
         }
         else{
         	
@@ -718,6 +717,42 @@ public class SchedulerApi {
         	holidayTimeBlocks = getEmployeeHolidaysInRange(user, findAppointmentForm);
         	
         	
+        	
+    		weekDayTimeBlocks = getDayTimeBlocksForWeekDay(currentDate.getDay(), dayTimeBlocks);
+ 
+    	
+        	for(DayTimeBlocks thisDayTimeBlock: weekDayTimeBlocks){
+				
+				//TODO
+				//Fix to test more than one in a block
+				
+        		
+        		
+        			if(!((testCalendarBusy(ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonth(), currentDate.getDate(), thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute())).getResult())){
+					
+        				list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonth(), currentDate.getDate()), length,
+							findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(),thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute()));	
+					
+        			}
+				
+        			//TODO
+        			//fix
+        			
+        			if((thisDayTimeBlock.getStartMinute() + length) < 60 && (thisDayTimeBlock.getStartMinute() + length) < thisDayTimeBlock.getEndMinute()){
+        				
+        				list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonth(), currentDate.getDate()), length,
+							findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(),thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute() + length));	
+					
+        				
+        				
+        			}
+        				
+        		
+	
+			} 
+	
+        	
+        	/*
         	while(true){
         		
         		if(!(currentDate.before(endDate))){
@@ -751,6 +786,7 @@ public class SchedulerApi {
         		currentDate = new Date(currentDate.getYear(), currentDate.getMonth(), (currentDate.getDate() + 1));
         		
         	}
+        	*/
         }
         	
         
@@ -878,9 +914,13 @@ public class SchedulerApi {
   			day = WeekDay.SATURDAY;
   		}
   		
+  		System.out.println(weekDay);
+  		
   		List<DayTimeBlocks> list = new ArrayList<DayTimeBlocks>();
   		
   		for(DayTimeBlocks temp: timeBlocks){
+  			
+  			System.out.println(temp.getStartHour() + ":" + temp.getStartMinute());
   			
   			if(temp.getWeekDay().equals(day)){
   				list.add(temp);
