@@ -36,10 +36,6 @@ public class EmployeeForm {
 	 */
 	private List<Long> serviceIds;
 
-	/**
-	 * Description of the property password.
-	 */
-	private String password;
 
 	/**
 	 * Description of the property email.
@@ -112,21 +108,6 @@ public class EmployeeForm {
 		this.email = newEmail;
 	}
 	
-	/**
-	 * Returns password.
-	 * @return password 
-	 */
-	public String getPassword() {
-		return this.password;
-	}
-
-	/**
-	 * Sets a value to attribute password. 
-	 * @param newPassword 
-	 */
-	public void setPassword(String newPassword) {
-		this.password = newPassword;
-	}
 
 	
 	/**

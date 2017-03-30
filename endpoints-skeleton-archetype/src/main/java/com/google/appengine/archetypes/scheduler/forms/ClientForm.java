@@ -21,11 +21,6 @@ import com.google.appengine.archetypes.scheduler.list.AdminClearances;
  */
 public class ClientForm {
 	
-	
-	/**
-	 * Description of the property password.
-	 */
-	private String password;
 
 	/**
 	 * Description of the property firstName.
@@ -66,7 +61,7 @@ public class ClientForm {
 		
 	}
 	
-	public ClientForm(String newFirstName, String newLastName, int newPhoneNumber, TimeBlockForm newBirthday, String newPassword, String newEmail  ){
+	public ClientForm(String newFirstName, String newLastName, int newPhoneNumber, TimeBlockForm newBirthday, String newEmail  ){
 		
 		super();
 		
@@ -75,26 +70,11 @@ public class ClientForm {
 		this.lastName = newLastName;
 		this.phoneNumber = newPhoneNumber;
 		this.email = newEmail;
-		this.password = newPassword;
 		this.clearance = AdminClearances.client;
 
 	}
 	
-	/**
-	 * Returns password.
-	 * @return password 
-	 */
-	public String getPassword() {
-		return this.password;
-	}
-
-	/**
-	 * Sets a value to attribute password. 
-	 * @param newPassword 
-	 */
-	public void setPassword(String newPassword) {
-		this.password = newPassword;
-	}
+	
 
 	/**
 	 * Returns firstName.

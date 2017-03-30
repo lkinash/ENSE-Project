@@ -4,10 +4,6 @@ import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 
 public class RemoveAdminForm {
 
-	/**
-	 * Description of the property password.
-	 */
-	private String password;
 
 	/**
 	 * Description of the property clearance.
@@ -26,31 +22,16 @@ public class RemoveAdminForm {
 		
 	}
 	
-	public RemoveAdminForm(String newPassword, AdminClearances newClearances, String newEmail){
-		
-		this.password = newPassword;
+	public RemoveAdminForm(AdminClearances newClearances, String newEmail, long newAdminId){
+	
 		this.email = newEmail;
 		this.clearance = newClearances;
+		this.adminId = newAdminId;
+		
 	}
 
-	// Start of user code (user defined methods for AdminForm)
 
-	// End of user code
-	/**
-	 * Returns password.
-	 * @return password 
-	 */
-	public String getPassword() {
-		return this.password;
-	}
 
-	/**
-	 * Sets a value to attribute password. 
-	 * @param newPassword 
-	 */
-	public void setPassword(String newPassword) {
-		this.password = newPassword;
-	}
 
 	/**
 	 * Returns clearance.

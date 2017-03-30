@@ -6,11 +6,6 @@ import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 
 public class RemoveClientForm {
 
-	
-	/**
-	 * Description of the property password.
-	 */
-	private String password;
 
 	/**
 	 * Description of the property firstName.
@@ -49,7 +44,7 @@ public class RemoveClientForm {
 		
 	}
 	
-	public RemoveClientForm(long newClientId, String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday, String newPassword, String newEmail  ){
+	public RemoveClientForm(long newClientId, String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday,  String newEmail  ){
 		
 		super();
 		
@@ -59,27 +54,10 @@ public class RemoveClientForm {
 		this.lastName = newLastName;
 		this.phoneNumber = newPhoneNumber;
 		this.email = newEmail;
-		this.password = newPassword;
 		this.clearance = AdminClearances.client;
 
 	}
 	
-	/**
-	 * Returns password.
-	 * @return password 
-	 */
-	public String getPassword() {
-		return this.password;
-	}
-
-	/**
-	 * Sets a value to attribute password. 
-	 * @param newPassword 
-	 */
-	public void setPassword(String newPassword) {
-		this.password = newPassword;
-	}
-
 	/**
 	 * Returns firstName.
 	 * @return firstName 

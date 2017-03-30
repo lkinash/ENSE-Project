@@ -21,11 +21,7 @@ public class AdminForm {
 	 * Description of the property lastName.
 	 */
 	private String lastName;
-	
-	/**
-	 * Description of the property password.
-	 */
-	private String password;
+
 
 	/**
 	 * Description of the property clearance.
@@ -42,9 +38,8 @@ public class AdminForm {
 		
 	}
 	
-	public AdminForm(String newPassword, AdminClearances newClearances, String newEmail, String newFirstName, String newLastName){
+	public AdminForm( AdminClearances newClearances, String newEmail, String newFirstName, String newLastName){
 		
-		this.password = newPassword;
 		this.email = newEmail;
 		this.clearance = newClearances;
 		
@@ -52,22 +47,6 @@ public class AdminForm {
 		this.lastName = newLastName;
 	}
 
-
-	/**
-	 * Returns password.
-	 * @return password 
-	 */
-	public String getPassword() {
-		return this.password;
-	}
-
-	/**
-	 * Sets a value to attribute password. 
-	 * @param newPassword 
-	 */
-	public void setPassword(String newPassword) {
-		this.password = newPassword;
-	}
 
 	/**
 	 * Returns clearance.

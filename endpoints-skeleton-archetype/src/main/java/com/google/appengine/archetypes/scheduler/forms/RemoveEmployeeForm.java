@@ -29,11 +29,6 @@ public class RemoveEmployeeForm {
 	private List<Long> serviceIds;
 
 	/**
-	 * Description of the property password.
-	 */
-	private String password;
-
-	/**
 	 * Description of the property email.
 	 */
 	private String email;
@@ -122,22 +117,6 @@ public class RemoveEmployeeForm {
 	 */
 	public void setEmail(String newEmail) {
 		this.email = newEmail;
-	}
-	
-	/**
-	 * Returns password.
-	 * @return password 
-	 */
-	public String getPassword() {
-		return this.password;
-	}
-
-	/**
-	 * Sets a value to attribute password. 
-	 * @param newPassword 
-	 */
-	public void setPassword(String newPassword) {
-		this.password = newPassword;
 	}
 
 	
