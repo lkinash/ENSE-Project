@@ -22,7 +22,6 @@ public class ClientFormTest {
 	private String FIRSTNAME = "Jennifer";
 	private String LASTNAME = "Lopez";
 	private String EMAIL = "jennyfromtheblock@hip.com";
-	private String PASSWORD = "danceislife";
 	private int PHONENUM = 5556978;
 	
 	private TimeBlockForm BIRTHDAY;
@@ -37,7 +36,7 @@ public class ClientFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 clientForm = new ClientForm(FIRSTNAME,LASTNAME,PHONENUM,BIRTHDAY,PASSWORD,EMAIL); 
+		 clientForm = new ClientForm(FIRSTNAME,LASTNAME,PHONENUM,BIRTHDAY,EMAIL); 
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -51,7 +50,6 @@ public class ClientFormTest {
 		assertEquals(FIRSTNAME,clientForm.getFirstName());
 		assertEquals(LASTNAME,clientForm.getLastName());
 		assertEquals(PHONENUM,clientForm.getPhoneNumber());
-		assertEquals(PASSWORD,clientForm.getPassword());
 		assertEquals(EMAIL,clientForm.getEmail());
 	}
 }

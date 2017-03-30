@@ -34,7 +34,7 @@ public class RemoveClientFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 removeClientForm = new RemoveClientForm(CLIENTID,FIRSTNAME,LASTNAME,PHONENUM,BIRTHDAY,PASSWORD,EMAIL);
+		 removeClientForm = new RemoveClientForm(CLIENTID,FIRSTNAME,LASTNAME,PHONENUM,BIRTHDAY,EMAIL);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -50,7 +50,6 @@ public class RemoveClientFormTest {
 		assertEquals(LASTNAME,removeClientForm.getLastName());
 		assertEquals(PHONENUM,removeClientForm.getPhoneNumber());
 		assertEquals(BIRTHDAY,removeClientForm.getBirthday());
-		assertEquals(PASSWORD,removeClientForm.getPassword());
 		assertEquals(EMAIL,removeClientForm.getEmail());
 	}
 }

@@ -27,7 +27,7 @@ public class RemoveAdminFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 removeAdminForm = new RemoveAdminForm(PASSWORD,CLEARANCE,EMAIL);
+		 removeAdminForm = new RemoveAdminForm(CLEARANCE,EMAIL, ADMINID);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -38,7 +38,7 @@ public class RemoveAdminFormTest {
 
 	@Test
 	public void testGetters() throws Exception{
-		assertEquals(PASSWORD,removeAdminForm.getPassword());
+		assertEquals(ADMINID,removeAdminForm.getAdminId());
 		assertEquals(CLEARANCE,removeAdminForm.getClearance());
 		assertEquals(EMAIL,removeAdminForm.getEmail());
 	}

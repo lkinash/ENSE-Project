@@ -13,7 +13,6 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 public class AdminFormTest {
 	
 	//Data for Admin Form class
-	private String PASSWORD = "bababoo";
 	private static final String FIRSTNAME = "Admin";
 	private static final String LASTNAME = "Test";
 	private AdminClearances CLEARANCE = AdminClearances.admin;
@@ -28,7 +27,7 @@ public class AdminFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 admin = new AdminForm(PASSWORD,CLEARANCE,EMAIL, FIRSTNAME, LASTNAME);
+		 admin = new AdminForm(CLEARANCE,EMAIL, FIRSTNAME, LASTNAME);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -39,7 +38,6 @@ public class AdminFormTest {
 
 	@Test
 	public void testGetters() throws Exception{
-		assertEquals(PASSWORD,admin.getPassword());
 		assertEquals(CLEARANCE,admin.getClearance());
 		assertEquals(EMAIL,admin.getEmail());
 		assertEquals(FIRSTNAME, admin.getFirstName());
