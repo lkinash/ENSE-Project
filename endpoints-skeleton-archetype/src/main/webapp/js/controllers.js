@@ -656,7 +656,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	   
   });     
   
-   conferenceApp.controllers.controller('ViewAccountController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+   conferenceApp.controllers.controller('ViewAccountController', function ($scope, $log,$route, oauth2Provider, HTTP_ERRORS) {
 	   console.log("Reached the View admin controller");
 		  
 	   $scope.init = function(){
@@ -668,13 +668,13 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 };
 		 
 	   $scope.removeAdmin = function(index) {
-			 	console.log("Removing admin number ="+index);
-			 	var adminId= $scope.admins[index].clientId;
-			 	console.log("Client that is being deleted= "+ adminId);
+			 	//console.log("Removing admin number ="+index);
+			 	var adminId= $scope.admins[index].adminId;
+			 	//console.log("Admin that is being deleted= "+ adminId);
 			 	var removeAdminForm={
 			 			"adminId":adminId
 			 	};
-			 	gapi.client.scheduler.client.removeAdmin(removeAdminForm).execute();
+			 	gapi.client.scheduler.admin.removeAdmin(removeAdminForm).execute();
 			 	$route.reload();
 			  };
 
