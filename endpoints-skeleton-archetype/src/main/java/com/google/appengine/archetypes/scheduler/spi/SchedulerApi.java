@@ -61,6 +61,7 @@ import com.google.appengine.archetypes.scheduler.forms.ServiceTypeForm;
 import com.google.appengine.archetypes.scheduler.forms.TimeBlockForm;
 import com.google.appengine.archetypes.scheduler.forms.TimeBlockListForm;
 import com.google.appengine.archetypes.scheduler.forms.TypeForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateEmployeeForm;
 import com.google.appengine.archetypes.scheduler.forms.UserEmailForm;
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.google.appengine.archetypes.scheduler.list.Status;
@@ -694,64 +695,60 @@ public class SchedulerApi {
         List<TimeBlock> holidayTimeBlocks;
         Employee employee;
         DateTime startTime;
+        List<Date> dateList;
         int length = getService(user, findAppointmentForm.getServiceId()).getDefaultLength();
+        List<Date> startTimes;
+        
         
     	@SuppressWarnings("deprecation")
 		Date startDate = new Date(findAppointmentForm.getStartDateRange().getYear(), findAppointmentForm.getStartDateRange().getMonth(), findAppointmentForm.getStartDateRange().getDay());
   		@SuppressWarnings("deprecation")
 		Date endDate = new Date(findAppointmentForm.getEndDateRange().getYear(), findAppointmentForm.getEndDateRange().getMonth(), findAppointmentForm.getEndDateRange().getDay());
   		
-  		Date currentDate = startDate;
        
+  		dateList = getDatesInRange(startDate, endDate);
+  		
   		String calendarId;
   		
         if(findAppointmentForm.getEmployeeId() == 0){
         	
-        	employees = getAllEmployeesService(user, findAppointmentForm.getServiceId());
-        
+        	return getAppointmentOptionsAnyEmployee(user, findAppointmentForm);
+        	
         }
         else{
+        	
         	
         	employee = getEmployee(user, findAppointmentForm.getEmployeeId());
         	dayTimeBlocks = getEmployeeTimeBlocks(user, findAppointmentForm);
         	holidayTimeBlocks = getEmployeeHolidaysInRange(user, findAppointmentForm);
         	
         	
+        	for(Date currentDate: dateList){
         	
-    		weekDayTimeBlocks = getDayTimeBlocksForWeekDay(currentDate.getDay(), dayTimeBlocks);
+        		weekDayTimeBlocks = getDayTimeBlocksForWeekDay(currentDate.getDay(), dayTimeBlocks);
  
-    	
-        	for(DayTimeBlocks thisDayTimeBlock: weekDayTimeBlocks){
+        		for(DayTimeBlocks thisDayTimeBlock: weekDayTimeBlocks){
 				
 				//TODO
 				//Fix to test more than one in a block
 				
+        			startTimes = getStartTimes(thisDayTimeBlock, length);
         		
-        		
-        			if(!((testCalendarBusy(ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonth(), currentDate.getDate(), thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute())).getResult())){
-					
-        				list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonth(), currentDate.getDate()), length,
-							findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(),thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute()));	
-					
-        			}
-				
-        			//TODO
-        			//fix
+        			for(Date startTimeDate: startTimes){
         			
-        			if((thisDayTimeBlock.getStartMinute() + length) < 60 && (thisDayTimeBlock.getStartMinute() + length) < thisDayTimeBlock.getEndMinute()){
-        				
-        				list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonth(), currentDate.getDate()), length,
-							findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(),thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute() + length));	
+        				if(!((testCalendarBusy(ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonth(), currentDate.getDate(), startTimeDate.getHours(), startTimeDate.getMinutes())).getResult())){
 					
-        				
-        				
-        			}
-        				
+        					list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonth(), currentDate.getDate()), length,
+        						findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(), startTimeDate.getHours(), startTimeDate.getMinutes()));	
+					
+        				}
+        			
+        			}	
         		
 	
-			} 
+				} 
 	
-        	
+        	}
         	/*
         	while(true){
         		
@@ -793,6 +790,54 @@ public class SchedulerApi {
         
         
         return list;
+	}
+	
+	
+
+	/**
+	 * Description of the method createAppointment.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+	
+	@ApiMethod(name = "appointment.getAppointmentOptionsAnyEmployee", path = "appointment.getAppointmentOptionsAnyEmployee", httpMethod = "post")
+  	public List<WrappedAppointmentOption> getAppointmentOptionsAnyEmployee(final User user, FindAppointmentForm findAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
+	
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+		
+		List<WrappedAppointmentOption> list = new ArrayList<WrappedAppointmentOption>();
+        
+        List<Room> rooms = getAllRoomsService(user, findAppointmentForm.getServiceId());
+        List<Employee> employees;
+        List<DayTimeBlocks> dayTimeBlocks;
+        List<DayTimeBlocks> weekDayTimeBlocks;
+        List<TimeBlock> holidayTimeBlocks;
+        Employee employee;
+        DateTime startTime;
+        int length = getService(user, findAppointmentForm.getServiceId()).getDefaultLength();
+        
+    	@SuppressWarnings("deprecation")
+		Date startDate = new Date(findAppointmentForm.getStartDateRange().getYear(), findAppointmentForm.getStartDateRange().getMonth(), findAppointmentForm.getStartDateRange().getDay());
+  		@SuppressWarnings("deprecation")
+		Date endDate = new Date(findAppointmentForm.getEndDateRange().getYear(), findAppointmentForm.getEndDateRange().getMonth(), findAppointmentForm.getEndDateRange().getDay());
+  		
+  		Date currentDate = startDate;
+       
+  		String calendarId;
+  		
+        if(findAppointmentForm.getEmployeeId() == 0){
+        	
+        	employees = getAllEmployeesService(user, findAppointmentForm.getServiceId());
+        
+        	
+        	
+        }
+        
+        return list;
+	
 	}
 	
 	
@@ -978,6 +1023,226 @@ public class SchedulerApi {
   		
   		return new WrappedBoolean(false);
   	}
+  	
+  	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 * 
+	 * 
+	 */
+	
+  	private static Date getNextDay(@Named("currentDate") final Date currentDate, @Named("endDate") final Date endDate){
+
+  		if(!(currentDate.equals(endDate))){
+  			  			
+  			if(currentDate.getDate() < 28){
+  				currentDate.setDate((currentDate.getDate() + 1));
+  			}
+  			else if(currentDate.getDate() == 28){
+  				
+  				if(currentDate.getMonth() == 2){
+  				
+  					currentDate.setMonth(currentDate.getMonth() + 1);
+  					currentDate.setDate(1);
+  				
+  				}
+  				
+  				else{
+  					currentDate.setDate(currentDate.getDate() + 1);
+  				}
+  			}
+  			else if(currentDate.getDate() == 29){
+  				
+  				if(currentDate.getMonth() == 2){
+  	  				
+  					currentDate.setMonth(currentDate.getMonth() + 1);
+  					currentDate.setDate(1);
+  				
+  				}
+  				
+  				else{
+  					currentDate.setDate(currentDate.getDate() + 1);
+  				}
+  				
+  			}
+  			else if(currentDate.getDate() == 30){
+  				
+  				if(currentDate.getMonth() == 4 || currentDate.getMonth() == 6  || currentDate.getMonth() == 9 || currentDate.getMonth() == 11 ){
+  	  				
+  					currentDate.setMonth(currentDate.getMonth() + 1);
+  					currentDate.setDate(1);
+  				
+  				}
+  				
+  				else{
+  					currentDate.setDate(currentDate.getDate() + 1);
+  				}
+  			}
+  			else{
+  				if(currentDate.getMonth() < 12){
+					currentDate.setMonth(currentDate.getMonth() + 1);
+					currentDate.setDate(1);
+  				}
+  				else{
+  					currentDate.setYear(currentDate.getYear() + 1);
+  					currentDate.setMonth(1);
+  					currentDate.setDate(1);
+  				}
+  			}
+  		}
+  		
+  		return currentDate;
+	}
+  	
+  	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 * 
+	 * 
+	 */
+	
+  	private static List<Date> getDatesInRange(@Named("startDate") final Date startDate, @Named("endDate") final Date endDate){
+  	
+  		Date currentDate = startDate;
+  		List<Date> dates = new ArrayList<Date>();
+  		
+  		while(!(currentDate.equals(endDate))){
+  			
+  			dates.add(currentDate);
+  			
+  			currentDate = getNextDay(currentDate, endDate);
+
+  		}
+  		
+  		return dates;
+  		
+  	}
+  	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 * 
+	 * 
+	 */
+	
+  	private static List<Date> getStartTimes(DayTimeBlocks thisDayTimeBlock, @Named("length") final int length){
+  		
+  		List<Date> list = new ArrayList<Date>();
+  		Date startTime = new Date(1, 1, 1, thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute());
+  		Date endTime = new Date(1, 1, 1, thisDayTimeBlock.getEndHour(), thisDayTimeBlock.getEndMinute());
+  		Date currentTime = getTimePlusLength(startTime, length);
+  		
+  		while(true){
+  			
+  			if(currentTime.after(endTime)){
+  				break;
+  			}
+
+  			list.add(currentTime);
+  			currentTime = (getTimePlusLength(currentTime, length));
+  			
+  		}
+  		
+  		
+  		return list;
+  		
+  	}
+  	
+  	
+  	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 * 
+	 * 
+	 */
+	
+  	private static Date getTimePlusLength(@Named("date") final Date date, @Named("length") final int length){
+  	
+  		int hour, minute;
+  		
+  		if(length < 60){
+  			
+  			if((date.getMinutes() + length) < 60){
+  				date.setMinutes(date.getMinutes() + length);
+  			}
+  			else{
+  				date.setMinutes((date.getMinutes() + length) - 60);
+  				date.setHours((date.getHours() + 1));
+  			}
+  			
+  		}
+  		else if(length > 60){
+  			
+  			hour = length / 60;
+  			minute = length % 60;
+  			
+  			date.setHours((date.getHours() + hour));
+  			
+
+  			if((date.getMinutes() + minute) < 60){
+  				date.setMinutes(date.getMinutes() + minute);
+  			}
+  			else{
+  				date.setMinutes((date.getMinutes() + minute) - 60);
+  				date.setHours((date.getHours() + 1));
+  			}
+  			
+  			
+  		}
+  		
+  		return date;
+  	}
+  	
+  	/**
+	 * Description of the method updateEmployee.
+	 * @param admin 
+	 * @param employeeForm 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "admin.updateEmployeeAddAllServicesOfAType", path = "admin.updateEmployeeAddAllServicesOfAType", httpMethod = "post")
+	public Employee updateEmployeeAddAllServicesOfAType(final User user, UpdateEmployeeForm updateEmployeeForm) throws UnauthorizedException {
+	
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }
+
+		 
+	    Employee employee = getEmployee(user, updateEmployeeForm.getEmployeeId());
+	    List<Service> services = new ArrayList<Service>();
+	    List<Long> serviceIds = employee.getServiceIds();
+	    List<Long> types = updateEmployeeForm.gettypeIds();
+	    
+	    for(Long tempType: types){
+	    
+	    	services = getServicesOfType(user, tempType);
+	    	
+	    	for(Service tempService: services){
+	    		
+	    		if(!serviceIds.contains(tempService.getProductId()))
+	    			serviceIds.add(tempService.getProductId());
+	    	}
+	    }
+	    
+	    employee.setServiceIds(serviceIds);
+	    
+  		ofy().save().entities(employee).now();
+	    
+  		
+  		String change = "Update Employee. Employee Id: " + updateEmployeeForm.getEmployeeId();
+  		addChange(user, user.getUserId(), change);
+  		
+  		
+		return employee;
+	}
   	
   	/**
 	 * Description of the method updateEmployee.
@@ -1626,6 +1891,9 @@ public class SchedulerApi {
         return query.list();
         
   	}
+  	
+  	
+  
 
   	/**
   	 * Returns saleItems.
