@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.json.JSONException;
 
-import com.google.api.client.util.DateTime;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
@@ -698,15 +698,13 @@ public class SchedulerApi {
         List<TimeBlock> holidayTimeBlocks;
         Employee employee;
         DateTime startTime;
-        List<Date> dateList;
+        List<DateTime> dateList;
         int length = getService(user, findAppointmentForm.getServiceId()).getDefaultLength();
-        List<Date> startTimes;
+        List<DateTime> startTimes;
         
-        
-    	@SuppressWarnings("deprecation")
-		Date startDate = new Date(findAppointmentForm.getStartDateRange().getYear(), findAppointmentForm.getStartDateRange().getMonth(), findAppointmentForm.getStartDateRange().getDay());
-  		@SuppressWarnings("deprecation")
-		Date endDate = new Date(findAppointmentForm.getEndDateRange().getYear(), findAppointmentForm.getEndDateRange().getMonth(), findAppointmentForm.getEndDateRange().getDay());
+    
+		DateTime startDate = new DateTime((findAppointmentForm.getStartDateRange().getYear()), findAppointmentForm.getStartDateRange().getMonth(), findAppointmentForm.getStartDateRange().getDay(), 0, 0);
+  		DateTime endDate = new DateTime(findAppointmentForm.getEndDateRange().getYear(), findAppointmentForm.getEndDateRange().getMonth(), findAppointmentForm.getEndDateRange().getDay(), 0, 0);
   		
        
   		dateList = getDatesInRange(startDate, endDate);
@@ -726,9 +724,9 @@ public class SchedulerApi {
         	holidayTimeBlocks = getEmployeeHolidaysInRange(user, findAppointmentForm);
         	
         	
-        	for(Date currentDate: dateList){
+        	for(DateTime currentDate: dateList){
         	
-        		weekDayTimeBlocks = getDayTimeBlocksForWeekDay(currentDate.getDay(), dayTimeBlocks);
+        		weekDayTimeBlocks = getDayTimeBlocksForWeekDay(currentDate.getDayOfWeek(), dayTimeBlocks);
  
         		for(DayTimeBlocks thisDayTimeBlock: weekDayTimeBlocks){
 				
@@ -737,12 +735,12 @@ public class SchedulerApi {
 				
         			startTimes = getStartTimes(thisDayTimeBlock, length);
         		
-        			for(Date startTimeDate: startTimes){
+        			for(DateTime startTimeDate: startTimes){
         			
-        				if(!((testCalendarBusy(ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonth(), currentDate.getDate(), startTimeDate.getHours(), startTimeDate.getMinutes())).getResult())){
+        				if(!((testCalendarBusy(ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour())).getResult())){
 					
-        					list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonth(), currentDate.getDate()), length,
-        						findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(), startTimeDate.getHours(), startTimeDate.getMinutes()));	
+        					list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth()), length,
+        						findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour()));	
 					
         				}
         			
@@ -772,9 +770,9 @@ public class SchedulerApi {
         					//TODO
         					//Fix to test more than one in a block
         					
-        					if(!((testCalendarBusy(calendarId, length, currentDate.getYear(), currentDate.getMonth(), currentDate.getDate(), thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute())).getResult())){
+        					if(!((testCalendarBusy(calendarId, length, currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDate(), thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute())).getResult())){
         						
-        						list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonth(), currentDate.getDate()), length,
+        						list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDate()), length,
         								findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(),thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute()));	
         						
         					}
@@ -783,7 +781,7 @@ public class SchedulerApi {
         			}       			
         		}
         		
-        		currentDate = new Date(currentDate.getYear(), currentDate.getMonth(), (currentDate.getDate() + 1));
+        		currentDate = new Date(currentDate.getYear(), currentDate.getMonthOfYear(), (currentDate.getDate() + 1));
         		
         	}
         	*/
@@ -914,14 +912,13 @@ public class SchedulerApi {
 	
   	private static WrappedBoolean inRange(TimeBlockForm start, TimeBlockForm end, TimeBlock block) throws UnauthorizedException, IOException, GeneralSecurityException {
   	
-  		@SuppressWarnings("deprecation")
-		Date startDate = new Date(start.getYear(), start.getMonth(), start.getDay());
-  		@SuppressWarnings("deprecation")
-		Date endDate = new Date(end.getYear(), end.getMonth(), end.getDay());
-  		@SuppressWarnings("deprecation")
-		Date blockDate = new Date(block.getYear(), block.getMonth(), block.getDay());
+		DateTime startDate = new DateTime(start.getYear(), start.getMonth(), start.getDay(), 0, 0);
+  	
+		DateTime endDate = new DateTime(end.getYear(), end.getMonth(), end.getDay(), 0, 0);
   		
-  		return new WrappedBoolean(!(blockDate.before(startDate) || blockDate.after(endDate)));
+		DateTime blockDate = new DateTime(block.getYear(), block.getMonth(), block.getDay(), 0, 0);
+  		
+  		return new WrappedBoolean(!(blockDate.isBefore(startDate) || blockDate.isAfter(endDate)));
   		
   	}
   	
@@ -990,13 +987,13 @@ public class SchedulerApi {
 	 * 
 	 */
 	
-  	private static WrappedBoolean dateInHolidayBlock(Date currentDate, List<TimeBlock> holidayTimeBlocks){
+  	private static WrappedBoolean dateInHolidayBlock(DateTime currentDate, List<TimeBlock> holidayTimeBlocks){
   		
-  		Date testDate;
+  		DateTime testDate;
   		
   		for(TimeBlock tempBlock: holidayTimeBlocks){
   			
-  			testDate = new Date(tempBlock.getYear(), tempBlock.getMonth(), tempBlock.getDay());
+  			testDate = new DateTime(tempBlock.getYear(), tempBlock.getMonth(), tempBlock.getDay(), 0, 0);
   			
   			if(testDate.equals(currentDate))
   				return new WrappedBoolean(true);
@@ -1026,79 +1023,9 @@ public class SchedulerApi {
   		
   		return new WrappedBoolean(false);
   	}
-  	
-  	/**
-	 * Description of the method queryAppointments.
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 * @throws GeneralSecurityException 
-	 * 
-	 * 
-	 */
-	
-  	private static Date getNextDay(@Named("currentDate") final Date currentDate, @Named("endDate") final Date endDate){
-
-  		if(!(currentDate.equals(endDate))){
-  			  			
-  			if(currentDate.getDate() < 28){
-  				currentDate.setDate((currentDate.getDate() + 1));
-  			}
-  			else if(currentDate.getDate() == 28){
-  				
-  				if(currentDate.getMonth() == 2){
-  				
-  					currentDate.setMonth(currentDate.getMonth() + 1);
-  					currentDate.setDate(1);
-  				
-  				}
-  				
-  				else{
-  					currentDate.setDate(currentDate.getDate() + 1);
-  				}
-  			}
-  			else if(currentDate.getDate() == 29){
-  				
-  				if(currentDate.getMonth() == 2){
-  	  				
-  					currentDate.setMonth(currentDate.getMonth() + 1);
-  					currentDate.setDate(1);
-  				
-  				}
-  				
-  				else{
-  					currentDate.setDate(currentDate.getDate() + 1);
-  				}
-  				
-  			}
-  			else if(currentDate.getDate() == 30){
-  				
-  				if(currentDate.getMonth() == 4 || currentDate.getMonth() == 6  || currentDate.getMonth() == 9 || currentDate.getMonth() == 11 ){
-  	  				
-  					currentDate.setMonth(currentDate.getMonth() + 1);
-  					currentDate.setDate(1);
-  				
-  				}
-  				
-  				else{
-  					currentDate.setDate(currentDate.getDate() + 1);
-  				}
-  			}
-  			else{
-  				if(currentDate.getMonth() < 12){
-					currentDate.setMonth(currentDate.getMonth() + 1);
-					currentDate.setDate(1);
-  				}
-  				else{
-  					currentDate.setYear(currentDate.getYear() + 1);
-  					currentDate.setMonth(1);
-  					currentDate.setDate(1);
-  				}
-  			}
-  		}
+  
+  
   		
-  		return currentDate;
-	}
-  	
   	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
@@ -1108,16 +1035,16 @@ public class SchedulerApi {
 	 * 
 	 */
 	
-  	private static List<Date> getDatesInRange(@Named("startDate") final Date startDate, @Named("endDate") final Date endDate){
+  	private static List<DateTime> getDatesInRange(@Named("startDate") final DateTime startDate, @Named("endDate") final DateTime endDate){
   	
-  		Date currentDate = startDate;
-  		List<Date> dates = new ArrayList<Date>();
+  		DateTime currentDate = startDate;
+  		List<DateTime> dates = new ArrayList<DateTime>();
   		
   		while(!(currentDate.equals(endDate))){
   			
   			dates.add(currentDate);
   			
-  			currentDate = getNextDay(currentDate, endDate);
+  			currentDate = currentDate.plusDays(1);
 
   		}
   		
@@ -1134,21 +1061,21 @@ public class SchedulerApi {
 	 * 
 	 */
 	
-  	private static List<Date> getStartTimes(DayTimeBlocks thisDayTimeBlock, @Named("length") final int length){
+  	private static List<DateTime> getStartTimes(DayTimeBlocks thisDayTimeBlock, @Named("length") final int length){
   		
-  		List<Date> list = new ArrayList<Date>();
-  		Date startTime = new Date(1, 1, 1, thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute());
-  		Date endTime = new Date(1, 1, 1, thisDayTimeBlock.getEndHour(), thisDayTimeBlock.getEndMinute());
-  		Date currentTime = getTimePlusLength(startTime, length);
+  		List<DateTime> list = new ArrayList<DateTime>();
+  		DateTime startTime = new DateTime(1, 1, 1, thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute());
+  		DateTime endTime = new DateTime(1, 1, 1, thisDayTimeBlock.getEndHour(), thisDayTimeBlock.getEndMinute());
+  		DateTime currentTime = startTime.plusMinutes(length);
   		
   		while(true){
   			
-  			if(currentTime.after(endTime)){
+  			if(currentTime.isAfter(endTime)){
   				break;
   			}
 
   			list.add(currentTime);
-  			currentTime = (getTimePlusLength(currentTime, length));
+  			currentTime = currentTime.plusMinutes(length);
   			
   		}
   		
@@ -1158,51 +1085,6 @@ public class SchedulerApi {
   	}
   	
   	
-  	/**
-	 * Description of the method queryAppointments.
-	 * @throws UnauthorizedException 
-	 * @throws IOException 
-	 * @throws GeneralSecurityException 
-	 * 
-	 * 
-	 */
-	
-  	private static Date getTimePlusLength(@Named("date") final Date date, @Named("length") final int length){
-  	
-  		int hour, minute;
-  		
-  		if(length < 60){
-  			
-  			if((date.getMinutes() + length) < 60){
-  				date.setMinutes(date.getMinutes() + length);
-  			}
-  			else{
-  				date.setMinutes((date.getMinutes() + length) - 60);
-  				date.setHours((date.getHours() + 1));
-  			}
-  			
-  		}
-  		else if(length > 60){
-  			
-  			hour = length / 60;
-  			minute = length % 60;
-  			
-  			date.setHours((date.getHours() + hour));
-  			
-
-  			if((date.getMinutes() + minute) < 60){
-  				date.setMinutes(date.getMinutes() + minute);
-  			}
-  			else{
-  				date.setMinutes((date.getMinutes() + minute) - 60);
-  				date.setHours((date.getHours() + 1));
-  			}
-  			
-  			
-  		}
-  		
-  		return date;
-  	}
   	
   	/**
 	 * Description of the method updateEmployee.
