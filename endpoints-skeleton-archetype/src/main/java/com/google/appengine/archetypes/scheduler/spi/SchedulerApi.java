@@ -1851,6 +1851,42 @@ public class SchedulerApi {
         
   		
   	}
+  	
+  	
+  	
+  	
+  	
+  	/**
+  	 * Returns saleItems.
+  	 * @return saleItems 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAllEmployeesService", path = "admin.getAllEmployeesService", httpMethod = "get")
+ 	public List<Employee> getAllEmployeesService(final User user, @Named("serviceId") final long serviceId) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+  		
+        List<Employee> employees = getAllEmployees(user);
+    	List<Employee> list = new ArrayList<Employee>();
+    	List<Long> services;
+   
+    	
+    	for(Employee temp: employees){
+    		services = temp.getServiceIds();
+    	
+    		if(services.contains(serviceId)){
+    			list.add(temp);
+    		}
+    	}
+        
+        
+        return list;
+  		
+  	}
 
   	/**
   	 * Returns products.
@@ -2027,37 +2063,7 @@ public class SchedulerApi {
   	
   	}
 
-  	/**
-  	 * Returns saleItems.
-  	 * @return saleItems 
-  	 * @throws UnauthorizedException 
-  	 */
   	
-  	@ApiMethod(name = "admin.getAllEmployeesService", path = "admin.getAllEmployeesService", httpMethod = "get")
- 	public List<Employee> getAllEmployeesService(final User user, @Named("serviceId") final long serviceId) throws UnauthorizedException {
-
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }
-        
-  		
-        List<Employee> employees = getAllEmployees(user);
-    	List<Employee> list = new ArrayList<Employee>();
-    	List<Long> services;
-   
-    	
-    	for(Employee temp: employees){
-    		services = temp.getServiceIds();
-    	
-    		if(services.contains(serviceId)){
-    			list.add(temp);
-    		}
-    	}
-        
-        
-        return list;
-  		
-  	}
   	
   	
   	/**
