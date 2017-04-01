@@ -78,7 +78,6 @@ import com.google.appengine.archetypes.scheduler.wrappers.WrapperStatus;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 import com.google.api.services.calendar.model.AclRule.Scope;
-import com.google.api.services.calendar.model.Setting;
 import com.google.api.services.calendar.model.Settings;
 import com.google.api.services.calendar.model.AclRule;
 
@@ -768,46 +767,11 @@ public class SchedulerApi {
 				} 
 	
         	}
-        	/*
-        	while(true){
-        		
-        		if(!(currentDate.before(endDate))){
-        			break;
-        		}
-        		
-        		weekDayTimeBlocks = getDayTimeBlocksForWeekDay(currentDate.getDay(), dayTimeBlocks);
-        		
-        		if(!(dateInHolidayBlock(currentDate, holidayTimeBlocks).getResult())){
-        			
-        			for(Room tempRoom: rooms){
-        				
-        				calendarId = tempRoom.getCalendar();
-        				
-        				for(DayTimeBlocks thisDayTimeBlock: weekDayTimeBlocks){
-        				
-        					//TODO
-        					//Fix to test more than one in a block
-        					
-        					if(!((testCalendarBusy(calendarId, length, currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDate(), thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute())).getResult())){
-        						
-        						list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDate()), length,
-        								findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(),thisDayTimeBlock.getStartHour(), thisDayTimeBlock.getStartMinute()));	
-        						
-        					}
-        		
-        				} 
-        			}       			
-        		}
-        		
-        		currentDate = new Date(currentDate.getYear(), currentDate.getMonthOfYear(), (currentDate.getDate() + 1));
-        		
-        	}
-        	*/
+        	
         }
         	
         
-        
-        
+     
         return list;
 	}
 	
