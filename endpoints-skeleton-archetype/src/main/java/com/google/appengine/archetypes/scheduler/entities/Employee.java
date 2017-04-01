@@ -64,6 +64,12 @@ public class Employee {
 	/**
 	 * Description of the property AccountId.
 	 */
+	private List<TimeBlock> holidayTimeBlocks;
+	
+	
+	/**
+	 * Description of the property AccountId.
+	 */
 	@Index
 	private String email;
 	
@@ -72,6 +78,11 @@ public class Employee {
 	 */
 	@Index
 	private List<Long> weekdayTimeBlockIds;
+	
+	/**
+	 * Description of the property AccountId.
+	 */
+	private List<DayTimeBlocks> weekdayTimeBlocks;
 	
 	
 	/**
@@ -105,6 +116,8 @@ public class Employee {
 		this.weekdayTimeBlockIds = newWeekdayTimeBlockIds;
 		this.firstName = newFirstName;
 		this.lastName = newLastName;
+		this.weekdayTimeBlocks = null;
+		this.holidayTimeBlocks = null;
 		
 	}
 
@@ -263,5 +276,40 @@ public class Employee {
 	public List<Long> getWeekdayTimeBlockIds(){
 		return this.weekdayTimeBlockIds;
 	}
+	
+	
+	/**
+	 * Description of the method setdayTimeBlocks.
+	 * @param dayTimeBlockIds 
+	 */
+	public void setDayTimeBlocks(List<DayTimeBlocks> newDayTimeBlocks) {
+		this.weekdayTimeBlocks = newDayTimeBlocks;
+	}
 
+	/**
+	 * Description of the method getdayTimeBlocks.
+	 * @return 
+	 */
+	public List<DayTimeBlocks> getDayTimeBlocks() {
+		return this.weekdayTimeBlocks;
+	}
+
+
+	/**
+	 * Description of the method setTimeBlocks.
+	 * @param TimeBlocks 
+	 */
+	public void setTimeBlocks(List<TimeBlock> newTimeBlocks) {
+		this.holidayTimeBlocks = newTimeBlocks;
+	}
+
+	/**
+	 * Description of the method getdayTimeBlocks.
+	 * @return 
+	 */
+	public List<TimeBlock> getTimeBlocks() {
+		return this.holidayTimeBlocks;
+	}
+
+	
 }

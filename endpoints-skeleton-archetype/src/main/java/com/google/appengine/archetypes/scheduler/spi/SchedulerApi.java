@@ -1774,8 +1774,7 @@ public class SchedulerApi {
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
-        
-  		
+            
         Query<Employee> query =  ofy().load().type(Employee.class);
     	query = query.order("firstName");
     	
@@ -1783,6 +1782,75 @@ public class SchedulerApi {
   		
   	}
 
+  	
+
+  	/**
+  	 * Returns saleItems.
+  	 * @return saleItems 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAllEmployeesWithTimeBlocks", path = "admin.getAllEmployeesWithTimeBlocks", httpMethod = "get")
+ 	public List<Employee> getAllEmployeesWithTimeBlocks(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+  		
+        Query<Employee> query =  ofy().load().type(Employee.class);
+    	query = query.order("firstName");
+       
+    	List<Employee> employeeList = query.list();
+        
+    	List<TimeBlock> holidayList;
+        List<DayTimeBlocks> dayTimeList;
+        
+        List<Long> holidayIdList;
+        List<Long> dayTimeIdList;
+        
+        Key<TimeBlock> holidayKey;
+        TimeBlock holidayBlock;
+        
+        Key<DayTimeBlocks> dayTimeKey;
+        DayTimeBlocks dayTimeBlock;
+        
+        
+        for(Employee tempEmployee: employeeList){
+        	
+        	holidayList = new ArrayList<TimeBlock>();
+        	holidayIdList = tempEmployee.getHolidayTimeBlockIds();
+        	
+        	if(holidayIdList != null){
+        		for(Long tempLong: holidayIdList){
+        			holidayKey = Key.create(TimeBlock.class, tempLong);
+        			holidayBlock = (TimeBlock) ofy().load().key(holidayKey).now();
+        			holidayList.add(holidayBlock);
+        		}
+        	
+        		tempEmployee.setTimeBlocks(holidayList);
+        	}
+        	
+        	
+        	dayTimeList = new ArrayList<DayTimeBlocks>();
+        	dayTimeIdList = tempEmployee.getWeekdayTimeBlockIds();
+        	
+        	if(dayTimeIdList != null){
+        		for(Long tempLong: dayTimeIdList){
+        			dayTimeKey = Key.create(DayTimeBlocks.class, tempLong);
+        			dayTimeBlock = (DayTimeBlocks) ofy().load().key(dayTimeKey).now();
+        			dayTimeList.add(dayTimeBlock);
+        		}
+        	
+        		tempEmployee.setDayTimeBlocks(dayTimeList);
+        	}
+        	
+        }
+        
+        return employeeList;
+        
+  		
+  	}
 
   	/**
   	 * Returns products.
@@ -1861,38 +1929,12 @@ public class SchedulerApi {
             throw new UnauthorizedException("Authorization required");
         }       
  
-        /*
-        Query<Room> query =  ofy().load().type(Room.class);
-        List<Room> roomList = query.list();
-        List<String> nameList;
-        List<Long> idList;
-        Key<Service> key;
-        Service service;
-        
-        for(Room tempRoom: roomList){
-        	
-        	nameList = new ArrayList<String>();
-        	idList = tempRoom.getServices();
-        	
-        	if(idList != null){
-        		for(Long tempLong: idList){
-        			key = Key.create(Service.class, tempLong);
-        			service = (Service) ofy().load().key(key).now();
-        			nameList.add(service.getName());
-        		}
-        	
-        		tempRoom.setServiceNames(nameList);
-        	}
-        	
-        }
-        
-        return roomList;
-        */
-        
+
         Query<Room> query =  ofy().load().type(Room.class);
     	query = query.order("number");
     	
         return query.list();
+        
 
   	}
   	
