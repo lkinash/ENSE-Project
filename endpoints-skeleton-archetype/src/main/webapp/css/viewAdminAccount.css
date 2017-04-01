@@ -57,13 +57,9 @@
 
 table{
 	width: 100%;
-	text-align: center;
-	border-bottom: solid;
 }
 table th{
 	white-space:nowrap;
-
-	text-align: center;
 	border-bottom: solid;
 }
 .checkbox{
@@ -74,12 +70,40 @@ table th{
 	margin-left: auto;
 	margin-right: auto;
 }
-.opt{
-	margin-top:5%;
+.employeeContainer{
+	width: 100%;
 	display: inline-flex;
-	width:90%;
-	margin-left: 5%;
+
+}
+.right{
+	width:40%;
+	margin-left: 10%;
+}
+.opt{
+	margin-left:auto;
+	margin-right:auto;
 }
 .saveBtn{
 	margin-left: 75%;
+}
+
+.cont{
+	width:70%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.cont table td{
+	height: inherit;
+
+}
+.cont table tr td{
+	width: 1%;
+
+}
+.cont table{
+	text-align: center;
+	width:70%;
+	margin-left: auto;
+	margin-right: auto;
 }
