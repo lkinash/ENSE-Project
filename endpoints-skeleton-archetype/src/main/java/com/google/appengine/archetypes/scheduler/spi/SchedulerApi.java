@@ -115,7 +115,10 @@ public class SchedulerApi {
         final long employeeId = employeeKey.getId();
    
 	
-        List<Long> timeHolidayBlockLong = addHolidayTimeBlocks(user, employeeForm.getHolidayTimeBlockListForm());
+        List<Long> timeHolidayBlockLong = new ArrayList<Long>();
+        		
+        timeHolidayBlockLong.addAll(addHolidayTimeBlocks(user, employeeForm.getHolidayTimeBlockListForm()));
+        
         
         List<Long> timeBlockLong = addTimeBlocks(user, employeeForm.getTimeBlockListForm());
         
