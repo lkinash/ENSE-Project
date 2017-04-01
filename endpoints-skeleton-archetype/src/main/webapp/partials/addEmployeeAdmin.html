@@ -166,27 +166,7 @@
       </div>
 		</div>
 </div>
-	
 
-	<form ng-submit="addEmployee()">
-  			<!-- <input type="text" ng-model="email" size="50"><br> -->
-		    <input type="text" ng-model="name" size="50"><br>
-		   <!--  <input type="text" ng-model="password" size="50"><br> -->
- 		    <input type="submit" class="btn" value="post">
-	</form>
-	<select>
-	<option ng-repeat="x in hours">{{x}}</option>
-	</select>
-	<select>
-	<option ng-repeat="x in minutes">{{x}}</option>
-	</select>
-	
-		<!--  
-	<form ng-submit="addRoom()" >
-		<input type="text" ng-model="number" size="50"><br>
-		<input type="submit" class="btn" value="Post">
-	</form>
-	-->
 	<div class="col-sm-10">
 	<div class="rightContent">
 	<div ng-controller="AddEmployeeController" ng-init="init()">
@@ -206,9 +186,9 @@
 						</tr>
 					</table>
 				</div>
-				<div class="containerUnder">
+				<div class="row">
+					<div class="col-sm-7">
 					<div class="rightCalendar">
-					<div class="weekdaytimes">
 					<div class="heading">
 								<h5>Availability</h5>
 								<div class="plusMinus">
@@ -217,20 +197,22 @@
 									</button>
 								</div>
 							</div>
-					</div>
 					<div class="tableheadings">
 					<table>
 					<tr>
-					<td>Days</td>
-					<td>Morning hours</td>
-					<td>Afternoon hours</td>
+					<th id="weekd">WeekDay</th>
+					<th id="timeslot">Start Hour</th>
+					<th id="timeslot">Start Minute</th>
+					<th id="timeslot">End Hour</th>
+					<th id="timeslot">End Minute</th>
+					<th> </th>
 					</tr>
 					</table>
 					</div>
 					<table>
 					<fieldset  ng-repeat="choice in choices2">
             	<tr>
-		            <td>
+		            <td id="weekd">
 						<select class="form-control" ng-model="weekDay" >
 						<option value="" disabled selected></option>
 						<option value="SUNDAY">SUNDAY</option>
@@ -241,108 +223,120 @@
 						<option value="FRIDAY">FRIDAY</option>
 						<option value="SATURDAY">FRIDAY</option>
 						</select>
-						</td>
-					<td>
-					<select class="form-control" ng-model="startTimeHour">
-					  <option value="1">1</option>
-					  <option value="2">2</option>
-					  <option value="3">3</option>
-					  <option value="4">4</option>
-					  <option value="5">5</option>
-					  <option value="6">6</option>
-					  <option value="7">7</option>
-					  <option value="8">8</option>
-					  <option value="9">9</option>
-					  <option value="10">10</option>
-					  <option value="11">11</option>
-					  <option value="12">12</option>
-					  <option value="13">13</option>
-					  <option value="14">14</option>
-					  <option value="15">15</option>
-					  <option value="16">16</option>
-					  <option value="17">17</option>
-					  <option value="18">18</option>
-					  <option value="19">19</option>
-					  <option value="20">20</option>
-					  <option value="21">21</option>
-					  <option value="22">22</option>
-					  <option value="23">23</option>
-					  <option value="24">24</option>
+					</td>
+					<td id="timeslot">
+						<select class="form-control" ng-model="startTimeHour">
+						  <option value="1">1</option>
+						  <option value="2">2</option>
+						  <option value="3">3</option>
+						  <option value="4">4</option>
+						  <option value="5">5</option>
+						  <option value="6">6</option>
+						  <option value="7">7</option>
+						  <option value="8">8</option>
+						  <option value="9">9</option>
+						  <option value="10">10</option>
+						  <option value="11">11</option>
+						  <option value="12">12</option>
+						  <option value="13">13</option>
+						  <option value="14">14</option>
+						  <option value="15">15</option>
+						  <option value="16">16</option>
+						  <option value="17">17</option>
+						  <option value="18">18</option>
+						  <option value="19">19</option>
+						  <option value="20">20</option>
+						  <option value="21">21</option>
+						  <option value="22">22</option>
+						  <option value="23">23</option>
+						  <option value="24">24</option>
+						</select>
+					</td>
+					<td id="timeslot">
+						<select class="form-control" ng-model="startTimeMinute">
+						  <option value="00">00</option>
+						  <option value="05">05</option>
+						  <option value="10">10</option>
+						  <option value="15">15</option>
+						  <option value="20">20</option>
+						  <option value="25">25</option>
+						  <option value="30">30</option>
+						  <option value="35">35</option>
+						  <option value="40">40</option>
+						  <option value="45">45</option>
+						  <option value="50">50</option>
+						  <option value="55">55</option>
+						</select>
+					</td>
+					<td id="timeslot">
+						<select class="form-control" ng-model="endTimeHour">
+						  <option value="1">1</option>
+						  <option value="2">2</option>
+						  <option value="3">3</option>
+						  <option value="4">4</option>
+						  <option value="5">5</option>
+						  <option value="6">6</option>
+						  <option value="7">7</option>
+						  <option value="8">8</option>
+						  <option value="9">9</option>
+						  <option value="10">10</option>
+						  <option value="11">11</option>
+						  <option value="12">12</option>
+						  <option value="13">13</option>
+						  <option value="14">14</option>
+						  <option value="15">15</option>
+						  <option value="16">16</option>
+						  <option value="17">17</option>
+						  <option value="18">18</option>
+						  <option value="19">19</option>
+						  <option value="20">20</option>
+						  <option value="21">21</option>
+						  <option value="22">22</option>
+						  <option value="23">23</option>
+						  <option value="24">24</option>
 					</select>
 					</td>
-					<td>
-					<select class="form-control" ng-model="startTimeMinute">
-					  <option value="00">00</option>
-					  <option value="05">05</option>
-					  <option value="10">10</option>
-					  <option value="15">15</option>
-					  <option value="20">20</option>
-					  <option value="25">25</option>
-					  <option value="30">30</option>
-					  <option value="35">35</option>
-					  <option value="40">40</option>
-					  <option value="45">45</option>
-					  <option value="50">50</option>
-					  <option value="55">55</option>
-					</select>
-					</td>
-					<td> - </td>
-					<td>
-					<select class="form-control" ng-model="endTimeHour">
-					  <option value="1">1</option>
-					  <option value="2">2</option>
-					  <option value="3">3</option>
-					  <option value="4">4</option>
-					  <option value="5">5</option>
-					  <option value="6">6</option>
-					  <option value="7">7</option>
-					  <option value="8">8</option>
-					  <option value="9">9</option>
-					  <option value="10">10</option>
-					  <option value="11">11</option>
-					  <option value="12">12</option>
-					  <option value="13">13</option>
-					  <option value="14">14</option>
-					  <option value="15">15</option>
-					  <option value="16">16</option>
-					  <option value="17">17</option>
-					  <option value="18">18</option>
-					  <option value="19">19</option>
-					  <option value="20">20</option>
-					  <option value="21">21</option>
-					  <option value="22">22</option>
-					  <option value="23">23</option>
-					  <option value="24">24</option>
-					</select>
-					</td>
-					<td>
-					<select class="form-control" ng-model="endTimeMinute">
-					  <option value="00">00</option>
-					  <option value="05">05</option>
-					  <option value="10">10</option>
-					  <option value="15">15</option>
-					  <option value="20">20</option>
-					  <option value="25">25</option>
-					  <option value="30">30</option>
-					  <option value="35">35</option>
-					  <option value="40">40</option>
-					  <option value="45">45</option>
-					  <option value="50">50</option>
-					  <option value="55">55</option>
-					</select>
+					<td id="timeslot">
+						<select class="form-control" ng-model="endTimeMinute">
+						  <option value="00">00</option>
+						  <option value="05">05</option>
+						  <option value="10">10</option>
+						  <option value="15">15</option>
+						  <option value="20">20</option>
+						  <option value="25">25</option>
+						  <option value="30">30</option>
+						  <option value="35">35</option>
+						  <option value="40">40</option>
+						  <option value="45">45</option>
+						  <option value="50">50</option>
+						  <option value="55">55</option>
+						</select>
 					</td>
 		   			 <td>
-		         	 <button type="button" ng-click="addHoursList(weekDay, startTimeHour, startTimeMinute, endTimeHour, endTimeMinute)">+</button>
+		         	 <button class="btn btn-default" type="button" ng-click="addHoursList(weekDay, startTimeHour, startTimeMinute, endTimeHour, endTimeMinute)">+</button>
 		           	</td>
 		          </tr>
 		           </fieldset>		  
 				   </table>
-				   {{timeBlocks}}
+				   	<table>
+					<tr ng-repeat="timeBlock in timeBlocks">
+					<td></td>
+					<td>{{timeBlock.weekDay}}</td>
+					<td>{{timeBlock.startHour}}</td>
+					<td>{{timeBlock.startMinute}}</td>
+					<td>{{timeBlock.endHour}}</td>
+					<td>{{timeBlock.endMinute}}</td>
+					<td><button id="" class="btn btn-default" ng-click="removeChoiceTime($index)">-</button></td>
+					</tr>
+					</table>
+				   </div>
 					</div>
-
+					
+					
+					<div class="col-sm-5">
 					<div class="leftServices">
 						<div class="serviceOffered">
-								<div class="heading">
+							<div class="heading">
 								<h5>Services Preformed</h5>
 									<div class="plusMinus">
 										<button type="button" class="btn btn-default" >
@@ -353,53 +347,61 @@
 							<div class="infoCategory">
 							<table>
 							<tr>
-							<td>
+							<th>
 								
-									<h5>Service Type</h5>
+									Service Type
 							
-							</td>
-							<td>
+							</th>
+							<th>
 							
-									<h5>Service Name</h5>
+									Service Name
 								
-							</td>
+							</th>
+							</tr>
+							</table>							
+							<table>
+											 
+				           <fieldset  ng-repeat="choice in choices">
+				            <tr><td><select class="form-control" data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
+				    		</select>
+				    		</td>
+				    		<td>
+				  			  <select class="form-control" id="{{$index}}" data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices" >
+				   			  <p>{{listservicesselect.name}}</p>
+				   			 </select>
+				   			 <td>
+				   			 <td>
+				         	 <button class="btn btn-default" type="button" ng-click="addServiceList(listservicesselect.productId,listservicesselect.name,listtypeselect.typeName)">+</button>
+				           	</td>
+				           	</tr>
+				           </fieldset>		  
+							</table>
+				    		<table>
+							
+							<tr ng-repeat="service in services">
+							<td>{{service.typeName}}</td>
+							<td>{{service.name}}</td>
+							<td><button id="" class="btn btn-default" ng-click="removeChoice($index)">-</button></td>
+							
 							</tr>
 							</table>
 							</div>
-			<table>
-							 
-           <fieldset  ng-repeat="choice in choices">
-            <tr><td><select class="form-control" data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
-    		</select>
-    		</td>
-    		<td>
-  			  <select class="form-control" id="{{$index}}" data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices" >
-   			  <p>{{listservicesselect.name}}</p>
-   			 </select>
-   			 <td>
-   			 <td>
-         	 <button type="button" ng-click="addServiceList(listservicesselect.productId,listservicesselect.name,listtypeselect.typeName)">+</button>
-           	</td>
-           	</tr>
-           </fieldset>		  
-			</table>
-    		<table>
-			
-			<tr ng-repeat="service in services">
-			<td>{{service.typeName}}</td>
-			<td>{{service.name}}</td>
-			<td><button id="" ng-click="removeChoice($index)">-</button></td>
-			
-			</tr>
-			</table>
+						</div>
 					</div>
 				</div>
+				</div>
+				
+				<div class="row">
+				<div class="col-sm-12">
 				<div class="submitBtn">
 					<button type="submit" class="btn btn-default">Submit</button>
 				</div>
+				</div>
+				
+				</div>
 			</div>
-		</div>
 		</form>
+		</div>
 		</div>
 		</div>
 	</div>

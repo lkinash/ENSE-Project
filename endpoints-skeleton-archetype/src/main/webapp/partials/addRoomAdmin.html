@@ -226,7 +226,7 @@
    			 </select>
    			 <td>
    			 <td>
-         	 <button type="button" ng-click="addServiceList(listservicesselect.productId,listservicesselect.name,listtypeselect.typeName)">+</button>
+         	 <button class="btn btn-default"  type="button" ng-click="addServiceList(listservicesselect.productId,listservicesselect.name,listtypeselect.typeName)">+</button>
            	</td>
            	</tr>
            </fieldset>		  
@@ -236,7 +236,7 @@
 			<tr ng-repeat="service in services">
 			<td>{{service.typeName}}</td>
 			<td>{{service.name}}</td>
-			<td><button id="" ng-click="removeChoice($index)">-</button></td>
+			<td><button class="btn btn-default" id="" ng-click="removeChoice($index)">-</button></td>
 			
 			</tr>
 			</table>					

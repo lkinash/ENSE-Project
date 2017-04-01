@@ -441,6 +441,10 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 $scope.removeChoice = function(index) {
 	    $scope.services.splice(index,1);
 	 };
+	 
+	 $scope.removeChoiceTime = function(index) {
+		    $scope.timeBlocks.splice(index,1);
+		 };
 	
 	 $scope.addEmployee = function() {
 		 console.log("reached adding function");
@@ -465,7 +469,6 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				"lastName":$scope.lname,
 				"serviceIds":convertedservice,
 				"timeBlockListForm":timeBlockListForm,
-				"holidayTimeBlockListForm":holidayTimeBlockListForm
 								
 		};
 	    console.log("Employee form object created");
