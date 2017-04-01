@@ -2065,7 +2065,8 @@ public class SchedulerApi {
         
   		
         Query<Changes> query =  ofy().load().type(Changes.class);
-  
+        query = query.order("-timeStamp");
+        
         return query.list();
   	}
 
