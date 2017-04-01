@@ -117,10 +117,13 @@ public class SchedulerApi {
 	
         List<Long> timeHolidayBlockLong = new ArrayList<Long>();
         		
-        timeHolidayBlockLong.addAll(addHolidayTimeBlocks(user, employeeForm.getHolidayTimeBlockListForm()));
+        
+        timeHolidayBlockLong = addHolidayTimeBlocks(user, employeeForm.getHolidayTimeBlockListForm());
         
         
-        List<Long> timeBlockLong = addTimeBlocks(user, employeeForm.getTimeBlockListForm());
+        List<Long> timeBlockLong = new ArrayList<Long>();
+        
+        timeBlockLong = addTimeBlocks(user, employeeForm.getTimeBlockListForm());
         
         
         String calendarId = createCalendar(user, employeeForm.getFirstName()).getId();     
@@ -160,22 +163,30 @@ public class SchedulerApi {
         List<Long> list = new ArrayList<Long>();
         
         
-        List<TimeBlockForm> timeBlockForms = holidayTimeBlockListForm.getTimeBlockList(); 
-        
-        for(TimeBlockForm tempForm: timeBlockForms){
-
-        	final Key<TimeBlock> timeBlockKey = factory().allocateId(TimeBlock.class);
-        	final long Id = timeBlockKey.getId();
+        List<TimeBlockForm> timeBlockForms = new ArrayList<TimeBlockForm>();
+        		
+        if(holidayTimeBlockListForm != null){
         	
-        	list.add(Id);
+        	timeBlockForms.addAll(holidayTimeBlockListForm.getTimeBlockList()); 
         
-        	TimeBlock timeBlock = new TimeBlock(Id, tempForm.getYear(), tempForm.getMonth(), tempForm.getDay());
+        	for(TimeBlockForm tempForm: timeBlockForms){
+
+        		final Key<TimeBlock> timeBlockKey = factory().allocateId(TimeBlock.class);
+        		final long Id = timeBlockKey.getId();
+        	
+        		list.add(Id);
         
-        	ofy().save().entities(timeBlock).now(); 
+        		TimeBlock timeBlock = new TimeBlock(Id, tempForm.getYear(), tempForm.getMonth(), tempForm.getDay());
+        
+        		ofy().save().entities(timeBlock).now(); 
    		
-        }
+        	}
 		
-        return list;
+        	return list;
+        }
+        else 
+        	return null;
+        
   	}
    	
    	/**
@@ -198,24 +209,31 @@ public class SchedulerApi {
         List<Long> list = new ArrayList<Long>();
         
         
-        List<DayTimeBlocksForm> timeBlock = timeBlockListForm.getTimeBlocks(); 
+        List<DayTimeBlocksForm> timeBlock = new ArrayList<DayTimeBlocksForm>();
+        		
+        if(timeBlockListForm != null){
+ 
+        	timeBlock = timeBlockListForm.getTimeBlocks(); 
         
-        for(DayTimeBlocksForm tempBlock: timeBlock){
-
-        	final Key<DayTimeBlocks> timeBlockKey = factory().allocateId(DayTimeBlocks.class);
-        	final long Id = timeBlockKey.getId();
+        	for(DayTimeBlocksForm tempBlock: timeBlock){
+        		
+        		final Key<DayTimeBlocks> timeBlockKey = factory().allocateId(DayTimeBlocks.class);
+        		final long Id = timeBlockKey.getId();
         
-        	list.add(Id);
+        		list.add(Id);
         	
-        	DayTimeBlocks dayTimeBlock = new DayTimeBlocks(Id, tempBlock.getWeekDay(), tempBlock.getStartHour(), tempBlock.getStartMinute(), tempBlock.getEndHour(), tempBlock.getEndMinute());
+        		DayTimeBlocks dayTimeBlock = new DayTimeBlocks(Id, tempBlock.getWeekDay(), tempBlock.getStartHour(), tempBlock.getStartMinute(), tempBlock.getEndHour(), tempBlock.getEndMinute());
         			
         		
-        	ofy().save().entities(dayTimeBlock).now(); 
+        		ofy().save().entities(dayTimeBlock).now(); 
    		
-        }
+        	}
 		
-        return list;
+        	return list;
+        }
         
+        else 
+        	return null;
   	}
 	
 	
