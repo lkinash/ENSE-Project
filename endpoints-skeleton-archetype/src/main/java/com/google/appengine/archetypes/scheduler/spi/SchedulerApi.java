@@ -61,7 +61,13 @@ import com.google.appengine.archetypes.scheduler.forms.ServiceTypeForm;
 import com.google.appengine.archetypes.scheduler.forms.TimeBlockForm;
 import com.google.appengine.archetypes.scheduler.forms.TimeBlockListForm;
 import com.google.appengine.archetypes.scheduler.forms.TypeForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateAdminForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateClientForm;
 import com.google.appengine.archetypes.scheduler.forms.UpdateEmployeeForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateProductForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateRoomForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateServiceForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateTypeForm;
 import com.google.appengine.archetypes.scheduler.forms.UserEmailForm;
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.google.appengine.archetypes.scheduler.list.Status;
@@ -1119,14 +1125,14 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.updateEmployee", path = "admin.updateEmployee", httpMethod = "post")
-	public Employee updateEmployee(final User user, EmployeeForm employeeForm, @Named("employeeId") final long employeeId) throws UnauthorizedException {
+	public Employee updateEmployee(final User user, UpdateEmployeeForm employeeForm) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 
 		 
-	    Employee employee = getEmployee(user, employeeId);
+	    Employee employee = getEmployee(user, employeeForm.getEmployeeId());
 	    
 	    if(!(employeeForm.getFirstName() == null)){
 	    	employee.setFirstName(employeeForm.getFirstName());
@@ -1139,7 +1145,7 @@ public class SchedulerApi {
   		ofy().save().entities(employee).now();
 	    
   		
-  		String change = "Update Employee. Employee Id: " + employeeId;
+  		String change = "Update Employee. Employee Id: " + employeeForm.getEmployeeId();
   		addChange(user, user.getUserId(), change);
   		
   		
@@ -1156,7 +1162,7 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.updateRoom", path = "admin.updateRoom", httpMethod = "post")
-	public Room updateRoom(final User user, RoomForm roomForm, @Named("roomId") final long roomId) throws UnauthorizedException {
+	public Room updateRoom(final User user, UpdateRoomForm roomForm) throws UnauthorizedException {
 	
 		
 	    if (user == null) {
@@ -1164,7 +1170,7 @@ public class SchedulerApi {
 	    }		
 
 		
-	    Room room = getRoom(user, roomId);
+	    Room room = getRoom(user, roomForm.getRoomId());
 	   
 	    if(!(roomForm.getNumber() == -1)){
 	    	room.setNumber(roomForm.getNumber());
@@ -1186,14 +1192,14 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.updateService", path = "admin.updateService", httpMethod = "post")
-	public Service updateService(final User user, ServiceForm serviceForm, @Named("serviceId") final long serviceId) throws UnauthorizedException {
+	public Service updateService(final User user, UpdateServiceForm serviceForm) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 
 
-	    Service service = getService(user, serviceId);
+	    Service service = getService(user, serviceForm.getServiceId());
 	    
 	    if(!(serviceForm.getName() == null)){
 	    	service.setName(serviceForm.getName());
@@ -1214,7 +1220,7 @@ public class SchedulerApi {
 	    
   		ofy().save().entities(service).now();
 		
-  		String change = "Update Service. Service Id: " + serviceId;
+  		String change = "Update Service. Service Id: " + serviceForm.getServiceId();
   		addChange(user, user.getUserId(), change);
   	    
   		
@@ -1230,13 +1236,13 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "admin.updateProduct", path = "admin.updateProduct", httpMethod = "post")
-	public Product updateProduct(final User user, ProductForm productForm, @Named("productId") final long productId) throws UnauthorizedException {
+	public Product updateProduct(final User user, UpdateProductForm productForm) throws UnauthorizedException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
 	    }
 
-	    Product product = getProduct(user, productId);
+	    Product product = getProduct(user, productForm.getProductId());
 	    
 	    if(!(productForm.getBarcodeNumber() == -1)){
 	    	product.setBarcodeNumber(productForm.getBarcodeNumber());
@@ -1254,7 +1260,7 @@ public class SchedulerApi {
 	    
   		ofy().save().entities(product).now();
 	    
-  		String change = "Update Product. Product Id: " + productId;
+  		String change = "Update Product. Product Id: " + productForm.getProductId();
   		addChange(user, user.getUserId(), change);
   	    
   		
@@ -1269,14 +1275,14 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.updateAdmin", path = "admin.updateAdmin", httpMethod = "post")
- 	public Admin updateAdmin(final User user, AdminForm adminForm, @Named("adminId") final long adminId) throws UnauthorizedException {
+ 	public Admin updateAdmin(final User user, UpdateAdminForm adminForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
   		
-  		Admin admin = getAdmin(user, adminId);
+  		Admin admin = getAdmin(user, adminForm.getAdminId());
   			    
 	    if(!(adminForm.getClearance() == null)){
 	    	admin.setAdminClearance(adminForm.getClearance());
@@ -1284,7 +1290,7 @@ public class SchedulerApi {
 	    
   		ofy().save().entities(admin).now();
 	   
-  		String change = "Update Admin. Admin Id: " + adminId;
+  		String change = "Update Admin. Admin Id: " + adminForm.getAdminId();
   		addChange(user, user.getUserId(), change);
   		
   		
@@ -1299,7 +1305,7 @@ public class SchedulerApi {
   	 */
   	
   	@ApiMethod(name = "admin.updateType", path = "admin.updateType", httpMethod = "post")
- 	public Type updateType(final User user, TypeForm typeForm, @Named("typeId") final long typeId  ) throws UnauthorizedException {
+ 	public Type updateType(final User user, UpdateTypeForm typeForm ) throws UnauthorizedException {
 
   		if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -1307,7 +1313,7 @@ public class SchedulerApi {
         
         
         
-  		Type type = getType(user, typeId);
+  		Type type = getType(user, typeForm.getTypeId());
 		    
 	    if(!(typeForm.getIsService() == type.getIsService())){
 	    	type.setIsService(typeForm.getIsService());
@@ -1318,7 +1324,7 @@ public class SchedulerApi {
 	 
   		ofy().save().entities(type).now();
 	    
-  		String change = "Update Type. Type Id: " + typeId;
+  		String change = "Update Type. Type Id: " + typeForm.getTypeId();
   		addChange(user, user.getUserId(), change);
   		
   		
@@ -1334,14 +1340,14 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "client.updateClient", path = "client.updateClient", httpMethod = "post")
-  	public Client updateClient(ClientForm clientForm, final User user, @Named("clientId") final long clientId) throws UnauthorizedException {
+  	public Client updateClient(final User user, UpdateClientForm clientForm) throws UnauthorizedException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
 
-	    Client client = getClient(user, clientId);
+	    Client client = getClient(user, clientForm.getClientId());
 	    
 	    if(!(clientForm.getFirstName() == null)){
 	    	client.setFirstName(clientForm.getFirstName());
@@ -1357,7 +1363,7 @@ public class SchedulerApi {
 	    
   		ofy().save().entities(client).now();
 	    
-  		String change = "Update Client. Client Id: " + clientId;
+  		String change = "Update Client. Client Id: " + clientForm.getClientId();
   		addChange(user, user.getUserId(), change);
   		
 		return client;
