@@ -372,21 +372,110 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 
  conferenceApp.controllers.controller('AddEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 	 console.log("Reached AddEmployeeController");
-	 $scope.hours=["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"
-	               ];
-	 $scope.minutes=["00","05","10","15","20","25","30","35","40","45","50","55"
-	                 ];
-	 $scope.addEmployee = function() {
+	 $scope.init = function(){
+		 console.log("Reached Init function: populating list types drop down");
+		 $scope.choices = [
+		                   {
+		                	   'itemNo':0,
+		                   }];
+		 $scope.choices2 = [
+		                   {
+		                	   'itemNo':0,
+		                   }];
+		 gapi.client.scheduler.admin.getAllTypesWithService().execute(function(resp){
+			 $scope.listtypes=resp.result.items;
+			 $scope.$apply();
+		 });
+	 };
+	 
+	 
+	 $scope.getListServices = function(value){
+		 console.log("Reacher getlistservics function: populating service dropdown");
+	      console.log("The typeId from the first dropdown in value variable is"+ value);
+	      $scope.listservices=[];
+	      for(var i=0; i<$scope.listtypes.length;i++){
+	    	  if($scope.listtypes[i].typeId==value){
+	    		  console.log(" the typeId found is "+ $scope.listtypes[i].typeId);
+	    		   console.log("There are this many services for this"+ $scope.listtypes[i].service.length);
+	    		   $scope.listservices=$scope.listtypes[i].service;
+	    		   console.log("these are the services"+ $scope.listservices);
+	    		  
+	    	  }
+	      }
+	    };
+	 
+
+	 $scope.services=[];
+	 $scope.timeBlocks=[];
+	 var convertedservice= [];
+	 
+	 $scope.addHoursList= function(weekDay,startTimeHour,startTimeMinute,endTimeHour,endTimeMinute){
+		 var timeBlocks={
+					"weekDay":weekDay,
+					"startHour":parseInt(startTimeHour),
+					"startMinute":parseInt(startTimeMinute),
+					"endHour":parseInt(endTimeHour),
+					"endMinute":parseInt(endTimeMinute)
+				};
+			  
+				  $scope.timeBlocks.push(timeBlocks);  
+	 };
+	 
+	 $scope.addServiceList=function(value,name,typeName){
+		  var flag=0;
+		  console.log("got to addServiceList function v $scope.servicesalue= "+ value);
+		  for(var i=0; i< $scope.services.length;i++){
+			  if(value==$scope.services[i].id){
+				  flag=1;
+			  }
+		  }
+		  if(flag==0){
+			  $scope.services.push({'id':value,'name':name,'typeName':typeName});  
+		  }else{
+			  console.log("Service was not added as you are unable to add duplicate services IDs");
+		  }
 		  
+		  console.log("add the service to services");
+	 };
+	    
+	 $scope.removeChoice = function(index) {
+	    $scope.services.splice(index,1);
+	 };
+	
+	 $scope.addEmployee = function() {
+		 console.log("reached adding function");
+		 for(var i=0; i<$scope.services.length;i++){
+			 console.log($scope.services[i].id);
+			 convertedservice[i]=parseInt($scope.services[i].id);
+		 };
+		  	console.log(convertedservice);
+		var timeBlockListForm={
+				"timeBlocks":$scope.timeBlocks
+		};
+		var timeBlockList={
+				"year":parseInt('2017'),
+				"month":parseInt('03'),
+				"day":parseInt('12')
+		};
+		var holidayTimeBlockListForm={
+				"timeBlockList":timeBlockList
+		};
 		var employeeForm={
-				"name":$scope.name,
+				"firstName":$scope.fname,
+				"lastName":$scope.lname,
+				"serviceIds":convertedservice,
+				"timeBlockListForm":timeBlockListForm,
+				"holidayTimeBlockListForm":holidayTimeBlockListForm
+								
 		};
 	    console.log("Employee form object created");
-	    console.log("The employee name saved in the emloyeeForm Object is:" +employeeForm.name);
+	    console.log("firstname "+employeeForm.firstName);
+	    console.log("lastname "+employeeForm.lastName);
+	    console.log("serviceID "+employeeForm.serviceIds);
+	    console.log("timeeBlocklistform "+employeeForm.timeBlockListForm);
 	   // console.log("The services saved in the roomForm Object is:" +roomForm.serviceIds);
 	 //gapi.client.scheduler.addRoom(roomForm).execute();
 	 
-	 $scope.name="ADD IT";
 	 gapi.client.scheduler.admin.addEmployee(employeeForm).execute();
 	 console.log("Added the employee form now");
  };
@@ -435,19 +524,21 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 gapi.client.scheduler.admin.getAllTypes().execute(function(resp){
 			 $scope.listtypes=resp.result.items;
 			 console.log("The length is "+$scope.listtypes.length);
-			// for(var i=0;i<$scope.listtypes.length;i++){
-				// $scope.typenames[i]=$scope.listtypes[i].typeName;
-				// console.log("name"+i+" "+$scope.typenames[i]);
-			// }
-			 $scope.listtypeselect=$scope.listtypes[0].typeName;
 			 $scope.$apply();
 		 });
 	 };
 	 var serviceTypeForm={};
+	 var typeId=0;
+	 $scope.getserviceId=function(value){
+		 console.log("the id is " +value);
+		 typeId=value;
+	 };
 	 $scope.addService=function(){
 		 console.log("Reached the add service function");
+		 console.log("what is in thelisttype feild"+$scope.listtypeselect);
+		 console.log("the type id is "+typeId);
 		 if($scope.newtype==true){
-		 serviceTypeForm = {
+			 serviceTypeForm = {
 			      "name" : $scope.serviceName,
 			      "price": parseFloat($scope.servicePrice),
 			      "clearanceRequired": $scope.clearanceCheck,
@@ -460,13 +551,12 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				      "name" : $scope.serviceName,
 				      "price": parseFloat($scope.servicePrice),
 				      "clearanceRequired": $scope.clearanceCheck,
-				      "typeId": $scope.listtypeselect.typeId,
-				      "typeName": $scope.listtypeselect.typeName,
+				      "typeId": typeId,
 				      "defaultLength":parseInt($scope.serviceDuration)
 				    };
 		 }
-		//console.log(serviceTypeForm);
-		 gapi.client.scheduler.admin.addServiceType(serviceTypeForm).execute();
+		console.log( "the type id service form"+serviceTypeForm.typeId);
+		gapi.client.scheduler.admin.addServiceType(serviceTypeForm).execute();
 		 console.log("Added the ServiceType form now");
 		 $location.path('/admin/viewService');
 		 
