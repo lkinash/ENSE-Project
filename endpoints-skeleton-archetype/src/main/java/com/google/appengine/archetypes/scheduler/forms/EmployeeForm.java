@@ -46,9 +46,6 @@ public class EmployeeForm {
 	 * Description of the property clearance.
 	 */
 	private AdminClearances clearance;
-
-
-	private List<Long> timeBlockIds;
 	
 	
 	private HolidayTimeBlockListForm holidayTimeBlockListForm;
@@ -61,15 +58,13 @@ public class EmployeeForm {
 		
 	}
 	
-	public EmployeeForm(String newName, List<Long> newServiceIds, 
-			List<Long> newTimeBlockIds, String newFirstName, String newLastName,
+	public EmployeeForm(String newName, List<Long> newServiceIds, String newFirstName, String newLastName,
 			HolidayTimeBlockListForm newHolidayTimeBlockListForm, TimeBlockListForm newTimeBlockListForm ){
 		
 		this.firstName = newFirstName;
 		this.lastName = newLastName;
 		this.serviceIds = newServiceIds;
 		this.clearance = AdminClearances.employee;
-		this.timeBlockIds = newTimeBlockIds;
 		this.holidayTimeBlockListForm = newHolidayTimeBlockListForm;
 		this.timeBlockListForm = newTimeBlockListForm;
 	}
@@ -126,14 +121,6 @@ public class EmployeeForm {
 		this.clearance = newClearance;
 	}
 
-	public void setTimeBlockIds(List<Long> newTimeBlockId){
-		this.timeBlockIds = newTimeBlockId;
-	}
-	
-	public List<Long> getTimeBlockIds(){
-		return this.timeBlockIds;
-	}
-	
 	
 	/**
 	 * Returns firstName.
