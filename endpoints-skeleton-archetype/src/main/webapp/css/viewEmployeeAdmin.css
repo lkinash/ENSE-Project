@@ -59,6 +59,9 @@ table{
 	border-bottom-color: black;
 
 }
+.availability table{
+	width:100%;
+}
 .left{
 	margin-left: 5%;
 	width:40%;
@@ -85,12 +88,19 @@ table{
 .opt{
 	margin-top:5%;
 	display: inline-flex;
-	width:90%;
-	margin-left: 5%
+	width:100%;
+	text-align:center;
+
 }
-.saveBtn{
-	margin-left: 75%;
+
+#weekd{
+	width:25%;
 }
+#timeslot{
+	width:10%;
+	 white-space: nowrap;
+}
+
 
 .cont{
 	width:70%;

@@ -221,10 +221,13 @@
 						</tr>
 						<tr>
 							<td>
-								<p>Birthday(MM-DD-YYYY)</p>
+								<p>Birthday(YYYY-MM-DD)</p>
 							</td>
 							<td class="innerTh">
 								<div class="form-inline">
+						  <select ng-model="dateYear" ng-options="year for year in selects.years() | orderBy: year:yearOrder" class="form-control">
+						    <option value="" disabled>----</option>
+						  </select>
 						  <select ng-model="dateMonth" ng-options="month for month in selects.months()" class="form-control">
 						    <option value="" disabled>--</option>
 						  </select>
@@ -233,9 +236,6 @@
 						    <option value="" disabled>--</option>
 						  </select>
 						
-						  <select ng-model="dateYear" ng-options="year for year in selects.years() | orderBy: year:yearOrder" class="form-control">
-						    <option value="" disabled>----</option>
-						  </select>
 							</div>
 							</td>
 					

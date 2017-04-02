@@ -133,6 +133,7 @@
 	
 	<div class="col-sm-10 col-lg-10">
 	<div class="rightContent">
+		<div ng-controller="ViewEmployeeController" ng-init="init()">
 		<div class="mainTitle">
 			<h2>View Employee's</h2>
 			<div class="addSign">
@@ -141,21 +142,17 @@
 			</div>
 		</div>
 		<div class="employeeContainerMaster">
-		<ul>
-  		<li ng-repeat="room in rooms">
-  			<p>Employee: {{employee.name}}</p>
-		</ul>
-			<div class="room" ng-repeat="employee in employees">
+			<div class="room" ng-repeat="employee in employees" >
 				<div class="panel-group">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<label>{{ employee.name }} </label> <a data-toggle="collapse"
+							<label>{{ employee.firstName }} {{employee.lastName}} </label> <a data-toggle="collapse"
 								href="#collapse{{$index}}"><span class="caret"></span></a>
 						</div>
 						<div id="collapse{{$index}}" class="panel-collapse collapse">
 							<div class="panel-body">
 								<div class="cont">
-									<h4>Employee Name</h4>
+									<h4>Employee Name: {{ employee.firstName }} {{employee.lastName}}  </h4>
 									<div class="employeeContainer">
 										<div class="left">
 											<div class="availability">
@@ -168,29 +165,11 @@
 													</div>
 												</div>
 												<table>
-													<tr>
-														<td>Monday</td>
-														<td>8:00AM</td>
-														<td>-</td>
-														<td>4:00PM</td>
-													</tr>
-													<tr>
-														<td>Tuesday</td>
-														<td>8:00AM</td>
-														<td>-</td>
-														<td>4:00PM</td>
-													</tr>
-													<tr>
-														<td>Wenesday</td>
-														<td>8:00AM</td>
-														<td>-</td>
-														<td>4:00PM</td>
-													</tr>
-													<tr>
-														<td>Thursday</td>
-														<td>8:00AM</td>
-														<td>-</td>
-														<td>4:00PM</td>
+													<tr ng-repeat="daytimeblock in employee.dayTimeBlocks">
+														<td id="weekd">{{daytimeblock.weekDay}}</td>
+														<td id="timeslot">{{daytimeblock.startHour}}:{{daytimeblock.startMinute}}</td>
+														<td id="timeslot"> to </td>
+														<td id="timeslot">{{daytimeblock.endHour}}:{{daytimeblock.endMinute}}</td>
 													</tr>
 												</table>
 											</div>
@@ -236,9 +215,6 @@
 											<button type="button" class="btn btn-danger">Remove
 												Employee</button>
 										</div>
-										<div class="saveBtn">
-											<button type="button" class="btn btn-default">Save</button>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -247,6 +223,7 @@
 				</div>
 			</div>
 			</div>
+			
 		</div>
 	</div>
 	</div>
