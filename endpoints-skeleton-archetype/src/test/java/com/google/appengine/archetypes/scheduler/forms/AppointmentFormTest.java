@@ -20,6 +20,10 @@ public class AppointmentFormTest {
 	private int MINUTE = 30;
 	private int LENGTH = 30;
 	
+	private String TYPENAME = "laser";
+	private String EMPLOYEENAME = "Joe";
+	private String SERVICENAME = "leg";
+	
 	private TimeBlockForm DATE;
 	
 	private AppointmentForm appointment;
@@ -31,7 +35,7 @@ public class AppointmentFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 appointment = new AppointmentForm(TYPEID,SERVICEID,CLIENTID,EMPLOYEEID,ROOMID, HOUR, MINUTE, DATE, LENGTH);
+		 appointment = new AppointmentForm(EMPLOYEEID, EMPLOYEENAME, TYPEID,TYPENAME, SERVICEID, SERVICENAME ,CLIENTID,ROOMID, HOUR, MINUTE, DATE, LENGTH);
 
 	 }
 

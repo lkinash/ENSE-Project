@@ -2162,7 +2162,10 @@ public class SchedulerApi {
     	List<Employee> list = new ArrayList<Employee>();
     	List<Long> services;
    
+    	
     	long Id = removeServiceForm.getServiceId();
+    	
+    	System.out.println(Id);
     	
     	for(Employee temp: employees){
     		services = temp.getServiceIds();
