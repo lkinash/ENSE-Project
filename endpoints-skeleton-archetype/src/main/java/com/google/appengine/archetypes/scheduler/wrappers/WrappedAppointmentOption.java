@@ -20,6 +20,17 @@ public class WrappedAppointmentOption {
 	 */
 	private long serviceId;
 	
+	
+	/**
+	 * Description of the property serviceId.
+	 */
+	private String serviceName;
+
+	/**
+	 * Description of the property client
+	 */
+	private long clientId;
+	
 	/**
 	 * Description of the property serviceId.
 	 */
@@ -39,16 +50,6 @@ public class WrappedAppointmentOption {
 	 * Description of the property end
 	 */
 	private int minute;
-	
-	/**
-	 * Description of the property serviceId.
-	 */
-	private String serviceName;
-
-	/**
-	 * Description of the property client
-	 */
-	private long clientId;
 	
 	
 	public WrappedAppointmentOption(){

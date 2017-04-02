@@ -719,14 +719,14 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "appointment.getAppointmentOptions", path = "appointment.getAppointmentOptions", httpMethod = "post")
-  	public List<WrappedAppointmentOption> getAppointmentOptions(final User user, FindAppointmentForm findAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	public List<AppointmentForm> getAppointmentOptions(final User user, FindAppointmentForm findAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 	
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-        List<WrappedAppointmentOption> list = new ArrayList<WrappedAppointmentOption>();
+        List<AppointmentForm> list = new ArrayList<AppointmentForm>();
         
         List<Room> rooms = getAllRoomsService(user, findAppointmentForm.getServiceId());
         List<Employee> employees;
@@ -738,6 +738,7 @@ public class SchedulerApi {
         List<DateTime> dateList;
         int length = getService(user, findAppointmentForm.getServiceId()).getDefaultLength();
         List<DateTime> startTimes;
+        long roomId = 0;
         
     
 		DateTime startDate = new DateTime((findAppointmentForm.getStartDateRange().getYear()), findAppointmentForm.getStartDateRange().getMonth(), findAppointmentForm.getStartDateRange().getDay(), 0, 0);
@@ -773,11 +774,16 @@ public class SchedulerApi {
         		
         			for(DateTime startTimeDate: startTimes){
         			
-        				if(!((testCalendarBusy(user, ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour())).getResult())){
+        				if(!((testCalendarBusy(user, ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonthOfYear(), 
+        							currentDate.getDayOfMonth(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour())).getResult())){
 					
-        					list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth()), length,
-        						findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour()));	
+        					list.add(new AppointmentForm(employee.getEmployeeId(), employee.getFirstName(), findAppointmentForm.getTypeId(), 
+        							findAppointmentForm.getTypeName(), findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), 
+        							findAppointmentForm.getClientId(), roomId, startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour(), 
+        							(new TimeBlockForm(currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth())), length));	
 					
+        					
+        			
         				}
         			
         			}	
@@ -804,13 +810,13 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "appointment.getAppointmentOptionsAnyEmployee", path = "appointment.getAppointmentOptionsAnyEmployee", httpMethod = "post")
-  	public List<WrappedAppointmentOption> getAppointmentOptionsAnyEmployee(final User user, FindAppointmentForm findAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	public List<AppointmentForm> getAppointmentOptionsAnyEmployee(final User user, FindAppointmentForm findAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 	
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
 		
-		List<WrappedAppointmentOption> list = new ArrayList<WrappedAppointmentOption>();
+		List<AppointmentForm> list = new ArrayList<AppointmentForm>();
         
         List<Room> rooms = getAllRoomsService(user, findAppointmentForm.getServiceId());
         List<Employee> employees;
