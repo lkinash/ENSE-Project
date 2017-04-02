@@ -93,6 +93,11 @@ table{
 
 }
 
+.opt .rmvEmp {
+	margin-left:auto;
+	margin-right:auto;
+}
+
 #weekd{
 	width:25%;
 }
