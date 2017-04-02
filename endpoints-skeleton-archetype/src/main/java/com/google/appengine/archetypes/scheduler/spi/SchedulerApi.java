@@ -578,7 +578,6 @@ public class SchedulerApi {
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
 	 */
-	 /*
 	@ApiMethod(name = "admin.addClearances", path = "admin.addClearances", httpMethod = "post")
   	public WrappedBoolean addClearances(final User user) throws UnauthorizedException, IOException {
 	
@@ -587,11 +586,12 @@ public class SchedulerApi {
 	        }		
 		
 	        Query<PageAuth> query =  ofy().load().type(PageAuth.class);
-	    	
-	        if(query.list().equals(null)){
+	    	List<PageAuth> list = query.list();
+	        
+	        if(list.isEmpty()){
 	        	
 	        	for (AdminClearances temp : AdminClearances.values()) {
-	        			addPageAuth(user, temp);
+	        		addPageAuth(user, temp);
 	        	}
 	        	
 	        	return new WrappedBoolean(false, "Created");
@@ -600,7 +600,7 @@ public class SchedulerApi {
 	        	return new WrappedBoolean(true);
 	       
 	}
-	*/
+	
 	/**
 	 * Description of the method addClientClearances.
 	 * @param clientId 
@@ -616,14 +616,26 @@ public class SchedulerApi {
 	       if (user == null) {
 	            throw new UnauthorizedException("Authorization required");
 	        }		
-		
+			        
 
-	        //TODO
-	        //Fix
-	        
-	        
-	      	//getPageAuth(user, pageAuthForm.getClearance());
-	       
+	       Query<PageAuth> query =  ofy().load().type(PageAuth.class);
+	    	query = query.order("clearance");
+	     	List<PageAuth> pageAuthList = query.list();
+
+	     	for(PageAuth pageList: pageAuthList){
+	     		
+	     		if(pageList.getClearance().equals(pageAuthForm.getClearance())){
+	     			
+	     			pageList.setView(pageAuthForm.getView());
+		      		pageList.setViewAndEdit(pageAuthForm.getViewAndEdit());
+		      		
+		      		ofy().save().entities(pageList).now();
+		      		
+	     			return pageList;
+	     		}
+	     	}
+	     	
+	   
 	      	return null;
 	       
 	}
@@ -2274,6 +2286,57 @@ public class SchedulerApi {
 
        	Type type = (Type) ofy().load().key(key).now();
        	return type;
+        
+  	}
+  	
+  	/**
+  	 * Returns pageAuths.
+  	 * @return pageAuths 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getPageAuth", path = "admin.getPageAuth", httpMethod = "get")
+ 	public PageAuth getPageAuth(final User user, @Named("pageAuthId") final long pageAuthId) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        Key<PageAuth> key = Key.create(PageAuth.class, pageAuthId);
+
+       	PageAuth pageAuth = (PageAuth) ofy().load().key(key).now();
+       
+       	return pageAuth;
+        
+  	}
+  	
+  	
+  	/**
+  	 * Returns pageAuths.
+  	 * @return pageAuths 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getPageAuthByName", path = "admin.getPageAuthByName", httpMethod = "post")
+ 	public PageAuth getPageAuthByName(final User user, PageAuthForm pageAuthForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        Query<PageAuth> query =  ofy().load().type(PageAuth.class);
+    	query = query.order("clearance");
+     	List<PageAuth> pageAuthList = query.list();
+
+     	for(PageAuth pageList: pageAuthList){
+     		
+     		if(pageList.getClearance().equals(pageAuthForm.getClearance()))
+     			return pageList;
+     		
+     	}
+     	
+        return null;
         
   	}
   	

@@ -27,11 +27,11 @@ public class PageAuthForm {
 			
 		}
 		
-		public PageAuthForm(long newId, AdminClearances newClearance){
+		public PageAuthForm(AdminClearances newClearance, Set<Integer> newViewOnly, Set<Integer> newViewAndEdit){
 		
 			this.clearance = newClearance;
-			this.viewOnly = new HashSet<Integer>();
-			this.viewAndEdit = new HashSet<Integer>();
+			this.viewOnly = newViewOnly;
+			this.viewAndEdit = newViewAndEdit;
 		}
 		
 		
