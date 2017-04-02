@@ -770,6 +770,11 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		    	  }
 		      }
 		    };
+		    
+		    $scope.getServiceId=function(val){
+		    	console.log("the value is "+val);
+		    };
+		    
 
 	  
   });
