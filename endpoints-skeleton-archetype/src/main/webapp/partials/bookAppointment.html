@@ -13,10 +13,11 @@
 				<div class="form-group">
 				
 					<select class="form-control" id="sel1"  data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
-					<option value="" disabled selected>Service Type</option>
+					<option value="" >Service Type</option>
 					</select>
-					<select class="form-control" id="sel1"data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices" >
-					<option value="" disabled selected>Service Name </option>
+					<select class="form-control" id="sel1"data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices"  data-ng-change="getServiceId(listservicesselect.productId)">
+					<option value="" >Service Name </option>
+					 <p>{{listservicesselect.name}}</p>
 					</select>
 					<select class="form-control" id="sel1">
 					<option value="" disabled selected>Employee</option>
@@ -46,7 +47,7 @@
                     <p class="input-group">
                         <input placeholder="End Date" id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
                                ng-model="endDate" is-open="opened"
-                               datepicker-options="dateOptions"
+                               datepicker-options="dateOptions" 
                                close-text="Close"/>
                     <span class="input-group-btn">
                         <button class="btn btn-xs" ng-click="open($event)"><i
