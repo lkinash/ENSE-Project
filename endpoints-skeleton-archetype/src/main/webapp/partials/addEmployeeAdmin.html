@@ -178,11 +178,17 @@
 					<table>
 						<tr>
 							<td>First Name:</td>
-							<td><input type="text" class="form-control" ng-model="fname"></td>
+							<td><input type="text" class="form-control" name="fname" ng-model="fname" required></td>
+							<span ng-show="(employeeForm.fname.$dirty || submitted) && employeeForm.fname.$error.required">
+							First name is required
+						</span>						
 						</tr>
 						<tr>
 							<td>Last Name:</td>
-							<td><input type="text" class="form-control" ng-model="lname"></td>
+							<td><input type="text" class="form-control" name="lname" ng-model="lname"></td>
+							<span ng-show="(employeeForm.lname.$dirty || submitted) && employeeForm.lname.$error.required">
+							First name is required
+						</span>	
 						</tr>
 					</table>
 				</div>
@@ -320,12 +326,11 @@
 				   </table>
 				   	<table>
 					<tr ng-repeat="timeBlock in timeBlocks">
-					<td></td>
-					<td>{{timeBlock.weekDay}}</td>
-					<td>{{timeBlock.startHour}}</td>
-					<td>{{timeBlock.startMinute}}</td>
-					<td>{{timeBlock.endHour}}</td>
-					<td>{{timeBlock.endMinute}}</td>
+					<td id="weekd2">{{timeBlock.weekDay}}</td>
+					<td id="timeslot2">{{timeBlock.startHour}}</td>
+					<td id="timeslot2">{{timeBlock.startMinute}}</td>
+					<td id="timeslot2">{{timeBlock.endHour}}</td>
+					<td id="timeslot2">{{timeBlock.endMinute}}</td>
 					<td><button id="" class="btn btn-default" ng-click="removeChoiceTime($index)">-</button></td>
 					</tr>
 					</table>
