@@ -363,7 +363,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
  
 });
 
- conferenceApp.controllers.controller('ViewEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+ conferenceApp.controllers.controller('ViewEmployeeController', function ($scope, $log, $route, oauth2Provider, HTTP_ERRORS) {
 
 	 console.log("controller reached for viewEmployeeAdmin");
 	 
@@ -374,6 +374,17 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 $scope.$apply();
 		 });
 	 };
+	 
+	 $scope.removeEmployee = function(index) {
+		 	console.log("Removing Employee number ="+index);
+		 	var employeeId= $scope.employees[index].employeeId;
+		 	console.log("roomId that is being deleted= "+ employeeId);
+		 	var removeEmployeeForm={
+		 			"employeeId":employeeId
+		 	};
+		 	gapi.client.scheduler.admin.removeEmployee(removeEmployeeForm).execute();
+		 	$route.reload();
+		  };
 
 	 
  });
