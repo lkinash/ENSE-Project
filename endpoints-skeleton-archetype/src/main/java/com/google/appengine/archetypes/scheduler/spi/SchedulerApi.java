@@ -62,8 +62,10 @@ import com.google.appengine.archetypes.scheduler.forms.TimeBlockForm;
 import com.google.appengine.archetypes.scheduler.forms.TimeBlockListForm;
 import com.google.appengine.archetypes.scheduler.forms.TypeForm;
 import com.google.appengine.archetypes.scheduler.forms.UpdateAdminForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateAppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.UpdateClientForm;
 import com.google.appengine.archetypes.scheduler.forms.UpdateEmployeeForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateEventForm;
 import com.google.appengine.archetypes.scheduler.forms.UpdateProductForm;
 import com.google.appengine.archetypes.scheduler.forms.UpdateRoomForm;
 import com.google.appengine.archetypes.scheduler.forms.UpdateServiceForm;
@@ -744,8 +746,7 @@ public class SchedulerApi {
        
   		dateList = getDatesInRange(startDate, endDate);
   		
-  		String calendarId;
-  		
+  	
         if(findAppointmentForm.getEmployeeId() == 0){
         	
         	return getAppointmentOptionsAnyEmployee(user, findAppointmentForm);
@@ -772,7 +773,7 @@ public class SchedulerApi {
         		
         			for(DateTime startTimeDate: startTimes){
         			
-        				if(!((testCalendarBusy(ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour())).getResult())){
+        				if(!((testCalendarBusy(user, ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour())).getResult())){
 					
         					list.add(new WrappedAppointmentOption(employee.getEmployeeId(), employee.getFirstName(), new TimeBlockForm(currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth()), length,
         						findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), findAppointmentForm.getClientId(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour()));	
@@ -1012,14 +1013,20 @@ public class SchedulerApi {
 	 * 
 	 */
 	
-  	private static WrappedBoolean testCalendarBusy(@Named("calendarId") final String calendarId, @Named("length") final int length,
+  	private static WrappedBoolean testCalendarBusy(final User user, @Named("calendarId") final String calendarId, @Named("length") final int length,
   			@Named("year") final int year, @Named("month") final int month, @Named("day") final int day,
-  			@Named("hour") final int hour, @Named("minute") final int minute){
+  			@Named("hour") final int hour, @Named("minute") final int minute) throws UnauthorizedException, IOException, GeneralSecurityException{
   		
   		
   		//TODO
   		
   		//Write Method
+  		
+  		com.google.api.services.calendar.model.Calendar calendar = getCalendar(user, null);
+  		
+  		if(calendar !=  null){
+  			
+  		}
   		
   		return new WrappedBoolean(false);
   	}
@@ -1386,23 +1393,17 @@ public class SchedulerApi {
 	 * Description of the method updateAppointment.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
 	
 	@ApiMethod(name = "appointment.updateAppointment", path = "appointment.updateAppointment",  httpMethod = "post")
-  	public Appointment updateAppointment(final User user, @Named("clientIdLong") final long clientIdLong, @Named("appointmentId") final long appointmentId, AppointmentForm appointmentForm) throws UnauthorizedException, IOException {
+  	public Appointment updateAppointment(final User user, UpdateAppointmentForm appointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-  		
 		
-        Appointment appointment = getAppointment(user, appointmentId);
-        
-        //TODO
-        // Update the variables of the appointment
-        //
-        
         String serviceName = getService(user, appointmentForm.getServiceId()).getName();
         
         serviceName += " Appointment";
@@ -1420,17 +1421,21 @@ public class SchedulerApi {
         	endMinute += length;
         }
         
-        EventForm eventForm = new EventForm(serviceName, Defaults.LOCATION, serviceName, 
+        UpdateEventForm eventForm = new UpdateEventForm(appointmentForm.getEventId(), serviceName, Defaults.LOCATION, serviceName, 
         		appointmentForm.getDate().getYear(), appointmentForm.getDate().getMonth(), appointmentForm.getDate().getDay(), 
         		appointmentForm.getHour(), appointmentForm.getMinute(), appointmentForm.getDate().getYear(), 
         		appointmentForm.getDate().getMonth(), appointmentForm.getDate().getDay(), endHour, endMinute
         		);
         
-        updateEvent(user, getClientCalendarId(user, clientIdLong).getId(), eventForm);
+        updateEvent(user, appointmentForm.getEventId(), eventForm);
+        
+        Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
+        
+        Appointment appointment = new Appointment(Status.booked, appointmentForm.getEventId(), appointmentForm.getAppointmentId(), employeeKey, appointmentForm.getTypeId(), appointmentForm.getServiceId(), appointmentForm.getClientId(), appointmentForm.getRoomId());
         
         ofy().save().entities(appointment).now();
         
-  		String change = "Update Appointment. Appointment Id: " + appointmentId;
+  		String change = "Update Appointment. Appointment Id: " + appointmentForm.getAppointmentId();
   		addChange(user, user.getUserId(), change);
   		
         
@@ -2881,8 +2886,7 @@ public class SchedulerApi {
 		scope.setType("default");
 		rule.setScope(scope).setRole("reader");
 
-		// Insert new access rule
-		AclRule createdRule = service.acl().insert(createdCalendar.getId(), rule).execute();
+		service.acl().insert(createdCalendar.getId(), rule).execute();
 		
 		return new WrappedStringId(createdCalendar.getId());
   	}
@@ -3019,22 +3023,28 @@ public class SchedulerApi {
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
 	 * @throws IOException 
+	 * @throws GeneralSecurityException 
 	 */
 	
-	private static WrappedBoolean updateEvent(final User user, @Named("calendarId") final String calendarId, EventForm eventForm) throws UnauthorizedException, IOException {
+	private static Event updateEvent(final User user, @Named("calendarId") final String calendarId, UpdateEventForm eventForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 
-		//TODO
         
-       // Event event = service.events().get("primary", "eventId").execute();
+		Calendar service = Quickstart.getService(user);
+		
+        
+		Event event = service.events().get(calendarId, eventForm.getEventId()).execute();
 
-     // Make a change
-   //  event.setSummary("Appointment at Somewhere");
+		
+        EventCreatorForm eventCreatorForm = new EventCreatorForm(eventForm.getSummary(), eventForm.getLocation(), eventForm.getDescription(), 
+				DateTimeConverter.convertUpdateStartDate(eventForm), DateTimeConverter.convertUpdateEndDate(eventForm) );
+        
+        event = EventCreator.createEvent(eventCreatorForm);
 
-     // Update the event
-     //Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
+        
+        Event updatedEvent = service.events().update(calendarId, eventForm.getEventId(), event).execute();
 
 	
-        return null;
+        return updatedEvent;
 	}
 	
      

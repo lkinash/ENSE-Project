@@ -2,6 +2,7 @@ package com.google.appengine.archetypes.scheduler.service;
 
 import com.google.api.client.util.DateTime;
 import com.google.appengine.archetypes.scheduler.forms.EventForm;
+import com.google.appengine.archetypes.scheduler.forms.UpdateEventForm;
 
 public class DateTimeConverter {
 
@@ -22,6 +23,15 @@ public class DateTimeConverter {
 	}
 	
 	public static DateTime convertEndDate(EventForm eventForm){
+		return convert(eventForm.getEndYear(), eventForm.getEndMonth(), eventForm.getEndDay(), eventForm.getEndHour(), eventForm.getEndMinute());
+	}
+	
+	
+	public static DateTime convertUpdateStartDate(UpdateEventForm eventForm){
+		return convert(eventForm.getStartYear(), eventForm.getStartMonth(), eventForm.getStartDay(), eventForm.getStartHour(), eventForm.getStartMinute());
+	}
+	
+	public static DateTime convertUpdateEndDate(UpdateEventForm eventForm){
 		return convert(eventForm.getEndYear(), eventForm.getEndMonth(), eventForm.getEndDay(), eventForm.getEndHour(), eventForm.getEndMinute());
 	}
 	
