@@ -399,22 +399,49 @@
 				<div class="row">
 				<div class="col-sm-7">
 				<div class="heading">
-								<h5>Holiday</h5>
-								<div class="plusMinus">
-									<button type="button" class="btn btn-default">
-										<h5> + </h5>
-									</button>
-								</div>
-							</div>
-							
-				<table>
+					<h5>Holidays</h5>
+						<div class="plusMinus">
+							<button type="button" class="btn btn-default">
+								<h5> + </h5>
+							</button>
+						</div>
+				</div>
+				<div class="holidayholder"	>
+					<table>
 					<tr>
-					<th id="weekd">Year</th>
-					<th id="timeslot">Month</th>
-					<th id="timeslot">Day</th>
-					<th> </th>
+					<th >Year</th>
+					<th >Month</th>
+					<th >Day</th>
 					</tr>
-					</table>
+				      <tr ng-repeat="choice in choices3">
+						<td id="weekd" >
+							<select ng-model="dateYear" ng-options="year for year in selects.years() | orderBy: year:yearOrder" class="form-control">
+							    <option value="" disabled>----</option>
+							 </select>
+				    	</td>
+				    	<td id="timeslot">
+							 <select ng-model="dateMonth" ng-options="month for month in selects.months()" class="form-control">
+							    <option value="" disabled>--</option>
+							  </select>
+				   		</td>
+				   		<td id="timeslot">
+							 <select ng-model="dateDay" ng-options="day for day in selects.days()" class="form-control">
+							    <option value="" disabled>--</option>
+							  </select>
+						</td>
+						<td>
+				         	 <button class="btn btn-default" type="button" ng-click="addHoliday(dateYear, dateMonth, dateDay)">+</button>
+				        </td>
+				       </tr>
+				       <tr ng-repeat="timeBlockL in timeBlockList">
+				       <td id="weekd" >{{ timeBlockL.year}}</td>
+				       <td id="timeslot">{{timeBlockL.month}}</td>
+				       <td id="timeslot">{{timeBlockL.day}}</td>
+				       <td> <button id="" class="btn btn-default" ng-click="removeChoiceHoliday($index)">-</button></td>
+				       
+				       </tr>
+				     </table>
+				       </div>	
 				
 				</div>
 				</div>

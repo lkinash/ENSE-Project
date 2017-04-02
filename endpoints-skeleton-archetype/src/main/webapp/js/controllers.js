@@ -369,7 +369,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
 	 $scope.init = function(){
 		 console.log("Reached Init function: Retrieving All Employee");
-		 	 gapi.client.scheduler.admin.getAllEmployeesWithTimeBlocks().execute(function(resp){
+		 	 gapi.client.scheduler.admin.getAllEmployeesWithTimeBlocksServices().execute(function(resp){
 			 $scope.employees=resp.result.items;
 			 $scope.$apply();
 		 });
@@ -390,6 +390,43 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		                   {
 		                	   'itemNo':0,
 		                   }];
+		 $scope.choices3 = [
+			                   {
+			                	   'itemNo':0,
+			                   }];
+		   var endYear = 2017;
+		   var startYear = 1920;
+		   $scope.selects = {
+
+				   days: function(){
+
+				     // Get number of days based on month + year 
+				     // (January = 31, February = 28, April = 30, February 2000 = 29) or 31 if no month selected yet
+				     var nbDays = new Date($scope.dateYear, $scope.dateMonth, 0).getDate() || 31;
+
+				     var daysList = [];
+				     for( var i = 1; i <= nbDays ; i++){
+				       var iS = i.toString();
+				       daysList.push( (iS.length < 2) ? '0' + iS : iS ); // Adds a leading 0 if single digit
+				     }
+				     return daysList;
+				   },
+				   months: function(){
+				     var monthList = [];
+				     for( var i = 1; i <= 12 ; i++){
+				       var iS = i.toString();
+				       monthList.push( (iS.length < 2) ? '0' + iS : iS ); // Adds a leading 0 if single digit
+				     }
+				     return monthList;
+				   },
+				   years: function(){
+				     var yearsList = [];
+				     for( var i = endYear; i >= startYear ; i--){
+				       yearsList.push( i.toString() );
+				     }
+				     return yearsList;
+				   }
+				 };
 		 gapi.client.scheduler.admin.getAllTypesWithService().execute(function(resp){
 			 $scope.listtypes=resp.result.items;
 			 $scope.$apply();
@@ -415,6 +452,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 
 	 $scope.services=[];
 	 $scope.timeBlocks=[];
+	 $scope.timeBlockList=[];
 	 var convertedservice= [];
 	 
 	 $scope.addHoursList= function(weekDay,startTimeHour,startTimeMinute,endTimeHour,endTimeMinute){
@@ -427,6 +465,16 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				};
 			  
 				  $scope.timeBlocks.push(timeBlocks);  
+	 };
+	 
+	 $scope.addHoliday=function(dateYear, dateMonth, dateDay){
+		 var timeBlockList={
+				 "day": parseInt(dateDay),
+				 "month":parseInt(dateMonth),
+				 "year":parseInt(dateYear) 
+		 };
+		 $scope.timeBlockList.push(timeBlockList);
+		 
 	 };
 	 
 	 $scope.addServiceList=function(value,name,typeName){
@@ -453,7 +501,10 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 $scope.removeChoiceTime = function(index) {
 		    $scope.timeBlocks.splice(index,1);
 		 };
-	
+     $scope.removeChoiceHoliday = function(index) {
+		    $scope.timeBlockList.splice(index,1);
+		  };
+		  
 	 $scope.addEmployee = function() {
 		 console.log("reached adding function");
 		 for(var i=0; i<$scope.services.length;i++){
@@ -464,19 +515,16 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		var timeBlockListForm={
 				"timeBlocks":$scope.timeBlocks
 		};
-		var timeBlockList={
-				"year":parseInt('2017'),
-				"month":parseInt('03'),
-				"day":parseInt('12')
-		};
+		
 		var holidayTimeBlockListForm={
-				"timeBlockList":timeBlockList
+				"timeBlockList":$scope.timeBlockList
 		};
 		var employeeForm={
 				"firstName":$scope.fname,
 				"lastName":$scope.lname,
 				"serviceIds":convertedservice,
 				"timeBlockListForm":timeBlockListForm,
+				"holidayTimeBlockListForm":holidayTimeBlockListForm
 								
 		};
 	    console.log("Employee form object created");

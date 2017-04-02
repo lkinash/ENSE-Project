@@ -176,7 +176,7 @@
 
 											<div class="Holidays">
 												<div class="heading">
-													<h5>Holidays</h5>
+													<h5>Holidays(YYYY-MM-DD)</h5>
 													<div class="plusMinus">
 														<button type="button" class="btn btn-default">
 															<h5>+ / -</h5>
@@ -184,10 +184,8 @@
 													</div>
 												</div>
 												<table>
-													<tr>
-														<td>February 2, 2017</td>
-														<td>-</td>
-														<td>February 10, 2017</td>
+													<tr ng-repeat="timeBlock in employee.timeBlocks">
+														<td>{{timeBlock.year}}, {{timeBlock.month}}, {{timeBlock.day}}</td>
 													</tr>
 												</table>
 											</div>
@@ -203,8 +201,8 @@
 													</div>
 												</div>
 												<table>
-													<tr ng-repeat="service in employee.services">
-												<td>{{service.name}}</td>
+													<tr ng-repeat="service in employee.serviceList">
+													<td>{{service.name}}</td>
 													</tr>
 												</table>
 											</div>
