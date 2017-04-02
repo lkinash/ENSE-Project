@@ -217,11 +217,11 @@
 			<table>
 							 
            <fieldset  ng-repeat="choice in choices">
-            <tr><td><select data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
+            <tr><td><select class="form-control" data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
     		</select>
     		</td>
     		<td>
-  			  <select id="{{$index}}" data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices" >
+  			  <select  class="form-control" id="{{$index}}" data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices" >
    			  <p>{{listservicesselect.name}}</p>
    			 </select>
    			 <td>

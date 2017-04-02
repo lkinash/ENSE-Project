@@ -89,9 +89,18 @@ td {
 #weekd{
 	width:25%;
 }
+#weekd2{
+	width:25%;
+	text-align:center;
+}
 #timeslot{
 	width:15%;
 	 white-space: nowrap;
+}
+#timeslot2{
+	width:15%;
+	 white-space: nowrap;
+	 text-align:center;
 }
 
 .infoCategory table{
