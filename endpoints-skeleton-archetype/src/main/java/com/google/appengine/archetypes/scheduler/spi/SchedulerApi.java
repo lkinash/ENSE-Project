@@ -1871,6 +1871,92 @@ public class SchedulerApi {
   	}
   	
   	
+  	/**
+  	 * Returns saleItems.
+  	 * @return saleItems 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAllEmployeesWithTimeBlocksServices", path = "admin.getAllEmployeesWithTimeBlocksServices", httpMethod = "get")
+ 	public List<Employee> getAllEmployeesWithTimeBlocksServices(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+  		
+        Query<Employee> query =  ofy().load().type(Employee.class);
+    	query = query.order("firstName");
+       
+    	List<Employee> employeeList = query.list();
+        
+    	List<TimeBlock> holidayList;
+        List<DayTimeBlocks> dayTimeList;
+        List<Service> serviceList;
+        
+        List<Long> holidayIdList;
+        List<Long> dayTimeIdList;
+        List<Long> serviceIdList;
+        
+        Key<TimeBlock> holidayKey;
+        TimeBlock holidayBlock;
+        
+        Key<DayTimeBlocks> dayTimeKey;
+        DayTimeBlocks dayTimeBlock;
+        
+        Key<Service> serviceKey;
+        Service service;
+        
+        
+        for(Employee tempEmployee: employeeList){
+        	
+        	holidayList = new ArrayList<TimeBlock>();
+        	holidayIdList = tempEmployee.getHolidayTimeBlockIds();
+        	
+        	if(holidayIdList != null){
+        		for(Long tempLong: holidayIdList){
+        			holidayKey = Key.create(TimeBlock.class, tempLong);
+        			holidayBlock = (TimeBlock) ofy().load().key(holidayKey).now();
+        			holidayList.add(holidayBlock);
+        		}
+        	
+        		tempEmployee.setTimeBlocks(holidayList);
+        	}
+        	
+        	
+        	dayTimeList = new ArrayList<DayTimeBlocks>();
+        	dayTimeIdList = tempEmployee.getWeekdayTimeBlockIds();
+        	
+        	if(dayTimeIdList != null){
+        		for(Long tempLong: dayTimeIdList){
+        			dayTimeKey = Key.create(DayTimeBlocks.class, tempLong);
+        			dayTimeBlock = (DayTimeBlocks) ofy().load().key(dayTimeKey).now();
+        			dayTimeList.add(dayTimeBlock);
+        		}
+        	
+        		tempEmployee.setDayTimeBlocks(dayTimeList);
+        	}
+        	
+        	serviceList = new ArrayList<Service>();
+        	serviceIdList = tempEmployee.getServiceIds();
+        	
+        	if(serviceIdList != null){
+        		for(Long tempLong: serviceIdList){
+        			serviceKey = Key.create(Service.class, tempLong);
+        			service = (Service) ofy().load().key(serviceKey).now();
+        			serviceList.add(service);
+        		}
+        	
+        		tempEmployee.setServiceList(serviceList);
+        	}
+        	
+        }
+        
+        return employeeList;
+        
+  		
+  	}
+  	
   	
   	
   	

@@ -84,6 +84,11 @@ public class Employee {
 	 */
 	private List<DayTimeBlocks> weekdayTimeBlocks;
 	
+	/**
+	 * Description of the property AccountId.
+	 */
+	private List<Service> serviceList;
+	
 	
 	/**
 	 * Description of the property firstName.
@@ -118,6 +123,7 @@ public class Employee {
 		this.lastName = newLastName;
 		this.weekdayTimeBlocks = null;
 		this.holidayTimeBlocks = null;
+		this.serviceList = null;
 		
 	}
 
@@ -311,5 +317,23 @@ public class Employee {
 		return this.holidayTimeBlocks;
 	}
 
+
+	/**
+	 * Description of the method setServices.
+	 * @param Services 
+	 */
+	public void setServiceList(List<Service> newServices) {
+		this.serviceList = newServices;
+	}
+
+	/**
+	 * Description of the method getdayServices.
+	 * @return 
+	 */
+	public List<Service> getServiceList() {
+		return this.serviceList;
+	}
+
+	
 	
 }
