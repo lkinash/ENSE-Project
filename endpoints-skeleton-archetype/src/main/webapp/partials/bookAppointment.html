@@ -60,5 +60,26 @@
 					<button type="submit" class="btn btn-default" ng-click="getOptions()">Search</button>
 				</div>
 		</div>
+		<div class="row">
+			<div class="optionsHolder" ng-show="appointments">
+			<h5>Possible Appointments:</h5>
+			<div class="appHolderOpt">
+					<table>
+						<tr>
+							<th>Date(YYYY-MM-DD)</th>
+							<th>Time</th>
+							<th></th>
+						</tr>
+						<tr ng-repeat="appointment in appointments">
+						<td>{{appointment.date.year}} - {{appointment.date.month}}- {{appointment.date.day}}</td>
+						<td>{{appointment.hour}} : {{appointment.minute}}</td>
+						<td>
+						<button type="button" class="btn btn-danger" ng-click ="bookAppointment($index)">Book Now</button>
+						</td>
+						</tr>
+					</table>
+			</div>
+			</div>
+		</div>
 </div>
 </body>

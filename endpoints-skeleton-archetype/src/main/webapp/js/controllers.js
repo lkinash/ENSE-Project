@@ -1033,7 +1033,11 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 					 "endDateRange":enddate
 		    	};
 		    	
-		    	 gapi.client.scheduler.appointment.getAppointmentOptions(findAppointmentForm).execute();
+		    	 gapi.client.scheduler.appointment.getAppointmentOptions(findAppointmentForm).execute(function(resp){
+			    		$scope.appointments=resp.result.items;
+			    		$scope.$apply();
+			    		
+			    	});
 		    	
 		    };
 
