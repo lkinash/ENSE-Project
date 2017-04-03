@@ -2394,6 +2394,27 @@ public class SchedulerApi {
     	return employee;
   		
   	}
+  	
+ 	/**
+  	 * Returns saleItems.
+  	 * @return saleItems 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getEmployeeObject", path = "admin.getEmployeeObject", httpMethod = "post")
+ 	public Employee getEmployeeObject(final User user, UpdateEmployeeForm employeeForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+  		
+        Key<Employee> key = Key.create(Employee.class, employeeForm.getEmployeeId());
+
+    	Employee employee = (Employee) ofy().load().key(key).now();
+    	return employee;
+  		
+  	}
 
   	/**
   	 * Returns products.
@@ -2416,6 +2437,28 @@ public class SchedulerApi {
   		
   	}
 
+  	/**
+  	 * Returns admins.
+  	 * @return admins 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAdminObject", path = "admin.getAdminObject", httpMethod = "post")
+ 	public Admin getAdminObject(final User user, UpdateAdminForm adminForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        Key<Admin> key = Key.create(Admin.class, adminForm.getAdminId());
+
+       	Admin admin = (Admin) ofy().load().key(key).now();
+       	return admin;
+        
+  	}
+  	
+  	
   	/**
   	 * Returns admins.
   	 * @return admins 
@@ -2453,6 +2496,28 @@ public class SchedulerApi {
 		
 	    
 	    Key<Room> key = Key.create(Room.class, roomId);
+	    		
+	    Room room = (Room) ofy().load().key(key).now();
+		
+		return room;
+	}
+	
+ 	/**
+	 * Returns rooms.
+	 * @return rooms 
+	 * @throws UnauthorizedException 
+	 */
+	
+	@ApiMethod(name = "admin.getRoomObject", path = "admin.getRoomObject", httpMethod = "post")
+	public Room getRoomObject(final User user, UpdateRoomForm roomForm) throws UnauthorizedException {
+
+		
+	    if (user == null) {
+	        throw new UnauthorizedException("Authorization required");
+	    }  
+		
+	    
+	    Key<Room> key = Key.create(Room.class, roomForm.getRoomId());
 	    		
 	    Room room = (Room) ofy().load().key(key).now();
 		
