@@ -2075,15 +2075,36 @@ public class SchedulerApi {
  	public List<Room> getAllRooms(final User user) throws UnauthorizedException {
 
   		
-        if (user == null) {
-            throw new UnauthorizedException("Authorization required");
-        }       
- 
-
-        Query<Room> query =  ofy().load().type(Room.class);
-    	query = query.order("number");
-    	
-        return query.list();
+  		 if (user == null) {
+             throw new UnauthorizedException("Authorization required");
+         }       
+  
+         
+         Query<Room> query =  ofy().load().type(Room.class);
+         List<Room> roomList = query.list();
+         List<String> nameList;
+         List<Long> idList;
+         Key<Service> key;
+         Service service;
+         
+         for(Room tempRoom: roomList){
+         	
+         	nameList = new ArrayList<String>();
+         	idList = tempRoom.getServices();
+         	
+         	if(idList != null){
+         		for(Long tempLong: idList){
+         			key = Key.create(Service.class, tempLong);
+         			service = (Service) ofy().load().key(key).now();
+         			nameList.add(service.getName());
+         		}
+         	
+         		tempRoom.setServiceNames(nameList);
+         	}
+         	
+         }
+         
+         return roomList;
         
 
   	}

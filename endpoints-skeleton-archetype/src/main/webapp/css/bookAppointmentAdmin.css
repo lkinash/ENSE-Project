@@ -1,6 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
+
 body h2{
 	color:#0A25BF;
 }
@@ -18,7 +19,39 @@ body h2{
 	background-color: lightgray;
 	
 }
+.filter .form-group{
+	display:inline-flex;
+	
+}
+.inputgroup .form-group .form-control{
+	width:auto;
+	padding-left:2%;
+	margin-left:2%;
+}
+.inputgroup .form-group .form-control select{
+    width: auto;
+    position: relative;
+}
+.inputgroup{
+	padding-top:1%;
+	width:55%;
+}
 
+.timearea{
+	padding-top:1.5%;
+	width:18%;
+}
+.timearea table{
+	text-align:center;
+	padding-top:5%;
+	width:100%;
+}
+.timearea table tr td{
+	width:33%;
+}
+.dropDownCal{
+	padding-top:0.5%;
+}
 .bookAppointment table{
 	margin-top: 7%;
 	margin-left: auto;
