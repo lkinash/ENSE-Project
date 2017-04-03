@@ -841,6 +841,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 $scope.getListServices = function(value){
 			 console.log("Reacher getlistservics function: populating service dropdown");
 		      console.log("The typeId from the first dropdown in value variable is"+ value);
+		      $scope.tempTypeid=value;
 		      $scope.listservices=[];
 		      for(var i=0; i<$scope.listtypes.length;i++){
 		    	  if($scope.listtypes[i].typeId==value){
@@ -855,8 +856,60 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		    
 		    $scope.getServiceId=function(val){
 		    	console.log("the value is "+val);
+		    	$scope.tempServiceId=val;
+		    	
+		    	var removeServiceForm={
+		    			"serviceId":val
+		    	};
+		    	
+		    	gapi.client.scheduler.admin.getServiceEmployees(removeServiceForm).execute(function(resp){
+		    		$scope.employees=resp.result.items;
+		    		$scope.$apply();
+		    		
+		    	});
+		    	
 		    };
 		    
+		    $scope.getStartDate=function(sdate){
+		    	$scope.tempStartDate=sdate;
+		    };
+		    
+		    $scope.getEndDate=function(edate){
+		    	$scope.tempEndDate=edate;
+		    };
+		    
+		    $scope.getOptions=function(){
+		    	var tempclientId="89";
+		    	var d= new Date($scope.tempStartDate);
+				 var startdate={
+						 "month":d.getMonth()+1,
+						 "day":d.getDate(),
+						 "year":d.getFullYear()
+						 
+				 };
+				 var d1= new Date($scope.tempEndDate);
+				 var enddate={
+						 "month":d1.getMonth()+1,
+						 "day":d1.getDate(),
+						 "year":d1.getFullYear()
+						 
+				 };
+		    	var findAppointmentForm={
+		    		 "clientId":tempclientId,
+					 "employeeId":$scope.employeeSelect,
+					 "serviceId":$scope.tempServiceId,
+					 "typeId":$scope.tempTypeid,
+					 "startDateRange":startdate,
+					 "endDateRange":enddate
+		    	};
+		    	
+		    	 gapi.client.scheduler.appointment.getAppointmentOptions(findAppointmentForm).execute(function(resp){
+			    		$scope.appointments=resp.result.items;
+			    		$scope.$apply();
+			    		
+			    	});
+		    	
+		    };
 
 	  
   });

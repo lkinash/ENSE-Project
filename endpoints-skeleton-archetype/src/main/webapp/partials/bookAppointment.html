@@ -19,10 +19,9 @@
 					<option value="" >Service Name </option>
 					 <p>{{listservicesselect.name}}</p>
 					</select>
-					<select class="form-control" id="sel1">
+					<select class="form-control" id="sel1" ng-model="employeeSelect">
 					<option value="" disabled selected>Employee</option>
-						<option>Employee</option>
-						<option>Room</option>
+					<option value="{{employee.employeeId}}"   ng-repeat="employee in employees">{{employee.firstName}}</option>
 					</select>
 				</div>
 				</div>
@@ -32,7 +31,7 @@
                         <input placeholder="Start Date" id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
                                ng-model="startDate" is-open="opened"
                                datepicker-options="dateOptions"
-                               close-text="Close"/>
+                               close-text="Close" ng-change="getStartDate(startDate)"/>
                     <span class="input-group-btn">
                         <button class="btn btn-xs" ng-click="open($event)"><i
                                 class="glyphicon glyphicon-calendar"></i>
@@ -48,7 +47,7 @@
                         <input placeholder="End Date" id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
                                ng-model="endDate" is-open="opened"
                                datepicker-options="dateOptions" 
-                               close-text="Close"/>
+                               close-text="Close" ng-change="getEndDate(endDate)"/>
                     <span class="input-group-btn">
                         <button class="btn btn-xs" ng-click="open($event)"><i
                                 class="glyphicon glyphicon-calendar"></i>
@@ -58,7 +57,7 @@
                 </div>
 				</div>
 				<div class="filterBtn">
-					<button type="submit" class="btn btn-default">Search</button>
+					<button type="submit" class="btn btn-default" ng-click="getOptions()">Search</button>
 				</div>
 		</div>
 </div>
