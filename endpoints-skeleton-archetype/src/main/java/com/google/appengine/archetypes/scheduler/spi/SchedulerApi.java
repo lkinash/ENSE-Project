@@ -78,7 +78,6 @@ import com.google.appengine.archetypes.scheduler.service.DateTimeConverter;
 import com.google.appengine.archetypes.scheduler.service.EventCreator;
 import com.google.appengine.archetypes.scheduler.service.Quickstart;
 import com.google.appengine.archetypes.scheduler.servlets.Sendgrid;
-import com.google.appengine.archetypes.scheduler.wrappers.WrappedAppointmentOption;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedBoolean;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedLongId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedStringId;
