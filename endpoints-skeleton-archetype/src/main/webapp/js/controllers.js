@@ -1042,7 +1042,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
   
   conferenceApp.controllers.controller('editAdminController', function ($scope, $log, oauth2Provider, passingId, HTTP_ERRORS) {
 	  console.log("reached the edit admin controller");
-	  //console.log("the id"+$scope.passingId.Id);
+	  console.log("the id"+passingId.getId());
 
 		 
   });
@@ -1113,7 +1113,8 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			  };
 			  
 		$scope.editAdmin=function(val){
-			$scope.passingId=$scope.admins[val].adminId;
+			passingId.setId($scope.admins[val].adminId);
+			$location.path('/admin/editAdmin');
 		
 		};
 
