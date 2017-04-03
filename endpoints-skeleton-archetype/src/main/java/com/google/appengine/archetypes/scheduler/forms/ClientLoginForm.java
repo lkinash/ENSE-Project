@@ -25,9 +25,6 @@ public class ClientLoginForm {
 	private String email;
 
 
-	// Start of user code (user defined methods for ClientLoginForm)
-
-	// End of user code
 	
 	public ClientLoginForm(){
 		

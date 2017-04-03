@@ -41,6 +41,7 @@ import com.google.appengine.archetypes.scheduler.forms.AdminForm;
 import com.google.appengine.archetypes.scheduler.forms.AppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.CancelAppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.ClientForm;
+import com.google.appengine.archetypes.scheduler.forms.ClientLoginForm;
 import com.google.appengine.archetypes.scheduler.forms.DayTimeBlocksForm;
 import com.google.appengine.archetypes.scheduler.forms.EmployeeForm;
 import com.google.appengine.archetypes.scheduler.forms.EventCreatorForm;
@@ -2688,6 +2689,36 @@ public class SchedulerApi {
     	
         return query.list();
 
+  	}
+  	
+  	
+  	/**
+  	 * Description of the method removeAdmin.
+  	 * @param admin 
+  	 * @param adminForm 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "client.getClientIdValue",  path = "client.getClientIdValue",  httpMethod = "post")
+ 	public WrappedLongId getClientIdValue(final User user, ClientLoginForm clientForm) throws UnauthorizedException {
+  	
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+
+        
+        Query<Client> query =  ofy().load().type(Client.class);
+    	query = query.order("email");
+    	query = query.filter("email =", clientForm.getEmail());
+    	
+    	List<Client> list = query.list();
+    	
+    	if(list.isEmpty()){
+    		return null;
+    	}
+    	else{
+    		return new WrappedLongId(list.get(0).getClientId());
+    	}
   	}
 
 	

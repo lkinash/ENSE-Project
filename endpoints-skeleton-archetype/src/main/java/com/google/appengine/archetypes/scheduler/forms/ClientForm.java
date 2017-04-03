@@ -47,15 +47,6 @@ public class ClientForm {
 	 */
 	private TimeBlockForm birthday;
 	
-	/**
-	 * Description of the property clearance.
-	 */
-	private AdminClearances clearance;
-
-
-	// Start of user code (user defined methods for ClientForm)
-
-	// End of user code
 	
 	public ClientForm(){
 		
@@ -70,7 +61,6 @@ public class ClientForm {
 		this.lastName = newLastName;
 		this.phoneNumber = newPhoneNumber;
 		this.email = newEmail;
-		this.clearance = AdminClearances.client;
 
 	}
 	
@@ -159,22 +149,6 @@ public class ClientForm {
 	}
 
 
-	
-	/**
-	 * Returns clearance.
-	 * @return clearance 
-	 */
-	public AdminClearances getClearance() {
-		return this.clearance;
-	}
-
-	/**
-	 * Sets a value to attribute clearance. 
-	 * @param newClearance 
-	 */
-	public void setClearance(AdminClearances newClearance) {
-		this.clearance = newClearance;
-	}
 
 
 }
