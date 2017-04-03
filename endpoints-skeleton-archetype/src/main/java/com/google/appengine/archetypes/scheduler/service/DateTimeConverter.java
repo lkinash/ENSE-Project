@@ -49,9 +49,14 @@ public class DateTimeConverter {
 		String date = year + "-"; 
 		
 		if(month < 10)
-			date += "0" + month + "-" + day + "T";
+			date += "0" + month + "-" ;
 		else
-			date += month + "-" + day + "T";
+			date += month + "-" ;
+		
+		if(day < 10)
+			date +=  "0" + day + "T";
+		else
+			date +=  day + "T";
 		
 		
 		if(hour < 10)
