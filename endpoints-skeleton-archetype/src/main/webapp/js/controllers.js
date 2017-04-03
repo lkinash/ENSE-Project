@@ -957,7 +957,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	  
   });
   
-  conferenceApp.controllers.controller('ClientBookAppointmentController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+  conferenceApp.controllers.controller('ClientBookAppointmentController', function ($scope, $log, $location, oauth2Provider, HTTP_ERRORS) {
 	  console.log("Reached the ClientBookAppointmentController");
 	  $scope.init = function(){
 			 console.log("Reached Init function: populating list types drop down");
@@ -1038,6 +1038,13 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			    		$scope.$apply();
 			    		
 			    	});
+		    	 
+		    	 $scope.bookAppointment= function(val){
+		    		 var appointmentForm=$scope.appointments[val];
+		    		 gapi.client.scheduler.appointment.addAppointment(appointmentForm).execute();
+		    		 console.log("book the appointment ");
+		    		 $location.path('/');
+		    	 };
 		    	
 		    };
 
