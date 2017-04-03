@@ -179,7 +179,7 @@
 			</div>
 		</div>
 		<div class="employeeContainerMaster">
-			<div class="employee" ng-repeat="admin in admins">
+			<div class="employee2" ng-repeat="admin in admins">
 				<div class="panel-group">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -212,6 +212,9 @@
 										<div class="rmvEmp">
 											<button type="button" class="btn btn-danger" ng-click="removeAdmin($index)">Remove
 												Admin</button>
+										</div>
+										<div class="saveBtn">
+											<button type="button" class="btn btn-default" ng-click="editAdmin($index)">Edit</button>
 										</div>
 									</div>
 								</div>

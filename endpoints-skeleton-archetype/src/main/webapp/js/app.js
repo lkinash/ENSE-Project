@@ -30,6 +30,10 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','n
                     templateUrl: 'partials/addAdminUser.html',
                     controller: 'AddAdminController'
                 })
+                .when('/admin/editAdmin', {
+                    templateUrl: 'partials/addAdminUser.html',
+                    controller: 'editAdminController'
+                })
                 
                 .when('/admin/addEmployee', {
                     templateUrl: 'partials/addEmployeeAdmin.html',
@@ -156,6 +160,17 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','n
                 });
         }]);
 
+app.service('passingId', function() {
+    var Id = 1234;
+    return {
+        getId: function () {
+            return Id;
+        },
+        setId: function(value) {
+            Id = value;
+        }
+    };
+});
 /**
  * @ngdoc filter
  * @name startFrom
