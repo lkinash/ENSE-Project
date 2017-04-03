@@ -2180,18 +2180,22 @@ public class SchedulerApi {
         
         List<Employee> employees = getAllEmployees(user);
     	List<Employee> list = new ArrayList<Employee>();
-    	List<Long> services;
+    	List<Long> services = new ArrayList<Long>();
    
     	
     	long Id = removeServiceForm.getServiceId();
-    	
-    	System.out.println(Id);
-    	
+
     	for(Employee temp: employees){
+    		
     		services = temp.getServiceIds();
 
-    		if(services.contains(Id)){
-    			list.add(temp);
+    		if(services != null){
+    			for(Long serviceTemp: services){
+    		
+    				if(serviceTemp.equals(Id)){
+    					list.add(temp);
+    				}
+    			}
     		}
     	}
         
@@ -2201,6 +2205,47 @@ public class SchedulerApi {
   	
   	}
 
+  	
+  	/**
+  	 * Returns rooms.
+  	 * @return rooms 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getServiceRooms", path = "admin.getServiceRooms", httpMethod = "post")
+ 	public List<Room> getServiceRooms(final User user, RemoveServiceForm removeServiceForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        List<Room> Rooms = ofy().load().type(Room.class).list();
+    	List<Room> list = new ArrayList<Room>();
+    	List<Long> services = new ArrayList<Long>();
+   
+    	
+    	long Id = removeServiceForm.getServiceId();
+
+    	for(Room temp: Rooms){
+    		
+    		services = temp.getServices();
+
+    		if(services != null){
+    			for(Long serviceTemp: services){
+    		
+    				if(serviceTemp.equals(Id)){
+    					list.add(temp);
+    				}
+    			}
+    		}
+    	}
+        
+        
+        return list;
+  		
+  	
+  	}
   	
   	
   	
