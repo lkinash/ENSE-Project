@@ -1309,6 +1309,12 @@ public class SchedulerApi {
 	    if(!(adminForm.getClearance() == null)){
 	    	admin.setAdminClearance(adminForm.getClearance());
 	    }
+	    if(!(adminForm.getFirstName() == null)){
+	    	admin.setFirstName(adminForm.getFirstName());
+	    }
+	    if(!(adminForm.getLastName() == null)){
+	    	admin.setLastName(adminForm.getLastName());
+	    }
 	    
   		ofy().save().entities(admin).now();
 	   
