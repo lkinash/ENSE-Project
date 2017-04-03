@@ -1,10 +1,12 @@
 
 <head>
-<link href="/css/bookAppointment.css" rel="stylesheet">
+<link href="/css/bookAppointmentAdmin.css" rel="stylesheet">
 </head>
 
 <body>
-	<div class="container">
+
+<div class="row">
+	  <div class="col-sm-2">
 		<div class="leftNav">
 			<div class="admin">
 				<div class="panel-group">
@@ -21,6 +23,7 @@
      						 	<li><a href="#/admin/addAdmin">Add Admin</a></li>
      						 	<li><a href="#/admin/viewAccount">View List Admins</a></li>
      						 	<li><a href="#/admin/logChanges">Changes Log</a></li>
+     						 	<li><a href="#/admin/bookAppointment">Book Appointment</a></li>
      						 </ul>
      						 </div>
    
@@ -130,50 +133,139 @@
  					 </div>
 				</div>
 			</div>
-		</div>
-	</md-sidenav>
-	
-	<div class="rightContent">
-		<div class="bookAppointment">
-			<h2>Schedule Appointment</h2>
-			<table>
-				<tr>
-					<th>
-						<p>Select a Service Type</p>
-					</th>
-					<th class="drop"><select>
-							<option value="default">Service</option>
-							<option value="Service1">Service 1</option>
-							<option value="Service2">Service 2</option>
-							<option value="Service3">Service 3</option>
-					</select></th>
-				</tr>
-				<tr>
-					<th>
-						<p>Select a Treament Area</p>
-					</th>
-					<th class="drop"><select>
-							<option value="default">Area</option>
-							<option value="Service1">Area 1</option>
-							<option value="Service2">Area 2</option>
-							<option value="Service3">Area 3</option>
-					</select></th>
-				</tr>
-				<tr>
-					<th>
-						<p>Preffered Staff Member</p>
-					</th>
-					<th class="drop"><select>
-							<option value="default">Member</option>
-							<option value="Service1">Member 1</option>
-							<option value="Service2">Member 2</option>
-							<option value="Service3">Member 3</option>
-					</select></th>
-				</tr>
-			</table>
-			<button type="submit" class="btn btn-default">Select Time</button>
+			     <div class="client Side View">
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse70009">Client Side</a>
+              </h4>
+            </div>
+            <div id="collapse70009" class="panel-collapse collapse">
+              <div class="panel-body">
+                <ul>
+                  <li>
+                    <a href="#/client/viewApointment">viewAppointent</a>
+                  </li>
+                  <li>
+                    <a href="#/client/bookAppointment">bookAppointment</a>
+                  </li>
+                  <li>
+                    <a href="#/client/cancelAppointment">CancelAppointment</a>
+                  </li>
+                  <li>
+                    <a href="#/client/editBooking">editBooking</a>
+                  </li>
+                  <li>
+                    <a href="#/client/login">Login</a>
+                  </li>
+                  <li>
+                    <a href="#/client/editProfile">editProfile</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 		</div>
 </div>
-	</div>
+ <div class="col-sm-10">
+<div ng-controller="AdminBookAppointmentController" ng-init="init()">
+	<div class="filter" >
+					<div class="inputgroup">
+				<div class="form-group">
+					<select class="form-control" id="sel1" ng-model="clientSelect" >
+					<option value="" disabled selected>Client</option>
+					<option value="{{client.clientId}}"  ng-repeat="client in clients">{{client.firstName}} {{client.lastName}}</option>
+					</select>
+					<select class="form-control" id="sel1"  data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
+					<option value="" >Service Type</option>
+					</select>
+					<select class="form-control" id="sel1"data-ng-model="listservicesselect" data-ng-options="listservice.name for listservice in listservices"  data-ng-change="getServiceId(listservicesselect.productId)">
+					<option value="" >Service Name </option>
+					 <p>{{listservicesselect.name}}</p>
+					</select>
+					<select class="form-control" id="sel1" ng-model="employeeSelect">
+					<option value="" disabled selected>Employee</option>
+					<option value="{{employee.employeeId}}"   ng-repeat="employee in employees">{{employee.firstName}}</option>
+					</select>
+					
+				</div>
+				</div>
+					<div class="timearea">
+						<table>
+						<tr>
+							<td >Time:</td>
+							<td >
+								<select class="form-control" ng-model="startTimeHour">
+								  <option value="1">1</option>
+								  <option value="2">2</option>
+								  <option value="3">3</option>
+								  <option value="4">4</option>
+								  <option value="5">5</option>
+								  <option value="6">6</option>
+								  <option value="7">7</option>
+								  <option value="8">8</option>
+								  <option value="9">9</option>
+								  <option value="10">10</option>
+								  <option value="11">11</option>
+								  <option value="12">12</option>
+								  <option value="13">13</option>
+								  <option value="14">14</option>
+								  <option value="15">15</option>
+								  <option value="16">16</option>
+								  <option value="17">17</option>
+								  <option value="18">18</option>
+								  <option value="19">19</option>
+								  <option value="20">20</option>
+								  <option value="21">21</option>
+								  <option value="22">22</option>
+								  <option value="23">23</option>
+								  <option value="24">24</option>
+								</select>
+							</td>
+							<td >
+								<select  class="form-control" ng-model="startTimeMinute">
+								  <option value="00">00</option>
+								  <option value="05">05</option>
+								  <option value="10">10</option>
+								  <option value="15">15</option>
+								  <option value="20">20</option>
+								  <option value="25">25</option>
+								  <option value="30">30</option>
+								  <option value="35">35</option>
+								  <option value="40">40</option>
+								  <option value="45">45</option>
+								  <option value="50">50</option>
+								  <option value="55">55</option>
+								</select>
+							</td>
+						</tr>
+						</table>
+				</div>
+				<div class="dropDownCal"> 
+				<div class="form-group" ng-controller="DatepickerCtrl">
+                    <p class="input-group">
+                        <input placeholder="Start Date" id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
+                               ng-model="datechoose" is-open="opened" 
+                               datepicker-options="dateOptions"
+                               close-text="Close" ng-change="getDate(datechoose)"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-xs" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    </p>
+                </div>
+				</div>
+				
+				<div class="filterBtn">
+					<button type="submit" class="btn btn-default" ng-click="bookApt()">Book</button>
+				</div>
+				{{datechoose}}
+		</div>
+</div>
+</div>
+</div>
 </body>
-

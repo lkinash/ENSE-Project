@@ -709,7 +709,89 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 
 	 };
  });
+ conferenceApp.controllers.controller('AdminBookAppointmentController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+	  console.log("Reached the AdminBookAppointmentController");
+	  $scope.init = function(){
+		  
+			 console.log("Reached Init function: populating list types drop down");
+			 gapi.client.scheduler.admin.getAllTypesWithService().execute(function(resp){
+				 $scope.listtypes=resp.result.items;
+				 $scope.$apply();
+			 });
+			 
+			 console.log("Reached Init function: Retrieving AllClients");
+		 	 gapi.client.scheduler.admin.getAllClients().execute(function(resp){
+			 $scope.clients=resp.result.items;
+			 $scope.$apply();
+		 	 });
+		 	 
+		 	console.log("Reached Init function: Retrieving All Employee");
+		 	 gapi.client.scheduler.admin.getAllEmployeesWithTimeBlocksServices().execute(function(resp){
+			 $scope.employees=resp.result.items;
+			 $scope.$apply();
+		 	 });
+			 
+		 };
+		 
+		 $scope.bookApt=function(){
+			 console.log("client id"+ $scope.clientSelect);
+			 console.log("type id"+ $scope.temptypeId);
+			 console.log("service id"+ $scope.tempServiceId);
+			 console.log("employee id"+ $scope.employeeSelect);
+			 console.log("start time"+ $scope.startTimeHour);
+			 console.log("start minute"+ $scope.startTimeMinute);
+			 console.log("Date"+ $scope.tempdate);
+			 var temp="46";
+			 var templength=parseInt("60");
+			 var d= new Date($scope.tempdate);
+			 var date={
+					 "month":d.getMonth()+1,
+					 "day":d.getDate(),
+					 "year":d.getFullYear()
+					 
+			 };
+			 var appointmentForm={
+					 "clientId":$scope.clientSelect,
+					 "employeeId":$scope.employeeSelect,
+					 "serviceId":$scope.tempServiceId,
+					 "typeId":$scope.temptypeId,
+					 "roomId":temp,
+					 "date":date,
+					 "hour":$scope.startTimeHour,
+					 "minute":$scope.startTimeMinute,
+					 "length":templength
+			 };
+			 gapi.client.scheduler.appointment.addAppointment(appointmentForm).execute();
+		 };
+		 
+		 $scope.getDate=function(date){
+			 $scope.tempdate=date;
+		 };
+		 
+		 $scope.getListServices = function(value){
+			 $scope.temptypeId=value;
+			 console.log("Reacher getlistservics function: populating service dropdown");
+		      console.log("The typeId from the first dropdown in value variable is"+ value);
+		      $scope.listservices=[];
+		      for(var i=0; i<$scope.listtypes.length;i++){
+		    	  if($scope.listtypes[i].typeId==value){
+		    		//  console.log(" the typeId found is "+ $scope.listtypes[i].typeId);
+		    		 //  console.log("There are this many services for this"+ $scope.listtypes[i].service.length);
+		    		   $scope.listservices=$scope.listtypes[i].service;
+		    		   //console.log("these are the services"+ $scope.listservices);
+		    		  
+		    	  }
+		      }
+		    };
+		    
+		    $scope.getServiceId=function(val){
+		    	console.log("the value is "+val);
+		    	$scope.tempServiceId=val;
+		    };
+		    
 
+	  
+ });
  conferenceApp.controllers.controller('ForgotPasswordController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 
 
@@ -888,6 +970,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 					 "year":parseInt($scope.dateYear),
 					 "day":parseInt($scope.dateDay)
 			 };
+			 console.log(newBirthday);
 			 var password="sdkjfs";
 			 clientForm = {
 				      "firstName" : $scope.Fname,

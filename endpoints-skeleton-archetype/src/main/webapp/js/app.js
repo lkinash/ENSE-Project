@@ -60,7 +60,10 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','n
                     templateUrl: 'partials/logTrackingAdmin.html',
                     controller: 'LogController'
                 })
-                
+                .when('/admin/bookAppointment', {
+                    templateUrl: 'partials/bookAppointmentAdmin.html',
+                    controller: 'AdminBookAppointmentController'
+                })
                 .when('/client/bookAppointment', {
                     templateUrl: 'partials/bookAppointment.html',
                     controller: 'ClientBookAppointmentController'
