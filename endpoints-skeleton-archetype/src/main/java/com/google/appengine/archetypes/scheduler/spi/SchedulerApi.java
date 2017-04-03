@@ -1027,11 +1027,9 @@ public class SchedulerApi {
   		
   		//Write Method
   		
-  		com.google.api.services.calendar.model.Calendar calendar = getCalendar(user, null);
+  		//com.google.api.services.calendar.model.Calendar calendar = getCalendar(user, null);
   		
-  		if(calendar !=  null){
-  			
-  		}
+  		
   		
   		return new WrappedBoolean(false);
   	}
@@ -2073,6 +2071,27 @@ public class SchedulerApi {
   	
   	@ApiMethod(name = "admin.getAllRooms", path = "admin.getAllRooms", httpMethod = "get")
  	public List<Room> getAllRooms(final User user) throws UnauthorizedException {
+
+  		
+  		 if (user == null) {
+             throw new UnauthorizedException("Authorization required");
+         }       
+  
+         
+         Query<Room> query =  ofy().load().type(Room.class);
+         query = query.order("number");
+         return query.list();
+
+  	}
+  	
+  	/**
+  	 * Returns rooms.
+  	 * @return rooms 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAllRoomsWithServiceNames", path = "admin.getAllRoomsWithServiceNames", httpMethod = "get")
+ 	public List<Room> getAllRoomsWithServiceNames(final User user) throws UnauthorizedException {
 
   		
   		 if (user == null) {
