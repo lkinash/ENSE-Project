@@ -22,7 +22,7 @@ public class ClientFormTest {
 	private String FIRSTNAME = "Jennifer";
 	private String LASTNAME = "Lopez";
 	private String EMAIL = "jennyfromtheblock@hip.com";
-	private int PHONENUM = 5556978;
+	private long PHONENUM = 5556978;
 	
 	private TimeBlockForm BIRTHDAY;
 	

@@ -21,16 +21,17 @@ import java.util.List;
  * Tests for Client
  */
 public class ClientTest {
-	/*
+	
 	//Data for Client class fields
 	private static final String FIRSTNAME = "Jennifer";
 	private static final String LASTNAME = "Anniston";
-	private static final int PHONENUM = 5465568; //can't add the area code
+	private static final String EMAIL = "email@email.com";
+	private static final long PHONENUM = 5465568; //can't add the area code
 	private static final String CALENDARID = "jhj5686";
 	private static final long CLIENTID = 115587877;
 	private static final String USERID = "kjkj589";
 	private static final AdminClearances CLEARANCE = AdminClearances.admin;
-	private static final Date BIRTHDAY = new Date(2005,06,19);
+	private static final long BIRTHDAYID = 345434;
 	
 	private List<Long> clearanceIds;
 	private List<Long> appointmentIds;
@@ -43,8 +44,9 @@ public class ClientTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 client = new Client(FIRSTNAME,LASTNAME,PHONENUM,BIRTHDAY,appointmentIds,clearanceIds,CALENDARID,USERID,CLIENTID);
+		 client = new Client(FIRSTNAME,LASTNAME,PHONENUM,BIRTHDAYID,appointmentIds,clearanceIds,CALENDARID,USERID,CLIENTID, EMAIL);
 	 }
+
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
 	 @After
@@ -60,6 +62,6 @@ public class ClientTest {
 		assertEquals(CALENDARID,client.getCalendarId());
 		assertEquals(CLIENTID,client.getClientId());
 		assertEquals(USERID,client.getUserId());
-		assertEquals(BIRTHDAY,client.getBirthday());
-	}*/
+		assertEquals(BIRTHDAYID,client.getBirthday());
+	}
 }

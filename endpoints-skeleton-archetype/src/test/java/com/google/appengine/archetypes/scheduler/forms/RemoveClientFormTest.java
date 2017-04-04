@@ -20,7 +20,7 @@ public class RemoveClientFormTest {
 	private String FIRSTNAME = "Alyssa";
 	private String LASTNAME = "Milano";
 	private Date BIRTHDAY = new Date(05,06,1985);
-	private int PHONENUM = 3369985;
+	private long PHONENUM = 3369985;
 	
 	private AdminClearances CLEARANCE = AdminClearances.admin;
 	private long CLIENTID = 999999;
