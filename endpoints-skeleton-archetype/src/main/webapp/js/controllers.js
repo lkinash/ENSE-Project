@@ -1009,6 +1009,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		    };
 		    
 		    $scope.getOptions=function(){
+		    	$scope.appointmentView=[];
 		    	var tempclientId="89";
 		    	var d= new Date($scope.tempStartDate);
 				 var startdate={

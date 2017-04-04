@@ -2815,11 +2815,10 @@ public class SchedulerApi {
         for(Appointment list:appointments){
         	
         	employee = (Employee) ofy().load().key(list.getEmployeeKey()).now();
-        	service = getService(user, list.getServiceId());
         	event = getEvent(user, calendarId, list.getEventId());
         	
         	list.setEmployeeName(employee.getFirstName());
-        	list.setServiceName(service.getName());
+        	list.setServiceName(event.getDescription());
         	list.setDate(event.getStart().toString());
         	
         }
