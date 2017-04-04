@@ -1036,18 +1036,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		    	
 		    	 gapi.client.scheduler.appointment.getAppointmentOptions(findAppointmentForm).execute(function(resp){
 			    		$scope.appointments=resp.result.items;
-			    		$scope.$apply();
-			    		
-			    		for(var i=0; i<$scope.appointments.length;i++){
-			    			if($scope.appointments[i].mintue <10){
-			    				var tempTime= $scope.appointments[i].hour+":"+"0"+$scope.appointments[i].minute;
-			    				 $scope.appointmentView.push({'date':$scope.appointment[i].date.year,'time':tempTime,});
-			    			}else{
-			    				var tempTime= $scope.appointments[i].hour+":"+$scope.appointments[i].minute;
-			    				 $scope.appointmentView.push({'date':$scope.appointment[i].date.year,'time':tempTime,});
-			    			}
-			    		}
-			    		
+			    		$scope.$apply();			    		
 			    	});
 		    	 
 		    	 $scope.bookAppointment= function(val){

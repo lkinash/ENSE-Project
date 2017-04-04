@@ -70,9 +70,9 @@
 							<th>Time</th>
 							<th></th>
 						</tr>
-						<tr ng-repeat="appointment in appointmentView">
-						<td>{{appointment.date}}</td>
-						<td>{{appointment.time}}</td>
+						<tr ng-repeat="appointment in appointments">
+						<td>{{appointment.date.year}} - {{appointment.date.month}}- {{appointment.date.day}}</td>
+						<td>{{appointment.hour}} : {{appointment.minute}}</td>
 						<td>
 						<button type="button" class="btn btn-default" ng-click ="bookAppointment($index)">Book Now</button>
 						</td>
