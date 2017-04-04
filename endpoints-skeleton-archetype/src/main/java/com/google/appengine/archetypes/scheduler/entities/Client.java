@@ -232,6 +232,14 @@ public class Client{
 	 * Returns clearances.
 	 * @return clearances 
 	 */
+	public void setClearances(List<Long> newClearance) {
+		this.clearanceIds = newClearance;
+	}
+	
+	/**
+	 * Returns clearances.
+	 * @return clearances 
+	 */
 	public void addClearance(Long newClearance) {
 		this.clearanceIds.add(newClearance);
 	}

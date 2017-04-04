@@ -1145,10 +1145,11 @@ public class SchedulerApi {
 	 * @param admin 
 	 * @param employeeForm 
 	 * @throws UnauthorizedException 
+  	 * @throws IOException 
 	 */
 	
 	@ApiMethod(name = "admin.updateEmployee", path = "admin.updateEmployee", httpMethod = "post")
-	public Employee updateEmployee(final User user, UpdateEmployeeForm employeeForm) throws UnauthorizedException {
+	public Employee updateEmployee(final User user, UpdateEmployeeForm employeeForm) throws UnauthorizedException, IOException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
@@ -1157,15 +1158,21 @@ public class SchedulerApi {
 		 
 	    Employee employee = getEmployee(user, employeeForm.getEmployeeId());
 	    
-	    if(!(employeeForm.getFirstName() == null)){
-	    	employee.setFirstName(employeeForm.getFirstName());
-	    }
-
-	    if(!(employeeForm.getLastName() == null)){
-	    	employee.setLastName(employeeForm.getLastName());
-	    }
-	    
-  		ofy().save().entities(employee).now();
+	
+        List<Long> timeHolidayBlockLong = new ArrayList<Long>();
+        		
+        timeHolidayBlockLong = addHolidayTimeBlocks(user, employeeForm.getHolidayTimeBlockListForm());
+        
+        
+        List<Long> timeBlockLong = new ArrayList<Long>();
+        
+        timeBlockLong = addTimeBlocks(user, employeeForm.getTimeBlockListForm());
+        
+        
+  		Employee newEmployee  = new Employee(employee.getCalendarId(), employeeForm.getFirstName(), employeeForm.getLastName(), employee.getUserId(), employee.getEmail(),  
+  				employeeForm.getServiceIds(), employee.getEmployeeId(), timeHolidayBlockLong, timeBlockLong);
+  			
+  		ofy().save().entities(newEmployee).now();
 	    
   		
   		String change = "Update Employee. Employee Id: " + employeeForm.getEmployeeId();
@@ -1387,8 +1394,7 @@ public class SchedulerApi {
 	    if(!(clientForm.getPhoneNumber() == -1)){
 	    	client.setPhoneNumber(clientForm.getPhoneNumber());
 	    }
-
-
+	   
 	    
   		ofy().save().entities(client).now();
 	    
