@@ -227,15 +227,15 @@
 							</td>
 							<td class="innerTh">
 								<div class="form-inline">
-						  <select ng-model="dateYear" ng-options="year for year in selects.years() | orderBy: year:yearOrder" class="form-control">
-						    <option value="" disabled>----</option>
+						  <select ng-model="dateYear"  ng-options="year for year in selects.years() | orderBy: year:yearOrder" class="form-control">
+						    <option value="">{{dateYear}}</option>
 						  </select>
 						  <select ng-model="dateMonth" ng-options="month for month in selects.months()" class="form-control">
-						    <option value="" disabled>--</option>
+						    <option value="" >{{dateMonth}}</option>
 						  </select>
 						
 						  <select ng-model="dateDay" ng-options="day for day in selects.days()" class="form-control">
-						    <option value="" disabled>--</option>
+						    <option value="">{{dateDay}}</option>
 						  </select>
 						
 							</div>
