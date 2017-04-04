@@ -568,7 +568,9 @@ public class SchedulerApi {
             throw new UnauthorizedException("Authorization required");
         }
         
-
+        //TODO
+        //Fix method
+        
 		Client client = getClient(user, clientId);
 
 		clearance.setRenewalDate(date);
@@ -1775,7 +1777,7 @@ public class SchedulerApi {
         String clientCalendarId = getClient(user, appointmentForm.getClientId()).getCalendarId();
         String roomCalendarId = getRoom(user, appointmentForm.getRoomId()).getCalendar();
         
-        
+     
         deleteEvent(user, calendarId ,  clientCalendarId , roomCalendarId, appointment.getEventId());
     	
 	    Key<Appointment> key = Key.create(Appointment.class, appointmentForm.getAppointmentId());
@@ -2200,7 +2202,7 @@ public class SchedulerApi {
   
          
          Query<Room> query =  ofy().load().type(Room.class);
-         query = query.order("number");
+        
          return query.list();
 
   	}
@@ -2791,6 +2793,26 @@ public class SchedulerApi {
 	 * @throws UnauthorizedException 
 	 */
 	
+	@ApiMethod(name = "appointment.getClientAppointmentsObject", path = "appointment.getClientAppointmentsObject", httpMethod = "post")
+  	public List<Appointment> getClientAppointmentsObject(final User user, UpdateClientForm clientForm) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+    	Query<Appointment> query =  ofy().load().type(Appointment.class);
+    	query = query.filter("clientId =", clientForm.getClientId());
+    	
+        return query.list();
+        
+	}
+	
+	
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 */
+	
 	@ApiMethod(name = "appointment.getAppointment", path = "appointment.getAppointment", httpMethod = "post")
   	public Appointment getAppointment(final User user, @Named("appointmentId") final long appointmentId) throws UnauthorizedException {
 
@@ -2827,7 +2849,30 @@ public class SchedulerApi {
 	}
   	
 
+	@ApiMethod(name = "client.getClientObject", path = "client.getClientObject", httpMethod = "post")
+  	public Client getClientObject(final User user, UpdateClientForm clientForm) throws UnauthorizedException {
+		//pass in a client ID to access a client other than the current user
 
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+
+        Key<Client> key = null;
+        long clientId = clientForm.getClientId();
+        
+        if(clientId < 1){
+        	String userId = user.getUserId();
+        	key = Key.create(Client.class, userId);
+        }
+        else{
+        	key = Key.create(Client.class, clientId);
+        }
+        
+    	Client client = (Client) ofy().load().key(key).now();
+    	return client;
+	}
+	
+	
 	
 	@ApiMethod(name = "client.getClient", path = "client.getClient", httpMethod = "get")
   	public Client getClient(final User user,@Named("clientId") final long clientId) throws UnauthorizedException {
