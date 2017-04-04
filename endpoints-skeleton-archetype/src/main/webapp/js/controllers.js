@@ -1009,7 +1009,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		    };
 		    
 		    $scope.getOptions=function(){
-		    	$scope.appointmentView=[];
+		    	
 		    	var tempclientId="89";
 		    	var d= new Date($scope.tempStartDate);
 				 var startdate={
@@ -1036,18 +1036,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		    	
 		    	 gapi.client.scheduler.appointment.getAppointmentOptions(findAppointmentForm).execute(function(resp){
 			    		$scope.appointments=resp.result.items;
-			    		$scope.$apply();
-			    		
-			    		for(var i=0; i<$scope.appointments.length;i++){
-			    			if($scope.appointments[i].mintue <10){
-			    				var tempTime= $scope.appointments[i].hour+":"+"0"+$scope.appointments[i].minute;
-			    				 $scope.appointmentView.push({'date':$scope.appointment[i].date.year,'time':tempTime,});
-			    			}else{
-			    				var tempTime= $scope.appointments[i].hour+":"+$scope.appointments[i].minute;
-			    				 $scope.appointmentView.push({'date':$scope.appointment[i].date.year,'time':tempTime,});
-			    			}
-			    		}
-			    		
+			    		$scope.$apply();			    		
 			    	});
 		    	 
 		    	 $scope.bookAppointment= function(val){
@@ -1116,29 +1105,27 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 		 	 
   });
   */
-  conferenceApp.controllers.controller('editClientController', function ($scope, $log, $location, oauth2Provider, passingId, HTTP_ERRORS) {
+  conferenceApp.controllers.controller('editClientAdminController', function ($scope, $log, $location, oauth2Provider, passingId, HTTP_ERRORS) {
 	  console.log("reached the edit client controller");
 	  console.log("the id"+passingId.getId());
 	  var tempId2=passingId.getId();
-	  $scope.tempClient={};
-	  
-	$scope.init=function(){  
-		console.log("reached the init function......");
-	gapi.client.scheduler.admin.getAllClients().execute(function(resp){
-		console.log("inside the get cliens call");
-		 		$scope.clients=resp.result.items;
-				 $scope.$apply();
-				 
-				 for(var i=0;i<$scope.clients.length;i++){
-					 console.log("inside for loop" +$scope.clients[i].firstName);
-					 if(tempId2===$scope.clients[i].clientId){
-						 console.log("FOUND MY MATCH" +$scope.clients[i].firstName);
-						 	$scope.tempClient=$scope.clients[i];
-						}
-				 }
-		 	 });
-	console.log("cleent name"+ $scope.tempClient.firstName);
-	};
+	  var clientForm={
+			  "clientId":tempId2
+	  };
+	
+		gapi.client.scheduler.client.getClientObject(clientForm).execute(function(resp){
+	 		$scope.clientOb=resp.result;
+			 $scope.$apply();
+			 if(resp){
+			 $scope.Fname=$scope.clientOb.firstName;
+			 $scope.lname=$scope.clientOb.lastName;
+			 $scope.phoneNumber=$scope.clientOb.phoneNumber;
+			 $scope.email=$scope.clientOb.email;
+			 $scope.dateMonth=$scope.clientOb.birthdayBlock.month;
+			 }
+	 	 });
+	$scope.nametest="sdkfjhdkdf";
+	
 	 $scope.addClient=function(){
 			 var clientForm={};
 			 var newBirthday={
@@ -1149,6 +1136,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 console.log(newBirthday);
 			 var password="sdkjfs";
 			 clientForm = {
+					  "clientId":tempId2,
 				      "firstName" : $scope.Fname,
 				      "lastName": $scope.lname,
 				      "phoneNumber": $scope.phoneNumber,
@@ -1164,28 +1152,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 
 		 
   });
-  /*
-  conferenceApp.controllers.controller('editRoomController', function ($scope, $log, $location, oauth2Provider, passingId, HTTP_ERRORS) {
-	  console.log("reached the edit Room controller");
-	  console.log("the id"+passingId.getId());
-	  
-	 // var tempId=passingId.getId();
-	
-		 
-  });
-  
-  conferenceApp.controllers.controller('editServiceController', function ($scope, $log, $location, passingId,oauth2Provider, passingId, HTTP_ERRORS) {
-	  console.log("reached the edit Service controller");
-	  console.log("the id"+passingId.getId());
-	  
-	 // var tempId=passingId.getId();
-	
-	  
-		 		 	 
 
-		 
-  });
-  */
   conferenceApp.controllers.controller('AdminEditProfileController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 
 
