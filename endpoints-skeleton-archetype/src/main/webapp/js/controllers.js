@@ -1051,9 +1051,49 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	  
   });
   
-  conferenceApp.controllers.controller('editAdminController', function ($scope, $log, oauth2Provider, passingId, HTTP_ERRORS) {
+  conferenceApp.controllers.controller('editAdminController', function ($scope, $log, $location, oauth2Provider, passingId, HTTP_ERRORS) {
 	  console.log("reached the edit admin controller");
 	  console.log("the id"+passingId.getId());
+	  
+	  var tempId=passingId.getId();
+	  
+	  $scope.init=function(){
+			 console.log("Reached Init function: Retrieving All Admins");
+		 	 gapi.client.scheduler.admin.getAllAdmins().execute(function(resp){
+			 $scope.adminlist=resp.result.items;
+			 $scope.$apply();
+			 
+			 for(var i=0; i<$scope.adminlist.length;i++){
+				if(tempId===$scope.adminlist[i].adminId){
+			 	$scope.fname=$scope.adminlist[i].firstName;
+			 	$scope.lname=$scope.adminlist[i].lastName;
+			 	$scope.email=$scope.adminlist[i].email;
+			 	$scope.adminClearanceSubmit=$scope.adminlist[i].adminClearance;
+				}
+			 };
+		 });
+		 	 
+	  };
+	  
+	  var adminForm={
+				 
+		 };
+		 $scope.addAdmin=function(){
+			 adminForm={
+					 "adminId":tempId,
+					 "firstName":$scope.fname,
+					 "lastName":$scope.lname,
+					 "email":$scope.email,
+					 "clearance":$scope.adminClearanceSubmit
+			 };
+			 console.log(adminForm);
+			 gapi.client.scheduler.admin.updateAdmin(adminForm).execute();
+			 console.log("updated the  the Admin ");
+			 $location.path('/');
+			 
+		 };
+	  
+		 		 	 
 
 		 
   });

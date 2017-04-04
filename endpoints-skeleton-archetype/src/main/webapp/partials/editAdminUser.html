@@ -1,9 +1,10 @@
 <head>
-<link href="/css/viewAdminAccount.css" rel="stylesheet">
+<link href="/css/addAdminUser.css" rel="stylesheet">
 </head>
-
-	<div class="row">
-		<div class="col-sm-2 col-lg-2">
+	
+<div class="row">
+	<div ng-controller="AddAdminController" ng-init="init()">
+	<div class="col-sm-2 col-lg-2">
 		<div class="leftNav">
 			<div class="admin">
 				<div class="panel-group">
@@ -170,63 +171,56 @@
 	
 	<div class="col-sm-10 col-lg-10">
 	<div class="rightContent">
-	<div ng-controller="ViewAccountController" ng-init="init()">
-		<div class="mainTitle">
-			<h2>View Admin Account</h2>
-			<div class="addSign">
-				<a href="#/admin/addAdmin"> <span class="glyphicon glyphicon-plus"></span>
-				</a>
+		<h2>Add Admin</h2>
+		<div class="mainContainer">
+		<div ng-controller="editAdminController" ng-init="init()">
+		<form name="adminForm" ng-submit="addAdmin()">
+			<div class="adminInfo">
+				<table>
+					<tr>
+						<td>First Name:</td>
+						<td><input class="form-control" name="fname" ng-model="fname" type="text" required>
+						<span ng-show="(adminForm.fname.$dirty || submitted) && adminForm.fname.$error.required">
+							First name is required
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Last Name:</td>
+						<td><input class="form-control" name="lname" ng-model="lname" type="text" required>
+						<span ng-show="(adminForm.lname.$dirty || submitted) && adminFormlname.$error.required">
+							Last name is required
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Email:</td>
+						<td><input class="form-control" name="email" ng-model="email" type="email" required>
+						<span ng-show="(adminForm.email.$dirty || submitted) && adminForm.email.$error.required">
+							Email is required
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Admin Clearance:</td>
+						<td>
+						<select class="form-control" id="sel1"  ng-model="adminClearanceSubmit" >
+						<option value="" disabled selected></option>
+						<option value="admin">admin</option>
+						<option value="superAdmin">superAdmin</option>
+						</select>
+						</td>
+					</tr>
+				</table>
 			</div>
-		</div>
-		<div class="employeeContainerMaster">
-			<div class="employee2" ng-repeat="admin in admins">
-				<div class="panel-group">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<label>{{admin.firstName}} {{admin.lastName}} </label> <a data-toggle="collapse"
-								href="#collapse{{$index}}"><span class="caret"></span></a>
-							<div class="btnApp"></div>
-						</div>
-						<div id="collapse{{$index}}" class="panel-collapse collapse">
-							<div class="panel-body">
-								<div class="cont">
-									<table>
-										<tr>
-											<td>First Name</td>
-											<td>{{admin.firstName}}</td>
-										</tr>
-										<tr>
-											<td>Last Name</td>
-											<td>{{admin.lastName}}</td>
-										</tr>
-										<tr>
-											<td>Email</td>
-											<td>{{admin.email}}</td>
-										</tr>
-										<tr>
-											<td>Clearance level</td>
-											<td>{{admin.adminClearance}}</td>
-										</tr>
-									</table>
-									<div class="opt">
-										<div class="rmvEmp">
-											<button type="button" class="btn btn-danger" ng-click="removeAdmin($index)">Remove
-												Admin</button>
-										</div>
-										<div class="saveBtn">
-											<button type="button" class="btn btn-default" ng-click="editAdmin($index)">Edit</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+
+			<div class="btnSubmit">
+				<button type="submit" class="btn btn-default">Submit</button>
 			</div>
+		</form>
 		</div>
-		
-	</div>
+		</div>
+		</div>
 	</div>
 </div>
-
 

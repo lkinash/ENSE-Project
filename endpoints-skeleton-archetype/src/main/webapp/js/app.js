@@ -31,7 +31,7 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','n
                     controller: 'AddAdminController'
                 })
                 .when('/admin/editAdmin', {
-                    templateUrl: 'partials/addAdminUser.html',
+                    templateUrl: 'partials/editAdminUser.html',
                     controller: 'editAdminController'
                 })
                 
