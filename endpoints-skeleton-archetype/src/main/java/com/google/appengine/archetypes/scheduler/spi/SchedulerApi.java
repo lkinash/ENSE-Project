@@ -2869,6 +2869,12 @@ public class SchedulerApi {
         }
         
     	Client client = (Client) ofy().load().key(key).now();
+    	
+		Key<TimeBlock> blockKey = Key.create(TimeBlock.class, client.getBirthday());
+		TimeBlock timeBlock = (TimeBlock) ofy().load().key(blockKey).now();
+    	
+    	client.setBirthdayBlock(timeBlock);
+    	
     	return client;
 	}
 	

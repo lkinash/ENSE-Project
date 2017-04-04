@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.appengine.archetypes.scheduler.forms.TimeBlockForm;
 import com.google.appengine.archetypes.scheduler.list.AdminClearances;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -62,6 +63,12 @@ public class Client{
 	private long birthdayId;
 
 	/**
+	 * Description of the property birthday.
+	 */
+	private TimeBlock birthday;
+	
+	
+	/**
 	 * Description of the property adminClearance.
 	 */
 	private AdminClearances clearance;
@@ -106,6 +113,7 @@ public class Client{
 		this.clientId = newClientId;
 		this.clearance = AdminClearances.client;
 		this.email = newEmail;
+		this.birthday = null;
 	}
 	
 	/**
@@ -311,5 +319,21 @@ public class Client{
 	 */
 	public void setAdminClearance(AdminClearances newAdminClearance) {
 		this.clearance = newAdminClearance;
+	}
+	
+	/**
+	 * Returns birthday.
+	 * @return birthday 
+	 */
+	public TimeBlock getBirthdayBlock() {
+		return this.birthday;
+	}
+
+	/**
+	 * Sets a value to attribute birthday. 
+	 * @param newBirthday 
+	 */
+	public void setBirthdayBlock(TimeBlock newBirthday) {
+		this.birthday = newBirthday;
 	}
 }
