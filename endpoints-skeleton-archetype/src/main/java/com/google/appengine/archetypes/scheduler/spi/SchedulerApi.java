@@ -80,6 +80,7 @@ import com.google.appengine.archetypes.scheduler.service.EventCreator;
 import com.google.appengine.archetypes.scheduler.service.Quickstart;
 import com.google.appengine.archetypes.scheduler.servlets.Sendgrid;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedBoolean;
+import com.google.appengine.archetypes.scheduler.wrappers.WrappedInt;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedLongId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedStringId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrapperStatus;
@@ -283,10 +284,11 @@ public class SchedulerApi {
   	 * @param admin 
   	 * @param serviceForm 
   	 * @throws UnauthorizedException 
+  	 * @throws IOException 
   	 */
       
   	@ApiMethod(name = "admin.addService",  path = "admin.addService", httpMethod = "post")
- 	public Service addService(final User user, ServiceForm serviceForm) throws UnauthorizedException {
+ 	public Service addService(final User user, ServiceForm serviceForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -299,7 +301,9 @@ public class SchedulerApi {
         
         boolean requiresClearance = serviceForm.getClearanceRequired();
         
-  		Service service  = new Service(serviceForm.getDefaultLength(), requiresClearance , serviceId, serviceForm.getName(), serviceForm.getTypeId(), serviceForm.getPrice());
+        int length = getRoundedLength(user, serviceForm.getDefaultLength()).getId();
+        
+  		Service service  = new Service(length, requiresClearance , serviceId, serviceForm.getName(), serviceForm.getTypeId(), serviceForm.getPrice());
   		
   	    ofy().save().entities(service).now();
   		
@@ -314,10 +318,11 @@ public class SchedulerApi {
   	 * @param admin 
   	 * @param serviceForm 
   	 * @throws UnauthorizedException 
+	 * @throws IOException 
   	 */
       
   	@ApiMethod(name = "admin.addServiceType",  path = "admin.addServiceType", httpMethod = "post")
- 	public Service addServiceType(final User user, ServiceTypeForm serviceTypeForm) throws UnauthorizedException {
+ 	public Service addServiceType(final User user, ServiceTypeForm serviceTypeForm) throws UnauthorizedException, IOException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -342,7 +347,9 @@ public class SchedulerApi {
         
         boolean requiresClearance = serviceTypeForm.getClearanceRequired();
         
-  		Service service  = new Service(serviceTypeForm.getDefaultLength(), requiresClearance , serviceId, serviceTypeForm.getName(), type.getTypeId(), serviceTypeForm.getPrice());
+        int length = getRoundedLength(user, serviceTypeForm.getDefaultLength()).getId();
+        
+  		Service service  = new Service(length, requiresClearance , serviceId, serviceTypeForm.getName(), type.getTypeId(), serviceTypeForm.getPrice());
   		
   	    ofy().save().entities(service).now();
   		
@@ -965,15 +972,11 @@ public class SchedulerApi {
   		else{
   			day = WeekDay.SATURDAY;
   		}
-  		
-  		System.out.println(weekDay);
-  		
+
   		List<DayTimeBlocks> list = new ArrayList<DayTimeBlocks>();
   		
   		for(DayTimeBlocks temp: timeBlocks){
-  			
-  			System.out.println(temp.getStartHour() + ":" + temp.getStartMinute());
-  			
+  		
   			if(temp.getWeekDay().equals(day)){
   				list.add(temp);
   			}
@@ -1219,10 +1222,11 @@ public class SchedulerApi {
 	 * @param admin 
 	 * @param serviceForm 
 	 * @throws UnauthorizedException 
+	 * @throws IOException 
 	 */
 	
 	@ApiMethod(name = "admin.updateService", path = "admin.updateService", httpMethod = "post")
-	public Service updateService(final User user, UpdateServiceForm serviceForm) throws UnauthorizedException {
+	public Service updateService(final User user, UpdateServiceForm serviceForm) throws UnauthorizedException, IOException {
 	
 	    if (user == null) {
 	        throw new UnauthorizedException("Authorization required");
@@ -1241,10 +1245,13 @@ public class SchedulerApi {
 	    	service.setTypeId(serviceForm.getTypeId());
 	    }
 	    if(!(serviceForm.getDefaultLength() < 1)){
-	    	service.setDefaultLength(serviceForm.getDefaultLength());
+	    	
+	        int length = getRoundedLength(user, serviceForm.getDefaultLength()).getId();
+	        
+	    	service.setDefaultLength(length);
 	    }
 	    
-	    if(!(serviceForm.getPrice() == -1)){
+	    if(!(serviceForm.getPrice() < -1)){
 	    	service.setPrice(serviceForm.getPrice());
 	    }
 	    
@@ -2997,7 +3004,26 @@ public class SchedulerApi {
 		return settings;
 
 	}
-
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 */
+	
+  	private static WrappedInt getRoundedLength(final User user, @Named("length") int length) throws UnauthorizedException, IOException {
+  	
+  		int temp = length%15;
+  		
+  		if(temp != 0){
+  			
+  			length = (length / 15) + 1;
+  			length = 15 * length;
+  		}
+  		
+  		return new WrappedInt(length);
+  	}
+	
+	
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
