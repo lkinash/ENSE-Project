@@ -669,12 +669,13 @@ public class SchedulerApi {
         }
         
   
-
         Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
 
     	Employee employee = (Employee) ofy().load().key(employeeKey).now();
 
         final String calendarId = employee.getCalendarId();
+        String clientCalendarId = getClient(user, appointmentForm.getClientId()).getCalendarId();
+        String roomCalendarId = getRoom(user, appointmentForm.getRoomId()).getCalendar();
         
         
         String serviceName = getService(user, appointmentForm.getServiceId()).getName();
@@ -702,10 +703,10 @@ public class SchedulerApi {
        
        	
         
-        Event event = createEvent(user, eventForm, calendarId);
+        Event event = createEvent(user, eventForm, calendarId, clientCalendarId, roomCalendarId);
 
         final String eventId = event.getId();
-        
+       
         
         final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
         final long appointmentId = appointmentKey.getId();
@@ -1506,6 +1507,11 @@ public class SchedulerApi {
             throw new UnauthorizedException("Authorization required");
         }
         
+        
+        String calendarId = getEmployee(user, appointmentForm.getEmployeeId()).getCalendarId();
+        String clientCalendarId = getClient(user, appointmentForm.getClientId()).getCalendarId();
+        String roomCalendarId = getRoom(user, appointmentForm.getRoomId()).getCalendar();
+        
 		
         String serviceName = getService(user, appointmentForm.getServiceId()).getName();
         
@@ -1530,7 +1536,7 @@ public class SchedulerApi {
         		appointmentForm.getDate().getMonth(), appointmentForm.getDate().getDay(), endHour, endMinute
         		);
         
-        updateEvent(user, appointmentForm.getEventId(), eventForm);
+        updateEvent(user, calendarId , clientCalendarId ,  roomCalendarId, eventForm);
         
         Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
         
@@ -1755,18 +1761,24 @@ public class SchedulerApi {
 	 */
 	
 	@ApiMethod(name = "appointment.removeAppointment", path = "appointment.removeAppointment", httpMethod = "post")
-  	public WrappedBoolean removeAppointment(final User user, @Named("calendarId") final String calendarId, CancelAppointmentForm removeAppointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	public WrappedBoolean removeAppointment(final User user, CancelAppointmentForm appointmentForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
         
-        Appointment appointment = getAppointment(user, removeAppointmentForm.getAppointmentId());
+        Appointment appointment = getAppointment(user, appointmentForm.getAppointmentId());
         
-        deleteEvent(user, calendarId, appointment.getEventId());
+
+        String calendarId = getEmployee(user, appointmentForm.getEmployeeId()).getCalendarId();
+        String clientCalendarId = getClient(user, appointmentForm.getClientId()).getCalendarId();
+        String roomCalendarId = getRoom(user, appointmentForm.getRoomId()).getCalendar();
+        
+        
+        deleteEvent(user, calendarId ,  clientCalendarId , roomCalendarId, appointment.getEventId());
     	
-	    Key<Appointment> key = Key.create(Appointment.class, removeAppointmentForm.getAppointmentId());
+	    Key<Appointment> key = Key.create(Appointment.class, appointmentForm.getAppointmentId());
 		
   		String change = "Remove Appointment. Appointment Id: " + key.getId();
   		addChange(user, user.getUserId(), change);
@@ -3325,7 +3337,7 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-  	private static Event createEvent(final User user, EventForm eventForm, @Named("calendarId") final String calendarId) throws UnauthorizedException, IOException, GeneralSecurityException {
+  	private static Event createEvent(final User user, EventForm eventForm, @Named("calendarId") final String calendarId , @Named("clientCalendarId") final String clientCalendarId , @Named("roomCalendarId") final String roomCalendarId) throws UnauthorizedException, IOException, GeneralSecurityException {
         
 		Calendar service = Quickstart.getService(user);
 		
@@ -3335,6 +3347,10 @@ public class SchedulerApi {
   		Event event = EventCreator.createEvent(eventCreatorForm);
 
         event = service.events().insert(calendarId, event).execute();
+
+        event = service.events().insert(roomCalendarId, event).execute();
+
+        event = service.events().insert(clientCalendarId, event).execute();
 
         event = service.events().insert(ConstantsSecret.masterCalendarId, event).execute();
 		
@@ -3347,11 +3363,18 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-	private static WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException, GeneralSecurityException {
+	private static WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId , @Named("clientCalendarId") final String clientCalendarId , @Named("roomCalendarId") final String roomCalendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException, GeneralSecurityException {
 
 		Calendar service = Quickstart.getService(user);
 		
 		service.events().delete(calendarId, eventId).execute();
+		
+		service.events().delete(clientCalendarId, eventId).execute();
+		
+		service.events().delete(roomCalendarId, eventId).execute();
+		
+		service.events().delete(ConstantsSecret.masterCalendarId, eventId).execute();
+		
 		
         return new WrappedStringId(eventId);
 	}
@@ -3364,7 +3387,7 @@ public class SchedulerApi {
 	 * @throws GeneralSecurityException 
 	 */
 	
-	private static Event updateEvent(final User user, @Named("calendarId") final String calendarId, UpdateEventForm eventForm) throws UnauthorizedException, IOException, GeneralSecurityException {
+	private static Event updateEvent(final User user,  @Named("calendarId") final String calendarId , @Named("clientCalendarId") final String clientCalendarId , @Named("roomCalendarId") final String roomCalendarId, UpdateEventForm eventForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 
         
 		Calendar service = Quickstart.getService(user);
@@ -3381,6 +3404,9 @@ public class SchedulerApi {
         
         Event updatedEvent = service.events().update(calendarId, eventForm.getEventId(), event).execute();
 
+        service.events().update(ConstantsSecret.masterCalendarId, eventForm.getEventId(), event).execute();
+        service.events().update(clientCalendarId, eventForm.getEventId(), event).execute();
+        service.events().update(roomCalendarId, eventForm.getEventId(), event).execute();
 	
         return updatedEvent;
 	}

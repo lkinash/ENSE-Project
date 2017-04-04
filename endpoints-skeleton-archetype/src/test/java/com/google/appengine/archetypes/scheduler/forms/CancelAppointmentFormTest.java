@@ -18,6 +18,9 @@ public class CancelAppointmentFormTest {
 	//Data for Cancel Appointment Form class field
 	private Long APPOINTMENTID = 0L;
 	private String CANCELREASON = "hit by deer" ;
+	private long EMPLOYEEID = 2398423;
+	private long ROOMID = 203942;
+	private long CLIENTID = 29348;
 	
 	private CancelAppointmentForm cancelAppointment;
 	
@@ -28,7 +31,7 @@ public class CancelAppointmentFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 cancelAppointment = new CancelAppointmentForm(APPOINTMENTID,CANCELREASON);
+		 cancelAppointment = new CancelAppointmentForm(APPOINTMENTID,CANCELREASON, EMPLOYEEID, CLIENTID, ROOMID);
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -41,5 +44,8 @@ public class CancelAppointmentFormTest {
 	public void testGetters() throws Exception{
 		assertEquals(APPOINTMENTID,cancelAppointment.getAppointmentId());
 		assertEquals(CANCELREASON,cancelAppointment.getReasonForCancellation());
+		assertEquals(EMPLOYEEID,cancelAppointment.getEmployeeId());
+		assertEquals(ROOMID,cancelAppointment.getRoomId());
+		assertEquals(CLIENTID,cancelAppointment.getClientId());
 	}
 }

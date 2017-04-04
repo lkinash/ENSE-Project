@@ -23,18 +23,34 @@ public class CancelAppointmentForm {
 	 */
 	private String reasonForCancellation;
 
-	// Start of user code (user defined methods for CancelAppointmentForm)
+	/**
+	 * Description of the property clientId.
+	 */
+	private long clientId;
 
-	// End of user code
+	/**
+	 * Description of the property clientId.
+	 */
+	private long employeeId;
+	
+	/**
+	 * Description of the property clientId.
+	 */
+	private long roomId;
+	
 	
 	public CancelAppointmentForm(){
 		
 	}
 	
-	public CancelAppointmentForm(Long newAppointmentId, String newReasonForCancellation){
+	public CancelAppointmentForm(Long newAppointmentId, String newReasonForCancellation, long newEmployeeId, long newClientId, long newRoomId){
 		
 		this.appointmentId = newAppointmentId;
 		this.reasonForCancellation = newReasonForCancellation;
+		this.employeeId = newEmployeeId;
+		this.roomId = newRoomId;
+		this.clientId = newClientId;
+		
 	}
 	
 	
@@ -71,4 +87,53 @@ public class CancelAppointmentForm {
 	}
 
 
+	/**
+	 * Returns clientId.
+	 * @return clientId 
+	 */
+	public long getClientId() {
+		return this.clientId;
+	}
+
+	/**
+	 * Sets a value to attribute clientId. 
+	 * @param newClientId 
+	 */
+	public void setClientId(long newClientId) {
+		this.clientId = newClientId;
+	}
+	
+	/**
+	 * Returns employeeId.
+	 * @return employeeId 
+	 */
+	public long getEmployeeId() {
+		return this.employeeId;
+	}
+
+	/**
+	 * Sets a value to attribute employeeId. 
+	 * @param newEmployeeId 
+	 */
+	public void setEmployeeId(long newEmployeeId) {
+		this.employeeId = newEmployeeId;
+	}
+
+	
+	/**
+	 * Returns RoomId.
+	 * @return RoomId 
+	 */
+	public long getRoomId() {
+		return this.roomId;
+	}
+
+	/**
+	 * Sets a value to attribute RoomId. 
+	 * @param newRoomId 
+	 */
+	public void setRoomId(long newRoomId) {
+		this.roomId = newRoomId;
+	}
+	
 }

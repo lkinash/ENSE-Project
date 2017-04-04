@@ -128,6 +128,7 @@ public class AppointmentForm {
 	public void setServiceId(long newServiceId) {
 		this.serviceId = newServiceId;
 	}
+	
 	/**
 	 * Returns clientId.
 	 * @return clientId 
