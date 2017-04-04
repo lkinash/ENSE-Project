@@ -5,6 +5,7 @@ package com.google.appengine.archetypes.scheduler.entities;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.appengine.archetypes.scheduler.forms.TimeBlockForm;
 import com.google.appengine.archetypes.scheduler.list.Status;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
@@ -33,6 +34,11 @@ public class Appointment{
     private Key<Employee> employeeKey;
 	
 	/**
+	 * Description of the property employee.
+	 */
+	private String employeeName;
+    
+	/**
 	 * Description of the property eventId.
 	 */
 	@Index 
@@ -55,6 +61,11 @@ public class Appointment{
 	 */
 	@Index
 	private long serviceId;
+	
+	/**
+	 * Description of the property serviceId.
+	 */
+	private String serviceName;
 
 	/**
 	 * Description of the property serviceId.
@@ -68,9 +79,13 @@ public class Appointment{
 	 */
 	@Index
 	private long roomId;
-
 		
+	/**
+	 * Description of the property end
+	 */
+	private String date;
 
+	
 	public Appointment(){
 		
 	}
@@ -86,6 +101,10 @@ public class Appointment{
 		this.typeId = newTypeId;
 		this.clientId = newClientId;
 		this.roomId = newRoomId;
+		this.date = null;
+		this.employeeName = null;
+		this.serviceName = null;
+		
 	}
 
 	/**
@@ -216,4 +235,32 @@ public class Appointment{
 		this.roomId = newRoomId;
 	}
 
+	public String getEmployeeName(){
+		return this.employeeName;
+	}
+	
+	public void setEmployeeName(String newName){
+		this.employeeName = newName;
+	}
+	
+	
+	
+	public String getServiceName(){
+		return this.serviceName;
+	}
+	
+	public void setServiceName(String newName){
+		this.serviceName = newName;
+	}
+	
+	public String getDate(){
+		return this.date;
+	}
+	
+	public void setDate(String newName){
+		this.date = newName;
+	}
+	
+	
+	
 }

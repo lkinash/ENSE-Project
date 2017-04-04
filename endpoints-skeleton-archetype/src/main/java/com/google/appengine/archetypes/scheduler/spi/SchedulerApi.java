@@ -2791,10 +2791,12 @@ public class SchedulerApi {
 	/**
 	 * Description of the method queryAppointments.
 	 * @throws UnauthorizedException 
+	 * @throws GeneralSecurityException 
+	 * @throws IOException 
 	 */
 	
 	@ApiMethod(name = "appointment.getClientAppointmentsObject", path = "appointment.getClientAppointmentsObject", httpMethod = "post")
-  	public List<Appointment> getClientAppointmentsObject(final User user, UpdateClientForm clientForm) throws UnauthorizedException {
+  	public List<Appointment> getClientAppointmentsObject(final User user, UpdateClientForm clientForm) throws UnauthorizedException, IOException, GeneralSecurityException {
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
@@ -2803,8 +2805,27 @@ public class SchedulerApi {
     	Query<Appointment> query =  ofy().load().type(Appointment.class);
     	query = query.filter("clientId =", clientForm.getClientId());
     	
-        return query.list();
+    	String calendarId = getClient(user, clientForm.getClientId()).getCalendarId();
+    	
+        List<Appointment> appointments = query.list();
+        Employee employee;
+        Service service;
+        Event event;
         
+        for(Appointment list:appointments){
+        	
+        	employee = (Employee) ofy().load().key(list.getEmployeeKey()).now();
+        	service = getService(user, list.getServiceId());
+        	event = getEvent(user, calendarId, list.getEventId());
+        	
+        	list.setEmployeeName(employee.getFirstName());
+        	list.setServiceName(service.getName());
+        	list.setDate(event.getStart().toString());
+        	
+        }
+        
+        
+        return appointments;
 	}
 	
 	
@@ -3462,5 +3483,21 @@ public class SchedulerApi {
         return updatedEvent;
 	}
 	
-     
+ 
+	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+	
+	private static Event getEvent(final User user,  @Named("calendarId") final String calendarId ,@Named("eventId") final String eventId) throws UnauthorizedException, IOException, GeneralSecurityException {
+
+		Calendar service = Quickstart.getService(user);
+		
+		return service.events().get(calendarId, eventId).execute();	
+		
+	}
+	
+	
 }
