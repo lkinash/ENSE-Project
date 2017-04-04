@@ -25,7 +25,7 @@ public class RemoveClientForm {
 	/**
 	 * Description of the property phoneNumber.
 	 */
-	private int phoneNumber;
+	private long phoneNumber;
 
 	/**
 	 * Description of the property lastName.
@@ -44,10 +44,8 @@ public class RemoveClientForm {
 		
 	}
 	
-	public RemoveClientForm(long newClientId, String newFirstName, String newLastName, int newPhoneNumber, Date newBirthday,  String newEmail  ){
-		
-		super();
-		
+	public RemoveClientForm(long newClientId, String newFirstName, String newLastName, long newPhoneNumber, Date newBirthday,  String newEmail  ){
+
 		this.clientId = newClientId;
 		this.birthday = newBirthday;
 		this.firstName = newFirstName;
@@ -111,7 +109,7 @@ public class RemoveClientForm {
 	 * Returns phoneNumber.
 	 * @return phoneNumber 
 	 */
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return this.phoneNumber;
 	}
 
@@ -119,7 +117,7 @@ public class RemoveClientForm {
 	 * Sets a value to attribute phoneNumber. 
 	 * @param newPhoneNumber 
 	 */
-	public void setPhoneNumber(int newPhoneNumber) {
+	public void setPhoneNumber(long newPhoneNumber) {
 		this.phoneNumber = newPhoneNumber;
 	}
 

@@ -520,7 +520,7 @@ public class SchedulerApi {
         
         String calendarId = createCalendar(user, clientForm.getEmail()).getId();
 		
-        int phoneNumber;
+        long phoneNumber;
         
         if(clientForm.getPhoneNumber() < 1111111)
         	phoneNumber = 1111111;

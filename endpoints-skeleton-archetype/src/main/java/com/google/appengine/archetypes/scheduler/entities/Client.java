@@ -39,7 +39,7 @@ public class Client{
 	/**
 	 * Description of the property phoneNumber.
 	 */
-	private int phoneNumber;
+	private long phoneNumber;
 
 	/**
 	 * Description of the property calendarId.
@@ -99,7 +99,7 @@ public class Client{
 		
 	}
 	
-	public Client(String newFirstName, String newLastName, int newPhoneNumber, long newBirthday, List<Long> newAppointments,
+	public Client(String newFirstName, String newLastName, long newPhoneNumber, long newBirthday, List<Long> newAppointments,
 			List<Long> newClearanceIds, String newCalendarId, String newUserId, long newClientId  , String newEmail){
 
 		this.userId = newUserId;
@@ -200,7 +200,7 @@ public class Client{
 	 * Returns phoneNumber.
 	 * @return phoneNumber 
 	 */
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return this.phoneNumber;
 	}
 
@@ -208,7 +208,7 @@ public class Client{
 	 * Sets a value to attribute phoneNumber. 
 	 * @param newPhoneNumber 
 	 */
-	public void setPhoneNumber(int newPhoneNumber) {
+	public void setPhoneNumber(long newPhoneNumber) {
 		this.phoneNumber = newPhoneNumber;
 	}
 

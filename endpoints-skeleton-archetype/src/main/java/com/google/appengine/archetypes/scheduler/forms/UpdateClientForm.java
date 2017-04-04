@@ -23,7 +23,7 @@ public class UpdateClientForm {
 	/**
 	 * Description of the property phoneNumber.
 	 */
-	private int phoneNumber;
+	private long phoneNumber;
 
 	/**
 	 * Description of the property email.
@@ -45,7 +45,7 @@ public class UpdateClientForm {
 		
 	}
 	
-	public UpdateClientForm(long newClientId, String newFirstName, String newLastName, int newPhoneNumber, TimeBlockForm newBirthday, String newEmail  ){
+	public UpdateClientForm(long newClientId, String newFirstName, String newLastName, long newPhoneNumber, TimeBlockForm newBirthday, String newEmail  ){
 		
 		this.birthday = newBirthday;
 		this.firstName = newFirstName;
@@ -129,7 +129,7 @@ public class UpdateClientForm {
 	 * Returns phoneNumber.
 	 * @return phoneNumber 
 	 */
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return this.phoneNumber;
 	}
 
@@ -137,7 +137,7 @@ public class UpdateClientForm {
 	 * Sets a value to attribute phoneNumber. 
 	 * @param newPhoneNumber 
 	 */
-	public void setPhoneNumber(int newPhoneNumber) {
+	public void setPhoneNumber(long newPhoneNumber) {
 		this.phoneNumber = newPhoneNumber;
 	}
 
