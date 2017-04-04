@@ -638,7 +638,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
  conferenceApp.controllers.controller('ViewRoomController', function ($scope, $log, $location, $route, oauth2Provider, HTTP_ERRORS) {
 	 console.log("controller reached for viewRoomAdmin");
 	 $scope.init = function(){
-		 gapi.client.scheduler.admin.getAllRoomsWithServiceNames().execute(function(resp){
+		 gapi.client.scheduler.admin.getAllRooms().execute(function(resp){
 			 $scope.rooms=resp.result.items;
 			 $scope.services=resp.result;
 			 
@@ -1255,23 +1255,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
    });
    
    conferenceApp.controllers.controller('ViewCalendarController',function ($scope,$compile, uiCalendarConfig){
-		
-	   $scope.init=function(){
-		   gapi.client.scheduler.admin.getAllEmployeesWithTimeBlocksServices().execute(function(resp){
-				 $scope.employees=resp.result.items;
-				 $scope.$apply();
-			 });
-		   gapi.client.scheduler.admin.getAllRoomsWithServiceNames().execute(function(resp){
-				 $scope.rooms=resp.result.items;
-				 $scope.$apply();
-			 });
-		   
-	   };
-	   
-	
-	   $scope.calendarURL="ronbrfav0rnhnjo3bjfi0m186c@group.calendar.google.com";
-	   
-	   var date = new Date();
+		var date = new Date();
 	    var d = date.getDate();
 	    var m = date.getMonth();
 	    var y = date.getFullYear();
@@ -1279,7 +1263,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    $scope.changeTo = 'Hungarian';
 	    /* event source that pulls from google.com */
 	    $scope.eventSource = {
-	            url: $scope.calendarURL,
+	            url: "ronbrfav0rnhnjo3bjfi0m186c@group.calendar.google.com",
 	            googleCalendarApiKey: 'AIzaSyCk3oNQRiy8vVIM-dyIx4DZfy2qyTT3avU',
 	            className: 'gcal-event',           // an option!
 	            currentTimezone: 'America/Chicago' // an option!
@@ -1399,24 +1383,6 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    /* event sources array*/
 	    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
 	    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
-	    
-	    $scope.changeCal=function(){
-			   if($scope.firstSelect==="employee"){
-				   console.log("its an employee" +$scope.employeeSelect);
-				   $scope.calendarURL=$scope.employees[$scope.employeeSelect].calendarId;
-				   console.log($scope.calendarURL=$scope.employees[$scope.employeeSelect].calendarId);
-				   //$scope.myCalendar1.fullCalendar("refetchEvents");
-				   $('#calendar').fullCalendar('rerenderEvents');
-			   }
-			   if($scope.firstSelect==="room"){
-				   console.log("its an room");
-			   }
-			   if($scope.firstSelect==="main"){
-				   console.log("its an main");
-				   var calURL="ronbrfav0rnhnjo3bjfi0m186c@group.calendar.google.com";
-			   }
-			   
-		   };
 	});
    conferenceApp.controllers.controller('LogController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
 	 console.log("reached the log controller");

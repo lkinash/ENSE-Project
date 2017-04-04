@@ -15,12 +15,7 @@
 }
 .filter .form-group{
 	margin-left: 1%;
-	margin-top: 1%;
-	width:30%;
-	display:inline-flex;
-}
-#sel1{
-	width:50%;
+	margin-top: 1%
 }
 .filterBtn{
 	margin-left: 1%;

@@ -172,32 +172,17 @@
 		</div>
 	</div>
 	<div class="col-lg-10">
-	<div ng-controller="ViewCalendarController" ng-init="init()">
 	<div class="rightContent" >
 			<div class="filter" >
 					<div class="filterTitle">
 						<h3>Filter By:</h3>
 					</div>
 				<div class="form-group">
-					<select class="form-control" id="sel1" ng-model="firstSelect">
-						<option value="employee">Employee</option>
-						<option value="room">Room</option>
-						<option value="main">Main Calendar</option>
-					</select>
-					<select class="form-control" id="sel1"  ng-hide="firstSelect=='employee'||firstSelect=='room'" ng-model="secondSelect">
-						<option value=" "> -----------</option>
-
-					</select>
-					<select class="form-control" id="sel1"  ng-model="employeeSelect" ng-show="firstSelect=='employee'">
+					<select class="form-control" id="sel1">
 						<option>Employee</option>
-						<option value="{{$index}}"   ng-repeat="employee in employees">{{employee.firstName}}</option>
-					</select>
-					<select class="form-control" id="sel1" ng-model="roomSelect"  ng-show="firstSelect=='room'">
 						<option>Room</option>
-						<option value="{{$index}}"   ng-repeat="room in rooms">{{room.roomId}}</option>
 					</select>
 				</div>
-				<!-- 
 				<div class="dropDownCal"> 
 				<div class="form-group" ng-controller="DatepickerCtrl">
                     <p class="input-group">
@@ -213,9 +198,8 @@
                     </p>
                 </div>
 				</div>
-				-->
 				<div class="filterBtn">
-					<button type="submit" class="btn btn-default" ng-click="changeCal()">View</button>
+					<button type="submit" class="btn btn-default">Search</button>
 				</div>
 			</div>
 			
@@ -226,9 +210,9 @@
                             <button class="btn btn-success" ng-class="{active: currentView === 'month'}" ng-click="changeView('month', 'myCalendar1')">Month</button>
                         </div>
                 </div>
-     			<div class="calendar" id="calendar" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar" ></div>
+     			<div class="calendar" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar" ></div>
 			 </div>
-			
+				
 	</div>
 </div>
 </div>
