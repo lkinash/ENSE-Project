@@ -35,6 +35,11 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','n
                     controller: 'editAdminController'
                 })
                 
+                .when('/admin/editClient', {
+                    templateUrl: 'partials/editClientUserAdmin.html',
+                    controller: 'editClientAdminController'
+                })
+                
                 .when('/admin/addEmployee', {
                     templateUrl: 'partials/addEmployeeAdmin.html',
                     controller: 'AddEmployeeController'
@@ -171,6 +176,8 @@ app.service('passingId', function() {
         }
     };
 });
+
+
 /**
  * @ngdoc filter
  * @name startFrom
