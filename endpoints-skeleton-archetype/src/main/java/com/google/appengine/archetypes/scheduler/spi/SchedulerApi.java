@@ -828,33 +828,71 @@ public class SchedulerApi {
             throw new UnauthorizedException("Authorization required");
         }
 		
-		List<AppointmentForm> list = new ArrayList<AppointmentForm>();
+ List<AppointmentForm> list = new ArrayList<AppointmentForm>();
         
         List<Room> rooms = getAllRoomsService(user, findAppointmentForm.getServiceId());
-        List<Employee> employees;
+        List<Employee> employeeList = getAllEmployeesService(user, findAppointmentForm.getServiceId());
         List<DayTimeBlocks> dayTimeBlocks;
         List<DayTimeBlocks> weekDayTimeBlocks;
         List<TimeBlock> holidayTimeBlocks;
-        Employee employee;
         DateTime startTime;
+        List<DateTime> dateList;
         int length = getService(user, findAppointmentForm.getServiceId()).getDefaultLength();
+        List<DateTime> startTimes;
+        boolean timeAdded = false;
+        boolean timeAddedOuter = false;
         
-    	@SuppressWarnings("deprecation")
-		Date startDate = new Date(findAppointmentForm.getStartDateRange().getYear(), findAppointmentForm.getStartDateRange().getMonth(), findAppointmentForm.getStartDateRange().getDay());
-  		@SuppressWarnings("deprecation")
-		Date endDate = new Date(findAppointmentForm.getEndDateRange().getYear(), findAppointmentForm.getEndDateRange().getMonth(), findAppointmentForm.getEndDateRange().getDay());
+        
+		DateTime startDate = new DateTime((findAppointmentForm.getStartDateRange().getYear()), findAppointmentForm.getStartDateRange().getMonth(), findAppointmentForm.getStartDateRange().getDay(), 0, 0);
+  		DateTime endDate = new DateTime(findAppointmentForm.getEndDateRange().getYear(), findAppointmentForm.getEndDateRange().getMonth(), findAppointmentForm.getEndDateRange().getDay(), 0, 0);
   		
-  		Date currentDate = startDate;
        
-  		String calendarId;
+  		dateList = getDatesInRange(startDate, endDate);
   		
-        if(findAppointmentForm.getEmployeeId() == 0){
+  		for(Employee employee: employeeList){
         	
-        	employees = getAllEmployeesService(user, findAppointmentForm.getServiceId());
+  			findAppointmentForm.setEmployeeId(employee.getEmployeeId());
+  			
+        	dayTimeBlocks = getEmployeeTimeBlocks(user, findAppointmentForm);
+        	holidayTimeBlocks = getEmployeeHolidaysInRange(user, findAppointmentForm);
+        	
+        	for(DateTime currentDate: dateList){
+        	
+        		weekDayTimeBlocks = getDayTimeBlocksForWeekDay(currentDate.getDayOfWeek(), dayTimeBlocks);
+ 
+        		for(DayTimeBlocks thisDayTimeBlock: weekDayTimeBlocks){
+
+        			startTimes = getStartTimes(thisDayTimeBlock, length);
+        		
+        			for(DateTime startTimeDate: startTimes){
+        			
+        				for(Room roomList: rooms){
+        					
+        					if((!((testCalendarBusy(user, employee.getEmployeeId(), roomList.getRoomId(), length, currentDate.getYear(), currentDate.getMonthOfYear(), 
+        							currentDate.getDayOfMonth(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour())).getResult())) && !timeAdded && !timeAddedOuter){
+					
+        						list.add(new AppointmentForm(employee.getEmployeeId(), employee.getFirstName(), findAppointmentForm.getTypeId(), 
+        							findAppointmentForm.getTypeName(), findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), 
+        							findAppointmentForm.getClientId(), roomList.getRoomId(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour(), 
+        							(new TimeBlockForm(currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth())), length));	
+					
+        						timeAdded = true;
+        						timeAddedOuter = true;
+        						
+        					}
+        				}
+        				
+        				timeAdded = false;
+        			}	
+        		
+        			timeAddedOuter = false;
+				} 
+	
+        	}
         
-        	
         	
         }
+        	
         
         return list;
 	
@@ -2044,16 +2082,25 @@ public class SchedulerApi {
         }
         
   		
+        
         List<Employee> employees = getAllEmployees(user);
     	List<Employee> list = new ArrayList<Employee>();
-    	List<Long> services;
+    	List<Long> services = new ArrayList<Long>();
    
     	
+    	long Id = serviceId;
+
     	for(Employee temp: employees){
+    		
     		services = temp.getServiceIds();
-    	
-    		if(services.contains(serviceId)){
-    			list.add(temp);
+
+    		if(services != null){
+    			for(Long serviceTemp: services){
+    		
+    				if(serviceTemp.equals(Id)){
+    					list.add(temp);
+    				}
+    			}
     		}
     	}
         
