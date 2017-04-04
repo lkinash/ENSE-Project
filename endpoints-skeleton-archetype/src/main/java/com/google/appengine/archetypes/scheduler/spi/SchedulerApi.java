@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.json.JSONException;
@@ -87,6 +88,10 @@ import com.google.appengine.archetypes.scheduler.wrappers.WrapperStatus;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 import com.google.api.services.calendar.model.AclRule.Scope;
+import com.google.api.services.calendar.model.FreeBusyCalendar;
+import com.google.api.services.calendar.model.FreeBusyRequest;
+import com.google.api.services.calendar.model.FreeBusyRequestItem;
+import com.google.api.services.calendar.model.FreeBusyResponse;
 import com.google.api.services.calendar.model.Settings;
 import com.google.api.services.calendar.model.AclRule;
 
@@ -745,8 +750,7 @@ public class SchedulerApi {
         List<DateTime> dateList;
         int length = getService(user, findAppointmentForm.getServiceId()).getDefaultLength();
         List<DateTime> startTimes;
-        long roomId = 0;
-        
+        boolean timeAdded = false;
     
 		DateTime startDate = new DateTime((findAppointmentForm.getStartDateRange().getYear()), findAppointmentForm.getStartDateRange().getMonth(), findAppointmentForm.getStartDateRange().getDay(), 0, 0);
   		DateTime endDate = new DateTime(findAppointmentForm.getEndDateRange().getYear(), findAppointmentForm.getEndDateRange().getMonth(), findAppointmentForm.getEndDateRange().getDay(), 0, 0);
@@ -773,26 +777,27 @@ public class SchedulerApi {
         		weekDayTimeBlocks = getDayTimeBlocksForWeekDay(currentDate.getDayOfWeek(), dayTimeBlocks);
  
         		for(DayTimeBlocks thisDayTimeBlock: weekDayTimeBlocks){
-				
-				//TODO
-				//Fix to test more than one in a block
-				
+
         			startTimes = getStartTimes(thisDayTimeBlock, length);
         		
         			for(DateTime startTimeDate: startTimes){
         			
-        				if(!((testCalendarBusy(user, ConstantsSecret.masterCalendarId, length, currentDate.getYear(), currentDate.getMonthOfYear(), 
-        							currentDate.getDayOfMonth(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour())).getResult())){
+        				for(Room roomList: rooms){
+        					
+        					if((!((testCalendarBusy(user, employee.getEmployeeId(), roomList.getRoomId(), length, currentDate.getYear(), currentDate.getMonthOfYear(), 
+        							currentDate.getDayOfMonth(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour())).getResult())) && !timeAdded){
 					
-        					list.add(new AppointmentForm(employee.getEmployeeId(), employee.getFirstName(), findAppointmentForm.getTypeId(), 
+        						list.add(new AppointmentForm(employee.getEmployeeId(), employee.getFirstName(), findAppointmentForm.getTypeId(), 
         							findAppointmentForm.getTypeName(), findAppointmentForm.getServiceId(), findAppointmentForm.getServiceName(), 
-        							findAppointmentForm.getClientId(), roomId, startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour(), 
+        							findAppointmentForm.getClientId(), roomList.getRoomId(), startTimeDate.getHourOfDay(), startTimeDate.getMinuteOfHour(), 
         							(new TimeBlockForm(currentDate.getYear(), currentDate.getMonthOfYear(), currentDate.getDayOfMonth())), length));	
 					
-        					
-        			
+        						timeAdded = true;
+        						
+        					}
         				}
-        			
+        				
+        				timeAdded = false;
         			}	
         		
 	
@@ -1022,18 +1027,55 @@ public class SchedulerApi {
 	 * 
 	 */
 	
-  	private static WrappedBoolean testCalendarBusy(final User user, @Named("calendarId") final String calendarId, @Named("length") final int length,
+  	private WrappedBoolean testCalendarBusy(final User user, @Named("employeeId") final long employeeId, @Named("roomId") final long roomId, @Named("length") final int length,
   			@Named("year") final int year, @Named("month") final int month, @Named("day") final int day,
   			@Named("hour") final int hour, @Named("minute") final int minute) throws UnauthorizedException, IOException, GeneralSecurityException{
   		
   		
-  		//TODO
+  		Room room = getRoom(user, roomId);
+  		Employee employee = getEmployee(user, employeeId);
   		
-  		//Write Method
+  		com.google.api.client.util.DateTime startTime = DateTimeConverter.convert(year, month, day, hour, minute);
   		
-  		//com.google.api.services.calendar.model.Calendar calendar = getCalendar(user, null);
+  		DateTime time = new DateTime(year, month, day, hour, minute).plusMinutes(length);
+  		
+  		com.google.api.client.util.DateTime endTime = DateTimeConverter.convertJoda(time);
   		
   		
+  		
+  		FreeBusyRequest request = new FreeBusyRequest();
+  		
+  		request.setTimeMin(startTime);
+  		request.setTimeMax(endTime);
+  	
+  		List<FreeBusyRequestItem> itemList = new ArrayList<FreeBusyRequestItem>();
+
+  		FreeBusyRequestItem roomItem = new FreeBusyRequestItem();
+  		FreeBusyRequestItem employeeItem = new FreeBusyRequestItem();
+  		
+  		roomItem.setId(room.getCalendar());
+  		employeeItem.setId(employee.getCalendarId());
+  		
+  		itemList.add(roomItem);
+  		itemList.add(employeeItem);
+
+  		request.setItems(itemList);
+  		
+  		
+  		FreeBusyResponse response = getCalendarBusy(user, request);
+  		
+  		Map<String, FreeBusyCalendar> calendarList = response.getCalendars();
+  		
+  		for (FreeBusyCalendar calendar: calendarList.values()) {
+  			
+  			if(!(calendar.getBusy().isEmpty())){
+  				
+  				System.out.println(calendar.getBusy().get(0));
+  				
+  				return new WrappedBoolean(true);
+  			}
+
+  		}
   		
   		return new WrappedBoolean(false);
   	}
@@ -2302,19 +2344,26 @@ public class SchedulerApi {
         }
 
         
-        List<Room> Rooms = getAllRooms(user);
+        List<Room> Rooms = ofy().load().type(Room.class).list();
     	List<Room> list = new ArrayList<Room>();
-    	List<Long> services;
+    	List<Long> services = new ArrayList<Long>();
+   
     	
-    	
+    	long Id = serviceId;
+
     	for(Room temp: Rooms){
+    		
     		services = temp.getServices();
 
-    		if(services.contains(serviceId)){
-    			list.add(temp);
+    		if(services != null){
+    			for(Long serviceTemp: services){
+    		
+    				if(serviceTemp.equals(Id)){
+    					list.add(temp);
+    				}
+    			}
     		}
     	}
-        
         
         return list;
   		
@@ -3176,6 +3225,21 @@ public class SchedulerApi {
   		
 		return removeCalendar(user, client.getCalendarId());
   	}
+  	/**
+	 * Description of the method queryAppointments.
+	 * @throws UnauthorizedException 
+	 * @throws IOException 
+	 * @throws GeneralSecurityException 
+	 */
+	
+  	private static FreeBusyResponse getCalendarBusy(final User user, FreeBusyRequest request) throws UnauthorizedException, IOException, GeneralSecurityException {
+
+		Calendar service = Quickstart.getService(user);
+		
+  		return service.freebusy().query(request).execute();
+       
+  	}
+  	
   	
   	/**
 	 * Description of the method queryAppointments.

@@ -35,6 +35,10 @@ public class DateTimeConverter {
 		return convert(eventForm.getEndYear(), eventForm.getEndMonth(), eventForm.getEndDay(), eventForm.getEndHour(), eventForm.getEndMinute());
 	}
 	
+	public static DateTime convertJoda(org.joda.time.DateTime form){
+		return convert(form.getYear(), form.getMonthOfYear(), form.getDayOfMonth(), form.getHourOfDay(), form.getMinuteOfHour());
+	}
+	
 	public static DateTime convert(int year, int month, int day, int hour, int minute){
 		
 		return convert(year, month, day, hour, minute, 0);
