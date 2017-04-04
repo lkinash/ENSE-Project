@@ -2444,7 +2444,7 @@ public class SchedulerApi {
         }       
         
   		
-        Query<Changes> query =  ofy().load().type(Changes.class);
+        Query<Changes> query =  ofy().load().type(Changes.class).limit(100);
         query = query.order("-timeStamp");
         
         return query.list();
