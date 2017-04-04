@@ -39,25 +39,6 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','n
                     templateUrl: 'partials/addEmployeeAdmin.html',
                     controller: 'AddEmployeeController'
                 })
-                
-                .when('/admin/editEmployee', {
-                    templateUrl: 'partials/editEmployeeAdmin.html',
-                    controller: 'editEmployeeController'
-                })
-                
-                .when('/admin/editClient', {
-                    templateUrl: 'partials/editClientAdmin.html',
-                    controller: 'editClientController'
-                })
-                .when('/admin/editRoom', {
-                    templateUrl: 'partials/editRoomAdmin.html',
-                    controller: 'editAdminController'
-                })
-                
-                .when('/admin/editService', {
-                    templateUrl: 'partials/editServiceAdmin.html',
-                    controller: 'editServiceController'
-                })
 
                 .when('/admin/addRoom', {
                     templateUrl: 'partials/addRoomAdmin.html',
