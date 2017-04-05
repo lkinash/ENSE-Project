@@ -82,6 +82,7 @@ import com.google.appengine.archetypes.scheduler.service.EventCreator;
 import com.google.appengine.archetypes.scheduler.service.Quickstart;
 import com.google.appengine.archetypes.scheduler.servlets.Sendgrid;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedBoolean;
+import com.google.appengine.archetypes.scheduler.wrappers.WrappedClearanceWithId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedInt;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedLongId;
 import com.google.appengine.archetypes.scheduler.wrappers.WrappedStringId;
@@ -3174,13 +3175,34 @@ public class SchedulerApi {
 	 */
 
 	@ApiMethod(name = "admin.signin", path = "admin.signin", httpMethod = "post")
-  	public WrappedLongId signin(final User user, ClientLoginForm form) throws IOException, UnauthorizedException, GeneralSecurityException {
+  	public WrappedClearanceWithId signin(final User user, ClientLoginForm form) throws IOException, UnauthorizedException, GeneralSecurityException {
 
         if (user == null) {
            throw new UnauthorizedException("Authorization required");
         }
         
         Client client;
+          
+        
+        Query<Employee> employeeQuery =  ofy().load().type(Employee.class);
+    	employeeQuery = employeeQuery.filter("email =", form.getEmail());
+    	
+        List<Employee> employee = employeeQuery.list();
+	
+        if(!employee.isEmpty()){
+        	return new WrappedClearanceWithId(employee.get(0).getEmployeeId(), employee.get(0).getAdminClearance());
+        }
+        
+        
+        Query<Admin> adminQuery =  ofy().load().type(Admin.class);
+    	adminQuery = adminQuery.filter("email =", form.getEmail());
+    	
+        List<Admin> admin = adminQuery.list();
+	
+        if(!admin.isEmpty()){
+        	return new WrappedClearanceWithId(admin.get(0).getAdminId(), admin.get(0).getAdminClearance());
+        }
+        
         
         Query<Client> query =  ofy().load().type(Client.class);
     	query = query.filter("email =", form.getEmail());
@@ -3188,15 +3210,14 @@ public class SchedulerApi {
         List<Client> list = query.list();
         
         if(list.isEmpty()){
-   
+        	
         	client = addClient(user, new ClientForm(user.getNickname(), null, 0, null, user.getEmail()));
-        }
-        else{
-        	client = list.get(0);
+        	return new WrappedClearanceWithId(client.getClientId(), client.getAdminClearance());
         }
         
-
-		return new WrappedLongId(client.getClientId());
+        else{
+        	return new WrappedClearanceWithId(list.get(0).getClientId(), list.get(0).getAdminClearance());
+        }
 
 	}
 	/**
