@@ -45,6 +45,11 @@ public class Appointment{
 	private String eventId;
 	
 	/**
+	 * Description of the property clientId.
+	 */
+	private long employeeId;
+	
+	/**
 	 * Description of the property eventId.
 	 */
 	@Id 
@@ -91,7 +96,7 @@ public class Appointment{
 	}
 	
 	public Appointment(Status status, String eventId, long newAppointmentId, Key<Employee> newEmployeeKey,
-				long newServiceId, long newTypeId, long newClientId, long newRoomId) {
+				long newServiceId, long newTypeId, long newClientId, long newRoomId, long newEmployeeId) {
 		
 		this.status = status;
 		this.eventId = eventId;
@@ -104,6 +109,7 @@ public class Appointment{
 		this.date = null;
 		this.employeeName = null;
 		this.serviceName = null;
+		this.employeeId = newEmployeeId;
 		
 	}
 
@@ -261,6 +267,21 @@ public class Appointment{
 		this.date = newName;
 	}
 	
+	/**
+	 * Returns employeeId.
+	 * @return employeeId 
+	 */
+	public long getEmployeeId() {
+		return this.employeeId;
+	}
+
+	/**
+	 * Sets a value to attribute employeeId. 
+	 * @param newEmployeeId 
+	 */
+	public void setEmployeeId(long newEmployeeId) {
+		this.employeeId = newEmployeeId;
+	}
 	
 	
 }
