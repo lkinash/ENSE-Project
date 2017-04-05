@@ -64,6 +64,10 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','n
                     templateUrl: 'partials/adminEditProfile.html',
                     controller: 'AdminEditProfileController'
                 })
+                .when('/admin/searchApp', {
+                    templateUrl: 'partials/searchAppointmentAdmin.html',
+                    controller: 'SearchAppointmentController'
+                })
                 
                 .when('/admin/logChanges', {
                     templateUrl: 'partials/logTrackingAdmin.html',

@@ -1,5 +1,5 @@
 <head>
-	<link href="/css/viewCalendarMainAdmin.css" rel="stylesheet">
+	<link href="/css/searchAppointmentAdmin.css" rel="stylesheet">
 </head>
 <body >
 
@@ -172,48 +172,56 @@
 	</div>
 	<div class="col-lg-10">
 	<div class="rightContent" >
+		<div ng-controller="SearchAppointmentController" ng-init="init()">
 			<div class="filter" >
 					<div class="filterTitle">
-						<h3>Filter By:</h3>
+						<h5>Search For Appointment: </h5>
 					</div>
 				<div class="form-group">
-					<select class="form-control" id="sel1">
-						<option>Employee</option>
-						<option>Room</option>
+					<select class="form-control" id="sel1" ng-model="clientSelect" >
+					<option value="" disabled selected>Client</option>
+					<option value="{{client.clientId}}"  ng-repeat="client in clients">{{client.firstName}} {{client.lastName}}</option>
 					</select>
 				</div>
-				<div class="dropDownCal"> 
-				<div class="form-group" ng-controller="DatepickerCtrl">
-                    <p class="input-group">
-                        <input id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
-                               ng-model="conference.startDate" is-open="opened"
-                               datepicker-options="dateOptions"
-                               close-text="Close"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-xs" ng-click="open($event)"><i
-                                class="glyphicon glyphicon-calendar"></i>
-                        </button>
-                    </span>
-                    </p>
-                </div>
-				</div>
+
 				<div class="filterBtn">
-					<button type="submit" class="btn btn-default">Search</button>
+					<button type="submit" class="btn btn-default" ng-click="getAppointments()">Search</button>
 				</div>
 			</div>
+		
+		<div class="appointments">
+			<div class="row">
+			<div class="col-sm-3">
+			<p>Date</p>
+			</div>
+			<div class="col-sm-3">
+			<p>Service</p>
+			</div>
+			<div class="col-sm-3">
+			<p>Employee</p>
+			</div>
 			
-			  <div class="calbox">
-			  <div class="btn-group">
-                            <button class="btn btn-success" ng-class="{active: currentView === 'agendaDay'}" ng-click="changeView('agendaDay', 'myCalendar1')">AgendaDay</button>
-                            <button class="btn btn-success" ng-class="{active: currentView === 'agendaWeek'}" ng-click="changeView('agendaWeek', 'myCalendar1')">AgendaWeek</button>
-                            <button class="btn btn-success" ng-class="{active: currentView === 'month'}" ng-click="changeView('month', 'myCalendar1')">Month</button>
-                        </div>
-                </div>
-     			<div class="calendar" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar" ></div>
-			 </div>
+		</div>
+		<div ng-repeat="appointment in appointmentsList">
+		<div class="row">
+			<div class="col-sm-3">
+			<p>{{appointment.date}}</p>
+			</div>
+			<div class="col-sm-3">
+			<p>{{appointment.serviceName}}</p>
+			</div>
+			<div class="col-sm-3">
+			<p>{{appointment.employeeName}}</p>
+			</div>
+			<button type="button" class="btn btn-default" ng-click ="removeApp($index)">Cancel</button>
+		</div>
+		</div>
+		</div>
+		</div>
+			  
+	 </div>
 				
 	</div>
-</div>
 </div>
 </body>
 
