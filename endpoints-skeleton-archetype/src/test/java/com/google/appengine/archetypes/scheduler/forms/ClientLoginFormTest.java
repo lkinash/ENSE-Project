@@ -19,7 +19,6 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 public class ClientLoginFormTest {
 	
 	//Data for Client Login Form class fields
-	private String PASSWORD = "hellokitty";
 	private String EMAIL = "adriana@lima.com";
 	
 	private ClientLoginForm clientLogin;
@@ -31,7 +30,7 @@ public class ClientLoginFormTest {
 	 @Before
 	 public void setUp() throws Exception {
 		 testHelper.setUp();
-		 clientLogin = new ClientLoginForm(EMAIL,PASSWORD); 
+		 clientLogin = new ClientLoginForm(EMAIL); 
 	 }
 
 	 //After the test is run, user the helper to remove the data store entities that were involved in the test as they are unneeded 
@@ -42,7 +41,6 @@ public class ClientLoginFormTest {
 
 	@Test
 	public void testGetters() throws Exception{
-		assertEquals(PASSWORD,clientLogin.getPassword());
 		assertEquals(EMAIL,clientLogin.getEmail());
 	}
 

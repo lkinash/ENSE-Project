@@ -41,6 +41,7 @@ import com.google.appengine.archetypes.scheduler.entities.TypeWithService;
 import com.google.appengine.archetypes.scheduler.forms.AdminForm;
 import com.google.appengine.archetypes.scheduler.forms.AppointmentForm;
 import com.google.appengine.archetypes.scheduler.forms.CancelAppointmentForm;
+import com.google.appengine.archetypes.scheduler.forms.ClientClearanceForm;
 import com.google.appengine.archetypes.scheduler.forms.ClientForm;
 import com.google.appengine.archetypes.scheduler.forms.ClientLoginForm;
 import com.google.appengine.archetypes.scheduler.forms.DayTimeBlocksForm;
@@ -100,7 +101,7 @@ import com.google.api.services.calendar.model.AclRule;
  */
 @Api(	name = "scheduler", 
 		version = "v1", 
-		scopes = { Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE}, 
+		scopes = { Constants.EMAIL_SCOPE, Constants.CALENDAR_SCOPE, Constants.CALENDAR_READONLY_SCOPE, Constants.USER_INFO_SCOPE }, 
 		clientIds = { Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID }, 
 		description = "API ")
 
@@ -532,16 +533,20 @@ public class SchedulerApi {
         
      	final Key<TimeBlock> timeBlockKey = factory().allocateId(TimeBlock.class);
     	final long Id = timeBlockKey.getId();
-
-    	TimeBlock timeBlock = new TimeBlock(Id, tempBlock.getYear(), tempBlock.getMonth(), tempBlock.getDay());
-    			
-    	ofy().save().entities(timeBlock).now(); 
-		
+    	
+    	TimeBlock timeBlock = null;
+    	long blockId = 0;
+  
+    	if(tempBlock != null){
+    		timeBlock = new TimeBlock(Id, tempBlock.getYear(), tempBlock.getMonth(), tempBlock.getDay());
+    		ofy().save().entities(timeBlock).now(); 
+    		blockId = timeBlock.getTimeBlockId();
+    	}
         
-        // Client must enter first name, last name, email and a password
+    	// Client must enter first name, last name, email and a password
         
 		Client client = new Client(clientForm.getFirstName(), clientForm.getLastName(),
-				phoneNumber, timeBlock.getTimeBlockId(), newAppointmentIds, newClearanceIds, calendarId, userId, clientId, clientForm.getEmail());
+				phoneNumber, blockId, newAppointmentIds, newClearanceIds, calendarId, userId, clientId, clientForm.getEmail());
 			
   		ofy().save().entities(client).now();
         
@@ -561,21 +566,23 @@ public class SchedulerApi {
 	 */
 	 
 	@ApiMethod(name = "client.addClientClearance", path = "client.addClientClearance", httpMethod = "post")
-  	public Clearances addClientClearances(@Named("clientId") final long clientId, Clearances clearance, @Named("date") final Date date, final User user) throws UnauthorizedException {
+  	public Clearances addClientClearances(final User user, ClientClearanceForm form) throws UnauthorizedException {
 
 
         if (user == null) {
             throw new UnauthorizedException("Authorization required");
         }
         
-        //TODO
-        //Fix method
+        Date date = new Date();
         
-		Client client = getClient(user, clientId);
+        final Key<Clearances> clearanceKey = factory().allocateId(Clearances.class);
+        final long clearanceId = clearanceKey.getId();
+       
+        
+        Clearances clearance = new Clearances(form.getServiceId(), date, clearanceId);
+        
+		Client client = getClient(user, form.getClientId());
 
-		clearance.setRenewalDate(date);
-		
-		client.addClearance(clearance.getClearanceId());
 		
   		ofy().save().entities(client, clearance).now();
 		
@@ -2890,10 +2897,12 @@ public class SchedulerApi {
         
     	Client client = (Client) ofy().load().key(key).now();
     	
-		Key<TimeBlock> blockKey = Key.create(TimeBlock.class, client.getBirthday());
-		TimeBlock timeBlock = (TimeBlock) ofy().load().key(blockKey).now();
+    	if(client.getBirthday() != 0){
+    		Key<TimeBlock> blockKey = Key.create(TimeBlock.class, client.getBirthday());
+			TimeBlock timeBlock = (TimeBlock) ofy().load().key(blockKey).now();
     	
-    	client.setBirthdayBlock(timeBlock);
+    		client.setBirthdayBlock(timeBlock);
+    	}
     	
     	return client;
 	}
@@ -3164,23 +3173,30 @@ public class SchedulerApi {
 	 * @throws GeneralSecurityException 
 	 */
 
-	@ApiMethod(name = "appointment.test", path = "appointment.test", httpMethod = "post")
-  	public Settings test(final User user) throws IOException, UnauthorizedException, GeneralSecurityException {
+	@ApiMethod(name = "admin.signin", path = "admin.signin", httpMethod = "post")
+  	public WrappedLongId signin(final User user, ClientLoginForm form) throws IOException, UnauthorizedException, GeneralSecurityException {
 
-      //  if (user == null) {
-        //    throw new UnauthorizedException("Authorization required");
-       // }
+        if (user == null) {
+           throw new UnauthorizedException("Authorization required");
+        }
         
-		
-		//return Quickstart.addEvent(user, ConstantsSecret.calendarId, EventCreator.createEvent());
-		
-		Calendar service = Quickstart.getService(user);
-		
-		Settings settings = service.settings().list().execute();
+        Client client;
+        
+        Query<Client> query =  ofy().load().type(Client.class);
+    	query = query.filter("email =", form.getEmail());
+    	
+        List<Client> list = query.list();
+        
+        if(list.isEmpty()){
+   
+        	client = addClient(user, new ClientForm(user.getNickname(), null, 0, null, user.getEmail()));
+        }
+        else{
+        	client = list.get(0);
+        }
+        
 
-		//osoqisel4rd08hkiihi1d080cg@group.calendar.google.com
-		
-		return settings;
+		return new WrappedLongId(client.getClientId());
 
 	}
 	/**
