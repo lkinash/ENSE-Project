@@ -165,6 +165,7 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
                         oauth2Provider.signedIn = true;
                         $scope.alertStatus = 'success';
                         $scope.rootMessages = 'Logged in with ' + resp.email;
+                        $location.path('/admin/home');
                     }
                 });
             });
@@ -358,12 +359,12 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
 	 //$scope.number=9999999;
 	 gapi.client.scheduler.admin.addRoom(roomForm).execute();
-	 $location.path('/admin/viewRoom');
+	 $location.path('/admin/home');
   };
  
 });
 
- conferenceApp.controllers.controller('ViewEmployeeController', function ($scope, $log, $route,passingId, oauth2Provider, HTTP_ERRORS) {
+ conferenceApp.controllers.controller('ViewEmployeeController', function ($scope, $log,$location, $route,passingId, oauth2Provider, HTTP_ERRORS) {
 
 	 console.log("controller reached for viewEmployeeAdmin");
 	 
@@ -383,13 +384,13 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 			"employeeId":employeeId
 		 	};
 		 	gapi.client.scheduler.admin.removeEmployee(removeEmployeeForm).execute();
-		 	$route.reload();
+		 	 $location.path('/admin/home');
 		  };
 
 	 
  });
 
- conferenceApp.controllers.controller('AddEmployeeController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+ conferenceApp.controllers.controller('AddEmployeeController', function ($scope, $log,$location, oauth2Provider, HTTP_ERRORS) {
 	 console.log("Reached AddEmployeeController");
 	 $scope.init = function(){
 		 console.log("Reached Init function: populating list types drop down");
@@ -548,6 +549,8 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
 	 gapi.client.scheduler.admin.addEmployee(employeeForm).execute();
 	 console.log("Added the employee form now");
+	 $location.path('/admin/home');
+	 
  };
      
   });
@@ -572,7 +575,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 	};
 		 	gapi.client.scheduler.admin.removeType(removeTypeForm).execute();
 		 	console.log("removed type");
-		 	$route.reload();
+		 	 $location.path('/admin/home');
 		  };
 
 	 $scope.removeSpecificService= function(value){
@@ -581,7 +584,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 			"serviceId":value
 		 	};
 		 	gapi.client.scheduler.admin.removeService(removeServiceForm).execute();
-		 	$route.reload();
+		 	 $location.path('/admin/home');
 		 
 	 };
  });
@@ -628,7 +631,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		console.log( "the type id service form"+serviceTypeForm.typeId);
 		gapi.client.scheduler.admin.addServiceType(serviceTypeForm).execute();
 		 console.log("Added the ServiceType form now");
-		 $location.path('/admin/viewService');
+		 $location.path('/admin/home');
 		 
 	 };
 
@@ -684,7 +687,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 			"roomId":roomId
 		 	};
 		 	gapi.client.scheduler.admin.removeRoom(removeRoomForm).execute();
-		 	$route.reload();
+		 	 $location.path('/admin/home');
 		  };
 	 
  });
@@ -705,11 +708,11 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 console.log(adminForm);
 		 gapi.client.scheduler.admin.addAdmin(adminForm).execute();
 		 console.log("Added the Admin form now");
-		 $location.path('/admin/viewAccount');
+		 $location.path('/admin/home');
 		 
 	 };
  });
- conferenceApp.controllers.controller('AdminBookAppointmentController', function ($scope, $log,$compile, uiCalendarConfig, oauth2Provider, HTTP_ERRORS) {
+ conferenceApp.controllers.controller('AdminBookAppointmentController', function ($scope, $log,$location,$compile, uiCalendarConfig, oauth2Provider, HTTP_ERRORS) {
 	  console.log("Reached the AdminBookAppointmentController");
 	  
 		var date = new Date();
@@ -892,6 +895,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 					 "length":templength
 			 };
 			 gapi.client.scheduler.appointment.addAppointment(appointmentForm).execute();
+			 $location.path('/admin/home');
 		 };
 		 
 		 $scope.getDate=function(date){
@@ -966,7 +970,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 };
 		 
 		 gapi.client.scheduler.appointment.removeAppointment(appointmentForm).execute();
-		 
+		 $location.path('/admin/home');
 	 };
 	 
  });
@@ -1092,7 +1096,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		    		 var appointmentForm=$scope.appointments[val];
 		    		 gapi.client.scheduler.appointment.addAppointment(appointmentForm).execute();
 		    		 console.log("book the appointment ");
-		    		 $location.path('/');
+		    		 $location.path('/admin/home');
 		    	 };
 		    	
 		    };
@@ -1138,7 +1142,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 console.log(adminForm);
 			 gapi.client.scheduler.admin.updateAdmin(adminForm).execute();
 			 console.log("updated the  the Admin ");
-			 $location.path('/');
+			 $location.path('/admin/home');
 			 
 		 };
 	  
@@ -1232,19 +1236,17 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				    };
 			gapi.client.scheduler.client.updateClient(clientForm).execute();
 			console.log("Client updated ");
-			$location.path('/');
+			 $location.path('/admin/home');
 		 };
 
 		 
   });
-
-  conferenceApp.controllers.controller('AdminEditProfileController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
-
-	  
+  
+conferenceApp.controllers.controller('homeIndexController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+	console.log("Reached home index controller");
   });
   
-  conferenceApp.controllers.controller('ViewClientAppointmentController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+  conferenceApp.controllers.controller('ViewClientAppointmentController', function ($scope, $log, $location, oauth2Provider, HTTP_ERRORS) {
 	  console.log("reached the view Client appointment controller");
 	  $scope.init=function(){
 		  var tempId="124";
@@ -1275,6 +1277,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 };
 			 
 			 gapi.client.scheduler.appointment.removeAppointment(appointmentForm).execute();
+			 $location.path('/admin/home');
 			 
 		 };
 	  
@@ -1330,7 +1333,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 			"adminId":adminId
 			 	};
 			 	gapi.client.scheduler.admin.removeAdmin(removeAdminForm).execute();
-			 	$route.reload();
+			 	 $location.path('/admin/home');
 			  };
 			  
 		$scope.editAdmin=function(val){
@@ -1397,7 +1400,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 				    };
 			gapi.client.scheduler.client.addClient(clientForm).execute();
 			console.log("Client successfully added");
-			$location.path('/');
+			 $location.path('/admin/home');
 		 };
    });
    conferenceApp.controllers.controller('ViewClientController', function ($scope, $log,$location,$route,passingId, oauth2Provider, HTTP_ERRORS) {
@@ -1420,7 +1423,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 			"clientId":clientId
 			 	};
 			 	gapi.client.scheduler.client.removeClient(removeClientForm).execute();
-			 	$route.reload();
+			 	 $location.path('/admin/home');
 			  };
 			  
 		$scope.editClient=function(val){
