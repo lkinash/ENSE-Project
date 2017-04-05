@@ -947,7 +947,8 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 console.log("appointment name test"+$scope.appointmentsList[0].employeeName);
 			 for(var i=0;i<$scope.appointmentsList.length;i++){
 				 var stringcon=$scope.appointmentsList[i].date;
-				 stringcon=stringcon.substr(13,10);
+				 stringcon=stringcon.substr(13,16);
+				 stringcon=stringcon.replace("T", " at ");
 				 $scope.appointmentsList[i].date=stringcon;
 			 }
 			 $scope.$apply();
@@ -1244,8 +1245,38 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
   });
   
   conferenceApp.controllers.controller('ViewClientAppointmentController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
-
+	  console.log("reached the view Client appointment controller");
+	  $scope.init=function(){
+		  var tempId="124";
+		  var clientForm={
+					 "clientId":tempId
+				 };
+		  gapi.client.scheduler.appointment.getClientAppointmentsObject(clientForm).execute(function(resp){
+				 $scope.appointmentsList=resp.result.items;
+				 console.log("appointment name test"+$scope.appointmentsList[0].employeeName);
+				 for(var i=0;i<$scope.appointmentsList.length;i++){
+					 var stringcon=$scope.appointmentsList[i].date;
+					 stringcon=stringcon.substr(13,16);
+					 stringcon=stringcon.replace("T", " at ");
+					 $scope.appointmentsList[i].date=stringcon;
+				 }
+				 $scope.$apply();
+			 });
+	  };
+	  
+	  $scope.removeApp=function(val){
+			 var reason="cancelling appointment";
+			 var appointmentForm={
+					 "appointmentId":$scope.appointmentsList[val].appointmentId,
+					 "clientId":$scope.appointmentsList[val].clientId,
+					 "employeeId":$scope.appointmentsList[val].employeeId,
+					 "roomId":$scope.appointmentsList[val].roomId,
+					 "reasonForCancellation":reason
+			 };
+			 
+			 gapi.client.scheduler.appointment.removeAppointment(appointmentForm).execute();
+			 
+		 };
 	  
   });
       

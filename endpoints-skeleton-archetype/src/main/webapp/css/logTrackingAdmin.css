@@ -13,6 +13,7 @@ h2{
 }
 .logArea table{
 	white-space: nowrap;
+	text-align:center;
 }
 .logArea table tr{
 	padding-left:5%;
