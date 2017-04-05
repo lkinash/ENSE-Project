@@ -14,10 +14,6 @@ package com.google.appengine.archetypes.scheduler.forms;
  */
 public class ClientLoginForm {
 
-	/**
-	 * Description of the property password.
-	 */
-	private String password;
 
 	/**
 	 * Description of the property email.
@@ -30,29 +26,12 @@ public class ClientLoginForm {
 		
 	}
 	
-	public ClientLoginForm(String newEmail, String newPassword){
+	public ClientLoginForm(String newEmail){
 		
-		this.password = newPassword;
 		this.email = newEmail;
 	}
 	
 	
-
-	/**
-	 * Returns password.
-	 * @return password 
-	 */
-	public String getPassword() {
-		return this.password;
-	}
-
-	/**
-	 * Sets a value to attribute password. 
-	 * @param newPassword 
-	 */
-	public void setPassword(String newPassword) {
-		this.password = newPassword;
-	}
 
 	/**
 	 * Returns email.

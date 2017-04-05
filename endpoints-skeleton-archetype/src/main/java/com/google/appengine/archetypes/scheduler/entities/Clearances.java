@@ -27,7 +27,7 @@ public class Clearances {
 	 * Description of the property service.
 	 */
 	@Index
-    private Service service;
+    private long serviceId;
 
 	/**
 	 * Description of the property renewalDate.
@@ -40,8 +40,8 @@ public class Clearances {
 		
 	}
 	
-	public Clearances(Service service, Date renewalDate, long newClearanceId){
-		this.service = service;
+	public Clearances(long newService, Date renewalDate, long newClearanceId){
+		this.serviceId = newService;
 		this.renewalDate = renewalDate;
 		this.clearanceId = newClearanceId;
 	}
@@ -68,16 +68,16 @@ public class Clearances {
 	 * Returns service.
 	 * @return service 
 	 */
-	public Service getService() {
-		return this.service;
+	public long getService() {
+		return this.serviceId;
 	}
 
 	/**
 	 * Sets a value to attribute service. 
 	 * @param newService 
 	 */
-	public void setService(Service newService) {
-		this.service = newService;
+	public void setService(long newService) {
+		this.serviceId = newService;
 	}
 
 	/**
