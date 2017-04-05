@@ -162,6 +162,14 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
                 $scope.$apply(function () {
                 	$scope.username=resp.name;
                     if (resp.email) {
+                    	var form={
+                    			"email":resp.email
+                    	};
+                    	gapi.client.scheduler.admin.signin(form).execute(function(resp){
+                    		$scope.idreturned=resp.id;
+                    		$scope.clearancereturned=resp.adminClearance;
+                    		$scope.$apply();
+                    	});
                         oauth2Provider.signedIn = true;
                         $scope.alertStatus = 'success';
                         $scope.rootMessages = 'Logged in with ' + resp.email;
