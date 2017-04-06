@@ -56,7 +56,6 @@ private SchedulerApi schedulerApi;
 	private static final long NEWPRODUCTID1 = 4434556;
 	private static final String NEWNAME1 = "chest";
 	private static final double NEWPRICE1 = 33.05;
-	private static final long SERVICEID = 5555353;
 	
 	private static final boolean REQUIRESCLEARANCE1 = false;
 	private static final int DEFAULTLENGTH1 = 15;
@@ -349,18 +348,18 @@ private SchedulerApi schedulerApi;
     }
     /*
      * Test: Add Products
-     *//*
+     */
     @Test
     public void testAddProducts() throws Exception{
-    	Product product1 = schedulerApi.getProduct(user, NEWPRODUCTID1);
-    	assertEquals(PRODUCTTYPEID1,product1.getTypeId());
+    	Product product1 = schedulerApi.getProduct(user, PRODUCTTYPEID1);
+    	assertEquals(PRODUCTTYPEID1,product1.getProductId());
     }
     /*
      * Test: Add Services
-     *//*
+     */
     @Test
     public void testAddServices() throws Exception{
-    	Service service1 = schedulerApi.getService(user, SERVICEID);
+    	Service service1 = schedulerApi.getService(user, NEWPRODUCTID1);
     	assertEquals(NEWPRODUCTID1,service1.getProductId());
     }
     /*
