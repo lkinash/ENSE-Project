@@ -29,10 +29,6 @@ public class Appointment{
 	@Index
     private Status status;
 
-    @Parent
-    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-    private Key<Employee> employeeKey;
-	
 	/**
 	 * Description of the property employee.
 	 */
@@ -95,12 +91,11 @@ public class Appointment{
 		
 	}
 	
-	public Appointment(Status status, String eventId, long newAppointmentId, Key<Employee> newEmployeeKey,
+	public Appointment(Status status, String eventId, long newAppointmentId, 
 				long newServiceId, long newTypeId, long newClientId, long newRoomId, long newEmployeeId) {
 		
 		this.status = status;
 		this.eventId = eventId;
-		this.employeeKey = newEmployeeKey;
 		this.appointmentId = newAppointmentId;
 		this.serviceId = newServiceId;
 		this.typeId = newTypeId;
@@ -177,21 +172,7 @@ public class Appointment{
 		this.clientId = newclientId;
 	}
 	
-	/**
-	 * Returns eventId.
-	 * @return eventId 
-	 */
-	public Key<Employee> getEmployeeKey() {
-		return this.employeeKey;
-	}
 
-	/**
-	 * Sets a value to attribute eventId. 
-	 * @param newEventId 
-	 */
-	public void setEmployeeKey(Key<Employee> newEmployeeKey) {
-		this.employeeKey = newEmployeeKey;
-	}
 
 	/**
 	 * Returns appointmentlong.

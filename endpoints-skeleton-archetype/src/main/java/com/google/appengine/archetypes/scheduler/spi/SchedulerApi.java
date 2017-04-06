@@ -721,7 +721,7 @@ public class SchedulerApi {
         final Key<Appointment> appointmentKey = factory().allocateId(employeeKey, Appointment.class);
         final long appointmentId = appointmentKey.getId();
         
-        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, employeeKey, appointmentForm.getTypeId(), appointmentForm.getServiceId(), appointmentForm.getClientId(), appointmentForm.getRoomId(), appointmentForm.getEmployeeId());
+        Appointment appointment = new Appointment(Status.booked, eventId, appointmentId, appointmentForm.getTypeId(), appointmentForm.getServiceId(), appointmentForm.getClientId(), appointmentForm.getRoomId(), appointmentForm.getEmployeeId());
     		
   		ofy().save().entities(appointment).now();
   		
@@ -1118,8 +1118,6 @@ public class SchedulerApi {
   		for (FreeBusyCalendar calendar: calendarList.values()) {
   			
   			if(!(calendar.getBusy().isEmpty())){
-  				
-  				System.out.println(calendar.getBusy().get(0));
   				
   				return new WrappedBoolean(true);
   			}
@@ -1550,7 +1548,7 @@ public class SchedulerApi {
         
         Key<Employee> employeeKey = Key.create(Employee.class, appointmentForm.getEmployeeId());
         
-        Appointment appointment = new Appointment(Status.booked, appointmentForm.getEventId(), appointmentForm.getAppointmentId(), employeeKey, appointmentForm.getTypeId(), appointmentForm.getServiceId(), appointmentForm.getClientId(), appointmentForm.getRoomId(), appointmentForm.getEmployeeId());
+        Appointment appointment = new Appointment(Status.booked, appointmentForm.getEventId(), appointmentForm.getAppointmentId(), appointmentForm.getTypeId(), appointmentForm.getServiceId(), appointmentForm.getClientId(), appointmentForm.getRoomId(), appointmentForm.getEmployeeId());
         
         ofy().save().entities(appointment).now();
         
@@ -1779,15 +1777,27 @@ public class SchedulerApi {
         
         
         Appointment appointment = getAppointment(user, appointmentForm.getAppointmentId());
-        
 
-        String calendarId = getEmployee(user, appointmentForm.getEmployeeId()).getCalendarId();
-        String clientCalendarId = getClient(user, appointmentForm.getClientId()).getCalendarId();
-        String roomCalendarId = getRoom(user, appointmentForm.getRoomId()).getCalendar();
+
+        String calendarId = null;
+        String clientCalendarId = null;
+        String roomCalendarId = null;
+       
+        String eventId = appointment.getEventId();
+
         
-     
-        deleteEvent(user, calendarId ,  clientCalendarId , roomCalendarId, appointment.getEventId());
-    	
+        calendarId = getEmployee(user, appointmentForm.getEmployeeId()).getCalendarId();
+        clientCalendarId = getClient(user, appointmentForm.getClientId()).getCalendarId();
+        roomCalendarId = getRoom(user, appointmentForm.getRoomId()).getCalendar();
+        
+        String returnValue  = deleteEvent(user, calendarId , eventId).getId();
+ 
+        returnValue  = deleteEvent(user, roomCalendarId, eventId).getId();
+        
+        returnValue  = deleteEvent(user,  clientCalendarId , eventId).getId();
+        
+        returnValue  = deleteEvent(user, ConstantsSecret.masterCalendarId, eventId).getId();
+        
 	    Key<Appointment> key = Key.create(Appointment.class, appointmentForm.getAppointmentId());
 		
   		String change = "Remove Appointment. Appointment Id: " + key.getId();
@@ -2817,12 +2827,11 @@ public class SchedulerApi {
     	
         List<Appointment> appointments = query.list();
         Employee employee;
-        Service service;
         Event event;
         
         for(Appointment list:appointments){
         	
-        	employee = (Employee) ofy().load().key(list.getEmployeeKey()).now();
+        	employee = getEmployee(user, list.getEmployeeId());
         	event = getEvent(user, calendarId, list.getEventId());
         	
         	list.setEmployeeName(employee.getFirstName());
@@ -2850,7 +2859,7 @@ public class SchedulerApi {
         
   		
         Key<Appointment> key = Key.create(Appointment.class, appointmentId);
-
+        
        	Appointment appointment = (Appointment) ofy().load().key(key).now();
        	return appointment;
         
@@ -3471,18 +3480,16 @@ public class SchedulerApi {
 	 * @throws IOException 
 	 * @throws GeneralSecurityException 
 	 */
-	private static WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId , @Named("clientCalendarId") final String clientCalendarId , @Named("roomCalendarId") final String roomCalendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException, GeneralSecurityException {
+	private static WrappedStringId deleteEvent(final User user, @Named("calendarId") final String calendarId, @Named("eventId") final String eventId ) throws UnauthorizedException, IOException, GeneralSecurityException {
 
 		Calendar service = Quickstart.getService(user);
 		
-		service.events().delete(calendarId, eventId).execute();
-		
-		service.events().delete(clientCalendarId, eventId).execute();
-		
-		service.events().delete(roomCalendarId, eventId).execute();
-		
-		service.events().delete(ConstantsSecret.masterCalendarId, eventId).execute();
-		
+		if(eventId != null){
+			
+			if(calendarId != null){
+				service.events().delete(calendarId, eventId).execute();
+			}
+		}
 		
         return new WrappedStringId(eventId);
 	}
