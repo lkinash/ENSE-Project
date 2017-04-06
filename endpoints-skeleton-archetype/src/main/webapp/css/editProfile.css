@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-.container{
+.container3{
 	
 	width: 600px;
 	height: 400px;
@@ -28,7 +28,7 @@
 	padding-bottom:1%;
 	width:60%;
 }
-.container button{
+.container3 button{
 	float: right;
 	margin-right: 15%
 }

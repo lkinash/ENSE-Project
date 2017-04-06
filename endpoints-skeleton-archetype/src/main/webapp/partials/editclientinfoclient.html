@@ -1,0 +1,93 @@
+<head>
+   	<link href="/css/editProfile.css" rel="stylesheet">
+</head>
+
+<div class="row">
+
+	<div class="col-sm-12 col-lg-12">	
+		<div class="rightContent">
+					<h2>Edit Profile</h2>
+	<div class="container3">
+	<div ng-controller="ClientEditProfileController" ng-init="init()">
+		<form name="clientForm" ng-submit="addClient()">
+			<div class="inner">
+				<div class="inner2">
+					<div class="information" >
+						<table>
+						<tr>
+							<td>
+								<p>First Name </p>
+							</td>	
+							<td class="innerTh">
+								<input type="text" ng-value="nametest" ng-model="Fname" name="Fname" class="form-control"  required>
+							</td>
+							<td><span ng-show="(clientForm.Fname.$dirty || submitted) && clientForm.Fname.$error.required">
+								First Name is required
+							</span></td>
+						</tr>
+						<tr>
+							<td >
+								<p>Last Name</p>
+							</td>
+							<td class="innerTh">
+								<input type="text" ng-model="lname" name="lname" class="form-control" requried>
+							</td>
+							<td><span ng-show="(clientForm.lname.$dirty || submitted) && clientForm.lname.$error.required">
+								Last Name is required
+							</span></td>
+						</tr>
+						<tr>
+							<td>
+								<p>Email</p>
+							</td>
+							<td class="innerTh">
+								<input type="email" ng-model="email" name="email" class="form-control" required>
+							</td>
+							<td><span ng-show="(clientForm.email.$dirty || submitted) && clientForm.email.$error.required">
+								Email is required
+							</span></td>
+						</tr>
+						<tr>
+							<td>
+								<p>Phone Number</p>
+							</td>
+							<td class="innerTh">
+								<input type="text" ng-model="phoneNumber" name="phoneN" class="form-control" required>
+							</td>
+							<td><span ng-show="(clientForm.phoneN.$dirty || submitted) && clientForm.phoneN.$error.required">
+								Phone number is required
+							</span></td>
+						</tr>
+						<tr>
+							<td>
+								<p>Birthday(YYYY-MM-DD)</p>
+							</td>
+							<td class="innerTh">
+								<div class="form-inline">
+						  <select ng-model="dateYear"  ng-options="year for year in selects.years() | orderBy: year:yearOrder" class="form-control">
+						    <option value="">{{dateYear}}</option>
+						  </select>
+						  <select ng-model="dateMonth" ng-options="month for month in selects.months()" class="form-control">
+						    <option value="" >{{dateMonth}}</option>
+						  </select>
+						
+						  <select ng-model="dateDay" ng-options="day for day in selects.days()" class="form-control">
+						    <option value="">{{dateDay}}</option>
+						  </select>
+						
+							</div>
+							</td>
+					
+						</tr>							
+						</table>		
+						<button type="submit" class="btn btn-default">Submit</button>	
+					</div>
+			
+				</div>
+			</div>
+		</form>
+		</div>
+	</div>	
+		</div>
+		</div>
+	</div>

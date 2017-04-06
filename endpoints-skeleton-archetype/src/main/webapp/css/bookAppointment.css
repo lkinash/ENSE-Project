@@ -19,9 +19,16 @@ body h2{
 	background-color: lightgray;
 	
 }
-.filter .form-group{
-	display:inline-flex;
-	
+.form-control{
+	width:auto;
+	margin-left:2%;
+	margin-bottom:2%;
+}
+.dropDownCal{
+	margin-left:2%
+}
+.filterBtn{
+	margin-left:2%;
 }
 .inputgroup .form-group .form-control{
 	width:auto;

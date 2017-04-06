@@ -172,16 +172,25 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
                     			oauth2Provider.signedIn = true;
                                 // $scope.alertStatus = 'success';
                                 // $scope.rootMessages = 'Logged in with ' + resp.email;
-                                 if($scope.clearancereturned==="admin"){
-                                  	$location.path('/admin/home');
+                    			if($scope.clearancereturned==="client"){
+                    				 var tempId2=$scope.idreturned;
+                    				  var clientForm={
+                    						  "clientId":tempId2
+                    				  };
+                    			gapi.client.scheduler.client.getClientObject(clientForm).execute(function(resp){
+                    		 		$scope.clientOb=resp.result;
+                    		 		$scope.calID=$scope.clientOb.calendarId;
+                    		 		$scope.$apply(function(){
+                    		 		$location.path('/client/home');
+                    		 		});
+                    			});
+                    		 		
                                   }
-                                 if($scope.clearancereturned==="client"){
-                                   	$location.path('/client/home');
+                                 if($scope.clearancereturned==="admin"){
+                                   	$location.path('/admin/home');
                                    }
                     		});
-                    	});
-                     
-                        
+                    	});                       
                     }
                 });
             });
@@ -749,10 +758,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	    $scope.events = [
 	      {title: 'All Day Event',start: new Date(y, m, 1)},
 	      {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-	      {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-	      {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-	      {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-	      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
+	      
 	    ];
 	    /* event source that calls a function on every view switch */
 	    $scope.eventsF = function (start, end, timezone, callback) {
@@ -998,34 +1004,91 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 	 
   });
   
-  conferenceApp.controllers.controller('ClientEditProfileController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
+  conferenceApp.controllers.controller('ClientEditProfileController', function ($scope,$location, $log, oauth2Provider, HTTP_ERRORS) {
+	  console.log("reached the edit client controller");
+	  var tempId2=$scope.idreturned;
+	  var clientForm={
+			  "clientId":tempId2
+	  };
+	  var endYear = 2017;
+	   var startYear = 1920;
+	   $scope.selects = {
 
+			   days: function(){
+
+			     // Get number of days based on month + year 
+			     // (January = 31, February = 28, April = 30, February 2000 = 29) or 31 if no month selected yet
+			     var nbDays = new Date($scope.dateYear, $scope.dateMonth, 0).getDate() || 31;
+
+			     var daysList = [];
+			     for( var i = 1; i <= nbDays ; i++){
+			       var iS = i.toString();
+			       daysList.push( (iS.length < 2) ? '0' + iS : iS ); // Adds a leading 0 if single digit
+			     }
+			     return daysList;
+			   },
+			   months: function(){
+			     var monthList = [];
+			     for( var i = 1; i <= 12 ; i++){
+			       var iS = i.toString();
+			       monthList.push( (iS.length < 2) ? '0' + iS : iS ); // Adds a leading 0 if single digit
+			     }
+			     return monthList;
+			   },
+			   years: function(){
+			     var yearsList = [];
+			     for( var i = endYear; i >= startYear ; i--){
+			       yearsList.push( i.toString() );
+			     }
+			     return yearsList;
+			   }
+			 };
+	   
+		gapi.client.scheduler.client.getClientObject(clientForm).execute(function(resp){
+	 		$scope.clientOb=resp.result;
+			 $scope.$apply();
+			 if(resp){
+			 $scope.Fname=$scope.clientOb.firstName;
+			 $scope.lname=$scope.clientOb.lastName;
+			 $scope.phoneNumber=$scope.clientOb.phoneNumber;
+			 $scope.email=$scope.clientOb.email;
+			 $scope.dateYear=$scope.clientOb.birthdayBlock.year;
+			 $scope.dateMonth=$scope.clientOb.birthdayBlock.month;
+			 $scope.dateDay=$scope.clientOb.birthdayBlock.day;
+			 }
+	 	 });
+
+		
+	
+	 $scope.addClient=function(){
+			 var clientForm={};
+			 var newBirthday={
+					 "month":parseInt($scope.dateMonth),
+					 "year":parseInt($scope.dateYear),
+					 "day":parseInt($scope.dateDay)
+			 };
+			 console.log(newBirthday);
+			 var password="sdkjfs";
+			 clientForm = {
+					  "clientId":tempId2,
+				      "firstName" : $scope.Fname,
+				      "lastName": $scope.lname,
+				      "phoneNumber": $scope.phoneNumber,
+				      "email": $scope.email,
+				      "birthday": newBirthday,
+				      "password":password
+		
+				    };
+			gapi.client.scheduler.client.updateClient(clientForm).execute();
+			console.log("Client updated ");
+			 $location.path('/client/home');
+		 };
+
+		 
 
 	  
   });
   
-  conferenceApp.controllers.controller('ViewCalendarAdminController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
-	  	
-  });
-  
-  conferenceApp.controllers.controller('ClientLoginController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
-
-	  
-  });
-  
-  conferenceApp.controllers.controller('ClientBookingController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-  
-
-	  
-  });
-  
-  conferenceApp.controllers.controller('ClientCancelAppointmentController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
-
-	  
-  });
   
   conferenceApp.controllers.controller('ClientBookAppointmentController', function ($scope, $log, $location, oauth2Provider, HTTP_ERRORS) {
 	  console.log("Reached the ClientBookAppointmentController");
@@ -1165,17 +1228,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		 };
 	  
   });
-  /*
-  conferenceApp.controllers.controller('editEmployeeController', function ($scope, $log, $location, oauth2Provider, passingId, HTTP_ERRORS) {
-	  console.log("reached the edit employee controller");
-	  console.log("the id"+passingId.getId());
-	  
-	 // var tempId=passingId.getId();
-	
-	  
-		 		 	 
-  });
-  */
+
   conferenceApp.controllers.controller('editClientAdminController', function ($scope, $log, $location, oauth2Provider, passingId, HTTP_ERRORS) {
 	  console.log("reached the edit client controller");
 	  console.log("the id"+passingId.getId());
@@ -1312,19 +1365,13 @@ conferenceApp.controllers.controller('homeIndexController', function ($scope, $l
 	    $scope.changeTo = 'Hungarian';
 	    /* event source that pulls from google.com */
 	    $scope.eventSource = {
-	            url: "ronbrfav0rnhnjo3bjfi0m186c@group.calendar.google.com",
+	            url: $scope.calID,
 	            googleCalendarApiKey: 'AIzaSyCk3oNQRiy8vVIM-dyIx4DZfy2qyTT3avU',
 	            className: 'gcal-event',           // an option!
 	            currentTimezone: 'America/Chicago' // an option!
 	    };
 	    /* event source that contains custom events on the scope */
 	    $scope.events = [
-	      {title: 'All Day Event',start: new Date(y, m, 1)},
-	      {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-	      {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-	      {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-	      {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-	      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
 	    ];
 	    /* event source that calls a function on every view switch */
 	    $scope.eventsF = function (start, end, timezone, callback) {
@@ -1460,11 +1507,7 @@ conferenceApp.controllers.controller('homeIndexController', function ($scope, $l
 	  
   });
   
-   conferenceApp.controllers.controller('SignupController', function ($scope, $log, oauth2Provider, HTTP_ERRORS) {
-
-
-	   
-  });     
+  
   
    conferenceApp.controllers.controller('ViewAccountController', function ($scope, $log,$route,$location, passingId, oauth2Provider, HTTP_ERRORS) {
 	   console.log("Reached the View admin controller");
@@ -1619,12 +1662,6 @@ conferenceApp.controllers.controller('homeIndexController', function ($scope, $l
 	    };
 	    /* event source that contains custom events on the scope */
 	    $scope.events = [
-	      {title: 'All Day Event',start: new Date(y, m, 1)},
-	      {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-	      {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-	      {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-	      {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-	      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
 	    ];
 	    /* event source that calls a function on every view switch */
 	    $scope.eventsF = function (start, end, timezone, callback) {

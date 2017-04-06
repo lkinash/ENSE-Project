@@ -5,13 +5,14 @@
 
 <body>
 <div ng-controller="ClientBookAppointmentController" ng-init="init()">
-	<div class="filter" >
-					<div class="filterTitle">
+	<div class="row">
+		<div class="col-sm-3 col-lg-3">
+				<div class="filterTitle">
 						<h3>Book Now:</h3>
 					</div>
-					<div class="inputgroup">
-				<div class="form-group">
-				
+
+	
+					
 					<select class="form-control" id="sel1"  data-ng-model="listtypeselect" data-ng-options="listtype.typeName for listtype in listtypes" data-ng-change="getListServices(listtypeselect.typeId)">
 					<option value="" >Service Type</option>
 					</select>
@@ -23,9 +24,8 @@
 					<option value="" disabled selected>Employee</option>
 					<option value="{{employee.employeeId}}"   ng-repeat="employee in employees">{{employee.firstName}}</option>
 					</select>
-				</div>
-				</div>
-				<div class="dropDownCal"> 
+
+		<div class="dropDownCal"> 
 				<div class="form-group" ng-controller="DatepickerCtrl">
                     <p class="input-group">
                         <input placeholder="Start Date" id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
@@ -59,8 +59,8 @@
 				<div class="filterBtn">
 					<button type="submit" class="btn btn-default" ng-click="getOptions()">Search</button>
 				</div>
-		</div>
-		<div class="row">
+				</div>
+		<div class="col-sm-9 col-lg-9">
 			<div class="optionsHolder" ng-show="appointments">
 			<h5>Possible Appointments:</h5>
 			<div class="appHolderOpt">
@@ -81,5 +81,7 @@
 			</div>
 			</div>
 		</div>
+	</div>
+		
 </div>
 </body>
