@@ -3251,16 +3251,15 @@ public class SchedulerApi {
     	
         List<Client> list = query.list();
         
-        //TODO
-        //if(list.isEmpty()){
+        if(list.isEmpty()){
         	
-        	//client = addClient(user, new ClientForm(user.getNickname(), null, 0, null, user.getEmail()));
-        	//return new WrappedClearanceWithId(client.getClientId(), client.getAdminClearance());
-        //}
+        	client = addClient(user, new ClientForm(user.getNickname(), null, 0, null, user.getEmail()));
+        	return new WrappedClearanceWithId(client.getClientId(), client.getAdminClearance());
+        }
         
-        //else{
+        else{
         	return new WrappedClearanceWithId(list.get(0).getClientId(), list.get(0).getAdminClearance());
-        //}
+        }
 
 	}
 	/**
