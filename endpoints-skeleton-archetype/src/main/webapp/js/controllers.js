@@ -169,10 +169,10 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
                     		$scope.idreturned=resp.id;
                     		$scope.clearancereturned=resp.adminClearance;
                     		$scope.$apply();
-                    		 if($scope.clearancereturned==="admin"){
-                             	$location.path('/admin/home');
+                    		 if($scope.clearancereturned==="client"){
+                    			 $location.path('/client/home');
                              }else{
-                             	$location.path('/client/home');
+                            	 $location.path('/admin/home');
                              }
                     	});
                         oauth2Provider.signedIn = true;
