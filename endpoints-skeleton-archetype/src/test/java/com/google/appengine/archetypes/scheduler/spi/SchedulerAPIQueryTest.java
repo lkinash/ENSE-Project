@@ -106,6 +106,12 @@ private SchedulerApi schedulerApi;
 	private static final TimeBlockForm NEWBIRTHDAY2 = new TimeBlockForm(06,24,1985);
 	private static final long BIRTHDAYID2 = 555356;
 	
+	//Data for EMPLOYEE Form 2
+	private static final int EMPLOYEENUM = 5551212;
+	private static final String EMPLOYEEFIRSTNAME = "Pipper";
+	private static final String EMPLOYEELASTNAME = "Halliwell";
+	private static final String EMPLOYEEEMAIL = "pipperh@gmail.com";
+
 	//Data for Admin Form 1
 	private static final String ADMINFIRSTNAME1 = "Prue";
 	private static final String ADMINLASTNAME1 = "Halliwell";
@@ -205,11 +211,11 @@ private SchedulerApi schedulerApi;
         room = new Room(roomForm.getNumber(), roomForm.getServiceIds(), CALENDARID, ROOMID);
         
         //Create a form for employee
-        //EmployeeForm employeeForm = new EmployeeForm(NEWNAME1,serviceIds,FIRSTNAME,LASTNAME,holidayTimeBlockListForm,timeBlockListForm);
-        //employee1 = new Employee(CALENDARID,employeeForm.getFirstName(),employeeForm.getLastName(),
-        		//USER_ID,employeeForm.getEmail(),serviceIds,EMPLOYEE_ID,employeeForm.getHolidayTimeBlockListForm(),employeeForm.getTimeBlockListForm());
+        EmployeeForm employeeForm = new EmployeeForm(NEWNAME1,serviceIds,FIRSTNAME,LASTNAME,holidayTimeBlockListForm,timeBlockListForm);
+        employee1 = new Employee(CALENDARID, employeeForm.getFirstName(), employeeForm.getLastName(),
+        		USER_ID, employeeForm.getEmail(),serviceIds,EMPLOYEE_ID, null, null);
         
-        
+
         //Create a form for clients
         clientForm1 = new ClientForm(FIRSTNAME,LASTNAME,PHONENUM,NEWBIRTHDAY,EMAIL1);
         clientForm2 = new ClientForm(FIRSTNAME2,LASTNAME2,PHONENUM2,NEWBIRTHDAY2,EMAIL2);
@@ -225,8 +231,8 @@ private SchedulerApi schedulerApi;
         adminForm2 = new AdminForm(CLEARANCE,ADMINEMAIL2, ADMINFIRSTNAME2, ADMINLASTNAME2);
         
         //Create new admin
-        admin1 = new Admin(adminForm1.getFirstName(),adminForm1.getLastName(),CLEARANCE,ADMINUSERID1,ADMINID1,adminForm1.getEmail());
-        admin2 = new Admin(adminForm2.getFirstName(),adminForm2.getLastName(),CLEARANCE,ADMINUSERID2,ADMINID2,adminForm2.getEmail());
+        admin1 = new Admin(adminForm1.getFirstName(),adminForm1.getLastName(), adminForm1.getClearance(),ADMINUSERID1,ADMINID1,adminForm1.getEmail());
+        admin2 = new Admin(adminForm2.getFirstName(),adminForm2.getLastName(), adminForm2.getClearance(),ADMINUSERID2,ADMINID2,adminForm2.getEmail());
         
         //Create a form for Product
         productForm1 = new ProductForm(PRODUCTTYPEID1,PRODUCTNAME1,PRODUCTBARNUM1,PRODUCTPRICE1);
@@ -247,7 +253,7 @@ private SchedulerApi schedulerApi;
         
         
         //Save it on the data store
-        ofy().save().entities(room, type, service1, service2, service3, client1, client2,admin1,admin2,product1,
+        ofy().save().entities(room, employee1, type, service1, service2, service3, client1, client2,admin1,admin2,product1,
         		product2,product3).now();
         
 	}
@@ -346,7 +352,7 @@ private SchedulerApi schedulerApi;
     
     /*
      * Test: Add Rooms
-     */
+     *//*
     @Test
     public void testAddRooms() throws Exception{
     	Room addRoom = schedulerApi.addRoom(user, roomForm);
@@ -422,6 +428,8 @@ private SchedulerApi schedulerApi;
      */
     @Test
     public void testRemoveService() throws Exception{
+    	removeServiceForm = new RemoveServiceForm(0, null, 0, 0.0, true, NEWPRODUCTID1);
+
     	WrappedBoolean service1 = schedulerApi.removeService(user, removeServiceForm);
     	assertTrue(service1.getResult());
     }
@@ -430,7 +438,7 @@ private SchedulerApi schedulerApi;
      */
     @Test
     public void testRemoveProduct() throws Exception{
-    	WrappedBoolean product1 = schedulerApi.removeProduct(user, NEWPRODUCTID1);
+    	WrappedBoolean product1 = schedulerApi.removeProduct(user, PRODUCTTYPEID1);
     	assertTrue(product1.getResult());
     }
     /*
@@ -438,14 +446,16 @@ private SchedulerApi schedulerApi;
      */
     @Test
     public void testRemoveAdmin() throws Exception{
+    	removeAdminForm = new RemoveAdminForm(CLEARANCE, ADMINEMAIL1, ADMINID1);
     	WrappedBoolean admin1 = schedulerApi.removeAdmin(user, removeAdminForm);
     	assertTrue(admin1.getResult());
     }
     /*
      * Test: Remove Employee
-     */
+     *//*
     @Test
     public void testRemoveEmployee() throws Exception{
+    	removeEmployeeForm = new RemoveEmployeeForm(null, null, null, EMPLOYEE_ID);
     	WrappedBoolean employee1 = schedulerApi.removeEmployee(user, removeEmployeeForm);
     	assertTrue(employee1.getResult());
     }
@@ -454,6 +464,7 @@ private SchedulerApi schedulerApi;
      */
     @Test
     public void testRemoveType() throws Exception{
+    	removeTypeForm = new RemoveTypeForm(NEWTYPEID, TYPE);
     	WrappedBoolean type1 = schedulerApi.removeType(user, removeTypeForm);
     	assertTrue(type1.getResult());
     }
