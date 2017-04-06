@@ -106,7 +106,7 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','n
                 })
                 
                 .when('/client/editProfile', {
-                    templateUrl: 'partials/editProfile.html',
+                    templateUrl: 'partials/editclientinfoclient.html',
                     controller: 'ClientEditProfileController'
                 })
                 
