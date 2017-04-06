@@ -9,6 +9,7 @@ public class WrappedClearanceWithId {
 	
 	private AdminClearances clearance;
 
+
 	public WrappedClearanceWithId(){
 		
 	}
@@ -20,14 +21,6 @@ public class WrappedClearanceWithId {
 		
 	}
 
-	public long getId(){
-		return this.id;
-	}
-	
-	public void setId(long newId){
-		this.id = newId;
-	}
-	
 	
 	/**
 	 * Returns adminClearance.
@@ -43,6 +36,14 @@ public class WrappedClearanceWithId {
 	 */
 	public void setAdminClearance(AdminClearances newAdminClearance) {
 		this.clearance = newAdminClearance;
+	}
+
+	public long getId(){
+		return this.id;
+	}
+
+	public void setId(long newId){
+		this.id = newId;
 	}
 	
 }

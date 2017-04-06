@@ -4,6 +4,10 @@ public class WrappedStringId {
 
 	private String id;
 	
+	public WrappedStringId(){
+		
+	}
+	
 	public WrappedStringId(String newId){
 		this.id = newId;
 	}
