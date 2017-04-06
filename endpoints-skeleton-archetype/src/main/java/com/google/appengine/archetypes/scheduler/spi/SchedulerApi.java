@@ -1805,7 +1805,7 @@ public class SchedulerApi {
 	    
 		ofy().delete().key(key).now();
 		
-		return null;
+		return new WrappedBoolean(true);
 	}
 	
 	
@@ -1872,7 +1872,7 @@ public class SchedulerApi {
   		String change = "Remove Client Clearance. Client Id: " + clientId;
   		addChange(user, user.getUserId(), change);
   		
-		return null;
+		return new WrappedBoolean(true);
 	}
 	
   	/**

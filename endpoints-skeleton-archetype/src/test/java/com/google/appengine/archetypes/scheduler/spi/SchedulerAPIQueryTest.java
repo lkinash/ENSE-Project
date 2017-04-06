@@ -275,6 +275,7 @@ private SchedulerApi schedulerApi;
         assertEquals(service1, services.get(1));
         assertEquals(service3, services.get(2));
     }
+    
     /*
      * Test: Get All Client
      */
@@ -288,6 +289,7 @@ private SchedulerApi schedulerApi;
     	assertEquals(client1, clients.get(0));
         assertEquals(client2, clients.get(1));
     }
+    
     /*
      * Test: Get All Rooms
      */
@@ -299,6 +301,7 @@ private SchedulerApi schedulerApi;
     	
     	assertEquals(room,rooms.get(0));
     }
+    
     /*
      * Test: Get All Types
      */
@@ -310,6 +313,7 @@ private SchedulerApi schedulerApi;
     	
     	assertEquals(type,types.get(0));
     }
+    
     /*
      * Test: Get All Admins
      */
@@ -323,6 +327,7 @@ private SchedulerApi schedulerApi;
     	assertEquals(admin1,admins.get(1));
     	assertEquals(admin2,admins.get(0));
     }
+    
     /*
      * Test: Get All Products
      */
@@ -338,14 +343,16 @@ private SchedulerApi schedulerApi;
     	assertEquals(product1,products.get(1));
     	assertEquals(product3,products.get(2));
     }
+    
     /*
      * Test: Add Rooms
-     *//*
+     */
     @Test
     public void testAddRooms() throws Exception{
     	Room addRoom = schedulerApi.addRoom(user, roomForm);
     	assertEquals(addRoom.getNumber(),addRoom.getNumber());
     }
+    
     /*
      * Test: Add Products
      */
@@ -353,7 +360,9 @@ private SchedulerApi schedulerApi;
     public void testAddProducts() throws Exception{
     	Product product1 = schedulerApi.getProduct(user, PRODUCTTYPEID1);
     	assertEquals(PRODUCTTYPEID1,product1.getProductId());
+    	assertEquals(PRODUCTNAME1, product1.getName());
     }
+    
     /*
      * Test: Add Services
      */
@@ -362,6 +371,7 @@ private SchedulerApi schedulerApi;
     	Service service1 = schedulerApi.getService(user, NEWPRODUCTID1);
     	assertEquals(NEWPRODUCTID1,service1.getProductId());
     }
+    
     /*
      * Test: Add Admin
      */
@@ -370,6 +380,7 @@ private SchedulerApi schedulerApi;
     	Admin admin1 = schedulerApi.getAdmin(user, ADMINID1);
     	assertEquals(ADMINFIRSTNAME1,admin1.getFirstName());
     }
+    
     /*
      * Test: Add Type
      */
@@ -378,6 +389,7 @@ private SchedulerApi schedulerApi;
     	Type type1 = schedulerApi.getType(user, NEWTYPEID);
     	assertEquals(NEWTYPEID,type1.getTypeId());
     }
+    
     /*
      * Test: Add Changes
      */
@@ -386,68 +398,63 @@ private SchedulerApi schedulerApi;
     	Changes change1 = schedulerApi.addChange(user, USER_ID,CHANGEDATA);
     	assertEquals(CHANGEDATA,change1.getChange());
     }
-    /*
-     * Test: Add Clearances
-     *//*
-    @Test
-    public void testAddClearance() throws Exception{
-    	WrappedBoolean clearance1 = schedulerApi.addClearances(user);
-    	assertEquals(REASON,clearance1.getReason());
-    }
+
     /*
      * Test: Add Employees
-     *//*
+     */
     @Test
     public void testAddEmployee() throws Exception{
     	Employee employee1 = schedulerApi.getEmployee(user, EMPLOYEE_ID);
     	assertEquals(EMPLOYEE_ID,employee1.getEmployeeId());
     }
+    
     /*
      * Test: Add Service Type
-     *//*
+     */
     @Test
     public void testAddServiceType() throws Exception{
-    	Service service1 = schedulerApi.getService(user, SERVICEID);
+    	Service service1 = schedulerApi.getService(user, NEWPRODUCTID1);
     	assertEquals(NEWPRODUCTID1,service1.getProductId());
+    	assertEquals(NEWNAME1, service1.getName());
     }
     /*
      * Test: Remove Service
-     *//*
+     */
     @Test
     public void testRemoveService() throws Exception{
     	WrappedBoolean service1 = schedulerApi.removeService(user, removeServiceForm);
-    	assertEquals(REASON,service1.getReason());
-    }*/
+    	assertTrue(service1.getResult());
+    }
     /*
      * Test: Remove Products
-     *//*
+     */
     @Test
     public void testRemoveProduct() throws Exception{
     	WrappedBoolean product1 = schedulerApi.removeProduct(user, NEWPRODUCTID1);
-    	assertEquals(REASON,product1.getReason());
+    	assertTrue(product1.getResult());
     }
     /*
      * Test: Remove Admin
-     *//*
+     */
     @Test
     public void testRemoveAdmin() throws Exception{
     	WrappedBoolean admin1 = schedulerApi.removeAdmin(user, removeAdminForm);
-    	assertEquals(REASON,admin1.getReason());
-    }*/
+    	assertTrue(admin1.getResult());
+    }
     /*
      * Test: Remove Employee
-     *//*
+     */
     @Test
     public void testRemoveEmployee() throws Exception{
     	WrappedBoolean employee1 = schedulerApi.removeEmployee(user, removeEmployeeForm);
-    	assertEquals(REASON,employee1.getReason());
-    }*/
+    	assertTrue(employee1.getResult());
+    }
     /*
      * Test: Remove Type
-     *//*
+     */
     @Test
     public void testRemoveType() throws Exception{
     	WrappedBoolean type1 = schedulerApi.removeType(user, removeTypeForm);
-    	assertEquals(REASON,type1.getReason());
-    }*/
+    	assertTruetypen1.getResult());
+    }
 }
