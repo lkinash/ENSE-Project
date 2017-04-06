@@ -169,13 +169,15 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
                     		$scope.idreturned=resp.id;
                     		$scope.clearancereturned=resp.adminClearance;
                     		$scope.$apply();
-                    		 if($scope.clearancereturned==="admin"){
-                             	$location.path('/admin/home');
+                    		 if($scope.clearancereturned==="client"){
+                    			 oauth2Provider.signedIn = true;
+                    			 $location.path('/client/home');
                              }else{
-                             	$location.path('/client/home');
+                            	 oauth2Provider.signedIn = true;
+                            	 $location.path('/admin/home');
                              }
                     	});
-                        oauth2Provider.signedIn = true;
+                       // oauth2Provider.signedIn = true;
                        // $scope.alertStatus = 'success';
                        // $scope.rootMessages = 'Logged in with ' + resp.email;
                         
