@@ -168,16 +168,19 @@ conferenceApp.controllers.controller('RootCtrl', function ($scope, $location, oa
                     	gapi.client.scheduler.admin.signin(form).execute(function(resp){
                     		$scope.idreturned=resp.id;
                     		$scope.clearancereturned=resp.adminClearance;
-                    		$scope.$apply();
-                    		 if($scope.clearancereturned==="admin"){
-                             	$location.path('/admin/home');
-                             }else{
-                             	$location.path('/client/home');
-                             }
+                    		$scope.$apply(function(){
+                    			oauth2Provider.signedIn = true;
+                                // $scope.alertStatus = 'success';
+                                // $scope.rootMessages = 'Logged in with ' + resp.email;
+                                 if($scope.clearancereturned==="admin"){
+                                  	$location.path('/admin/home');
+                                  }
+                                 if($scope.clearancereturned==="client"){
+                                   	$location.path('/client/home');
+                                   }
+                    		});
                     	});
-                        oauth2Provider.signedIn = true;
-                       // $scope.alertStatus = 'success';
-                       // $scope.rootMessages = 'Logged in with ' + resp.email;
+                     
                         
                     }
                 });
