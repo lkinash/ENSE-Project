@@ -2204,6 +2204,39 @@ public class SchedulerApi {
         
   	}
   	
+  	/**
+  	 * Returns clients.
+  	 * @return clients 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAllClientsObject", path = "admin.getAllClientsObject", httpMethod = "get")
+ 	public List<Client> getAllClientsObject(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        Query<Client> query =  ofy().load().type(Client.class);
+    	query = query.order("lastName");
+    	
+    	List<Client> list = query.list();
+        
+    	for(Client client: list){
+    		
+    		if(client.getBirthday() != 0){
+    			Key<TimeBlock> blockKey = Key.create(TimeBlock.class, client.getBirthday());
+    			TimeBlock timeBlock = (TimeBlock) ofy().load().key(blockKey).now();
+    	
+    			client.setBirthdayBlock(timeBlock);
+    		}
+    	}
+    	
+    	return list;
+        
+  	}
+  	
  	/**
   	 * Returns rooms.
   	 * @return rooms 
