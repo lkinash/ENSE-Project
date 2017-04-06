@@ -455,6 +455,6 @@ private SchedulerApi schedulerApi;
     @Test
     public void testRemoveType() throws Exception{
     	WrappedBoolean type1 = schedulerApi.removeType(user, removeTypeForm);
-    	assertTruetypen1.getResult());
+    	assertTrue(type1.getResult());
     }
 }
