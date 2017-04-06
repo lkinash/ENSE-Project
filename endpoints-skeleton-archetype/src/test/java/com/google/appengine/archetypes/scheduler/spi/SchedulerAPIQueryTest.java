@@ -466,6 +466,6 @@ private SchedulerApi schedulerApi;
     public void testRemoveType() throws Exception{
     	removeTypeForm = new RemoveTypeForm(NEWTYPEID, TYPE);
     	WrappedBoolean type1 = schedulerApi.removeType(user, removeTypeForm);
-    	assertTruetypen1.getResult());
+    	assertTrue(type1.getResult());
     }
 }
