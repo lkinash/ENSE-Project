@@ -89,6 +89,11 @@ var app = angular.module('conferenceApp', ['conferenceControllers', 'ngRoute','n
                     templateUrl: 'partials/cancelAppointment.html',
                     controller: 'ClientCancelAppointmentController'
                 })
+                .when('/client/home', {
+                    templateUrl: 'partials/clientHomePage.html',
+                    controller: 'ClientHomeController'
+                })
+                
                 
                 .when('/client/editBooking', {
                     templateUrl: 'partials/editBooking.html',

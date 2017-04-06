@@ -52,7 +52,9 @@
 
 <md-toolbar>
 	<div class="head" layout="row">
-		<a href="#/admin/home"><h3>Scheduler App</h3></a>
+		<a href="#/admin/home"  ng-show="getSignedInState() && clearancereturned==='admin'"><h3>Scheduler App</h3></a>
+		<a href="#/client/home"  ng-show="getSignedInState() && clearancereturned==='client'"><h3>Scheduler App</h3></a>
+		<h3 ng-hide="getSignedInState()">Scheduler App</h3>
 
 		<div class="hright">
 			

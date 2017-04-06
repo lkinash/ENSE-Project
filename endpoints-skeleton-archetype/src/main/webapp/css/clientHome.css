@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* CSS Document */
+.row{
+	text-align:center;
+}
+.filter{
+	margin-top:5%;
+	margin-bottom:5%;
+	width:50%;
+}
+
+.filter button{
+	width:100%;
+}
+
+@media only screen and (max-device-width: 480px) {
+	.filter{
+		width:100%;
+		display:line-items;	
+	}
+}
