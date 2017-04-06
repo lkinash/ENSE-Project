@@ -22,7 +22,7 @@ ul li{
 	text-align:inherit;
 }
 .bg {
-  background-image: url(/images/headerback2.JPG);
+  background-image: url(/img/headerback2.JPG);
   position: fixed;
   width: 80%;
   height: 350px; /*same height as jumbotron */
