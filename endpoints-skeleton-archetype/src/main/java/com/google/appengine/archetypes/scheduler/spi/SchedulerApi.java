@@ -2204,6 +2204,39 @@ public class SchedulerApi {
         
   	}
   	
+  	/**
+  	 * Returns clients.
+  	 * @return clients 
+  	 * @throws UnauthorizedException 
+  	 */
+  	
+  	@ApiMethod(name = "admin.getAllClientsObject", path = "admin.getAllClientsObject", httpMethod = "get")
+ 	public List<Client> getAllClientsObject(final User user) throws UnauthorizedException {
+
+        if (user == null) {
+            throw new UnauthorizedException("Authorization required");
+        }
+        
+        
+        Query<Client> query =  ofy().load().type(Client.class);
+    	query = query.order("lastName");
+    	
+    	List<Client> list = query.list();
+        
+    	for(Client client: list){
+    		
+    		if(client.getBirthday() != 0){
+    			Key<TimeBlock> blockKey = Key.create(TimeBlock.class, client.getBirthday());
+    			TimeBlock timeBlock = (TimeBlock) ofy().load().key(blockKey).now();
+    	
+    			client.setBirthdayBlock(timeBlock);
+    		}
+    	}
+    	
+    	return list;
+        
+  	}
+  	
  	/**
   	 * Returns rooms.
   	 * @return rooms 
@@ -3218,15 +3251,16 @@ public class SchedulerApi {
     	
         List<Client> list = query.list();
         
-        if(list.isEmpty()){
+        //TODO
+        //if(list.isEmpty()){
         	
-        	client = addClient(user, new ClientForm(user.getNickname(), null, 0, null, user.getEmail()));
-        	return new WrappedClearanceWithId(client.getClientId(), client.getAdminClearance());
-        }
+        	//client = addClient(user, new ClientForm(user.getNickname(), null, 0, null, user.getEmail()));
+        	//return new WrappedClearanceWithId(client.getClientId(), client.getAdminClearance());
+        //}
         
-        else{
+        //else{
         	return new WrappedClearanceWithId(list.get(0).getClientId(), list.get(0).getAdminClearance());
-        }
+        //}
 
 	}
 	/**
