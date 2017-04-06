@@ -6,15 +6,11 @@ h2{
 	color:#0A25BF;
 }
 .logArea{
-	width: 90%;
-	text-align:center;
+	width: 80%;
 	margin-left: auto;
 	margin-right: auto;
 }
 .logArea table{
+	width:100%;
 	white-space: nowrap;
-	text-align:center;
-}
-.logArea table tr{
-	padding-left:5%;
 }
