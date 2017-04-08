@@ -687,8 +687,6 @@ public class SchedulerApi {
         String clientCalendarId = getClient(user, appointmentForm.getClientId()).getCalendarId();
         String roomCalendarId = null;
         
-        System.out.println(appointmentForm.getRoomId());
-        
         if(appointmentForm.getRoomId() != 0){
         	roomCalendarId = getRoom(user, appointmentForm.getRoomId()).getCalendar();
         }
@@ -785,7 +783,7 @@ public class SchedulerApi {
         	
         	employee = getEmployee(user, findAppointmentForm.getEmployeeId());
         	dayTimeBlocks = getEmployeeTimeBlocks(user, findAppointmentForm);
-        	holidayTimeBlocks = getEmployeeHolidaysInRange(user, findAppointmentForm);
+        	//holidayTimeBlocks = getEmployeeHolidaysInRange(user, findAppointmentForm);
         	
         	
         	for(DateTime currentDate: dateList){
