@@ -432,8 +432,8 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			                   {
 			                	   'itemNo':0,
 			                   }];
-		   var endYear = 2017;
-		   var startYear = 1920;
+		   var endYear = 2050;
+		   var startYear = 2015;
 		   $scope.selects = {
 
 				   days: function(){
@@ -897,7 +897,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 			 console.log("start time"+ $scope.startTimeHour);
 			 console.log("start minute"+ $scope.startTimeMinute);
 			 console.log("Date"+ $scope.tempdate);
-			 var temp="46";
+			 var temp="3200003";
 			 var templength=parseInt("60");
 			 var d= new Date($scope.tempdate);
 			 var date={
