@@ -685,8 +685,13 @@ public class SchedulerApi {
 
         final String calendarId = employee.getCalendarId();
         String clientCalendarId = getClient(user, appointmentForm.getClientId()).getCalendarId();
-        String roomCalendarId = getRoom(user, appointmentForm.getRoomId()).getCalendar();
+        String roomCalendarId = null;
         
+        System.out.println(appointmentForm.getRoomId());
+        
+        if(appointmentForm.getRoomId() != 0){
+        	roomCalendarId = getRoom(user, appointmentForm.getRoomId()).getCalendar();
+        }
         
         String serviceName = getService(user, appointmentForm.getServiceId()).getName();
         
@@ -3498,8 +3503,10 @@ public class SchedulerApi {
 
         event = service.events().insert(calendarId, event).execute();
 
-        event = service.events().insert(roomCalendarId, event).execute();
-
+        if(roomCalendarId != null){
+        	event = service.events().insert(roomCalendarId, event).execute();
+        }
+        
         event = service.events().insert(clientCalendarId, event).execute();
 
         event = service.events().insert(ConstantsSecret.masterCalendarId, event).execute();
