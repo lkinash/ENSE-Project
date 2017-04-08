@@ -1177,7 +1177,7 @@ conferenceApp.controllers.controller('AddRoomController', function ($scope, $log
 		    		 var appointmentForm=$scope.appointments[val];
 		    		 gapi.client.scheduler.appointment.addAppointment(appointmentForm).execute();
 		    		 console.log("book the appointment ");
-		    		 $location.path('/admin/home');
+		    		 $location.path('/client/home');
 		    	 };
 		    	
 		    };
